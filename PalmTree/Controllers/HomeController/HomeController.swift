@@ -20,9 +20,23 @@ import IQKeyboardManagerSwift
 var admobDelegate = AdMobDelegate()
 var currentVc: UIViewController!
 
-class HomeController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, NVActivityIndicatorViewable, AddDetailDelegate, CategoryDetailDelegate, UISearchBarDelegate, MessagingDelegate,UNUserNotificationCenterDelegate, NearBySearchDelegate, BlogDetailDelegate , LocationCategoryDelegate, SwiftyAdDelegate , GADInterstitialDelegate, UIGestureRecognizerDelegate {
+var homeVC: HomeController!
+let defaults = UserDefaults.standard
+
+class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable, AddDetailDelegate, CategoryDetailDelegate, UISearchBarDelegate, MessagingDelegate,UNUserNotificationCenterDelegate, NearBySearchDelegate, BlogDetailDelegate , LocationCategoryDelegate, SwiftyAdDelegate , GADInterstitialDelegate, UIGestureRecognizerDelegate {
     
-    @IBOutlet weak var categoriesView: UIView!
+    //MARK:- Outlets
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            tableView.delegate = self
+            tableView.dataSource = self
+            tableView.tableFooterView = UIView()
+            tableView.showsVerticalScrollIndicator = false
+            tableView.separatorStyle = .none
+            tableView.register(UINib(nibName: "SearchSectionCell", bundle: nil), forCellReuseIdentifier: "SearchSectionCell")
+            tableView.addSubview(refreshControl)
+        }
+    }
     
     let keyboardManager = IQKeyboardManager.sharedManager()
     
@@ -43,7 +57,7 @@ class HomeController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var categoryArray = [CatIcon]()
     var featuredArray = [HomeAdd]()
     var latestAdsArray = [HomeAdd]()
-    var blogObj: HomeLatestBlog?
+    var blogObj : HomeLatestBlog?
     var catLocationsArray = [CatLocation]()
     var nearByAddsArray = [HomeAdd]()
     var searchSectionArray = [HomeSearchSection]()
@@ -99,109 +113,22 @@ class HomeController: UIViewController, UICollectionViewDelegate, UICollectionVi
         self.adForest_sendFCMToken()
         self.subscribeToTopicMessage()
         self.showLoader()
-        self.homeData()
-//        self.addLeftBarButtonWithImage()
-//        self.navigationButtons()
-        
+        self.adForest_homeData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//        if defaults.bool(forKey: "isGuest") || defaults.bool(forKey: "isLogin") == false {
-//            self.oltAddPost.isHidden = false
-//        }
+        homeVC = self
         currentVc = self
-                //self.homeData()
-        
+                //self.adForest_homeData()
     }
     
     @objc func refreshTableView() {
-        self.homeData()
+        self.adForest_homeData()
         //        self.perform(#selector(self.nokri_showNavController1), with: nil, afterDelay: 0.5)
+        tableView.reloadData()
         self.refreshControl.endRefreshing()
-    }
-    
-    func fillCategoriesView()
-    {
-        for view in categoriesView.subviews
-        {
-            view.removeFromSuperview()
-        }
-        
-        let screenSize = UIScreen.main.bounds
-        
-        let width = ((screenSize.width-10)/5)
-        
-        var xAxis = 5
-        
-        for i in 0..<categoryArray.count
-        {
-            if i < 4
-            {
-                let objData = categoryArray[i]
-                
-                let view = UIView(frame: CGRect(x: xAxis, y: 0, width: Int(width), height: 70))
-                
-                let imgView = UIImageView(frame: CGRect(x: 0, y: 10, width: Int(width) - 6, height: 30))
-                imgView.contentMode = .scaleAspectFit
-                if let imgUrl = URL(string: objData.img.encodeUrl()) {
-                    imgView.sd_setShowActivityIndicatorView(true)
-                    imgView.sd_setIndicatorStyle(.gray)
-                    imgView.sd_setImage(with: imgUrl, completed: nil)
-                }
-                
-                let lblName = UILabel(frame: CGRect(x: 0, y: 45, width: Int(width) - 6, height: 15))
-                lblName.font = UIFont.systemFont(ofSize: 11.0)
-                lblName.textAlignment = .center
-                if let name = objData.name {
-                    lblName.text = name
-                }
-                
-                let btn = UIButton(frame: CGRect(x: 0, y: 0, width: width, height: 70))
-                btn.tag = 1000 + i
-                btn.addTarget(self, action: #selector(catBtnAction(button:)), for: .touchUpInside)
-
-                view.addSubview(imgView)
-                view.addSubview(lblName)
-                view.addSubview(btn)
-                categoriesView.addSubview(view)
-                
-                xAxis += Int(width)
-            }
-            else
-            {
-                break
-            }
-        }
-        
-        let view = UIView(frame: CGRect(x: xAxis, y: 0, width: Int(width), height: 70))
-        
-        let imgView = UIImageView(frame: CGRect(x: 0, y: 10, width: Int(width) - 6, height: 30))
-        imgView.contentMode = .scaleAspectFit
-        imgView.image = UIImage(named : "more")
-        
-        let lblName = UILabel(frame: CGRect(x: 0, y: 45, width: Int(width) - 6, height: 15))
-        lblName.font = UIFont.systemFont(ofSize: 11.0)
-        lblName.textAlignment = .center
-        lblName.text = "More"
-        
-        let btn = UIButton(frame: CGRect(x: 0, y: 0, width: width, height: 70))
-        btn.addTarget(self, action: #selector(moreBtnAction(button:)), for: .touchUpInside)
-        view.addSubview(imgView)
-        view.addSubview(lblName)
-        view.addSubview(btn)
-        categoriesView.addSubview(view)
-    }
-    
-    @objc func catBtnAction(button:UIButton)
-    {
-        
-    }
-    
-    @objc func moreBtnAction(button:UIButton)
-    {
-        
     }
     
     //MARK:- Topic Message
@@ -259,85 +186,6 @@ class HomeController: UIViewController, UICollectionViewDelegate, UICollectionVi
             print(param)
             self.adForest_nearBySearch(param: param as NSDictionary)
         }
-    }
-    
-    func navigationButtons() {
-        
-        //Home Button
-        let HomeButton = UIButton(type: .custom)
-        let ho = UIImage(named: "home")?.withRenderingMode(.alwaysTemplate)
-        HomeButton.setBackgroundImage(ho, for: .normal)
-        HomeButton.tintColor = UIColor.white
-        HomeButton.setImage(ho, for: .normal)
-        //        if defaults.bool(forKey: "isGuest") || defaults.bool(forKey: "isLogin") == false {
-        //            HomeButton.isHidden = true
-        //        }
-        if #available(iOS 11, *) {
-            searchBarNavigation.widthAnchor.constraint(equalToConstant: 30).isActive = true
-            searchBarNavigation.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        } else {
-            HomeButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        }
-        HomeButton.addTarget(self, action: #selector(actionHome), for: .touchUpInside)
-        let homeItem = UIBarButtonItem(customView: HomeButton)
-        if defaults.bool(forKey: "showHome") {
-            barButtonItems.append(homeItem)
-            //self.barButtonItems.append(homeItem)
-        }
-        
-        //Location Search
-        let locationButton = UIButton(type: .custom)
-        if defaults.bool(forKey: "isGuest") || defaults.bool(forKey: "isLogin") == false {
-            locationButton.isHidden = true
-        }
-        
-        if #available(iOS 11, *) {
-            locationButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
-            locationButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        }
-        else {
-            locationButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-        }
-        let image = UIImage(named: "location")?.withRenderingMode(.alwaysTemplate)
-        locationButton.setBackgroundImage(image, for: .normal)
-        locationButton.tintColor = UIColor.white
-        locationButton.addTarget(self, action: #selector(onClicklocationButton), for: .touchUpInside)
-        let barButtonLocation = UIBarButtonItem(customView: locationButton)
-        if defaults.bool(forKey: "showNearBy") {
-            self.barButtonItems.append(barButtonLocation)
-        }
-        //Search Button
-        let searchButton = UIButton(type: .custom)
-        //       if defaults.bool(forKey: "isGuest") || defaults.bool(forKey: "isLogin") == false {
-        //           searchButton.isHidden = true
-        //       }
-        if defaults.bool(forKey: "advanceSearch") == true{
-            let con = UIImage(named: "controls")?.withRenderingMode(.alwaysTemplate)
-            searchButton.setBackgroundImage(con, for: .normal)
-            searchButton.tintColor = UIColor.white
-            searchButton.setImage(con, for: .normal)
-        }else{
-            let con = UIImage(named: "search")?.withRenderingMode(.alwaysTemplate)
-            searchButton.setBackgroundImage(con, for: .normal)
-            searchButton.tintColor = UIColor.white
-            searchButton.setImage(con, for: .normal)
-        }
-        
-        if #available(iOS 11, *) {
-            searchBarNavigation.widthAnchor.constraint(equalToConstant: 30).isActive = true
-            searchBarNavigation.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        } else {
-            searchButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        }
-        searchButton.addTarget(self, action: #selector(actionSearch), for: .touchUpInside)
-        let searchItem = UIBarButtonItem(customView: searchButton)
-        if defaults.bool(forKey: "showSearch") {
-            barButtonItems.append(searchItem)
-            //self.barButtonItems.append(searchItem)
-        }
-        
-        self.navigationItem.rightBarButtonItems = barButtonItems
-        
     }
     
     @objc func actionHome() {
@@ -453,12 +301,181 @@ class HomeController: UIViewController, UICollectionViewDelegate, UICollectionVi
         print(rewardAmount)
     }
     
+    
+    
+    //MARK:- Table View Delegate Methods
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+       
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        var value = 0
+        
+        if section == 0
+        {
+            value = 1
+        }
+        else
+        {
+            //value = dataArray.count
+            value = 4
+        }
+        
+        return value
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let section = indexPath.section
+
+        if section == 0
+        {
+            let cell: CategoriesTableCell = tableView.dequeueReusableCell(withIdentifier: "CategoriesTableCell", for: indexPath) as! CategoriesTableCell
+            let data = AddsHandler.sharedInstance.objHomeData
+            if let viewAllText = data?.catIconsColumnBtn.text {
+                cell.oltViewAll.setTitle(viewAllText, for: .normal)
+            }
+            cell.btnViewAll = { () in
+                let categoryDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "CategoryDetailController") as! CategoryDetailController
+                self.navigationController?.pushViewController(categoryDetailVC, animated: true)
+            }
+            cell.numberOfColums = self.numberOfColumns
+            cell.categoryArray  = self.categoryArray
+            cell.delegate = self
+            cell.collectionView.reloadData()
+            return cell
+        }
+        else
+        {
+            let cell: AddsTableCell  = tableView.dequeueReusableCell(withIdentifier: "AddsTableCell", for: indexPath) as! AddsTableCell
+//            let objData = dataArray[indexPath.row]
+//            let data = AddsHandler.sharedInstance.objHomeData
+//
+//            if let sectionTitle = objData.name {
+//                cell.lblSectionTitle.text = sectionTitle
+//            }
+//            if let viewAllText = data?.viewAll {
+//                cell.oltViewAll.setTitle(viewAllText, for: .normal)
+//            }
+//
+//            cell.btnViewAll = { () in
+//                let categoryVC = self.storyboard?.instantiateViewController(withIdentifier: "CategoryController") as! CategoryController
+//                categoryVC.categoryID = objData.catId
+//                self.navigationController?.pushViewController(categoryVC, animated: true)
+//            }
+//            cell.dataArray = objData.data
+//            cell.delegate = self
+//            cell.reloadData()
+            return cell
+        }
+        
+        return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let section = indexPath.section
+        var totalHeight : CGFloat = 0
+        var height: CGFloat = 0
+          
+        if section == 0
+        {
+            if Constants.isiPadDevice {
+                height = 220
+            }
+            else
+            {
+                if numberOfColumns == 3
+                {
+                    let itemHeight = CollectionViewSettings.getItemWidth(boundWidth: tableView.bounds.size.width)
+                    let totalRow = ceil(CGFloat(categoryArray.count) / CollectionViewSettings.column)
+                    let totalTopBottomOffSet = CollectionViewSettings.offset + CollectionViewSettings.offset
+                    let totalSpacing = CGFloat(totalRow - 1) * CollectionViewSettings.minLineSpacing
+                    if Constants.isiPhone5 {
+                        totalHeight = ((itemHeight * CGFloat(totalRow)) + totalTopBottomOffSet + totalSpacing + 80)
+                    } else {
+                        totalHeight = ((itemHeight * CGFloat(totalRow)) + totalTopBottomOffSet + totalSpacing + 60)
+                    }
+                    height =  totalHeight
+                }
+                else if numberOfColumns == 4
+                {
+                    let itemHeight = CollectionViewForuCell.getItemWidth(boundWidth: tableView.bounds.size.width)
+                    let totalRow = ceil(CGFloat(categoryArray.count) / CollectionViewForuCell.column)
+                    let totalTopBottomOffSet = CollectionViewForuCell.offset + CollectionViewForuCell.offset
+                    let totalSpacing = CGFloat(totalRow - 1) * CollectionViewForuCell.minLineSpacing
+                    if Constants.isiPhone5 {
+                        totalHeight = ((itemHeight * CGFloat(totalRow)) + totalTopBottomOffSet + totalSpacing + 170)
+                    } else {
+                        totalHeight = ((itemHeight * CGFloat(totalRow)) + totalTopBottomOffSet + totalSpacing + 140)
+                    }
+                    height =  totalHeight
+                }
+            }
+        }
+        else if section == 1
+        {
+            height = 270
+        }
+            
+        return height
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if tableView.isDragging {
+            cell.transform = CGAffineTransform.init(scaleX: 0.5, y: 0.5)
+            UIView.animate(withDuration: 0.3, animations: {
+                cell.transform = CGAffineTransform.identity
+            })
+        }
+    }
+    
+    
+//    private var finishedLoadingInitialTableCells = false
+//     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//
+//        var lastInitialDisplayableCell = false
+//
+//        //change flag as soon as last displayable cell is being loaded (which will mean table has initially loaded)
+////        if favorites.itemes.count > 0 && !finishedLoadingInitialTableCells {
+//            if let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows,
+//                let lastIndexPath = indexPathsForVisibleRows.last, lastIndexPath.row == indexPath.row {
+//                lastInitialDisplayableCell = true
+//            }
+////        }
+//
+//        if !finishedLoadingInitialTableCells {
+//
+//            if lastInitialDisplayableCell {
+//                finishedLoadingInitialTableCells = true
+//            }
+//
+//            //animates the cell as it is being displayed for the first time
+//            do {
+//                let startFromHeight = tableView.frame.height
+//                cell.layer.transform = CATransform3DMakeTranslation(0, startFromHeight, 0)
+//                let delay = Double(indexPath.row) * 0.2
+//
+//                UIView.animate(withDuration: 0.2, delay: delay, options: UIViewAnimationOptions.transitionFlipFromBottom, animations: {
+//                    do {
+//                        cell.layer.transform = CATransform3DIdentity
+//                    }
+//                }) { (success:Bool) in
+//
+//                }
+//            }
+//        }
+//    }
+
+    
+    
     //MARK:- IBActions
     @IBAction func menuBtnAction(_ button: UIButton)
     {
-        if button.tag == 1002
+        if button.tag == 1001
         {
-            
+            self.navigationController?.popToViewController(homeVC, animated: false)
         }
         else if button.tag == 1003
         {
@@ -471,7 +488,7 @@ class HomeController: UIViewController, UICollectionViewDelegate, UICollectionVi
             else
             {
                 let adPostVC = self.storyboard?.instantiateViewController(withIdentifier: "AadPostController") as! AadPostController
-                self.navigationController?.pushViewController(adPostVC, animated: true)
+                self.navigationController?.pushViewController(adPostVC, animated: false)
             }
         }
         else if button.tag == 1004
@@ -493,61 +510,10 @@ class HomeController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     
-    @IBAction func actionAddPost(_ sender: UIButton)
-    {
-        let notVerifyMsg = UserDefaults.standard.string(forKey: "not_Verified")
-        let can = UserDefaults.standard.bool(forKey: "can")
-        
-        if defaults.bool(forKey: "isLogin") == false
-        {
-            var msgLogin = ""
-            
-            if let msg = self.defaults.string(forKey: "notLogin") {
-                msgLogin = msg
-            }
-            
-            let alert = Constants.showBasicAlert(message: msgLogin)
-            self.presentVC(alert)
-            
-        }
-        else if can == false
-        {
-            var buttonOk = ""
-            var buttonCancel = ""
-            if let settingsInfo = defaults.object(forKey: "settings") {
-                let  settingObject = NSKeyedUnarchiver.unarchiveObject(with: settingsInfo as! Data) as! [String : Any]
-                let model = SettingsRoot(fromDictionary: settingObject)
-                
-                if let okTitle = model.data.internetDialog.okBtn {
-                    buttonOk = okTitle
-                }
-                if let cancelTitle = model.data.internetDialog.cancelBtn {
-                    buttonCancel = cancelTitle
-                }
-                
-                let alertController = UIAlertController(title: "Alert", message: notVerifyMsg, preferredStyle: .alert)
-                let okBtn = UIAlertAction(title: buttonOk, style: .default) { (ok) in
-                    self.appDelegate.moveToProfile()
-                }
-                let cancelBtn = UIAlertAction(title: buttonCancel, style: .cancel, handler: nil)
-                alertController.addAction(okBtn)
-                alertController.addAction(cancelBtn)
-                self.presentVC(alertController)
-                
-            }
-            
-        }
-        else
-        {
-            let adPostVC = self.storyboard?.instantiateViewController(withIdentifier: "AadPostController") as! AadPostController
-            self.navigationController?.pushViewController(adPostVC, animated: true)
-        }
-    }
-    
     //MARK:- API Call
     
     //get home data
-    func homeData() {
+    func adForest_homeData() {
         
         dataArray.removeAll()
         categoryArray.removeAll()
@@ -656,7 +622,14 @@ class HomeController: UIViewController, UICollectionViewDelegate, UICollectionVi
                         
                         print(successResponse.settings.ads.bannerId)
                         
-                        
+                        self.tableView.translatesAutoresizingMaskIntoConstraints = false
+                        if successResponse.settings.ads.position == "top" {
+                            self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 45).isActive = true
+                            SwiftyAd.shared.showBanner(from: self, at: .top)
+                        } else {
+                            self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 30).isActive = true
+                            SwiftyAd.shared.showBanner(from: self, at: .bottom)
+                        }
                     }
                     //ca-app-pub-6905547279452514/6461881125
                     if isShowInterstital {
@@ -695,7 +668,14 @@ class HomeController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 
                 //Search Section Data
                 self.searchSectionArray = [successResponse.data.searchSection]
-                self.fillCategoriesView()
+                
+                self.tableView.reloadData()
+                
+//                let scrollPoint = CGPoint(x: 0, y: self.tableView.contentSize.height)
+//                self.tableView.setContentOffset(scrollPoint, animated: true)
+                let scrollPoint = CGPoint(x: 0, y: self.tableView.contentSize.height + self.tableView.contentSize.height)
+                self.tableView.setContentOffset(scrollPoint, animated: true)
+                self.perform(#selector(self.nokri_showNavController1), with: nil, afterDelay: 0.5)
                 
             } else {
                 let alert = Constants.showBasicAlert(message: successResponse.message)
@@ -706,6 +686,13 @@ class HomeController: UIViewController, UICollectionViewDelegate, UICollectionVi
             let alert = Constants.showBasicAlert(message: error.message)
             self.presentVC(alert)
         }
+    }
+    
+    @objc func nokri_showNavController1(){
+        
+        let scrollPoint = CGPoint(x: 0, y: 0)
+        self.tableView.setContentOffset(scrollPoint, animated: true)
+        
     }
     
     @objc func showAd(){
@@ -738,66 +725,6 @@ class HomeController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     
-    //MARK:- CollectionView Delegate
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-       return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return dataArray.count
-        return 6
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell:  AddsCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddsCollectionCell", for: indexPath) as! AddsCollectionCell
-        
-        cell.layer.cornerRadius = 5
-        cell.layer.masksToBounds = true
-        
-//        let objData = dataArray[indexPath.row]
-        
-        cell.lblName.text = "Car"
-        cell.lblPrice.text = "$200"
-        
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
-//        let addDetailVC = self.storyboard?.instantiateViewController(withIdentifier: AddDetailController.className) as! AddDetailController
-//        addDetailVC.ad_id = dataArray[indexPath.row].adId
-//        self.navigationController?.pushViewController(addDetailVC, animated: true)
-    }
-    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        if Constants.isiPadDevice {
-//            let width = collectionView.bounds.width/3.0
-//            return CGSize(width: width, height: 220)
-//        }
-//        let width = collectionView.bounds.width/2.0
-//        return CGSize(width: width, height: 220)
-//    }
-    
-//    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-//        if collectionView.isDragging {
-//            cell.transform = CGAffineTransform.init(scaleX: 0.5, y: 0.5)
-//            UIView.animate(withDuration: 0.3, animations: {
-//                cell.transform = CGAffineTransform.identity
-//            })
-//        }
-//    }
-    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return UIEdgeInsets.zero
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-//        return 0
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        return 0
-//    }
-    
     //MARK:- Near By Search
     func adForest_nearBySearch(param: NSDictionary) {
         self.showLoader()
@@ -819,6 +746,21 @@ class HomeController: UIViewController, UICollectionViewDelegate, UICollectionVi
             let alert = Constants.showBasicAlert(message: error.message)
             self.presentVC(alert)
         }
+    }
+}
+
+extension UIViewController {
+    func setupNavigationBar(title: String) {
+        // back button without title
+        self.navigationController?.navigationBar.topItem?.title = ""
+        
+        //set titile
+        self.navigationItem.title = title
+        
+        let rightButton = UIBarButtonItem(image: UIImage(named: "home"), style: .plain, target: nil, action: nil)
+        
+        //show the Edit button item
+        self.navigationItem.rightBarButtonItem = rightButton
     }
 }
 

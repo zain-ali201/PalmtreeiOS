@@ -92,6 +92,45 @@ class MyAdsController: UIViewController, UICollectionViewDelegate, UICollectionV
         
     }
     
+    @IBAction func menuBtnAction(_ button: UIButton)
+    {
+        if button.tag == 1001
+        {
+            self.navigationController?.popToViewController(homeVC, animated: false)
+        }
+        else if button.tag == 1003
+        {
+            if defaults.bool(forKey: "isLogin") == false
+            {
+                let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+                let navController = UINavigationController(rootViewController: loginVC)
+                self.present(navController, animated:true, completion: nil)
+            }
+            else
+            {
+                let adPostVC = self.storyboard?.instantiateViewController(withIdentifier: "AadPostController") as! AadPostController
+                self.navigationController?.pushViewController(adPostVC, animated: false)
+            }
+        }
+        else if button.tag == 1004
+        {
+            
+        }
+        else if button.tag == 1005
+        {
+            if defaults.bool(forKey: "isLogin") == false
+            {
+                let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+                let navController = UINavigationController(rootViewController: loginVC)
+                self.present(navController, animated:true, completion: nil)
+            }
+            else
+            {
+                
+            }
+        }
+    }
+    
     //MARK:- Collection View Delegate Methods
     func numberOfSections(in collectionView: UICollectionView) -> Int {
        return 1

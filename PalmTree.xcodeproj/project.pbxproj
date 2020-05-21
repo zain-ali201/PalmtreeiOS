@@ -583,6 +583,7 @@
 		AB24F387247155AA005296A9 /* PrivacyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB24F386247155A8005296A9 /* PrivacyController.swift */; };
 		AB24F389247169F1005296A9 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB24F388247169F0005296A9 /* SettingsVC.swift */; };
 		AB364D34245EB30D00B558BE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB364D33245EB30D00B558BE /* GoogleService-Info.plist */; };
+		AB60F36D2473D27000FEB723 /* AddsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB60F36C2473D27000FEB723 /* AddsCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1178,6 +1179,7 @@
 		AB24F386247155A8005296A9 /* PrivacyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyController.swift; sourceTree = "<group>"; };
 		AB24F388247169F0005296A9 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		AB364D33245EB30D00B558BE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		AB60F36C2473D27000FEB723 /* AddsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddsCollectionViewCell.swift; sourceTree = "<group>"; };
 		ABB9CF6E246C1C08000AE15B /* sf-ui-display-medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "sf-ui-display-medium.ttf"; sourceTree = "<group>"; };
 		DCCFEF33A568B86FBFCB0E9A /* Pods_AdForestTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdForestTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1D8453734E27E2287858544 /* Pods-PalmTree.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmTree.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PalmTree/Pods-PalmTree.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1676,6 +1678,7 @@
 		1826F8382085D3F0002BF69A /* AddsCell */ = {
 			isa = PBXGroup;
 			children = (
+				AB60F36C2473D27000FEB723 /* AddsCollectionViewCell.swift */,
 				1826F8332085D205002BF69A /* AddsTableCell.swift */,
 				1826F8392085D40E002BF69A /* AddsCollectionCell.swift */,
 			);
@@ -3592,6 +3595,7 @@
 				185EAACE2099CC4F00E412DB /* AdPostLiveData.swift in Sources */,
 				18BBFADC20510FA90067662F /* SettingsAlertDialog.swift in Sources */,
 				184CAFA820B2827E008046C1 /* TermsConditionsRoot.swift in Sources */,
+				AB60F36D2473D27000FEB723 /* AddsCollectionViewCell.swift in Sources */,
 				1884DD6E2056823400059DEE /* EditProfileController.swift in Sources */,
 				18108E6D2092F9720020D440 /* AdPostImagesData.swift in Sources */,
 				182690F92087652900E2C966 /* CategoryTimer.swift in Sources */,
