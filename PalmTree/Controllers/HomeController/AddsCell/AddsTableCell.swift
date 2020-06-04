@@ -118,96 +118,54 @@ class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
         }
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataArray.count
+//        return dataArray.count
+        return 8
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell:  AddsCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddsCollectionCell", for: indexPath) as! AddsCollectionCell
-        let objData = dataArray[indexPath.row]
-        if latestHorizontalSingleAd == "horizental" {
-            for item in objData.adImages {
-                if let imgUrl = URL(string: item.thumb.encodeUrl()) {
-                    cell.imageView.sd_setShowActivityIndicatorView(true)
-                    cell.imageView.sd_setIndicatorStyle(.gray)
-                    cell.imageView.sd_setImage(with: imgUrl, completed: nil)
-                    
-                }
-            }
-            
-            if let name = objData.adTitle {
-                cell.lblTitle.text = name
-                let word = objData.adTimer.timer
-                if objData.adTimer.isShow {
-                    let first10 = String(word!.prefix(10))
-                    print(first10)
-                    cell.lblTimer.isHidden = true
-                    cell.lblBidTimer.isHidden = false
-                    
-                    if first10 != ""{
-                        let endDate = first10
-                        self.isEndTime = endDate
-                        Timer.every(1.second) {
-                            self.countDown(date: endDate)
-                            cell.lblBidTimer.text = "\(self.day) : \(self.hour) : \(self.minute) : \(self.second) "
-                            
-                        }
-                    }
-                }else{
-                    cell.lblBidTimer.isHidden = true
-                }
-                
-            }
-            if let location = objData.adLocation.address {
-                cell.lblLocs.text = location
-            }
-            if let price = objData.adPrice.price {
-                cell.lblPriceHori.text = price
-            }
-            cell.btnFullAction = { () in
-                self.delegate?.goToAddDetail(ad_id: objData.adId)
-            }
-            
-        }  else {
-            for item in objData.adImages {
-                if let imgUrl = URL(string: item.thumb.encodeUrl()) {
-                    cell.imgPicture.sd_setShowActivityIndicatorView(true)
-                    cell.imgPicture.sd_setIndicatorStyle(.gray)
-                    cell.imgPicture.sd_setImage(with: imgUrl, completed: nil)
-                }
-            }
-            
-            if let name = objData.adTitle {
-                cell.lblName.text = name
-                let word = objData.adTimer.timer
-                if objData.adTimer.isShow {
-                    let first10 = String(word!.prefix(10))
-                    print(first10)
-                    cell.lblTimer.isHidden = false
-                    
-                    if first10 != ""{
-                        let endDate = first10
-                        self.isEndTime = endDate
-                        Timer.every(1.second) {
-                            self.countDown(date: endDate)
-                            cell.lblTimer.text = "\(self.day) : \(self.hour) : \(self.minute) : \(self.second) "
-                            
-                        }
-                    }
-                }else{
-                    cell.lblTimer.isHidden = true
-                }
-            }
-            if let location = objData.adLocation.address {
-                cell.lblLocation.text = location
-            }
-            if let price = objData.adPrice.price {
-                cell.lblPrice.text = price
-            }
-            cell.btnFullAction = { () in
-                self.delegate?.goToAddDetail(ad_id: objData.adId)
-            }
-            
-        }
+//        let objData = dataArray[indexPath.row]
+//
+//        for item in objData.adImages {
+//            if let imgUrl = URL(string: item.thumb.encodeUrl()) {
+//                cell.imgPicture.sd_setShowActivityIndicatorView(true)
+//                cell.imgPicture.sd_setIndicatorStyle(.gray)
+//                cell.imgPicture.sd_setImage(with: imgUrl, completed: nil)
+//            }
+//        }
+//
+//        if let name = objData.adTitle {
+//            cell.lblName.text = name
+//            let word = objData.adTimer.timer
+//            if objData.adTimer.isShow {
+//                let first10 = String(word!.prefix(10))
+//                print(first10)
+//                cell.lblTimer.isHidden = false
+//
+//                if first10 != ""{
+//                    let endDate = first10
+//                    self.isEndTime = endDate
+//                    Timer.every(1.second) {
+//                        self.countDown(date: endDate)
+//                        cell.lblTimer.text = "\(self.day) : \(self.hour) : \(self.minute) : \(self.second) "
+//
+//                    }
+//                }
+//            }else{
+//                cell.lblTimer.isHidden = true
+//            }
+//        }
+//        if let location = objData.adLocation.address {
+//            cell.lblLocation.text = location
+//        }
+//        if let price = objData.adPrice.price {
+//            cell.lblPrice.text = price
+//        }
+//        cell.btnFullAction = { () in
+//            self.delegate?.goToAddDetail(ad_id: objData.adId)
+//        }
+        cell.lblName.text = "Cars"
+        cell.lblPrice.text = "$50"
         
         
         return cell
@@ -234,14 +192,16 @@ class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
         second = timeDifference.second!
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if latestVertical == "vertical" {
-            return CGSize(width:collectionView.frame.width/2 , height:210)
-        }else if latestHorizontalSingleAd == "horizental" {
-            return CGSize(width:collectionView.frame.width,height: 120)
-        }
-        else{
-            return CGSize(width: 170, height: 210)
-        }
+//        if latestVertical == "vertical" {
+//            return CGSize(width:collectionView.frame.width/2 , height:210)
+//        }else if latestHorizontalSingleAd == "horizental" {
+//            return CGSize(width:collectionView.frame.width,height: 120)
+//        }
+//        else{
+//            return CGSize(width: 170, height: 210)
+//        }
+        
+        return CGSize(width:collectionView.frame.width/2 , height:210)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets.zero

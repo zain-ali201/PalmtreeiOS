@@ -22,6 +22,7 @@ var currentVc: UIViewController!
 
 var homeVC: HomeController!
 let defaults = UserDefaults.standard
+let screenWidth = UIScreen.main.bounds.width
 
 class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable, AddDetailDelegate, CategoryDetailDelegate, UISearchBarDelegate, MessagingDelegate,UNUserNotificationCenterDelegate, NearBySearchDelegate, BlogDetailDelegate , LocationCategoryDelegate, SwiftyAdDelegate , GADInterstitialDelegate, UIGestureRecognizerDelegate {
     
@@ -312,19 +313,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        var value = 0
-        
-        if section == 0
-        {
-            value = 1
-        }
-        else
-        {
-            //value = dataArray.count
-            value = 4
-        }
-        
-        return value
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -334,13 +323,11 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         {
             let cell: CategoriesTableCell = tableView.dequeueReusableCell(withIdentifier: "CategoriesTableCell", for: indexPath) as! CategoriesTableCell
             let data = AddsHandler.sharedInstance.objHomeData
-            if let viewAllText = data?.catIconsColumnBtn.text {
-                cell.oltViewAll.setTitle(viewAllText, for: .normal)
-            }
-            cell.btnViewAll = { () in
-                let categoryDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "CategoryDetailController") as! CategoryDetailController
-                self.navigationController?.pushViewController(categoryDetailVC, animated: true)
-            }
+            
+//            cell.btnViewAll = { () in
+//                let categoryDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "CategoryDetailController") as! CategoryDetailController
+//                self.navigationController?.pushViewController(categoryDetailVC, animated: true)
+//            }
             cell.numberOfColums = self.numberOfColumns
             cell.categoryArray  = self.categoryArray
             cell.delegate = self
@@ -350,6 +337,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         else
         {
             let cell: AddsTableCell  = tableView.dequeueReusableCell(withIdentifier: "AddsTableCell", for: indexPath) as! AddsTableCell
+
 //            let objData = dataArray[indexPath.row]
 //            let data = AddsHandler.sharedInstance.objHomeData
 //
@@ -366,8 +354,8 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //                self.navigationController?.pushViewController(categoryVC, animated: true)
 //            }
 //            cell.dataArray = objData.data
-//            cell.delegate = self
-//            cell.reloadData()
+            cell.delegate = self
+            cell.reloadData()
             return cell
         }
         
@@ -381,8 +369,9 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
           
         if section == 0
         {
-            if Constants.isiPadDevice {
-                height = 220
+            if Constants.isiPadDevice
+            {
+                height = 150
             }
             else
             {
