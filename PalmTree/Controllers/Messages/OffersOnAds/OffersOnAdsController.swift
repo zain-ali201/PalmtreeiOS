@@ -50,7 +50,7 @@ class OffersOnAdsController: UIViewController, UITableViewDelegate, UITableViewD
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.adForest_getOffersData()
+        self.getOffersData()
         self.showLoader()
     }
     
@@ -61,7 +61,7 @@ class OffersOnAdsController: UIViewController, UITableViewDelegate, UITableViewD
     
     @objc func refreshTableView() {
         self.refreshControl.beginRefreshing()
-        self.adForest_getOffersData()
+        self.getOffersData()
     }
     
     //MARK:- table View Delegate Methods
@@ -123,13 +123,13 @@ class OffersOnAdsController: UIViewController, UITableViewDelegate, UITableViewD
             currentPage += 1
             let param: [String: Any] = ["page_number": currentPage]
             print(param)
-            self.adForest_moreOffersData(param: param as NSDictionary)
+            self.moreOffersData(param: param as NSDictionary)
             self.showLoader()
         }
     }
     
     //MARK:- API Call
-    func adForest_getOffersData() {
+    func getOffersData() {
         UserHandler.offerOnAds(success: { (successResponse) in
             self.stopAnimating()
             self.refreshControl.endRefreshing()
@@ -157,7 +157,7 @@ class OffersOnAdsController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     // Load More Data
-    func adForest_moreOffersData(param: NSDictionary) {
+    func moreOffersData(param: NSDictionary) {
         UserHandler.moreOfferAdsData(parameter: param, success: { (successResponse) in
             self.stopAnimating()
             self.refreshControl.endRefreshing()

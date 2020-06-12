@@ -64,6 +64,7 @@ class NetworkHandler {
                 if let userPassword = UserDefaults.standard.string(forKey: "password") {
                     password = userPassword
                 }
+                
                 let emailPass = "\(email):\(password)"
                 let encodedString = emailPass.data(using: String.Encoding.utf8)!
                 let base64String = encodedString.base64EncodedString(options: [])

@@ -54,7 +54,7 @@ class ChangePasswordController: UIViewController, UITextFieldDelegate, NVActivit
         super.viewDidLoad()
         self.hideKeyboard()
         self.googleAnalytics(controllerName: "Change Password Controller")
-        self.adForest_populateData()
+        self.populateData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,7 +70,7 @@ class ChangePasswordController: UIViewController, UITextFieldDelegate, NVActivit
         }
         else if textField == txtConfirmPassword {
             txtConfirmPassword.resignFirstResponder()
-            self.adForest_updatePass()
+            self.updatePass()
         }
         return true
     }
@@ -81,7 +81,7 @@ class ChangePasswordController: UIViewController, UITextFieldDelegate, NVActivit
         self.startAnimating(Constants.activitySize.size, message: Constants.loaderMessages.loadingMessage.rawValue,messageFont: UIFont.systemFont(ofSize: 14), type: NVActivityIndicatorType.ballClipRotatePulse)
     }
     
-    func adForest_populateData() {
+    func populateData() {
         if dataToShow != nil {
             if let oldPass = dataToShow?.extraText.changePass.oldPass {
                 self.txtOldPassword.placeholder = oldPass
@@ -117,10 +117,10 @@ class ChangePasswordController: UIViewController, UITextFieldDelegate, NVActivit
     }
     
     @IBAction func actionUpdate(_ sender: UIButton) {
-        self.adForest_updatePass()
+        self.updatePass()
     }
 
-    func adForest_updatePass() {
+    func updatePass() {
         guard let oldPassword = txtOldPassword.text  else {
             return
         }
@@ -156,13 +156,13 @@ class ChangePasswordController: UIViewController, UITextFieldDelegate, NVActivit
             ]
             print(param)
             self.passwordToSave = newPassword
-            self.adForest_changePassword(param: param as NSDictionary)
+            self.changePassword(param: param as NSDictionary)
         }
     }
 
     //MARK:- API Call
 
-    func adForest_changePassword(param: NSDictionary) {
+    func changePassword(param: NSDictionary) {
         self.showLoader()
         UserHandler.changePassword(parameter: param , success: { (successResponse) in
             self.stopAnimating()

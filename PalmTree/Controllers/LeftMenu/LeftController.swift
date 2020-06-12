@@ -161,7 +161,7 @@ class LeftController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.initializeOtherViews()
         }
         NotificationCenter.default.addObserver(forName: NSNotification.Name(Constants.NotificationName.updateUserProfile), object: nil, queue: nil) { (notification) in
-            self.adForest_populateData()
+            self.populateData()
         }
         self.langView()
         
@@ -169,7 +169,7 @@ class LeftController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.adForest_populateData()
+        self.populateData()
     }
     
     //MARK:- custom
@@ -177,7 +177,7 @@ class LeftController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.startAnimating(Constants.activitySize.size, message: Constants.loaderMessages.loadingMessage.rawValue,messageFont: UIFont.systemFont(ofSize: 14), type: NVActivityIndicatorType.ballClipRotatePulse)
     }
     
-    func adForest_populateData() {
+    func populateData() {
         if let mainColor = defaults.string(forKey: "mainColor") {
             self.containerViewImage.backgroundColor = Constants.hexStringToUIColor(hex: mainColor)
         }
@@ -509,7 +509,8 @@ class LeftController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     //MARK EmptyCart
-    func emptyCart(){
+    func emptyCart()
+    {
         self.showLoader()
         UserHandler.emptyCart(success: { (successResponse) in
             self.stopAnimating()
@@ -525,7 +526,8 @@ class LeftController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 self.appDelegate.moveToLogin()
                 self.stopAnimating()
             }
-            else{
+            else
+            {
                 Messaging.messaging().shouldEstablishDirectChannel = false
                 Messaging.messaging().unsubscribe(fromTopic: "global")
                 self.defaults.set(false, forKey: "isLogin")

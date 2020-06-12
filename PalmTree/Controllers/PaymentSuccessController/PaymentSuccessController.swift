@@ -43,7 +43,7 @@ class PaymentSuccessController: UIViewController , UIScrollViewDelegate, NVActiv
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.adForest_paymentSuccessData()
+        self.paymentSuccessData()
     }
     
     override func viewWillLayoutSubviews() {
@@ -56,7 +56,7 @@ class PaymentSuccessController: UIViewController , UIScrollViewDelegate, NVActiv
         self.startAnimating(Constants.activitySize.size, message: Constants.loaderMessages.loadingMessage.rawValue,messageFont: UIFont.systemFont(ofSize: 14), type: NVActivityIndicatorType.ballClipRotatePulse)
     }
     
-    func adForest_populateData() {
+    func populateData() {
         if dataArray.isEmpty {
         } else {
             for items in dataArray {
@@ -85,13 +85,13 @@ class PaymentSuccessController: UIViewController , UIScrollViewDelegate, NVActiv
     }
     
     //MARK:- API Call
-    func adForest_paymentSuccessData() {
+    func paymentSuccessData() {
         self.showLoader()
         UserHandler.paymentSuccess(success: { (successResponse) in
             self.stopAnimating()
             if successResponse.success {
                 self.dataArray = [successResponse.data]
-                self.adForest_populateData()
+                self.populateData()
             } else {
                 let alert = Constants.showBasicAlert(message: successResponse.message)
                 self.presentVC(alert)

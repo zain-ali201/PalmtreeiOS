@@ -49,7 +49,7 @@ class Stats: UIViewController, UITableViewDelegate, UITableViewDataSource, NVAct
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.adForest_populatedata()
+        self.populatedata()
     }
     
     //MARK: - Custom
@@ -57,7 +57,7 @@ class Stats: UIViewController, UITableViewDelegate, UITableViewDataSource, NVAct
         self.startAnimating(Constants.activitySize.size, message: Constants.loaderMessages.loadingMessage.rawValue,messageFont: UIFont.systemFont(ofSize: 14), type: NVActivityIndicatorType.ballClipRotatePulse)
     }
     
-     func adForest_populatedata() {
+     func populatedata() {
          self.dataArray = AddsHandler.sharedInstance.TopBiddersArray
         
         if dataArray.count == 0 {

@@ -87,7 +87,7 @@ class UserPublicProfile: UIViewController, UICollectionViewDelegate, UICollectio
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let param: [String: Any] = ["user_id": userID]
-        self.adForest_publicProfileData(parameter: param as NSDictionary)
+        self.publicProfileData(parameter: param as NSDictionary)
     }
     
     //MARK: - Custom
@@ -134,7 +134,7 @@ class UserPublicProfile: UIViewController, UICollectionViewDelegate, UICollectio
     }
     
     
-    func adForest_populateData() {
+    func populateData() {
         if UserHandler.sharedInstance.objPublicProfile != nil {
             let objData = UserHandler.sharedInstance.objPublicProfile
             
@@ -311,7 +311,7 @@ class UserPublicProfile: UIViewController, UICollectionViewDelegate, UICollectio
             currentPage = currentPage! + 1
             let param: [String: Any] = ["user_id": user_id ,"page_number": currentPage!]
             print(param)
-            self.adForest_loadMoreData(parameter: param as NSDictionary)
+            self.loadMoreData(parameter: param as NSDictionary)
         }
     }
     
@@ -425,7 +425,7 @@ class UserPublicProfile: UIViewController, UICollectionViewDelegate, UICollectio
        }
 
     //MARK:- Api Calls
-    func adForest_publicProfileData(parameter: NSDictionary) {
+    func publicProfileData(parameter: NSDictionary) {
         self.showLoader()
         UserHandler.userPublicProfile(params: parameter, success: { (successResponse) in
             self.stopAnimating()
@@ -434,7 +434,7 @@ class UserPublicProfile: UIViewController, UICollectionViewDelegate, UICollectio
                 self.dataArray = successResponse.data.ads
                 UserHandler.sharedInstance.objPublicProfile = successResponse.data
                 self.socialArray = successResponse.data.socialIcons
-                self.adForest_populateData()
+                self.populateData()
                 self.collectionViewAds.reloadData()
             }
             else {
@@ -448,7 +448,7 @@ class UserPublicProfile: UIViewController, UICollectionViewDelegate, UICollectio
         }
     }
     
-    func adForest_loadMoreData(parameter: NSDictionary) {
+    func loadMoreData(parameter: NSDictionary) {
         self.showLoader()
         UserHandler.userPublicProfile(params: parameter, success: { (successResponse) in
             self.stopAnimating()
@@ -456,7 +456,7 @@ class UserPublicProfile: UIViewController, UICollectionViewDelegate, UICollectio
                 print(successResponse.data)
                 self.dataArray.append(contentsOf: successResponse.data.ads )
                 UserHandler.sharedInstance.objPublicProfile = successResponse.data
-                self.adForest_populateData()
+                self.populateData()
                 self.collectionViewAds.reloadData()
             }
             else {
@@ -479,11 +479,11 @@ class UserPublicProfile: UIViewController, UICollectionViewDelegate, UICollectio
            if isSearch {
                let param: [String: Any] = ["nearby_latitude": lat, "nearby_longitude": long, "nearby_distance": searchDistance]
                print(param)
-               self.adForest_nearBySearch(param: param as NSDictionary)
+               self.nearBySearch(param: param as NSDictionary)
            } else {
                let param: [String: Any] = ["nearby_latitude": 0.0, "nearby_longitude": 0.0, "nearby_distance": searchDistance]
                print(param)
-               self.adForest_nearBySearch(param: param as NSDictionary)
+               self.nearBySearch(param: param as NSDictionary)
            }
        }
        
@@ -659,7 +659,7 @@ class UserPublicProfile: UIViewController, UICollectionViewDelegate, UICollectio
        
        
        //MARK:- Near By Search
-       func adForest_nearBySearch(param: NSDictionary) {
+       func nearBySearch(param: NSDictionary) {
            self.showLoader()
            AddsHandler.nearbyAddsSearch(params: param, success: { (successResponse) in
                self.stopAnimating()

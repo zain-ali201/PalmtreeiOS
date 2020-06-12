@@ -127,7 +127,7 @@ class PackagesCell: UITableViewCell,UITableViewDelegate,UITableViewDataSource {
     override func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .none
-        self.adForest_settingsData()
+        self.settingsData()
         buttonWithRtl()
         print(catNewArr)
     }
@@ -226,7 +226,7 @@ class PackagesCell: UITableViewCell,UITableViewDelegate,UITableViewDataSource {
         }
     }
     
-    func adForest_settingsData() {
+    func settingsData() {
         if let settingsInfo = defaults.object(forKey: "settings") {
             settingObject = NSKeyedUnarchiver.unarchiveObject(with: settingsInfo as! Data) as! [String : Any]
             

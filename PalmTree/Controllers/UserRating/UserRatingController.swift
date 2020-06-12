@@ -45,7 +45,7 @@ class UserRatingController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
         self.showBackButton()
         self.googleAnalytics(controllerName: "User Rating Controller")
-        self.adForest_userRatingData()
+        self.userRatingData()
     }
 
     //MARK: - Custom
@@ -169,7 +169,7 @@ class UserRatingController: UIViewController, UITableViewDelegate, UITableViewDa
 
     //MARK:- API Calls
     
-    func adForest_userRatingData() {
+    func userRatingData() {
         self.showLoader()
         UserHandler.userProfileRating(success: { (successResponse) in
             self.stopAnimating()

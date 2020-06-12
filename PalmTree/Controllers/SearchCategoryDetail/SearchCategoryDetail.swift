@@ -76,7 +76,7 @@ class SearchCategoryDetail: UIViewController, UITableViewDelegate, UITableViewDa
     //MARK:- view Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.adForest_populateData()
+        self.populateData()
         self.googleAnalytics(controllerName: "Search Category Detail")
         navigationButtons()
     }
@@ -91,7 +91,7 @@ class SearchCategoryDetail: UIViewController, UITableViewDelegate, UITableViewDa
         self.startAnimating(Constants.activitySize.size, message: Constants.loaderMessages.loadingMessage.rawValue,messageFont: UIFont.systemFont(ofSize: 14), type: NVActivityIndicatorType.ballClipRotatePulse)
     }
     
-    func adForest_populateData() {
+    func populateData() {
         if AddsHandler.sharedInstance.objSearchCategory != nil {
             let data = AddsHandler.sharedInstance.objSearchCategory
             if let title = data?.title {
@@ -154,11 +154,11 @@ class SearchCategoryDetail: UIViewController, UITableViewDelegate, UITableViewDa
              if isSearch {
                  let param: [String: Any] = ["nearby_latitude": lat, "nearby_longitude": long, "nearby_distance": searchDistance]
                  print(param)
-                 self.adForest_nearBySearch(param: param as NSDictionary)
+                 self.nearBySearch(param: param as NSDictionary)
              } else {
                  let param: [String: Any] = ["nearby_latitude": 0.0, "nearby_longitude": 0.0, "nearby_distance": searchDistance]
                  print(param)
-                 self.adForest_nearBySearch(param: param as NSDictionary)
+                 self.nearBySearch(param: param as NSDictionary)
              }
          }
          
@@ -334,7 +334,7 @@ class SearchCategoryDetail: UIViewController, UITableViewDelegate, UITableViewDa
          
          
          //MARK:- Near By Search
-         func adForest_nearBySearch(param: NSDictionary) {
+         func nearBySearch(param: NSDictionary) {
              self.showLoader()
              AddsHandler.nearbyAddsSearch(params: param, success: { (successResponse) in
                  self.stopAnimating()

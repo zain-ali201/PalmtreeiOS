@@ -73,7 +73,7 @@ class BlogDetailController: UIViewController, UITableViewDelegate, UITableViewDa
         self.googleAnalytics(controllerName: "Blog Detail Controller")
         let param: [String: Any] = ["post_id": post_id]
         print(param)
-        self.adForest_blogDetail(parameter: param as NSDictionary)
+        self.blogDetail(parameter: param as NSDictionary)
         if defaults.bool(forKey: "isGuest") {
             self.oltAdPost.isHidden = true
         }
@@ -323,7 +323,7 @@ class BlogDetailController: UIViewController, UITableViewDelegate, UITableViewDa
                             }
                             let param: [String: Any] = ["comment_id": "", "post_id": postID, "message": txtComment]
                             print(param)
-                            self.adForest_blogPostComment(param: param as NSDictionary)
+                            self.blogPostComment(param: param as NSDictionary)
                         }
                     }
                 }
@@ -444,7 +444,7 @@ class BlogDetailController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     //MARK:- API Call
     
-    func adForest_blogDetail(parameter: NSDictionary) {
+    func blogDetail(parameter: NSDictionary) {
         self.showLoader()
         UserHandler.blogDetail(parameter: parameter, success: { (successResponse) in
             self.stopAnimating()
@@ -471,7 +471,7 @@ class BlogDetailController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     // blog post comment
-    func adForest_blogPostComment(param: NSDictionary) {
+    func blogPostComment(param: NSDictionary) {
         self.showLoader()
         UserHandler.blogPostComment(parameter: param, success: { (successResponse) in
             self.stopAnimating()
@@ -479,7 +479,7 @@ class BlogDetailController: UIViewController, UITableViewDelegate, UITableViewDa
                 let alert = AlertView.prepare(title: "", message: successResponse.message, okAction: {
                     let param: [String: Any] = ["post_id": self.post_id]
                     print(param)
-                    self.adForest_blogDetail(parameter: param as NSDictionary)
+                    self.blogDetail(parameter: param as NSDictionary)
                 })
                 self.presentVC(alert)
             } else {
@@ -501,11 +501,11 @@ class BlogDetailController: UIViewController, UITableViewDelegate, UITableViewDa
              if isSearch {
                  let param: [String: Any] = ["nearby_latitude": lat, "nearby_longitude": long, "nearby_distance": searchDistance]
                  print(param)
-                 self.adForest_nearBySearch(param: param as NSDictionary)
+                 self.nearBySearch(param: param as NSDictionary)
              } else {
                  let param: [String: Any] = ["nearby_latitude": 0.0, "nearby_longitude": 0.0, "nearby_distance": searchDistance]
                  print(param)
-                 self.adForest_nearBySearch(param: param as NSDictionary)
+                 self.nearBySearch(param: param as NSDictionary)
              }
          }
          
@@ -681,7 +681,7 @@ class BlogDetailController: UIViewController, UITableViewDelegate, UITableViewDa
          
          
          //MARK:- Near By Search
-         func adForest_nearBySearch(param: NSDictionary) {
+         func nearBySearch(param: NSDictionary) {
              self.showLoader()
              AddsHandler.nearbyAddsSearch(params: param, success: { (successResponse) in
                  self.stopAnimating()

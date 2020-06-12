@@ -66,6 +66,12 @@ extension UIView {
     }
 }
 
+extension UIImageView {
+    func cornerRadius(radius:CGFloat) {
+        layer.cornerRadius = radius
+    }
+}
+
 extension UIView {
     func shadow() {
         backgroundColor = UIColor.white

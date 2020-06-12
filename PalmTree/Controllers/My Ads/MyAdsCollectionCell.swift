@@ -83,15 +83,14 @@ class MyAdsCollectionCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.adForest_settingsData()
+        self.settingsData()
     }
     
     
     //MARK:- Custom
     
-    func selectCategory() {
-    
-        
+    func selectCategory()
+    {
         addTypeDropDown.anchorView = buttonAddType
         addTypeDropDown.dataSource = dropDownDataArray
         
@@ -110,7 +109,7 @@ class MyAdsCollectionCell: UICollectionViewCell {
     }
     
     //MARK:- Custom
-    func adForest_settingsData() {
+    func settingsData() {
         if let settingsInfo = defaults.object(forKey: "settings") {
             settingObject = NSKeyedUnarchiver.unarchiveObject(with: settingsInfo as! Data) as! [String : Any]
             let model = SettingsRoot(fromDictionary: settingObject)
@@ -128,7 +127,6 @@ class MyAdsCollectionCell: UICollectionViewCell {
             }
         }
     }
-    
     
     //MARK:- IBActions
     

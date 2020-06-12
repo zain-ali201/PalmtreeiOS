@@ -33,13 +33,13 @@ class BlockedUserChatViewController: UIViewController,NVActivityIndicatorViewabl
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-         //adForest_getBlockedUsersChatList()
+         //getBlockedUsersChatList()
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        adForest_getBlockedUsersChatList()
+        getBlockedUsersChatList()
     }
     
     //MARK: - Custom
@@ -74,7 +74,7 @@ class BlockedUserChatViewController: UIViewController,NVActivityIndicatorViewabl
         cell.lblLocation.text = objData.block_time
         cell.oltUnBlock.tag = Int(objData.recvId)!
         
-        cell.oltUnBlock.addTarget(self, action:  #selector(BlockedUserChatViewController.adforest_unblock), for: .touchUpInside)
+        cell.oltUnBlock.addTarget(self, action:  #selector(BlockedUserChatViewController.unblock), for: .touchUpInside)
         
         
         return cell
@@ -85,20 +85,20 @@ class BlockedUserChatViewController: UIViewController,NVActivityIndicatorViewabl
     }
     
     
-    @objc func adforest_unblock(_ sender: UIButton){
+    @objc func unblock(_ sender: UIButton){
         
         let parameter : [String: Any] = ["sender_id":senderId , "recv_id": sender.tag]
         print(parameter)
-        adForest_UnblockUserChat(parameters: parameter as NSDictionary)
+        UnblockUserChat(parameters: parameter as NSDictionary)
 
     }
     
-    func adForest_UnblockUserChat(parameters: NSDictionary) {
+    func UnblockUserChat(parameters: NSDictionary) {
         self.showLoader()
         UserHandler.UnblockUserChat(parameter: parameters , success: { (successResponse) in
             self.stopAnimating()
             if successResponse.success {
-                //self.adForest_getBlockedUsersChatList()
+                //self.getBlockedUsersChatList()
                 let alert = Constants.showBasicAlert(message: successResponse.message)
                 self.presentVC(alert)
             } else {
@@ -111,7 +111,7 @@ class BlockedUserChatViewController: UIViewController,NVActivityIndicatorViewabl
         }
     }
     
-    func adForest_getBlockedUsersChatList() {
+    func getBlockedUsersChatList() {
         self.showLoader()
         UserHandler.blockedUsersChatList(success: { (successResponse) in
             self.stopAnimating()

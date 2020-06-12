@@ -67,7 +67,7 @@ class PagesController: UIViewController, NVActivityIndicatorViewable, UIWebViewD
         if type == "simple" {
             let param:[String: Any] = ["page_id": page_id]
             print(param)
-            self.adForest_pagesData(param: param as NSDictionary)
+            self.pagesData(param: param as NSDictionary)
         } else if type == "simple" || type != "simple" {
            // guard let userEmail = UserDefaults.standard.string(forKey: "email") else {return}
             //guard let userPassword = UserDefaults.standard.string(forKey: "password") else {return}
@@ -109,7 +109,7 @@ class PagesController: UIViewController, NVActivityIndicatorViewable, UIWebViewD
     }
     
     //MARK:- API Call
-    func adForest_pagesData(param: NSDictionary) {
+    func pagesData(param: NSDictionary) {
         self.showLoader()
         UserHandler.termsConditions(parameter: param, success: { (successResponse) in
             self.stopAnimating()
@@ -142,11 +142,11 @@ class PagesController: UIViewController, NVActivityIndicatorViewable, UIWebViewD
                   if isSearch {
                       let param: [String: Any] = ["nearby_latitude": lat, "nearby_longitude": long, "nearby_distance": searchDistance]
                       print(param)
-                      self.adForest_nearBySearch(param: param as NSDictionary)
+                      self.nearBySearch(param: param as NSDictionary)
                   } else {
                       let param: [String: Any] = ["nearby_latitude": 0.0, "nearby_longitude": 0.0, "nearby_distance": searchDistance]
                       print(param)
-                      self.adForest_nearBySearch(param: param as NSDictionary)
+                      self.nearBySearch(param: param as NSDictionary)
                   }
               }
               
@@ -322,7 +322,7 @@ class PagesController: UIViewController, NVActivityIndicatorViewable, UIWebViewD
               
               
               //MARK:- Near By Search
-              func adForest_nearBySearch(param: NSDictionary) {
+              func nearBySearch(param: NSDictionary) {
                   self.showLoader()
                   AddsHandler.nearbyAddsSearch(params: param, success: { (successResponse) in
                       self.stopAnimating()

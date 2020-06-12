@@ -23,7 +23,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.170168176816-cni27t9d6mkg9mmidp62hhm0urm4vlfn</string>
+				<string>com.googleusercontent.apps.815594864442-cuah88e976jn9rvaqt736l96d07rpdmr</string>
 			</array>
 		</dict>
 		<dict>
@@ -31,14 +31,14 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb182768595667719</string>
+				<string>fb313265116309170</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAppID</key>
-	<string>182768595667719</string>
+	<string>313265116309170</string>
 	<key>FacebookDisplayName</key>
 	<string>Palmtree</string>
 	<key>GADApplicationIdentifier</key>
@@ -54,6 +54,7 @@
 		<string>linkedin</string>
 		<string>linkedin-sdk2</string>
 		<string>linkedin-sdk</string>
+		<string>whatsapp</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -81,6 +82,8 @@
 		<string>sf-ui-display-regular.ttf</string>
 		<string>sf-ui-display-light.ttf</string>
 		<string>sf-ui-display-medium.ttf</string>
+		<string>HarmoniaSansProCyr-SemiBold.ttf</string>
+		<string>sf-ui-display-ultralight.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

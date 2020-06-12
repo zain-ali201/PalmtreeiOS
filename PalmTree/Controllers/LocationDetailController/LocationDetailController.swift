@@ -54,7 +54,7 @@ class LocationDetailController: UIViewController, UICollectionViewDelegate, UICo
         self.showBackButton()
         let param: [String: Any] = ["term_name":"ad_country", "term_id": "", "page_number":1]
         print(param)
-        self.adForest_locationDetails(parameter: param as NSDictionary)
+        self.locationDetails(parameter: param as NSDictionary)
         navigationButtons()
     }
     
@@ -115,7 +115,7 @@ class LocationDetailController: UIViewController, UICollectionViewDelegate, UICo
         if objData.hasChildren {
             let param: [String: Any] = ["term_name":"ad_country", "term_id": objData.termId, "page_number":1]
             print(param)
-            self.adForest_locationDetails(parameter: param as NSDictionary)
+            self.locationDetails(parameter: param as NSDictionary)
         } else {
             let categoryVC = self.storyboard?.instantiateViewController(withIdentifier: "CategoryController") as! CategoryController
             categoryVC.categoryID = objData.termId
@@ -157,13 +157,13 @@ class LocationDetailController: UIViewController, UICollectionViewDelegate, UICo
             currentPage = currentPage + 1
             let param: [String: Any] = ["term_name":"ad_country", "term_id": "", "page_number": currentPage]
             print(param)
-            self.adForest_loadMoreData(parameter: param as NSDictionary)
+            self.loadMoreData(parameter: param as NSDictionary)
         }
     }
     
     //MARK:- API Calls
     
-    func adForest_locationDetails(parameter: NSDictionary) {
+    func locationDetails(parameter: NSDictionary) {
         self.showLoader()
         AddsHandler.locationDetails(parameter: parameter, success: { (successResponse) in
             self.stopAnimating()
@@ -185,7 +185,7 @@ class LocationDetailController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     //LoadMore Data
-    func adForest_loadMoreData(parameter: NSDictionary) {
+    func loadMoreData(parameter: NSDictionary) {
         self.showLoader()
         AddsHandler.locationDetails(parameter: parameter, success: { (successResponse) in
             self.stopAnimating()
@@ -213,11 +213,11 @@ class LocationDetailController: UIViewController, UICollectionViewDelegate, UICo
           if isSearch {
               let param: [String: Any] = ["nearby_latitude": lat, "nearby_longitude": long, "nearby_distance": searchDistance]
               print(param)
-              self.adForest_nearBySearch(param: param as NSDictionary)
+              self.nearBySearch(param: param as NSDictionary)
           } else {
               let param: [String: Any] = ["nearby_latitude": 0.0, "nearby_longitude": 0.0, "nearby_distance": searchDistance]
               print(param)
-              self.adForest_nearBySearch(param: param as NSDictionary)
+              self.nearBySearch(param: param as NSDictionary)
           }
       }
       
@@ -393,7 +393,7 @@ class LocationDetailController: UIViewController, UICollectionViewDelegate, UICo
     
     
     //MARK:- Near By Search
-       func adForest_nearBySearch(param: NSDictionary) {
+       func nearBySearch(param: NSDictionary) {
            self.showLoader()
            AddsHandler.nearbyAddsSearch(params: param, success: { (successResponse) in
                self.stopAnimating()

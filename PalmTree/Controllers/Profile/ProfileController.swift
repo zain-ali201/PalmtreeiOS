@@ -64,7 +64,7 @@ class ProfileController: UIViewController , UITableViewDelegate, UITableViewData
         self.googleAnalytics(controllerName: "Profile Controller")
         self.adMob()
         NotificationCenter.default.addObserver(forName: NSNotification.Name(Constants.NotificationName.updateUserProfile), object: nil, queue: nil) { (notification) in
-            self.adForest_profileDetails()
+            self.profileDetails()
         }
         if defaults.bool(forKey: "isLogin") == false {
             self.oltAdPost.isHidden = true
@@ -78,12 +78,12 @@ class ProfileController: UIViewController , UITableViewDelegate, UITableViewData
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.addLeftBarButtonWithImage()
-        self.adForest_profileDetails()
+        self.profileDetails()
     }
     
 //    override func viewWillAppear(_ animated: Bool) {
 //        super.viewWillAppear(true)
-//         self.adForest_profileDetails()
+//         self.profileDetails()
 //    }
     
     
@@ -318,7 +318,7 @@ class ProfileController: UIViewController , UITableViewDelegate, UITableViewData
                     cell.clickNumberVerified = { () in
                         let alert = UIAlertController(title: detailsData?.extraText.sendSmsDialog.title, message: detailsData?.extraText.sendSmsDialog.text, preferredStyle: .alert)
                         let okAction = UIAlertAction(title: detailsData?.extraText.sendSmsDialog.btnSend, style: .default, handler: { (okAcion) in
-                            self.adForest_phoneNumberVerify()
+                            self.phoneNumberVerify()
                         })
                         let cancelAction = UIAlertAction(title: detailsData?.extraText.sendSmsDialog.btnCancel, style: .default, handler: nil)
                         alert.addAction(cancelAction)
@@ -568,7 +568,7 @@ class ProfileController: UIViewController , UITableViewDelegate, UITableViewData
     //MARK:- API Call
     
     // Profile Details
-    func adForest_profileDetails() {
+    func profileDetails() {
         self.showLoader()
         UserHandler.profileGet(success: { (successResponse) in
             self.stopAnimating()
@@ -590,7 +590,7 @@ class ProfileController: UIViewController , UITableViewDelegate, UITableViewData
     }
     
     //Verify Phone Number
-    func adForest_phoneNumberVerify() {
+    func phoneNumberVerify() {
         self.showLoader()
         UserHandler.verifyPhone(success: { (successResponse) in
             self.stopAnimating()
@@ -619,11 +619,11 @@ class ProfileController: UIViewController , UITableViewDelegate, UITableViewData
         if isSearch {
             let param: [String: Any] = ["nearby_latitude": lat, "nearby_longitude": long, "nearby_distance": searchDistance]
             print(param)
-            self.adForest_nearBySearch(param: param as NSDictionary)
+            self.nearBySearch(param: param as NSDictionary)
         } else {
             let param: [String: Any] = ["nearby_latitude": 0.0, "nearby_longitude": 0.0, "nearby_distance": searchDistance]
             print(param)
-            self.adForest_nearBySearch(param: param as NSDictionary)
+            self.nearBySearch(param: param as NSDictionary)
         }
     }
     
@@ -799,7 +799,7 @@ class ProfileController: UIViewController , UITableViewDelegate, UITableViewData
     
     
     //MARK:- Near By Search
-    func adForest_nearBySearch(param: NSDictionary) {
+    func nearBySearch(param: NSDictionary) {
         self.showLoader()
         AddsHandler.nearbyAddsSearch(params: param, success: { (successResponse) in
             self.stopAnimating()

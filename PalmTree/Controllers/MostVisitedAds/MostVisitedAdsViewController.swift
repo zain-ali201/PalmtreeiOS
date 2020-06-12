@@ -113,28 +113,28 @@ class MostVisitedAdsViewController: UIViewController, UICollectionViewDelegate, 
         if defaults.bool(forKey: "isGuest") {
             self.oltAdPost.isHidden = true
         }
-        self.adForest_settingsData()
-        //self.adForest_getAddsData()
+        self.settingsData()
+        //self.getAddsData()
         navigationButtons()
     }
     
     override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(true)
-     self.adForest_getAddsData()
+     self.getAddsData()
         }
 
         override func viewDidAppear(_ animated: Bool) {
             super.viewDidAppear(animated)
     //        if AddsHandler.sharedInstance.objMyAds == nil{
-    //            self.adForest_settingsData()
-    //            self.adForest_getAddsData()
+    //            self.settingsData()
+    //            self.getAddsData()
     //        }
         }
         //MARK: - Custom
 
         
         @objc func refreshTableView() {
-           adForest_getAddsData()
+           getAddsData()
         }
         
         
@@ -142,7 +142,7 @@ class MostVisitedAdsViewController: UIViewController, UICollectionViewDelegate, 
             self.startAnimating(Constants.activitySize.size, message: Constants.loaderMessages.loadingMessage.rawValue,messageFont: UIFont.systemFont(ofSize: 14), type: NVActivityIndicatorType.ballClipRotatePulse)
         }
         
-        func adForest_populateData() {
+        func populateData() {
             if AddsHandler.sharedInstance.objMyAds != nil {
             let objData = AddsHandler.sharedInstance.objMyAds
                 
@@ -196,7 +196,7 @@ class MostVisitedAdsViewController: UIViewController, UICollectionViewDelegate, 
             }
         }
         
-        func adForest_settingsData() {
+        func settingsData() {
             if let settingsInfo = defaults.object(forKey: "settings") {
                 settingObject = NSKeyedUnarchiver.unarchiveObject(with: settingsInfo as! Data) as! [String : Any]
                 let model = SettingsRoot(fromDictionary: settingObject)
@@ -350,7 +350,7 @@ class MostVisitedAdsViewController: UIViewController, UICollectionViewDelegate, 
 //                let okAction = UIAlertAction(title: self.popUpOkButton, style: .default, handler: { (okAction) in
 //                    let parameter : [String: Any] = ["ad_id": objData.adId]
 //                    print(parameter)
-//                    self.adForest_deleteAd(param: parameter as NSDictionary)
+//                    self.deleteAd(param: parameter as NSDictionary)
 //                })
 //
 //                let cancelAction = UIAlertAction(title: self.popUpCancelButton, style: .default, handler: nil)
@@ -366,7 +366,7 @@ class MostVisitedAdsViewController: UIViewController, UICollectionViewDelegate, 
             self.delegateStatusMsg = status
             print("Status \(status)")
             let parameter : [String: Any] = ["ad_id": self.ad_id, "ad_status": self.delegateStatusMsg.lowercased()]
-            self.adForest_changeAddStatus(param: parameter as NSDictionary)
+            self.changeAddStatus(param: parameter as NSDictionary)
         }
        
         func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -386,7 +386,7 @@ class MostVisitedAdsViewController: UIViewController, UICollectionViewDelegate, 
                 currentPage = currentPage + 1
                 let param: [String: Any] = ["page_number": currentPage]
                 print(param)
-                self.adForest_loadMoreData(param: param as NSDictionary)
+                self.loadMoreData(param: param as NSDictionary)
             }
         }
         
@@ -454,7 +454,7 @@ class MostVisitedAdsViewController: UIViewController, UICollectionViewDelegate, 
         
         //MARK:- API Calls
         //Ads Data
-        func adForest_getAddsData() {
+        func getAddsData() {
 
             self.showLoader()
             AddsHandler.getmyMostViewedAds(success: { (successResponse) in
@@ -467,7 +467,7 @@ class MostVisitedAdsViewController: UIViewController, UICollectionViewDelegate, 
                     
                     AddsHandler.sharedInstance.objMyAds = successResponse.data
                     self.dataArray = successResponse.data.ads
-                    self.adForest_populateData()
+                    self.populateData()
                     self.collectionView.reloadData()
                 } else {
                     let alert = Constants.showBasicAlert(message: successResponse.message)
@@ -480,7 +480,7 @@ class MostVisitedAdsViewController: UIViewController, UICollectionViewDelegate, 
             }
         }
         
-        func adForest_loadMoreData(param: NSDictionary) {
+        func loadMoreData(param: NSDictionary) {
             self.showLoader()
             AddsHandler.getmyMoreMostViewedAds(param: param, success: { (successResponse) in
                 self.stopAnimating()
@@ -488,7 +488,7 @@ class MostVisitedAdsViewController: UIViewController, UICollectionViewDelegate, 
                 if successResponse.success {
                     AddsHandler.sharedInstance.objMyAds = successResponse.data
                     self.dataArray.append(contentsOf: successResponse.data.ads)
-                    self.adForest_populateData()
+                    self.populateData()
                     self.collectionView.reloadData()
                 }
                 else {
@@ -503,13 +503,13 @@ class MostVisitedAdsViewController: UIViewController, UICollectionViewDelegate, 
         }
         
         //delete add
-        func adForest_deleteAd(param: NSDictionary) {
+        func deleteAd(param: NSDictionary) {
             self.showLoader()
             AddsHandler.deleteAdd(param: param, success: { (successResponse) in
                 self.stopAnimating()
                 if successResponse.success {
                     let alert = AlertView.prepare(title: "", message: successResponse.message, okAction: {
-                        self.adForest_getAddsData()
+                        self.getAddsData()
                         self.collectionView.reloadData()
                     })
                     self.presentVC(alert)
@@ -525,12 +525,12 @@ class MostVisitedAdsViewController: UIViewController, UICollectionViewDelegate, 
         }
         
         //change add status
-        func adForest_changeAddStatus(param: NSDictionary) {
+        func changeAddStatus(param: NSDictionary) {
             self.showLoader()
             AddsHandler.changeAddStatus(parameter: param, success: { (successResponse) in
                 self.stopAnimating()
                 if successResponse.success {
-                    self.adForest_getAddsData()
+                    self.getAddsData()
                     self.collectionView.reloadData()
                 }
                 else {
@@ -552,11 +552,11 @@ class MostVisitedAdsViewController: UIViewController, UICollectionViewDelegate, 
             if isSearch {
                 let param: [String: Any] = ["nearby_latitude": lat, "nearby_longitude": long, "nearby_distance": searchDistance]
                 print(param)
-                self.adForest_nearBySearch(param: param as NSDictionary)
+                self.nearBySearch(param: param as NSDictionary)
             } else {
                 let param: [String: Any] = ["nearby_latitude": 0.0, "nearby_longitude": 0.0, "nearby_distance": searchDistance]
                 print(param)
-                self.adForest_nearBySearch(param: param as NSDictionary)
+                self.nearBySearch(param: param as NSDictionary)
             }
         }
         
@@ -732,7 +732,7 @@ class MostVisitedAdsViewController: UIViewController, UICollectionViewDelegate, 
         
         
         //MARK:- Near By Search
-        func adForest_nearBySearch(param: NSDictionary) {
+        func nearBySearch(param: NSDictionary) {
             self.showLoader()
             AddsHandler.nearbyAddsSearch(params: param, success: { (successResponse) in
                 self.stopAnimating()

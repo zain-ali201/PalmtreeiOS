@@ -105,27 +105,27 @@ class InactiveAdsController: UIViewController, UIScrollViewDelegate, UICollectio
     override func viewDidLoad() {
         super.viewDidLoad()
         self.adMob()
-        self.adForest_inactiveAdsData()
+        self.inactiveAdsData()
         self.addLeftBarButtonWithImage()
         self.googleAnalytics(controllerName: "Inactive Ads Controller")
         if defaults.bool(forKey: "isGuest") {
             self.oltAdPost.isHidden = true
         }
-       // self.adForest_inactiveAdsData()
+       // self.inactiveAdsData()
         navigationButtons()
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-         self.adForest_inactiveAdsData()
+         self.inactiveAdsData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
    
 //        if AddsHandler.sharedInstance.objInactiveAds == nil{
-//             self.adForest_inactiveAdsData()
+//             self.inactiveAdsData()
 //        }
       
     }
@@ -133,14 +133,14 @@ class InactiveAdsController: UIViewController, UIScrollViewDelegate, UICollectio
     //MARK: - Custom
     
     @objc func refreshTableView() {
-        adForest_inactiveAdsData()
+        inactiveAdsData()
     }
     
     func showLoader() {
         self.startAnimating(Constants.activitySize.size, message: Constants.loaderMessages.loadingMessage.rawValue,messageFont: UIFont.systemFont(ofSize: 14), type: NVActivityIndicatorType.ballClipRotatePulse)
     }
     
-    func adForest_populateData() {
+    func populateData() {
         if AddsHandler.sharedInstance.objInactiveAds != nil {
             let objData = AddsHandler.sharedInstance.objInactiveAds
             
@@ -299,7 +299,7 @@ class InactiveAdsController: UIViewController, UIScrollViewDelegate, UICollectio
         if indexPath.row == dataArray.count - 1 && currentPage < maximumPage {
             currentPage = currentPage + 1
             let param: [String: Any] = ["page_number": currentPage]
-            self.adForest_loadMoreData(param: param as NSDictionary)
+            self.loadMoreData(param: param as NSDictionary)
         }
     }
     
@@ -368,7 +368,7 @@ class InactiveAdsController: UIViewController, UIScrollViewDelegate, UICollectio
     //MARK:- API Call
     
     //Inactive Ads Data
-    func adForest_inactiveAdsData() {
+    func inactiveAdsData() {
         self.showLoader()
         AddsHandler.inactiveAds(success: { (successResponse) in
             self.stopAnimating()
@@ -379,7 +379,7 @@ class InactiveAdsController: UIViewController, UIScrollViewDelegate, UICollectio
                 self.maximumPage = successResponse.data.pagination.maxNumPages
                 AddsHandler.sharedInstance.objInactiveAds = successResponse.data
                 self.dataArray = successResponse.data.ads
-                self.adForest_populateData()
+                self.populateData()
                 self.collectionView.reloadData()
             } else {
                 let alert = Constants.showBasicAlert(message: successResponse.message)
@@ -392,7 +392,7 @@ class InactiveAdsController: UIViewController, UIScrollViewDelegate, UICollectio
         }
     }
     
-    func adForest_loadMoreData(param: NSDictionary) {
+    func loadMoreData(param: NSDictionary) {
         self.showLoader()
         AddsHandler.moreInactiveAdsdata(param: param, success: { (successResponse) in
             self.stopAnimating()
@@ -400,7 +400,7 @@ class InactiveAdsController: UIViewController, UIScrollViewDelegate, UICollectio
             if successResponse.success {
                 AddsHandler.sharedInstance.objInactiveAds = successResponse.data
                 self.dataArray.append(contentsOf: successResponse.data.ads)
-                self.adForest_populateData()
+                self.populateData()
                 self.collectionView.reloadData()
             }
             else {
@@ -422,11 +422,11 @@ class InactiveAdsController: UIViewController, UIScrollViewDelegate, UICollectio
         if isSearch {
             let param: [String: Any] = ["nearby_latitude": lat, "nearby_longitude": long, "nearby_distance": searchDistance]
             print(param)
-            self.adForest_nearBySearch(param: param as NSDictionary)
+            self.nearBySearch(param: param as NSDictionary)
         } else {
             let param: [String: Any] = ["nearby_latitude": 0.0, "nearby_longitude": 0.0, "nearby_distance": searchDistance]
             print(param)
-            self.adForest_nearBySearch(param: param as NSDictionary)
+            self.nearBySearch(param: param as NSDictionary)
         }
     }
     
@@ -602,7 +602,7 @@ class InactiveAdsController: UIViewController, UIScrollViewDelegate, UICollectio
     
     
     //MARK:- Near By Search
-    func adForest_nearBySearch(param: NSDictionary) {
+    func nearBySearch(param: NSDictionary) {
         self.showLoader()
         AddsHandler.nearbyAddsSearch(params: param, success: { (successResponse) in
             self.stopAnimating()

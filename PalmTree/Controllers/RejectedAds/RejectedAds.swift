@@ -73,7 +73,7 @@ class RejectedAds: UIViewController, NVActivityIndicatorViewable,UISearchBarDele
  
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        adforest_rejectedAds()
+        rejectedAds()
     }
     
     //MARK: - Custom
@@ -177,7 +177,7 @@ class RejectedAds: UIViewController, NVActivityIndicatorViewable,UISearchBarDele
     }
     
     //MARK:- API Calls
-    func adforest_rejectedAds() {
+    func rejectedAds() {
         showLoader()
         AddsHandler.rejectedAds(success: {[unowned self] (successResponse) in
             self.stopAnimating()
@@ -206,7 +206,7 @@ class RejectedAds: UIViewController, NVActivityIndicatorViewable,UISearchBarDele
         }
     }
     
-    func adforest_moreAds(parameter: [String:Any]) {
+    func moreAds(parameter: [String:Any]) {
         showLoader()
         AddsHandler.moreRejectedAds(params: parameter, success: {[unowned self] (successResponse) in
             self.stopAnimating()
@@ -279,7 +279,7 @@ extension RejectedAds: UICollectionViewDelegate, UICollectionViewDataSource, UIC
         if indexPath.row == dataArray.count - 1 && currentPage < maximumPage {
             currentPage = currentPage + 1
             let param: [String: Any] = ["page_number": currentPage]
-            adforest_moreAds(parameter: param)
+            moreAds(parameter: param)
         }
     }
     
@@ -313,11 +313,11 @@ extension RejectedAds: UICollectionViewDelegate, UICollectionViewDataSource, UIC
         if isSearch {
             let param: [String: Any] = ["nearby_latitude": lat, "nearby_longitude": long, "nearby_distance": searchDistance]
             print(param)
-            self.adForest_nearBySearch(param: param as NSDictionary)
+            self.nearBySearch(param: param as NSDictionary)
         } else {
             let param: [String: Any] = ["nearby_latitude": 0.0, "nearby_longitude": 0.0, "nearby_distance": searchDistance]
             print(param)
-            self.adForest_nearBySearch(param: param as NSDictionary)
+            self.nearBySearch(param: param as NSDictionary)
         }
     }
     
@@ -493,7 +493,7 @@ extension RejectedAds: UICollectionViewDelegate, UICollectionViewDataSource, UIC
     
     
     //MARK:- Near By Search
-    func adForest_nearBySearch(param: NSDictionary) {
+    func nearBySearch(param: NSDictionary) {
         self.showLoader()
         AddsHandler.nearbyAddsSearch(params: param, success: { (successResponse) in
             self.stopAnimating()

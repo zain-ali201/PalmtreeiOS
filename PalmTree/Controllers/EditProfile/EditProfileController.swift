@@ -79,7 +79,7 @@ class EditProfileController: UIViewController, UITableViewDelegate, UITableViewD
         self.showBackButton()
         self.googleAnalytics(controllerName: "Edit Profile Controller")
         self.hideKeyboard()
-        self.adForest_profileDetails()
+        self.profileDetails()
         
         self.adMob()
         if defaults.bool(forKey: "isGuest") {
@@ -371,7 +371,7 @@ class EditProfileController: UIViewController, UITableViewDelegate, UITableViewD
                         let confirmAction = UIAlertAction(title: btnConfirm, style: .default) { (action) in
                             let param: [String: Any] = ["user_id": id]
                             print(param)
-                            self.adForest_deleteAccount(param: param as NSDictionary)
+                            self.deleteAccount(param: param as NSDictionary)
                         }
                         let cancelAction = UIAlertAction(title: btnCancel, style: .default, handler: nil)
                         alert.addAction(cancelAction)
@@ -447,7 +447,7 @@ class EditProfileController: UIViewController, UITableViewDelegate, UITableViewD
     
     // Profile Details
     
-    func adForest_profileDetails() {
+    func profileDetails() {
         self.showLoader()
         UserHandler.profileGet(success: { (successResponse) in
             self.stopAnimating()
@@ -469,7 +469,7 @@ class EditProfileController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     //Delete Account
-    func adForest_deleteAccount(param: NSDictionary) {
+    func deleteAccount(param: NSDictionary) {
         self.showLoader()
         UserHandler.deleteAccount(param: param, success: { (successResponse) in
             self.stopAnimating()
@@ -504,11 +504,11 @@ class EditProfileController: UIViewController, UITableViewDelegate, UITableViewD
           if isSearch {
               let param: [String: Any] = ["nearby_latitude": lat, "nearby_longitude": long, "nearby_distance": searchDistance]
               print(param)
-              self.adForest_nearBySearch(param: param as NSDictionary)
+              self.nearBySearch(param: param as NSDictionary)
           } else {
               let param: [String: Any] = ["nearby_latitude": 0.0, "nearby_longitude": 0.0, "nearby_distance": searchDistance]
               print(param)
-              self.adForest_nearBySearch(param: param as NSDictionary)
+              self.nearBySearch(param: param as NSDictionary)
           }
       }
       
@@ -684,7 +684,7 @@ class EditProfileController: UIViewController, UITableViewDelegate, UITableViewD
     
     
     //MARK:- Near By Search
-       func adForest_nearBySearch(param: NSDictionary) {
+       func nearBySearch(param: NSDictionary) {
            self.showLoader()
            AddsHandler.nearbyAddsSearch(params: param, success: { (successResponse) in
                self.stopAnimating()
@@ -759,7 +759,7 @@ class EditProfileCell: UITableViewCell, UITextFieldDelegate, GMSMapViewDelegate,
     @IBOutlet weak var lblImage: UILabel!
     @IBOutlet weak var imgPicture: UIImageView! {
         didSet {
-            let tapImage = UITapGestureRecognizer(target: self, action: #selector(adForest_imageGet))
+            let tapImage = UITapGestureRecognizer(target: self, action: #selector(imageGet))
             imgPicture.addGestureRecognizer(tapImage)
             imgPicture.isUserInteractionEnabled = true
         }
@@ -831,17 +831,17 @@ class EditProfileCell: UITableViewCell, UITextFieldDelegate, GMSMapViewDelegate,
 
     //MARK:- Custom
     
-    @objc func adForest_imageGet() {
+    @objc func imageGet() {
         let alert = UIAlertController(title: titleAddPhotos, message: nil, preferredStyle: .alert)
         let cameraAction = UIAlertAction(title: titleCamera, style: .default) { (actionIn) in
-            self.adForest_openCamera()
+            self.openCamera()
         }
         
         let galleryAction = UIAlertAction(title: titleGallery, style: .default) { (actionIn) in
-            self.adForest_openGallery()
+            self.openGallery()
         }
         let SettingsAction = UIAlertAction(title: "Settings", style: .default) { (actionIn) in
-//            self.adForest_openSettings()
+//            self.openSettings()
             guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
                            return
                        }
@@ -851,7 +851,7 @@ class EditProfileCell: UITableViewCell, UITextFieldDelegate, GMSMapViewDelegate,
         }
         
         let cancelAction = UIAlertAction(title: titleCancel, style: .default) { (actionIn) in
-            self.adForest_cancel()
+            self.cancel()
         }
         
         alert.addAction(cameraAction)
@@ -860,7 +860,7 @@ class EditProfileCell: UITableViewCell, UITextFieldDelegate, GMSMapViewDelegate,
         alert.addAction(cancelAction)
         self.appDel.presentController(ShowVC: alert)
     }
-     func adForest_openSettings(){
+     func openSettings(){
         // initialise a pop up for using later
         let alertController = UIAlertController(title: "TITLE", message: "Please go to Settings and turn on the permissions", preferredStyle: .alert)
         let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
@@ -888,7 +888,7 @@ class EditProfileCell: UITableViewCell, UITextFieldDelegate, GMSMapViewDelegate,
         }
     }
     
-    func adForest_openCamera() {
+    func openCamera() {
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             imagePicker.sourceType = .camera
             imagePicker.delegate = self
@@ -901,7 +901,7 @@ class EditProfileCell: UITableViewCell, UITextFieldDelegate, GMSMapViewDelegate,
         }
     }
     
-    func adForest_openGallery() {
+    func openGallery() {
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             imagePicker.delegate = self
             imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
@@ -912,7 +912,7 @@ class EditProfileCell: UITableViewCell, UITextFieldDelegate, GMSMapViewDelegate,
         }
     }
     
-    func adForest_cancel() {
+    func cancel() {
         self.appDel.dissmissController()
     }
     
@@ -921,7 +921,7 @@ class EditProfileCell: UITableViewCell, UITextFieldDelegate, GMSMapViewDelegate,
             imgPicture.image = pickedImage
             imageSelect = pickedImage
             saveFileToDocumentDirectory(image: imageSelect)
-            self.adForest_uploadImage()
+            self.uploadImage()
         }
         self.appDel.dissmissController()
     }
@@ -1033,7 +1033,7 @@ class EditProfileCell: UITableViewCell, UITextFieldDelegate, GMSMapViewDelegate,
         ]
         
         print(parameters)
-        self.adForest_updateProfile(params: parameters as NSDictionary)
+        self.updateProfile(params: parameters as NSDictionary)
     }
     
     @IBAction func actionDelete(_ sender: Any) {
@@ -1064,7 +1064,7 @@ class EditProfileCell: UITableViewCell, UITextFieldDelegate, GMSMapViewDelegate,
         }
     }
     
-    func adForest_uploadImage() {
+    func uploadImage() {
        
         uploadingProgressBar.progress = 0.0
         uploadingProgressBar.detailTextLabel.text = "0% Completed"
@@ -1098,7 +1098,7 @@ class EditProfileCell: UITableViewCell, UITextFieldDelegate, GMSMapViewDelegate,
         }
     }
     
-    func adForest_updateProfile(params: NSDictionary) {
+    func updateProfile(params: NSDictionary) {
         let editprofile = EditProfileController()
         editprofile.showLoader()
         UserHandler.profileUpdate(parameters: params, success: { (successResponse) in

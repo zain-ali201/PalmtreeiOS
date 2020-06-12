@@ -43,7 +43,7 @@ class BlockedUserController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         self.showBackButton()
-        self.adForest_getBlockedUsersList()
+        self.getBlockedUsersList()
         self.googleAnalytics(controllerName: "Blocked Users Controller")
         navigationButtons()
     }
@@ -103,7 +103,7 @@ class BlockedUserController: UIViewController, UITableViewDelegate, UITableViewD
             let param: [String: Any] = ["user_id": userID]
             print(param)
             self.removeItem(index: indexPath.row)
-            self.adForest_UnBlockUser(parameter: param as NSDictionary)
+            self.UnBlockUser(parameter: param as NSDictionary)
         }
         
         return cell
@@ -115,7 +115,7 @@ class BlockedUserController: UIViewController, UITableViewDelegate, UITableViewD
     
     //MARK:- API Call
     
-    func adForest_getBlockedUsersList() {
+    func getBlockedUsersList() {
         self.showLoader()
         UserHandler.blockedUsersList(success: { (successResponse) in
             self.stopAnimating()
@@ -136,7 +136,7 @@ class BlockedUserController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     //Un Block User
-    func adForest_UnBlockUser(parameter: NSDictionary) {
+    func UnBlockUser(parameter: NSDictionary) {
         self.showLoader()
         UserHandler.unBlockUser(parameter: parameter, success: { (successResponse) in
             self.stopAnimating()
@@ -164,11 +164,11 @@ class BlockedUserController: UIViewController, UITableViewDelegate, UITableViewD
         if isSearch {
             let param: [String: Any] = ["nearby_latitude": lat, "nearby_longitude": long, "nearby_distance": searchDistance]
             print(param)
-            self.adForest_nearBySearch(param: param as NSDictionary)
+            self.nearBySearch(param: param as NSDictionary)
         } else {
             let param: [String: Any] = ["nearby_latitude": 0.0, "nearby_longitude": 0.0, "nearby_distance": searchDistance]
             print(param)
-            self.adForest_nearBySearch(param: param as NSDictionary)
+            self.nearBySearch(param: param as NSDictionary)
         }
     }
     
@@ -344,7 +344,7 @@ class BlockedUserController: UIViewController, UITableViewDelegate, UITableViewD
     
     
     //MARK:- Near By Search
-    func adForest_nearBySearch(param: NSDictionary) {
+    func nearBySearch(param: NSDictionary) {
         self.showLoader()
         AddsHandler.nearbyAddsSearch(params: param, success: { (successResponse) in
             self.stopAnimating()

@@ -190,7 +190,7 @@ class Bids: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActi
                         print(adID)
                         let param: [String: Any] = ["ad_id": adID, "bid_amount": bidAmount  ,"bid_comment": bidText]
                         print(param)
-                        self.adForest_submitBid(param: param as NSDictionary)
+                        self.submitBid(param: param as NSDictionary)
                     }
                 }
                 return cell
@@ -224,7 +224,7 @@ class Bids: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActi
     }
     
     //MARK:- API Calls
-    func adForest_submitBid(param:NSDictionary) {
+    func submitBid(param:NSDictionary) {
         self.showLoader()
         AddsHandler.postBid(param: param, success: { (successResponse) in
             self.stopAnimating()

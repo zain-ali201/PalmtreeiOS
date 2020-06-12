@@ -53,7 +53,7 @@ class OffersonAdsDetailController: UIViewController, UITableViewDelegate, UITabl
         let param: [String: Any] = ["ad_id": ad_id]
         print(param)
         self.showLoader()
-        self.adForest_getDetailsData(param: param as NSDictionary)
+        self.getDetailsData(param: param as NSDictionary)
     }
     
     //MARK:- Custom
@@ -65,7 +65,7 @@ class OffersonAdsDetailController: UIViewController, UITableViewDelegate, UITabl
         let param: [String: Any] = ["ad_id": ad_id]
         print(param)
         self.refreshControl.beginRefreshing()
-        self.adForest_getDetailsData(param: param as NSDictionary)
+        self.getDetailsData(param: param as NSDictionary)
     }
     
     func refreshButton() {
@@ -88,7 +88,7 @@ class OffersonAdsDetailController: UIViewController, UITableViewDelegate, UITabl
         let param: [String: Any] = ["ad_id": ad_id]
         print(param)
         self.showLoader()
-        self.adForest_getDetailsData(param: param as NSDictionary)
+        self.getDetailsData(param: param as NSDictionary)
     }
     
     //MARK:- table View Delegate Methods
@@ -154,12 +154,12 @@ class OffersonAdsDetailController: UIViewController, UITableViewDelegate, UITabl
             let param: [String: Any] = ["page_number": currentPage]
             print(param)
             self.showLoader()
-            self.adForest_loadMoreData(param: param as NSDictionary)
+            self.loadMoreData(param: param as NSDictionary)
         }
     }
     
     //MARK:- API Call
-    func adForest_getDetailsData(param: NSDictionary) {
+    func getDetailsData(param: NSDictionary) {
         UserHandler.getOfferAddDetail(param: param, success: { (successResponse) in
             self.stopAnimating()
             self.refreshControl.endRefreshing()
@@ -180,7 +180,7 @@ class OffersonAdsDetailController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
-    func adForest_loadMoreData(param: NSDictionary) {
+    func loadMoreData(param: NSDictionary) {
         UserHandler.getOfferAddDetail(param: param, success: { (successResponse) in
             self.stopAnimating()
             self.refreshControl.endRefreshing()

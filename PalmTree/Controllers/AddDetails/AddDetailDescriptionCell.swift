@@ -79,7 +79,7 @@ class AddDetailDescriptionCell: UITableViewCell, UICollectionViewDelegate, UICol
         
     }
     
-    func adForest_reload() {
+    func reload() {
          collectionView.reloadData()
         //cstCollectionHeight.constant = self.collectionView.contentSize.height
         //self.perform(#selector(self.reloadCollection), with: nil, afterDelay: 1)

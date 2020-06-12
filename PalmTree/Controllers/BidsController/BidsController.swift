@@ -23,7 +23,7 @@ class BidsController: ButtonBarPagerTabStripViewController, NVActivityIndicatorV
         self.adMob()
         let param: [String: Any] = ["ad_id": adID]
         print(param)
-        self.adForest_bidsData(param: param as NSDictionary)
+        self.bidsData(param: param as NSDictionary)
     }
     
     func customizePagerTabStrip() {
@@ -99,7 +99,7 @@ class BidsController: ButtonBarPagerTabStripViewController, NVActivityIndicatorV
     }
     
     //MARK:- API Call
-    func adForest_bidsData(param: NSDictionary) {
+    func bidsData(param: NSDictionary) {
         self.showLoader()
         AddsHandler.bidsData(param: param, success: { (successResponse) in
             self.stopAnimating()

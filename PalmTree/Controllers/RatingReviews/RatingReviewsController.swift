@@ -185,12 +185,12 @@ class RatingReviewsController: UIViewController, UITableViewDelegate, UITableVie
         if self.hasNextPage {
             let param: [String: Any] = ["ad_id": 5799, "page_number": nextPage]
             print(param)
-            self.adForest_loadMoreData(param: param as NSDictionary)
+            self.loadMoreData(param: param as NSDictionary)
         }
     }
  
     //MARK:- API Call
-    func adForest_loadMoreData(param: NSDictionary) {
+    func loadMoreData(param: NSDictionary) {
         self.showLoader()
         AddsHandler.addDetailRating(parameter: param, success: { (successResponse) in
             self.stopAnimating()

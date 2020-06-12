@@ -54,7 +54,7 @@ class SentOffersController: UIViewController, UITableViewDelegate, UITableViewDa
    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.adForest_sentOffersData()
+        self.sentOffersData()
         self.showLoader()
     }
     //MARK: - Custom
@@ -64,7 +64,7 @@ class SentOffersController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @objc func refreshTableView() {
         self.refreshControl.beginRefreshing()
-        self.adForest_sentOffersData()
+        self.sentOffersData()
     }
     
     //MARK:- table View Delegate Methods
@@ -132,14 +132,14 @@ class SentOffersController: UIViewController, UITableViewDelegate, UITableViewDa
             currentPage += 1
             let param: [String: Any] = ["page_number": currentPage]
             print(param)
-            self.adForest_loadMoreData(param: param as NSDictionary)
+            self.loadMoreData(param: param as NSDictionary)
             self.showLoader()
         }
     }
     
     
     //MARK:- API Calls
-    func adForest_sentOffersData() {
+    func sentOffersData() {
         UserHandler.getSentOffersData(success: { (successResponse) in
             self.stopAnimating()
             self.refreshControl.endRefreshing()
@@ -180,7 +180,7 @@ class SentOffersController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    func adForest_loadMoreData(param: NSDictionary) {
+    func loadMoreData(param: NSDictionary) {
         UserHandler.moreSentOffersData(param: param, success: { (successResponse) in
             self.stopAnimating()
             self.refreshControl.endRefreshing()

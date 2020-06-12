@@ -156,7 +156,7 @@ class ChatController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         let parameter : [String: Any] = ["ad_id": ad_id, "sender_id": sender_id, "receiver_id": receiver_id, "type": messageType, "message": ""]
         print(parameter)
-        self.adForest_getChatData(parameter: parameter as NSDictionary)
+        self.getChatData(parameter: parameter as NSDictionary)
         self.showLoader()
         keyboardHandling()
     }
@@ -283,10 +283,10 @@ class ChatController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @objc func refreshTableView() {
         let parameter : [String: Any] = ["ad_id": ad_id, "sender_id": sender_id, "receiver_id": receiver_id, "type": messageType, "message": ""]
         print(parameter)
-        self.adForest_getChatData(parameter: parameter as NSDictionary)
+        self.getChatData(parameter: parameter as NSDictionary)
     }
     
-    func adForest_populateData() {
+    func populateData() {
         if UserHandler.sharedInstance.objSentOfferChatData != nil {
             let objData = UserHandler.sharedInstance.objSentOfferChatData
             
@@ -324,7 +324,7 @@ class ChatController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let parameter : [String: Any] = ["ad_id": ad_id, "sender_id": sender_id, "receiver_id": receiver_id, "type": messageType, "message": ""]
         print(parameter)
         self.showLoader()
-        self.adForest_getChatData(parameter: parameter as NSDictionary)
+        self.getChatData(parameter: parameter as NSDictionary)
     }
     
     
@@ -333,11 +333,11 @@ class ChatController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if isBlocked == "true"{
             let parameter : [String: Any] = ["sender_id": sender_id, "recv_id": receiver_id]
             print(parameter)
-            adForest_UnblockUserChat(parameters: parameter as NSDictionary)
+            UnblockUserChat(parameters: parameter as NSDictionary)
         }else{
             let parameter : [String: Any] = ["sender_id": sender_id, "recv_id": receiver_id]
             print(parameter)
-            adForest_blockUserChat(parameters: parameter as NSDictionary)
+            blockUserChat(parameters: parameter as NSDictionary)
         }
 
     }
@@ -448,7 +448,7 @@ class ChatController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let param: [String: Any] = ["page_number": currentPage]
             print(param)
             self.showLoader()
-            self.adForest_loadMoreChat(parameter: param as NSDictionary)
+            self.loadMoreChat(parameter: param as NSDictionary)
         }
     }
     
@@ -470,7 +470,7 @@ class ChatController: UIViewController, UITableViewDelegate, UITableViewDataSour
         } else {
             let parameter : [String: Any] = ["ad_id": ad_id, "sender_id": sender_id, "receiver_id": receiver_id, "type": messageType, "message": messageField]
             print(parameter)
-            self.adForest_sendMessage(param: parameter as NSDictionary)
+            self.sendMessage(param: parameter as NSDictionary)
             self.showLoader()
         }
       //}
@@ -485,7 +485,7 @@ class ChatController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     //MARK:- API Call
     
-    func adForest_getChatData(parameter: NSDictionary) {
+    func getChatData(parameter: NSDictionary) {
         UserHandler.getSentOfferMessages(parameter: parameter, success: { (successResponse) in
             self.stopAnimating()
             self.refreshControl.endRefreshing()
@@ -497,7 +497,7 @@ class ChatController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 self.reverseArray = successResponse.data.chat
                 self.btn_text = successResponse.data.btnText
                 self.dataArray = self.reverseArray.reversed()
-                self.adForest_populateData()
+                self.populateData()
                 self.tableView.reloadData()
                 self.scrollToBottom()
                 self.tableView.setEmptyMessage("")
@@ -527,7 +527,7 @@ class ChatController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     //Load More Chat
-    func adForest_loadMoreChat(parameter: NSDictionary) {
+    func loadMoreChat(parameter: NSDictionary) {
         UserHandler.getSentOfferMessages(parameter: parameter, success: { (successResponse) in
             self.stopAnimating()
             self.refreshControl.endRefreshing()
@@ -550,7 +550,7 @@ class ChatController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     //send message
-    func adForest_sendMessage(param: NSDictionary) {
+    func sendMessage(param: NSDictionary) {
         UserHandler.sendMessage(parameter: param, success: { (successResponse) in
             self.stopAnimating()
             self.refreshControl.endRefreshing()
@@ -576,7 +576,7 @@ class ChatController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    func adForest_blockUserChat(parameters: NSDictionary) {
+    func blockUserChat(parameters: NSDictionary) {
         self.showLoader()
         UserHandler.blockUserChat(parameter: parameters , success: { (successResponse) in
             self.stopAnimating()
@@ -600,7 +600,7 @@ class ChatController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     let parameter : [String: Any] = ["ad_id": self.ad_id, "sender_id": self.sender_id, "receiver_id": self.receiver_id, "type": self.messageType, "message": ""]
                                          print(parameter)
                         self.userBlocked = true
-                        self.adForest_getChatData(parameter: parameter as NSDictionary)
+                        self.getChatData(parameter: parameter as NSDictionary)
                 }
                 al.addAction(btnOk)
                 self.presentVC(al)
@@ -619,7 +619,7 @@ class ChatController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     
-    func adForest_UnblockUserChat(parameters: NSDictionary) {
+    func UnblockUserChat(parameters: NSDictionary) {
         self.showLoader()
         UserHandler.UnblockUserChat(parameter: parameters , success: { (successResponse) in
             self.stopAnimating()
@@ -643,7 +643,7 @@ class ChatController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     let parameter : [String: Any] = ["ad_id": self.ad_id, "sender_id": self.sender_id, "receiver_id": self.receiver_id, "type": self.messageType, "message": ""]
                     print(parameter)
                     self.userBlocked = false
-                    self.adForest_getChatData(parameter: parameter as NSDictionary)
+                    self.getChatData(parameter: parameter as NSDictionary)
                 }
                 al.addAction(btnOk)
                 self.presentVC(al)

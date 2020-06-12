@@ -2,39 +2,35 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
-	<string>ca-app-pub-3940256099942544/2934735716</string>
-	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
-	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>170168176816-cni27t9d6mkg9mmidp62hhm0urm4vlfn.apps.googleusercontent.com</string>
+	<string>815594864442-cuah88e976jn9rvaqt736l96d07rpdmr.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.170168176816-cni27t9d6mkg9mmidp62hhm0urm4vlfn</string>
+	<string>com.googleusercontent.apps.815594864442-cuah88e976jn9rvaqt736l96d07rpdmr</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDorvTuNOQlyBP3TmhCaRWjgfjl4P46MYM</string>
+	<string>AIzaSyCjMgDWuLvYz6cP5sNS33PO5lJrYAyIEeQ</string>
 	<key>GCM_SENDER_ID</key>
-	<string>170168176816</string>
+	<string>815594864442</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.GlixenTech.AdForestApp</string>
+	<string>com.sprintsols.Palmtree</string>
 	<key>PROJECT_ID</key>
-	<string>adforest-ab45e</string>
+	<string>palmtree-280107</string>
 	<key>STORAGE_BUCKET</key>
-	<string>adforest-ab45e.appspot.com</string>
+	<string>palmtree-280107.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<true></true>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
 	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<false></false>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
 	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:170168176816:ios:fc787efc4fd5673a</string>
+	<string>1:815594864442:ios:c6ecf19c9c6f33c3841a03</string>
 	<key>DATABASE_URL</key>
-	<string>https://adforest-ab45e.firebaseio.com</string>
+	<string>https://palmtree-280107.firebaseio.com</string>
 </dict>
 </plist>

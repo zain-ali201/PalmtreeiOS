@@ -123,20 +123,20 @@ class AddDetailController: UIViewController, UITableViewDelegate, UITableViewDat
         NotificationCenter.default.addObserver(forName: NSNotification.Name(Constants.NotificationName.updateAddDetails), object: nil, queue: nil) {[unowned self] (notification) in
             if self.isFromRejectedAd {
                 let parameter: [String: Any] = ["ad_id": self.ad_id, "is_rejected": true]
-                self.adForest_addDetail(param: parameter as NSDictionary)
+                self.addDetail(param: parameter as NSDictionary)
             } else {
                 let parameter: [String: Any] = ["ad_id": self.ad_id]
                 print(parameter)
-                self.adForest_addDetail(param: parameter as NSDictionary)
+                self.addDetail(param: parameter as NSDictionary)
             }
         }
         if isFromRejectedAd {
             let parameter: [String: Any] = ["ad_id": ad_id, "is_rejected": true]
-            self.adForest_addDetail(param: parameter as NSDictionary)
+            self.addDetail(param: parameter as NSDictionary)
         } else {
             let parameter: [String: Any] = ["ad_id": ad_id]
             print(parameter)
-            self.adForest_addDetail(param: parameter as NSDictionary)
+            self.addDetail(param: parameter as NSDictionary)
         }
         
         navigationButtons()
@@ -169,7 +169,7 @@ class AddDetailController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
-    func adForest_populateData() {
+    func populateData() {
         if AddsHandler.sharedInstance.objAddDetails != nil {
             let objData = AddsHandler.sharedInstance.objAddDetails
             
@@ -390,7 +390,7 @@ class AddDetailController: UIViewController, UITableViewDelegate, UITableViewDat
             }
             cell.btnMakeFeature = { () in
                 let param: [String: Any] = ["ad_id": objData.adDetail.adId]
-                self.adForest_makeAddFeature(Parameter: param as NSDictionary)
+                self.makeAddFeature(Parameter: param as NSDictionary)
             }
             if let directionButtonTitle = objData.staticText.getDirection {
                 cell.oltDirection.setTitle(directionButtonTitle, for: .normal)
@@ -517,7 +517,7 @@ class AddDetailController: UIViewController, UITableViewDelegate, UITableViewDat
                 }
                 else {
                     let parameter: [String: Any] = ["ad_id": objData.adDetail.adId]
-                    self.adForest_makeAddFavourite(param: parameter as NSDictionary)
+                    self.makeAddFavourite(param: parameter as NSDictionary)
                 }
             }
             cell.btnReport = { () in
@@ -658,7 +658,7 @@ class AddDetailController: UIViewController, UITableViewDelegate, UITableViewDat
                            }
             cell.fieldsArray = self.fieldsArray
             cell.frame = tableView.bounds
-            cell.adForest_reload()
+            cell.reload()
             cell.layoutIfNeeded()
             return cell
         }
@@ -855,7 +855,7 @@ class AddDetailController: UIViewController, UITableViewDelegate, UITableViewDat
                         } else {
                             let param: [String: Any] = ["ad_id": self.ad_id, "rating": cell.rating, "rating_comments": comment]
                             print(param)
-                            self.adForest_addRating(param: param as NSDictionary)
+                            self.addRating(param: param as NSDictionary)
                         }
                     }
                 }
@@ -951,7 +951,7 @@ class AddDetailController: UIViewController, UITableViewDelegate, UITableViewDat
                     let okAction = UIAlertAction(title: confirmText , style: .default, handler: { (action) in
                         let param: [String: Any] = ["user_id": user_id]
                         print(param)
-                        self.adForest_blockUser(param: param as NSDictionary)
+                        self.blockUser(param: param as NSDictionary)
                     })
                     let cancelAction = UIAlertAction(title: cancelText, style: .default, handler: nil)
                     
@@ -1212,7 +1212,7 @@ class AddDetailController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     //MARK:- API Call
-    func adForest_addDetail(param: NSDictionary) {
+    func addDetail(param: NSDictionary) {
         self.showLoader()
         AddsHandler.addDetails(parameter: param, success: { (successResponse) in
             self.stopAnimating()
@@ -1253,7 +1253,7 @@ class AddDetailController: UIViewController, UITableViewDelegate, UITableViewDat
                 self.fieldsArray = successResponse.data.adDetail.fieldsData
                 self.relatedAdsArray = successResponse.data.adDetail.relatedAds
                 AddsHandler.sharedInstance.ratingsAdds = successResponse.data.adRatting
-                self.adForest_populateData()
+                self.populateData()
                 self.tableView.reloadData()
                 self.perform(#selector(self.reloadTable), with: nil, afterDelay: 1.5)
             }
@@ -1274,14 +1274,14 @@ class AddDetailController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     //MARK:- Make Add Feature
-    func adForest_makeAddFeature(Parameter: NSDictionary) {
+    func makeAddFeature(Parameter: NSDictionary) {
         self.showLoader()
         AddsHandler.makeAddFeature(parameter: Parameter, success: { (successResponse) in
             self.stopAnimating()
             if successResponse.success {
                 let alert = AlertView.prepare(title: "", message: successResponse.message, okAction: {
                     let parameter: [String: Any] = ["ad_id": self.ad_id]
-                    self.adForest_addDetail(param: parameter as NSDictionary)
+                    self.addDetail(param: parameter as NSDictionary)
                 })
                 self.presentVC(alert)
             }
@@ -1298,7 +1298,7 @@ class AddDetailController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     //MARK:- Make Add Favourite
-    func adForest_makeAddFavourite(param: NSDictionary) {
+    func makeAddFavourite(param: NSDictionary) {
         self.showLoader()
         AddsHandler.makeAddFavourite(parameter: param, success: { (successResponse) in
             self.stopAnimating()
@@ -1318,7 +1318,7 @@ class AddDetailController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     //MARK:- Block user
-    func adForest_blockUser(param: NSDictionary) {
+    func blockUser(param: NSDictionary) {
         self.showLoader()
         UserHandler.blockUser(parameter: param, success: {[unowned self] (successResponse) in
             self.stopAnimating()
@@ -1340,14 +1340,14 @@ class AddDetailController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     //MARK:- Add Rating
-    func adForest_addRating(param: NSDictionary) {
+    func addRating(param: NSDictionary) {
         self.showLoader()
         AddsHandler.ratingToAdd(parameter: param, success: {[unowned self] (successResponse) in
             self.stopAnimating()
             if successResponse.success {
                 let alert = AlertView.prepare(title: "", message: successResponse.message, okAction: {
                     let parameter: [String: Any] = ["ad_id": self.ad_id]
-                    self.adForest_addDetail(param: parameter as NSDictionary)
+                    self.addDetail(param: parameter as NSDictionary)
                 })
                 self.presentVC(alert)
             } else {
@@ -1368,7 +1368,7 @@ class AddDetailController: UIViewController, UITableViewDelegate, UITableViewDat
             self.stopAnimating()
             if successResponse.success {
                 let parameter: [String: Any] = ["ad_id": self.ad_id]
-                self.adForest_addDetail(param: parameter as NSDictionary)
+                self.addDetail(param: parameter as NSDictionary)
             } else {
                 let alert = Constants.showBasicAlert(message: successResponse.message)
                 self.presentVC(alert)
@@ -1389,11 +1389,11 @@ class AddDetailController: UIViewController, UITableViewDelegate, UITableViewDat
         if isSearch {
             let param: [String: Any] = ["nearby_latitude": lat, "nearby_longitude": long, "nearby_distance": searchDistance]
             print(param)
-            self.adForest_nearBySearch(param: param as NSDictionary)
+            self.nearBySearch(param: param as NSDictionary)
         } else {
             let param: [String: Any] = ["nearby_latitude": 0.0, "nearby_longitude": 0.0, "nearby_distance": searchDistance]
             print(param)
-            self.adForest_nearBySearch(param: param as NSDictionary)
+            self.nearBySearch(param: param as NSDictionary)
         }
     }
     
@@ -1569,7 +1569,7 @@ class AddDetailController: UIViewController, UITableViewDelegate, UITableViewDat
     
     
     //MARK:- Near By Search
-    func adForest_nearBySearch(param: NSDictionary) {
+    func nearBySearch(param: NSDictionary) {
         self.showLoader()
         AddsHandler.nearbyAddsSearch(params: param, success: { (successResponse) in
             self.stopAnimating()

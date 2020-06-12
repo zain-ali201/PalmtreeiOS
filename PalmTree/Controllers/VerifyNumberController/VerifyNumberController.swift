@@ -41,7 +41,7 @@ class VerifyNumberController: UIViewController, NVActivityIndicatorViewable {
         super.viewDidLoad()
         self.hideKeyboard()
         self.googleAnalytics(controllerName: "Verify Number Controller")
-        self.adForest_populateData()
+        self.populateData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -53,7 +53,7 @@ class VerifyNumberController: UIViewController, NVActivityIndicatorViewable {
         self.startAnimating(Constants.activitySize.size, message: Constants.loaderMessages.loadingMessage.rawValue,messageFont: UIFont.systemFont(ofSize: 14), type: NVActivityIndicatorType.ballClipRotatePulse)
     }
     
-    func adForest_populateData() {
+    func populateData() {
         if dataToShow != nil {
             if let placeHolderText = dataToShow?.extraText.phoneDialog.textField {
                 self.txtCode.placeholder = placeHolderText
@@ -90,18 +90,18 @@ class VerifyNumberController: UIViewController, NVActivityIndicatorViewable {
         else {
             let parameter : [String: Any] = ["verify_code": codeField]
             print(parameter)
-            self.adForest_verifyCode(parameter: parameter as NSDictionary)
+            self.verifyCode(parameter: parameter as NSDictionary)
         }
         
     }
 
     @IBAction func actionResend(_ sender: UIButton) {
-        self.adForest_phoneNumberVerify()
+        self.phoneNumberVerify()
     }
     
     //MARK:- API Call
     
-    func adForest_verifyCode(parameter: NSDictionary) {
+    func verifyCode(parameter: NSDictionary) {
         self.showLoader()
         UserHandler.verifyCode(param: parameter, success: { (successResponse) in
             self.stopAnimating()
@@ -131,7 +131,7 @@ class VerifyNumberController: UIViewController, NVActivityIndicatorViewable {
     
     //send code
     
-    func adForest_phoneNumberVerify() {
+    func phoneNumberVerify() {
         self.showLoader()
         UserHandler.verifyPhone(success: { (successResponse) in
             self.stopAnimating()

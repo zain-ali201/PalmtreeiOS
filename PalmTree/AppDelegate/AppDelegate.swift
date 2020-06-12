@@ -165,7 +165,8 @@ extension AppDelegate {
 
 extension AppDelegate
 {
-    func customizeNavigationBar(barTintColor: UIColor) {
+    func customizeNavigationBar(barTintColor: UIColor)
+    {
         let appearance = UINavigationBar.appearance()
         appearance.setBackgroundImage(UIImage(), for: .default)
         appearance.shadowImage = UIImage()
@@ -175,15 +176,20 @@ extension AppDelegate
         appearance.barStyle = .blackTranslucent
     }
     
-    func moveToHome() {
+    func moveToHome()
+    {
         let HomeVC = storyboard.instantiateViewController(withIdentifier: HomeController.className) as! HomeController
-        if defaults.bool(forKey: "isRtl") {
+        
+        if defaults.bool(forKey: "isRtl")
+        {
             let rightViewController = storyboard.instantiateViewController(withIdentifier: LeftController.className) as! LeftController
             let navi: UINavigationController = UINavigationController(rootViewController: HomeVC)
             let slideMenuController = SlideMenuController(mainViewController: navi, rightMenuViewController: rightViewController)
             navi.modalPresentationStyle = .fullScreen
             self.window?.rootViewController = slideMenuController
-        } else {
+        }
+        else
+        {
             let leftVC = storyboard.instantiateViewController(withIdentifier: LeftController.className) as! LeftController
             let navi : UINavigationController = UINavigationController(rootViewController: HomeVC)
             let slideMenuController = SlideMenuController(mainViewController: navi, leftMenuViewController: leftVC)
@@ -193,22 +199,26 @@ extension AppDelegate
         self.window?.makeKeyAndVisible()
     }
     
- 
-    func moveToLanguageCtrl() {
+    func moveToLanguageCtrl()
+    {
         let HomeVC = storyboard.instantiateViewController(withIdentifier: LangViewController.className) as! LangViewController
-        if defaults.bool(forKey: "isRtl") {
+        if defaults.bool(forKey: "isRtl")
+        {
             let rightViewController = storyboard.instantiateViewController(withIdentifier: LeftController.className) as! LeftController
             let navi: UINavigationController = UINavigationController(rootViewController: HomeVC)
              navi.modalPresentationStyle = .fullScreen
             let slideMenuController = SlideMenuController(mainViewController: navi, rightMenuViewController: rightViewController)
             self.window?.rootViewController = slideMenuController
-        } else {
+        }
+        else
+        {
             let leftVC = storyboard.instantiateViewController(withIdentifier: LeftController.className) as! LeftController
             let navi : UINavigationController = UINavigationController(rootViewController: HomeVC)
              navi.modalPresentationStyle = .fullScreen
             let slideMenuController = SlideMenuController(mainViewController: navi, leftMenuViewController: leftVC)
             self.window?.rootViewController = slideMenuController
         }
+        
         self.window?.makeKeyAndVisible()
     }
  

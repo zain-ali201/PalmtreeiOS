@@ -84,7 +84,7 @@ class MostVisitedAdsCollectionViewCell: UICollectionViewCell {
        
        override func awakeFromNib() {
            super.awakeFromNib()
-           self.adForest_settingsData()
+           self.settingsData()
 //        buttonEdit.isHidden = true
 //        buttonDelete.isHidden = true
 //        buttonAddType.isHidden = true
@@ -117,7 +117,7 @@ class MostVisitedAdsCollectionViewCell: UICollectionViewCell {
        }
        
        //MARK:- Custom
-       func adForest_settingsData() {
+       func settingsData() {
            if let settingsInfo = defaults.object(forKey: "settings") {
                settingObject = NSKeyedUnarchiver.unarchiveObject(with: settingsInfo as! Data) as! [String : Any]
                let model = SettingsRoot(fromDictionary: settingObject)

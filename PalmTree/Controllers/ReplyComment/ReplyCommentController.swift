@@ -228,7 +228,7 @@ class ReplyCommentController: UIViewController , NVActivityIndicatorViewable{
             else  {
                 let param: [String: Any] = ["ad_id": ad_id, "message": commentField]
                 print(param)
-                self.adForest_popUpMessageReply(param: param as NSDictionary)
+                self.popUpMessageReply(param: param as NSDictionary)
             }
         }
         else if isFromAddDetailReply {
@@ -238,7 +238,7 @@ class ReplyCommentController: UIViewController , NVActivityIndicatorViewable{
             else {
                 let param: [String: Any] = ["ad_id": ad_id, "comment_id": comment_id, "rating_comments": commentField]
                 print(param)
-                self.adForest_replyComment(param: param as NSDictionary)
+                self.replyComment(param: param as NSDictionary)
             }
         }
         else if isFromCall {
@@ -251,7 +251,7 @@ class ReplyCommentController: UIViewController , NVActivityIndicatorViewable{
             else {
                 let param: [String: Any] = ["comment_id": comment_id, "post_id": post_id, "message": commentField]
                 print(param)
-                self.adForest_blogPostComment(param: param as NSDictionary)
+                self.blogPostComment(param: param as NSDictionary)
             }
         } else if isFromUserRating {
             if commentField == "" {
@@ -259,7 +259,7 @@ class ReplyCommentController: UIViewController , NVActivityIndicatorViewable{
             } else {
                 let param: [String: Any]  =  ["author_id": self.comment_id,"comments": commentField, "is_reply": true]
                 print(param)
-                self.adForest_rating(param: param as NSDictionary)
+                self.rating(param: param as NSDictionary)
             }
         }
     }
@@ -275,7 +275,7 @@ class ReplyCommentController: UIViewController , NVActivityIndicatorViewable{
     
     //MARK:- API Call
     //comment
-    func adForest_replyComment(param: NSDictionary) {
+    func replyComment(param: NSDictionary) {
         self.showLoader()
         AddsHandler.replyComment(parameters: param, success: { (successResponse) in
             self.stopAnimating()
@@ -298,7 +298,7 @@ class ReplyCommentController: UIViewController , NVActivityIndicatorViewable{
     }
     
     // pop up message reply
-    func adForest_popUpMessageReply(param: NSDictionary) {
+    func popUpMessageReply(param: NSDictionary) {
         self.showLoader()
         AddsHandler.popMsgReply(param: param, success: { (successResponse) in
             self.stopAnimating()
@@ -321,7 +321,7 @@ class ReplyCommentController: UIViewController , NVActivityIndicatorViewable{
     }
     
     // blog post comment
-    func adForest_blogPostComment(param: NSDictionary) {
+    func blogPostComment(param: NSDictionary) {
         self.showLoader()
         UserHandler.blogPostComment(parameter: param, success: { (successResponse) in
             self.stopAnimating()
@@ -343,7 +343,7 @@ class ReplyCommentController: UIViewController , NVActivityIndicatorViewable{
     }
     
     
-    func adForest_rating(param: NSDictionary) {
+    func rating(param: NSDictionary) {
         self.showLoader()
         AddsHandler.postUserRating(param: param, success: { (successResponse) in
             self.stopAnimating()

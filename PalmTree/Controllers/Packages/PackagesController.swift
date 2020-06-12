@@ -84,7 +84,7 @@ class PackagesController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.adForest_pakcagesData()
+        self.pakcagesData()
 //        interstitial?.delegate = self
 //        interstitial = self.appDelegate.createAndLoadInterstitial()
 //        self.appDelegate.interstitial?.delegate = self
@@ -476,14 +476,14 @@ class PackagesController: UIViewController, UITableViewDelegate, UITableViewData
          if methodName == "app_inapp" {
             self.inApp_id = inAppID
             self.package_id = packageID
-            self.adForest_MoveToInAppPurchases()
+            self.MoveToInAppPurchases()
         } else {
             print("Not Found")
         }
     }
     
     //MARK:- In App Method
-    func adForest_MoveToInAppPurchases() {
+    func MoveToInAppPurchases() {
         self.purchaseProduct(productID: self.inApp_id)
     }
     
@@ -510,7 +510,7 @@ class PackagesController: UIViewController, UITableViewDelegate, UITableViewData
                     "payment_from": "app_inapp"
                 ]
                 print(parameters)
-                self.adForest_paymentConfirmation(parameter: parameters as NSDictionary)
+                self.paymentConfirmation(parameter: parameters as NSDictionary)
                 if product.needsFinishTransaction {
                     SwiftyStoreKit.finishTransaction(product.transaction)
                 }
@@ -614,7 +614,7 @@ class PackagesController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     //MARK:- API Call
-    func adForest_pakcagesData() {
+    func pakcagesData() {
         self.showLoader()
         UserHandler.packagesdata(success: { (successResponse) in
             self.stopAnimating()
@@ -644,7 +644,7 @@ class PackagesController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     // payment confirmation
-    func adForest_paymentConfirmation(parameter: NSDictionary) {
+    func paymentConfirmation(parameter: NSDictionary) {
         self.showLoader()
         UserHandler.paymentConfirmation(parameters: parameter, success: { (successResponse) in
             self.stopAnimating()
@@ -672,11 +672,11 @@ class PackagesController: UIViewController, UITableViewDelegate, UITableViewData
                if isSearch {
                    let param: [String: Any] = ["nearby_latitude": lat, "nearby_longitude": long, "nearby_distance": searchDistance]
                    print(param)
-                   self.adForest_nearBySearch(param: param as NSDictionary)
+                   self.nearBySearch(param: param as NSDictionary)
                } else {
                    let param: [String: Any] = ["nearby_latitude": 0.0, "nearby_longitude": 0.0, "nearby_distance": searchDistance]
                    print(param)
-                   self.adForest_nearBySearch(param: param as NSDictionary)
+                   self.nearBySearch(param: param as NSDictionary)
                }
            }
            
@@ -852,7 +852,7 @@ class PackagesController: UIViewController, UITableViewDelegate, UITableViewData
          
          
          //MARK:- Near By Search
-            func adForest_nearBySearch(param: NSDictionary) {
+            func nearBySearch(param: NSDictionary) {
                 self.showLoader()
                 AddsHandler.nearbyAddsSearch(params: param, success: { (successResponse) in
                     self.stopAnimating()

@@ -61,7 +61,7 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.adForest_getAppData()
+        self.getAppData()
         navigationButtons()
     }
 
@@ -288,7 +288,7 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
   
     
     //MARK:- API Calls
-    func adForest_getAppData() {
+    func getAppData() {
         self.showLoader()
         UserHandler.appSettings(success: { (successResponse) in
             self.stopAnimating()
@@ -323,11 +323,11 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
           if isSearch {
               let param: [String: Any] = ["nearby_latitude": lat, "nearby_longitude": long, "nearby_distance": searchDistance]
               print(param)
-              self.adForest_nearBySearch(param: param as NSDictionary)
+              self.nearBySearch(param: param as NSDictionary)
           } else {
               let param: [String: Any] = ["nearby_latitude": 0.0, "nearby_longitude": 0.0, "nearby_distance": searchDistance]
               print(param)
-              self.adForest_nearBySearch(param: param as NSDictionary)
+              self.nearBySearch(param: param as NSDictionary)
           }
       }
       
@@ -503,7 +503,7 @@ class SettingsController: UIViewController, UITableViewDelegate, UITableViewData
       
       
       //MARK:- Near By Search
-      func adForest_nearBySearch(param: NSDictionary) {
+      func nearBySearch(param: NSDictionary) {
           self.showLoader()
           AddsHandler.nearbyAddsSearch(params: param, success: { (successResponse) in
               self.stopAnimating()

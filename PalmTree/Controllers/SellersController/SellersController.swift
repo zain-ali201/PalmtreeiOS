@@ -73,8 +73,8 @@ class SellersController: UIViewController, UITableViewDelegate, UITableViewDataS
         if defaults.bool(forKey: "isGuest") {
             self.AdpostCirclebtn.isHidden = true
         }
-        self.adForest_sellerData()
-        print(adForest_sellerData())
+        self.sellerData()
+        print(sellerData())
         navigationButtons()
 
     }
@@ -178,12 +178,12 @@ class SellersController: UIViewController, UITableViewDelegate, UITableViewDataS
         if indexPath.row == dataArray.count && currentPage < maximumPage  {
             currentPage = currentPage + 1
             let param: [String: Any] = ["page_number": currentPage]
-            adForest_loadMoreData(param: param as NSDictionary)
+            loadMoreData(param: param as NSDictionary)
         }
     }
 
     //MARK:- API Call
-    func adForest_sellerData() {
+    func sellerData() {
         self.showLoader()
         ShopHandler.sellerList(success: { (successResponse) in
             self.stopAnimating()
@@ -204,7 +204,7 @@ class SellersController: UIViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     
-    func adForest_loadMoreData(param: NSDictionary) {
+    func loadMoreData(param: NSDictionary) {
         self.showLoader()
         ShopHandler.sellerListLoadMore(param: param, success: { (successResponse) in
             self.stopAnimating()
@@ -230,11 +230,11 @@ class SellersController: UIViewController, UITableViewDelegate, UITableViewDataS
         if isSearch {
             let param: [String: Any] = ["nearby_latitude": lat, "nearby_longitude": long, "nearby_distance": searchDistance]
             print(param)
-            self.adForest_nearBySearch(param: param as NSDictionary)
+            self.nearBySearch(param: param as NSDictionary)
         } else {
             let param: [String: Any] = ["nearby_latitude": 0.0, "nearby_longitude": 0.0, "nearby_distance": searchDistance]
             print(param)
-            self.adForest_nearBySearch(param: param as NSDictionary)
+            self.nearBySearch(param: param as NSDictionary)
         }
     }
     
@@ -410,7 +410,7 @@ class SellersController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     
     //MARK:- Near By Search
-    func adForest_nearBySearch(param: NSDictionary) {
+    func nearBySearch(param: NSDictionary) {
         self.showLoader()
         AddsHandler.nearbyAddsSearch(params: param, success: { (successResponse) in
             self.stopAnimating()

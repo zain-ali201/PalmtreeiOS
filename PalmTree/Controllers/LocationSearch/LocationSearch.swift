@@ -74,7 +74,7 @@ class LocationSearch: UIViewController , RangeSeekSliderDelegate, NVActivityIndi
     //MARK:- View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.adForest_populateData()
+        self.populateData()
         self.hideBackButton()
         self.hideKeyboard()
         self.googleAnalytics(controllerName: "Location Search")
@@ -133,7 +133,7 @@ class LocationSearch: UIViewController , RangeSeekSliderDelegate, NVActivityIndi
         }
     }
 
-    func adForest_populateData() {
+    func populateData() {
         if let settingsInfo = defaults.object(forKey: "settings") {
             let  settingObject = NSKeyedUnarchiver.unarchiveObject(with: settingsInfo as! Data) as! [String : Any]
             let model = SettingsRoot(fromDictionary: settingObject)

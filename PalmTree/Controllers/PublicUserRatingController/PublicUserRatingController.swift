@@ -37,7 +37,7 @@ class PublicUserRatingController: UIViewController, UITableViewDelegate, UITable
         self.showBackButton()
         let param: [String: Any] = ["author_id": adAuthorID]
         print(param)
-        self.adForest_ratingData(param: param as NSDictionary)
+        self.ratingData(param: param as NSDictionary)
     }
 
     //MARK: - Custom
@@ -150,7 +150,7 @@ class PublicUserRatingController: UIViewController, UITableViewDelegate, UITable
                     } else {
                         let param: [String: Any]  =  ["author_id": self.adAuthorID, "ratting": cell.rating,"comments": comment, "is_reply": false]
                         print(param)
-                        self.adForest_rating(param: param as NSDictionary)
+                        self.rating(param: param as NSDictionary)
                         cell.txtComment.text = ""
                     }
                 }
@@ -178,7 +178,7 @@ class PublicUserRatingController: UIViewController, UITableViewDelegate, UITable
         }
     }
     //MARK:- API Call
-    func adForest_ratingData(param: NSDictionary) {
+    func ratingData(param: NSDictionary) {
         self.showLoader()
         AddsHandler.ratingToPublicUser(parameter: param, success: { (successResponse) in
             self.stopAnimating()
@@ -205,7 +205,7 @@ class PublicUserRatingController: UIViewController, UITableViewDelegate, UITable
     }
     
     //MARK:- API Call
-    func adForest_rating(param: NSDictionary) {
+    func rating(param: NSDictionary) {
         self.showLoader()
         AddsHandler.postUserRating(param: param, success: { (successResponse) in
             self.stopAnimating()

@@ -83,7 +83,7 @@ class ExpireAdsCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.adForest_settingsData()
+        self.settingsData()
     }
     
     
@@ -110,7 +110,7 @@ class ExpireAdsCollectionViewCell: UICollectionViewCell {
     }
     
     //MARK:- Custom
-    func adForest_settingsData() {
+    func settingsData() {
         if let settingsInfo = defaults.object(forKey: "settings") {
             settingObject = NSKeyedUnarchiver.unarchiveObject(with: settingsInfo as! Data) as! [String : Any]
             let model = SettingsRoot(fromDictionary: settingObject)

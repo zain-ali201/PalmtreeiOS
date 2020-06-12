@@ -71,7 +71,7 @@ class BlogController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 self.addLeftBarButtonWithImage()
             }
         }
-        self.adForest_blogData()
+        self.blogData()
         if defaults.bool(forKey: "isGuest") {
             self.oltAdPost.isHidden = true
         }
@@ -186,7 +186,7 @@ class BlogController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if indexPath.row == dataArray.count - 1 && currentPage < maximumPage {
             currentPage = currentPage + 1
             let param: [String: Any] = ["page_number": currentPage]
-            self.adForest_loadMoreData(param: param as NSDictionary)
+            self.loadMoreData(param: param as NSDictionary)
         }
     }
     
@@ -257,7 +257,7 @@ class BlogController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     //MARK:- API Call
     
-    func adForest_blogData() {
+    func blogData() {
         self.showLoader()
         UserHandler.blogData(success: { (successResponse) in
             self.stopAnimating()
@@ -281,7 +281,7 @@ class BlogController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     //more blog data
     
-    func adForest_loadMoreData(param: NSDictionary) {
+    func loadMoreData(param: NSDictionary) {
         self.showLoader()
         UserHandler.moreBlogData(parameter: param, success: { (successResponse) in
             self.stopAnimating()
@@ -310,11 +310,11 @@ class BlogController: UIViewController, UITableViewDelegate, UITableViewDataSour
            if isSearch {
                let param: [String: Any] = ["nearby_latitude": lat, "nearby_longitude": long, "nearby_distance": searchDistance]
                print(param)
-               self.adForest_nearBySearch(param: param as NSDictionary)
+               self.nearBySearch(param: param as NSDictionary)
            } else {
                let param: [String: Any] = ["nearby_latitude": 0.0, "nearby_longitude": 0.0, "nearby_distance": searchDistance]
                print(param)
-               self.adForest_nearBySearch(param: param as NSDictionary)
+               self.nearBySearch(param: param as NSDictionary)
            }
        }
        
@@ -490,7 +490,7 @@ class BlogController: UIViewController, UITableViewDelegate, UITableViewDataSour
        
        
        //MARK:- Near By Search
-       func adForest_nearBySearch(param: NSDictionary) {
+       func nearBySearch(param: NSDictionary) {
            self.showLoader()
            AddsHandler.nearbyAddsSearch(params: param, success: { (successResponse) in
                self.stopAnimating()

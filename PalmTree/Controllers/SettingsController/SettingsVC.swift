@@ -11,6 +11,7 @@ import UIKit
 class SettingsVC: UIViewController {
 
     //MARK:- Outlets
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var signinView: UIView!
     @IBOutlet weak var signoutView: UIView!
 
@@ -26,17 +27,74 @@ class SettingsVC: UIViewController {
         {
             signinView.alpha = 0
             signoutView.alpha = 1
+            
         }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        if UserDefaults.standard.bool(forKey: "isLogin")
+        {
+            scrollView.contentSize = CGSize(width: 0, height: 730)
+        }
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 
     //MARK:- IBActions
     @IBAction func backBtnAction(_ sender: Any)
     {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func signinBtnAction(_ sender: Any)
+    {
+        let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+        let navController = UINavigationController(rootViewController: loginVC)
+        self.present(navController, animated:true, completion: nil)
+    }
+    
+    @IBAction func signoutBtnAction(_ sender: Any)
+    {
+        let alert = UIAlertController(title: nil, message: "Are you sure you want to signout?", preferredStyle: .alert)
+        let yes = UIAlertAction(title: "YES", style: .default) { (action) in
+            
+            defaults.set(false, forKey: "isLogin")
+            defaults.set(false, forKey: "isGuest")
+            defaults.set(false, forKey: "isSocial")
+            FacebookAuthentication.signOut()
+            GoogleAuthenctication.signOut()
+            
+            self.navigationController?.popToViewController(homeVC, animated: true)
+        }
+        
+        let no = UIAlertAction(title: "NO", style: .cancel) { (action) in
+            
+        }
+        
+        alert.addAction(yes)
+        alert.addAction(no)
+        self.presentVC(alert)
+    }
+    
+    @IBAction func termsBtnAction(button: UIButton)
+    {
+        if button.tag == 1001
+        {
+            let termsVC = self.storyboard?.instantiateViewController(withIdentifier: "TermsConditionsController") as! TermsConditionsController
+            self.navigationController?.pushViewController(termsVC, animated: true)
+        }
+        else if button.tag == 1002
+        {
+            let privacyVC = self.storyboard?.instantiateViewController(withIdentifier: "PrivacyController") as! PrivacyController
+            self.navigationController?.pushViewController(privacyVC, animated: true)
+        }
+        else if button.tag == 1003
+        {
+            
+        }
     }
 }

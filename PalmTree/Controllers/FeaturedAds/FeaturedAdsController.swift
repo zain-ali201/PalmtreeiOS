@@ -96,38 +96,38 @@ class FeaturedAdsController: UIViewController, UIScrollViewDelegate, UICollectio
         super.viewDidLoad()
         self.addLeftBarButtonWithImage()
         self.adMob()
-        self.adForest_featuredAdsData()
+        self.featuredAdsData()
         self.googleAnalytics(controllerName: "Featured Ads Controller")
         if defaults.bool(forKey: "isGuest") {
             self.oltAdPost.isHidden = true
         }
-        //self.adForest_featuredAdsData()
+        //self.featuredAdsData()
         navigationButtons()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-         self.adForest_featuredAdsData()
+         self.featuredAdsData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 //        if AddsHandler.sharedInstance.objMyAds == nil{
-//            self.adForest_featuredAdsData()
+//            self.featuredAdsData()
 //        }
     }
     //MARK: - Custom
     
   
     @objc func refreshTableView() {
-        adForest_featuredAdsData()
+        featuredAdsData()
     }
     
     func showLoader() {
         self.startAnimating(Constants.activitySize.size, message: Constants.loaderMessages.loadingMessage.rawValue,messageFont: UIFont.systemFont(ofSize: 14), type: NVActivityIndicatorType.ballClipRotatePulse)
     }
     
-    func adForest_populateData() {
+    func populateData() {
         if AddsHandler.sharedInstance.objMyAds != nil {
             let objData = AddsHandler.sharedInstance.objMyAds
             self.title = objData?.pageTitle
@@ -289,7 +289,7 @@ class FeaturedAdsController: UIViewController, UIScrollViewDelegate, UICollectio
         if indexPath.row == dataArray.count - 1 && currentPage < maximumPage {
             currentPage = currentPage + 1
             let param: [String: Any] = ["page_number": currentPage]
-            self.adForest_loadMoreData(param: param as NSDictionary)
+            self.loadMoreData(param: param as NSDictionary)
         }        
     }
     
@@ -358,7 +358,7 @@ class FeaturedAdsController: UIViewController, UIScrollViewDelegate, UICollectio
     //MARK:- API Calls
     //Featured ads data
     
-    func adForest_featuredAdsData() {
+    func featuredAdsData() {
         self.showLoader()
         AddsHandler.featuredAds(success: { (successResponse) in
             self.stopAnimating()
@@ -369,7 +369,7 @@ class FeaturedAdsController: UIViewController, UIScrollViewDelegate, UICollectio
                 self.maximumPage = successResponse.data.pagination.maxNumPages
                 AddsHandler.sharedInstance.objMyAds = successResponse.data
                 self.dataArray = successResponse.data.ads
-                self.adForest_populateData()
+                self.populateData()
                 self.collectionView.reloadData()
             }
             else {
@@ -384,7 +384,7 @@ class FeaturedAdsController: UIViewController, UIScrollViewDelegate, UICollectio
     }
     
     //Load More Data
-    func adForest_loadMoreData(param: NSDictionary) {
+    func loadMoreData(param: NSDictionary) {
         self.showLoader()
         AddsHandler.moreFeaturedAdsData(param: param, success: { (successResponse) in
             self.stopAnimating()
@@ -392,7 +392,7 @@ class FeaturedAdsController: UIViewController, UIScrollViewDelegate, UICollectio
             if successResponse.success {
                 AddsHandler.sharedInstance.objMyAds = successResponse.data
                 self.dataArray.append(contentsOf: successResponse.data.ads)
-                self.adForest_populateData()
+                self.populateData()
                 self.collectionView.reloadData()
             }
             else {
@@ -414,11 +414,11 @@ class FeaturedAdsController: UIViewController, UIScrollViewDelegate, UICollectio
         if isSearch {
             let param: [String: Any] = ["nearby_latitude": lat, "nearby_longitude": long, "nearby_distance": searchDistance]
             print(param)
-            self.adForest_nearBySearch(param: param as NSDictionary)
+            self.nearBySearch(param: param as NSDictionary)
         } else {
             let param: [String: Any] = ["nearby_latitude": 0.0, "nearby_longitude": 0.0, "nearby_distance": searchDistance]
             print(param)
-            self.adForest_nearBySearch(param: param as NSDictionary)
+            self.nearBySearch(param: param as NSDictionary)
         }
     }
     
@@ -594,7 +594,7 @@ class FeaturedAdsController: UIViewController, UIScrollViewDelegate, UICollectio
     
     
     //MARK:- Near By Search
-    func adForest_nearBySearch(param: NSDictionary) {
+    func nearBySearch(param: NSDictionary) {
         self.showLoader()
         AddsHandler.nearbyAddsSearch(params: param, success: { (successResponse) in
             self.stopAnimating()

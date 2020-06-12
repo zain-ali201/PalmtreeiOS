@@ -9,7 +9,7 @@
 import UIKit
 import NVActivityIndicatorView
 
-class MyAdsController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, NVActivityIndicatorViewable{
+class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, NVActivityIndicatorViewable{
 
     //MARK:- Outlets
     @IBOutlet weak var signinView: UIView!
@@ -22,6 +22,8 @@ class MyAdsController: UIViewController, UICollectionViewDelegate, UICollectionV
     @IBOutlet weak var lblEmailverified: UILabel!
     @IBOutlet weak var lblJoining: UILabel!
     
+    @IBOutlet weak var tblView: UITableView!
+    
     //MARK:- Properties
    
     var dataArray = [MyAdsAd]()
@@ -32,12 +34,14 @@ class MyAdsController: UIViewController, UICollectionViewDelegate, UICollectionV
     var currentPage = 0
     var maximumPage = 0
     
+    var count = 0
+    
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:
             #selector(refreshTableView),
                                  for: UIControlEvents.valueChanged)
-        refreshControl.tintColor = UIColor.red
+//        refreshControl.tintColor = UIColor.red
         
         return refreshControl
     }()
@@ -48,6 +52,7 @@ class MyAdsController: UIViewController, UICollectionViewDelegate, UICollectionV
         super.viewDidLoad()
         
         self.googleAnalytics(controllerName: "My Ads Controller")
+        myAdsVC = self
         
         imgPicture.layer.cornerRadius = 34
         imgPicture.layer.masksToBounds = true
@@ -56,23 +61,43 @@ class MyAdsController: UIViewController, UICollectionViewDelegate, UICollectionV
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        checkLogin()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        checkLogin()
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    func checkLogin()
+    {
         if UserDefaults.standard.bool(forKey: "isLogin") == false
         {
             signinView.alpha = 1
             infoView.alpha = 0
+            lampView.alpha = 1
+            count = 0
         }
         else
         {
-            self.adForest_getAddsData()
+//            self.getAddsData()
             signinView.alpha = 0
             infoView.alpha = 1
+            lampView.alpha = 0
+            count = 6
+            tblView.reloadData()
         }
     }
     
     //MARK: - Custom
 
     @objc func refreshTableView() {
-       adForest_getAddsData()
+       getAddsData()
     }
     
     func showLoader()
@@ -89,7 +114,9 @@ class MyAdsController: UIViewController, UICollectionViewDelegate, UICollectionV
     
     @IBAction func signinBtnAction(_ sender: Any)
     {
-        
+        let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+        let navController = UINavigationController(rootViewController: loginVC)
+        self.present(navController, animated:true, completion: nil)
     }
     
     @IBAction func menuBtnAction(_ button: UIButton)
@@ -108,13 +135,23 @@ class MyAdsController: UIViewController, UICollectionViewDelegate, UICollectionV
             }
             else
             {
-                let adPostVC = self.storyboard?.instantiateViewController(withIdentifier: "AadPostController") as! AadPostController
+                let adPostVC = self.storyboard?.instantiateViewController(withIdentifier: "AdPostVC") as! AdPostVC
                 self.navigationController?.pushViewController(adPostVC, animated: false)
             }
         }
         else if button.tag == 1004
         {
-            
+            if defaults.bool(forKey: "isLogin") == false
+            {
+                let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+                let navController = UINavigationController(rootViewController: loginVC)
+                self.present(navController, animated:true, completion: nil)
+            }
+            else
+            {
+                let favouritesVC = self.storyboard?.instantiateViewController(withIdentifier: "FavouritesVC") as! FavouritesVC
+                self.navigationController?.pushViewController(favouritesVC, animated: false)
+            }
         }
         else if button.tag == 1005
         {
@@ -126,98 +163,124 @@ class MyAdsController: UIViewController, UICollectionViewDelegate, UICollectionV
             }
             else
             {
-                
+                let messagesVC = self.storyboard?.instantiateViewController(withIdentifier: "MessagesVC") as! MessagesVC
+                self.navigationController?.pushViewController(messagesVC, animated: false)
             }
         }
     }
     
     //MARK:- Collection View Delegate Methods
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-       return 1
-    }
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if dataArray.count == 0 {
-            lampView.alpha = 1
-        } else {
-            lampView.alpha = 0
-            collectionView.restore()
-        }
-        return dataArray.count
+//    func numberOfSections(in collectionView: UICollectionView) -> Int {
+//       return 1
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+////        if dataArray.count == 0 {
+////            lampView.alpha = 1
+////        } else {
+////            lampView.alpha = 0
+////            collectionView.restore()
+////        }
+////        return dataArray.count
+//        return count
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        let cell: MyAdsCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyAdsCollectionCell", for: indexPath) as! MyAdsCollectionCell
+//
+////        let objData = dataArray[indexPath.row]
+////
+////        for images in objData.adImages {
+////            if let imgUrl = URL(string: images.thumb) {
+////                cell.imgPicture.setImage(from: imgUrl)
+////            }
+////        }
+////
+////        if let userName = objData.adTitle {
+////            cell.lblName.text = userName
+////        }
+////        if let price = objData.adPrice.price {
+////            cell.lblPrice.text = price
+////        }
+////
+////        if let addStatus = objData.adStatus.statusText {
+////            cell.lblAddType.text = addStatus
+////            //set drop down button status
+////            cell.buttonAddType.setTitle(addStatus, for: .normal)
+////        }
+//
+//        return cell
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+////        let addDetailVC = self.storyboard?.instantiateViewController(withIdentifier: AddDetailController.className) as! AddDetailController
+////        addDetailVC.ad_id = dataArray[indexPath.row].adId
+////        self.navigationController?.pushViewController(addDetailVC, animated: true)
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+//        if collectionView.isDragging {
+//            cell.transform = CGAffineTransform.init(scaleX: 0.5, y: 0.5)
+//            UIView.animate(withDuration: 0.3, animations: {
+//                cell.transform = CGAffineTransform.identity
+//            })
+//        }
+////        if indexPath.row == dataArray.count - 1 && currentPage < maximumPage {
+////            currentPage = currentPage + 1
+////            let param: [String: Any] = ["page_number": currentPage]
+////            print(param)
+////            self.loadMoreData(param: param as NSDictionary)
+////        }
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//
+//        return CGSize(width: screenWidth - 12, height: 190)
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        return UIEdgeInsets.zero
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+//        return 0
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+//        return 0
+//    }
+    
+    //MARK:- TableView Delegates
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: MyAdsCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyAdsCollectionCell", for: indexPath) as! MyAdsCollectionCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let objData = dataArray[indexPath.row]
-        
-        for images in objData.adImages {
-            if let imgUrl = URL(string: images.thumb) {
-                cell.imgPicture.setImage(from: imgUrl)
-            }
-        }
-        
-        if let userName = objData.adTitle {
-            cell.lblName.text = userName
-        }
-        if let price = objData.adPrice.price {
-            cell.lblPrice.text = price
-        }
-        
-        if let addStatus = objData.adStatus.statusText {
-            cell.lblAddType.text = addStatus
-            //set drop down button status
-            cell.buttonAddType.setTitle(addStatus, for: .normal)
-        }
+        let cell: SearchAlertTableCell = tableView.dequeueReusableCell(withIdentifier: "SearchAlertTableCell", for: indexPath) as! SearchAlertTableCell
         
         return cell
     }
-   
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let addDetailVC = self.storyboard?.instantiateViewController(withIdentifier: AddDetailController.className) as! AddDetailController
-        addDetailVC.ad_id = dataArray[indexPath.row].adId
-        self.navigationController?.pushViewController(addDetailVC, animated: true)
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let productDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "ProductDetailVC") as! ProductDetailVC
+        self.navigationController?.pushViewController(productDetailVC, animated: true)
     }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if collectionView.isDragging {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if tableView.isDragging {
             cell.transform = CGAffineTransform.init(scaleX: 0.5, y: 0.5)
             UIView.animate(withDuration: 0.3, animations: {
                 cell.transform = CGAffineTransform.identity
             })
         }
-        if indexPath.row == dataArray.count - 1 && currentPage < maximumPage {
-            currentPage = currentPage + 1
-            let param: [String: Any] = ["page_number": currentPage]
-            print(param)
-            self.adForest_loadMoreData(param: param as NSDictionary)
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if Constants.isiPadDevice {
-            let width = collectionView.bounds.width/3.0
-            return CGSize(width: width, height: 250)
-        }
-        let width = collectionView.bounds.width/2.0
-        return CGSize(width: width, height: 250)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets.zero
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
     }
     
     //MARK:- API Calls
     //Ads Data
-    func adForest_getAddsData() {
+    func getAddsData() {
         self.showLoader()
         AddsHandler.myAds(success: { (successResponse) in
             self.stopAnimating()
@@ -242,7 +305,7 @@ class MyAdsController: UIViewController, UICollectionViewDelegate, UICollectionV
         }
     }
     
-    func adForest_loadMoreData(param: NSDictionary) {
+    func loadMoreData(param: NSDictionary) {
         self.showLoader()
         AddsHandler.moreMyAdsData(param: param, success: { (successResponse) in
             self.stopAnimating()
@@ -251,7 +314,7 @@ class MyAdsController: UIViewController, UICollectionViewDelegate, UICollectionV
                 AddsHandler.sharedInstance.objMyAds = successResponse.data
                 self.dataArray.append(contentsOf: successResponse.data.ads)
                 
-//                self.collectionView.reloadData()
+                self.tblView.reloadData()
             }
             else {
                 let alert = Constants.showBasicAlert(message: successResponse.message)

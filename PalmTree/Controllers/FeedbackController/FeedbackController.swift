@@ -125,7 +125,7 @@ class FeedbackController: UIViewController, NVActivityIndicatorViewable, UITextV
         else {
             let param : [String: Any] = ["subject": subject, "email": email, "message": description]
             print(param)
-            self.adForest_submit(param: param as NSDictionary)
+            self.submit(param: param as NSDictionary)
         }
     }
     
@@ -138,7 +138,7 @@ class FeedbackController: UIViewController, NVActivityIndicatorViewable, UITextV
     }
     
     //MARK:- API Call
-    func adForest_submit(param: NSDictionary) {
+    func submit(param: NSDictionary) {
         self.showLoader()
         UserHandler.feedback(parameter: param, success: { (successResponse) in
             self.stopAnimating()

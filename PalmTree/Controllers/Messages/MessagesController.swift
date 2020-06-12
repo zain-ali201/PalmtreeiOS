@@ -116,11 +116,11 @@ class MessagesController: ButtonBarPagerTabStripViewController, NVActivityIndica
              if isSearch {
                  let param: [String: Any] = ["nearby_latitude": lat, "nearby_longitude": long, "nearby_distance": searchDistance]
                  print(param)
-                 self.adForest_nearBySearch(param: param as NSDictionary)
+                 self.nearBySearch(param: param as NSDictionary)
              } else {
                  let param: [String: Any] = ["nearby_latitude": 0.0, "nearby_longitude": 0.0, "nearby_distance": searchDistance]
                  print(param)
-                 self.adForest_nearBySearch(param: param as NSDictionary)
+                 self.nearBySearch(param: param as NSDictionary)
              }
          }
          
@@ -296,7 +296,7 @@ class MessagesController: ButtonBarPagerTabStripViewController, NVActivityIndica
        
        
        //MARK:- Near By Search
-          func adForest_nearBySearch(param: NSDictionary) {
+          func nearBySearch(param: NSDictionary) {
               self.showLoader()
               AddsHandler.nearbyAddsSearch(params: param, success: { (successResponse) in
                   self.stopAnimating()
