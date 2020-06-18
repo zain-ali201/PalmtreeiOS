@@ -14,6 +14,12 @@ class SettingsVC: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var signinView: UIView!
     @IBOutlet weak var signoutView: UIView!
+    
+    @IBOutlet weak var lblRights: UILabel!
+    @IBOutlet weak var lblVersion: UILabel!
+    
+    @IBOutlet weak var lblLang: UILabel!
+    @IBOutlet weak var lblLang1: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +35,12 @@ class SettingsVC: UIViewController {
             signoutView.alpha = 1
             
         }
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy"
+        
+        lblRights.text = String(format: "Copyrights %@ Palmtree", formatter.string(from: Date()))
+        lblVersion.text = (Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -36,7 +48,7 @@ class SettingsVC: UIViewController {
         
         if UserDefaults.standard.bool(forKey: "isLogin")
         {
-            scrollView.contentSize = CGSize(width: 0, height: 730)
+            scrollView.contentSize = CGSize(width: 0, height: 780)
         }
     }
     

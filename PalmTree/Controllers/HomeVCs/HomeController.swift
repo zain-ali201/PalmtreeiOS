@@ -117,6 +117,8 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.subscribeToTopicMessage()
         self.showLoader()
         self.homeData()
+        
+//        self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
     }
     
     override func viewWillAppear(_ animated: Bool) {

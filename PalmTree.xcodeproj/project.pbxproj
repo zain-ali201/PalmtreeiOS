@@ -400,6 +400,7 @@
 		18711CE72089DA3F00474737 /* BlogPostRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18711CE62089DA3F00474737 /* BlogPostRoot.swift */; };
 		18711CE92089DA5600474737 /* BlogPostExtra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18711CE82089DA5600474737 /* BlogPostExtra.swift */; };
 		18711CEB2089DA6B00474737 /* BlogPostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18711CEA2089DA6B00474737 /* BlogPostData.swift */; };
+		187C6072249B9852006BD164 /* FilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187C6071249B9851006BD164 /* FilterVC.swift */; };
 		187D3F5C20D1B0120014ED2C /* LatestAddsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187D3F5B20D1B0120014ED2C /* LatestAddsCell.swift */; };
 		187EBCBF20BD6BB300B3277B /* CollectionViewSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187EBCBE20BD6BB300B3277B /* CollectionViewSettings.swift */; };
 		18800F532344B520000F8358 /* AllowCatsValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18800F522344B520000F8358 /* AllowCatsValue.swift */; };
@@ -995,6 +996,7 @@
 		18711CE62089DA3F00474737 /* BlogPostRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogPostRoot.swift; sourceTree = "<group>"; };
 		18711CE82089DA5600474737 /* BlogPostExtra.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogPostExtra.swift; sourceTree = "<group>"; };
 		18711CEA2089DA6B00474737 /* BlogPostData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogPostData.swift; sourceTree = "<group>"; };
+		187C6071249B9851006BD164 /* FilterVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterVC.swift; sourceTree = "<group>"; };
 		187D3F5B20D1B0120014ED2C /* LatestAddsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestAddsCell.swift; sourceTree = "<group>"; };
 		187EBCBE20BD6BB300B3277B /* CollectionViewSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewSettings.swift; sourceTree = "<group>"; };
 		18800F522344B520000F8358 /* AllowCatsValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AllowCatsValue.swift; path = emplate/AllowCatsValue.swift; sourceTree = "<group>"; };
@@ -2811,6 +2813,7 @@
 			children = (
 				ABDBD3BA248E663E00DCFB0E /* SearchVC.swift */,
 				ABC9DA13248F7A5D0065D8BE /* AdFilterListVC.swift */,
+				187C6071249B9851006BD164 /* FilterVC.swift */,
 				ABF59BB5249003BA00416EBC /* SearchVCs */,
 			);
 			path = AdvancedSearch;
@@ -3739,6 +3742,7 @@
 				180DC40B2057F21500A75C60 /* BlogDetailController.swift in Sources */,
 				181DDA8A23335918001FF048 /* ReplyReactionCell.swift in Sources */,
 				18AD93C0206D199200330ABF /* BlogDetailPagination.swift in Sources */,
+				187C6072249B9852006BD164 /* FilterVC.swift in Sources */,
 				18C2CD08206A502200235E0E /* MyAdsAdPrice.swift in Sources */,
 				18C2CCF6206A4F3000235E0E /* MyAdsProfile.swift in Sources */,
 				18196DFC2149185100F6515E /* CategoryDetailCell.swift in Sources */,
