@@ -311,7 +311,7 @@ extension NSMutableAttributedString {
         if foundRange.location != NSNotFound
         {
             self.addAttribute(.link, value: linkURL, range: foundRange)
-            self.addAttribute(NSAttributedStringKey.foregroundColor,value:UIColor(red: 73.0/255.0, green: 207.0/255.0, blue: 5.0/255.0, alpha: 1),range:foundRange)
+            self.addAttribute(NSAttributedStringKey.foregroundColor,value:UIColor(red: 58.0/255.0, green: 171.0/255.0, blue: 51.0/255.0, alpha: 1),range:foundRange)
             return true
         }
         return false

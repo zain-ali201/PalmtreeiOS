@@ -19,9 +19,13 @@ class ThankyouVC: UIViewController
         super.viewDidLoad()
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
+    }
+    
     @IBAction func crossBtnAction(_ sender: Any)
     {
-        self.navigationController?.popToViewController(homeVC, animated: false)
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func postAdBtnAction(_ sender: Any)

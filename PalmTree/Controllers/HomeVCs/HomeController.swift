@@ -379,23 +379,12 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
           
         if section == 0
         {
-            if Constants.isiPadDevice
-            {
-                height = 150
-            }
-            else
-            {
-                let itemHeight = CollectionViewSettings.getItemWidth(boundWidth: tableView.bounds.size.width)
-                let totalRow = ceil(CGFloat(categoryArray.count) / CollectionViewSettings.column)
-                let totalTopBottomOffSet = CollectionViewSettings.offset + CollectionViewSettings.offset
-                let totalSpacing = CGFloat(totalRow - 1) * CollectionViewSettings.minLineSpacing
-                if Constants.isiPhone5 {
-                    totalHeight = ((itemHeight * CGFloat(totalRow)) + totalTopBottomOffSet + totalSpacing)
-                } else {
-                    totalHeight = ((itemHeight * CGFloat(totalRow)) + totalTopBottomOffSet + totalSpacing)
-                }
-                height =  totalHeight
-            }
+            let itemHeight = CollectionViewSettings.getItemWidth(boundWidth: tableView.bounds.size.width)
+            let totalRow = ceil(CGFloat(categoryArray.count) / CollectionViewSettings.column)
+            let totalTopBottomOffSet = CollectionViewSettings.offset + CollectionViewSettings.offset
+            let totalSpacing = CGFloat(totalRow - 1) * CollectionViewSettings.minLineSpacing
+            totalHeight = ((itemHeight * CGFloat(totalRow)) + totalTopBottomOffSet + totalSpacing)
+            height =  totalHeight
         }
         else if section == 1
         {
@@ -479,7 +468,10 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             else
             {
                 let adPostVC = self.storyboard?.instantiateViewController(withIdentifier: "AdPostVC") as! AdPostVC
-                self.navigationController?.pushViewController(adPostVC, animated: false)
+                let navController = UINavigationController(rootViewController: adPostVC)
+                navController.navigationBar.isHidden = true
+                navController.modalPresentationStyle = .fullScreen
+                self.present(navController, animated:true, completion: nil)
             }
         }
         else if button.tag == 1004

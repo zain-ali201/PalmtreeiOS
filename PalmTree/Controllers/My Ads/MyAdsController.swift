@@ -56,18 +56,18 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         imgPicture.layer.cornerRadius = 34
         imgPicture.layer.masksToBounds = true
+        
+        checkLogin()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        checkLogin()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        checkLogin()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

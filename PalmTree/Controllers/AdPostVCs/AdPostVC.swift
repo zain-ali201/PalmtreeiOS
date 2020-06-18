@@ -33,14 +33,7 @@ class AdPostVC: UIViewController
     
     @IBAction func cancelBtnACtion(_ sender: Any)
     {
-        if fromVC == "Thankyou"
-        {
-            self.navigationController?.popToViewController(homeVC, animated: false)
-        }
-        else
-        {
-            self.navigationController?.popViewController(animated: false)
-        }
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func postAdBtnACtion(_ sender: Any)
