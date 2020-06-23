@@ -99,6 +99,13 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var showVerticalAds: String = UserDefaults.standard.string(forKey: "homescreenLayout")!
     var latestHorizontalSingleAd:String = UserDefaults.standard.string(forKey: "homescreenLayout")!
     
+    //MenuButtons
+    @IBOutlet weak var btnHome: UIButton!
+    @IBOutlet weak var btnPalmtree: UIButton!
+    @IBOutlet weak var btnPost: UIButton!
+    @IBOutlet weak var btnWishlist: UIButton!
+    @IBOutlet weak var btnMessages: UIButton!
+    
     //MARK:- View Life Cycle
     
     override func viewDidLoad() {
@@ -117,16 +124,30 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.subscribeToTopicMessage()
         self.showLoader()
         self.homeData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         
-//        self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        if defaults.string(forKey: "languageCode") == "ar"
+        {
+            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            for view in self.view.subviews
+//            {
+//                view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            }
+            changeMenuButtons()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        
         currentVc = self
                 //self.homeData()
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     @objc func refreshTableView() {
@@ -134,6 +155,21 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         //        self.perform(#selector(self.nokri_showNavController1), with: nil, afterDelay: 0.5)
         tableView.reloadData()
         self.refreshControl.endRefreshing()
+    }
+    
+    func changeMenuButtons()
+    {
+        btnHome.setImage(UIImage(named: "home_active_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
+        btnPalmtree.setImage(UIImage(named: "mypalmtree_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
+        btnPost.setImage(UIImage(named: "post_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
+        btnWishlist.setImage(UIImage(named: "wishlist_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
+        btnMessages.setImage(UIImage(named: "messages_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
+        
+        btnHome.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        btnPalmtree.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        btnPost.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        btnWishlist.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        btnMessages.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
     }
     
     //MARK:- Topic Message

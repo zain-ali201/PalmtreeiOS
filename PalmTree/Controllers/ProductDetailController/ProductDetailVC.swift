@@ -33,6 +33,11 @@ class ProductDetailVC: UIViewController{
         super.viewDidLoad()
         
 //        self.googleAnalytics(controllerName: "Watchlist Controller")
+        
+        if defaults.string(forKey: "languageCode") == "ar"
+        {
+            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {

@@ -39,8 +39,18 @@ class SettingsVC: UIViewController {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy"
         
-        lblRights.text = String(format: "Copyrights %@ Palmtree", formatter.string(from: Date()))
+        
         lblVersion.text = (Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String)
+        
+        if defaults.string(forKey: "languageCode") == "ar"
+        {
+//            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblRights.text = String(format: "Palmtree %@ حقوق النشر", formatter.string(from: Date()))
+        }
+        else
+        {
+            lblRights.text = String(format: "Copyrights %@ Palmtree", formatter.string(from: Date()))
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -90,6 +100,12 @@ class SettingsVC: UIViewController {
         alert.addAction(yes)
         alert.addAction(no)
         self.presentVC(alert)
+    }
+    
+    @IBAction func languageBtnAction(_ sender: Any)
+    {
+        let languageVC = self.storyboard?.instantiateViewController(withIdentifier: "LanguageVC") as! LanguageVC
+        self.present(languageVC, animated:true, completion: nil)
     }
     
     @IBAction func termsBtnAction(button: UIButton)

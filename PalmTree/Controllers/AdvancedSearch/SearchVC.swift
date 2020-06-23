@@ -28,7 +28,7 @@ class SearchVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.googleAnalytics(controllerName: "Watchlist Controller")
+        self.googleAnalytics(controllerName: "Search Controller")
     }
 
     override func viewDidAppear(_ animated: Bool) {

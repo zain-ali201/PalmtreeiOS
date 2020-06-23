@@ -21,6 +21,10 @@ import SwiftyStoreKit
 import NotificationBannerSwift
 import GoogleMobileAds
 import LinkedinSwift
+
+
+var languageCode = ""
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate, NotificationBannerDelegate {
     
@@ -88,6 +92,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         UITextField.appearance().tintColor = .black
         UITextView.appearance().tintColor = .black
+        
+        languageCode = UserDefaults.standard.string(forKey: "languageCode") ?? "en"
+        
+        if languageCode == "ar"
+        {
+            Bundle.setLanguage(UserDefaults.standard.string(forKey: "languageCode")!)
+            let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+            UIApplication.shared.keyWindow?.rootViewController = storyboard.instantiateInitialViewController()
+        }
         
         return true
     }
@@ -556,4 +569,33 @@ extension AppDelegate  {
         return nil
     }
     
+}
+
+var bundleKey: UInt8 = 0
+
+class AnyLanguageBundle: Bundle {
+
+override func localizedString(forKey key: String,
+                              value: String?,
+                              table tableName: String?) -> String {
+
+    guard let path = objc_getAssociatedObject(self, &bundleKey) as? String,
+        let bundle = Bundle(path: path) else {
+        return super.localizedString(forKey: key, value: value, table: tableName)
+    }
+
+    return bundle.localizedString(forKey: key, value: value, table: tableName)
+  }
+}
+
+extension Bundle {
+
+class func setLanguage(_ language: String) {
+
+    defer {
+        object_setClass(Bundle.main, AnyLanguageBundle.self)
+    }
+
+    objc_setAssociatedObject(Bundle.main, &bundleKey, Bundle.main.path(forResource: language, ofType: "lproj"), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+  }
 }

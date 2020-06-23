@@ -23,6 +23,11 @@ class CategoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         super.viewDidLoad()
         
         createCategoriesView()
+        
+        if defaults.string(forKey: "languageCode") == "ar"
+        {
+            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

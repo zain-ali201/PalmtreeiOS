@@ -30,6 +30,11 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate, NVAct
         self.hideKeyboard()
         
         txtFieldsWithRtl()
+        
+        if defaults.string(forKey: "languageCode") == "ar"
+        {
+            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

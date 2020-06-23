@@ -23,11 +23,15 @@ class FilterVC: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.googleAnalytics(controllerName: "Watchlist Controller")
+        self.googleAnalytics(controllerName: "Refine Filter Controller")
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     //MARK:- IBActions

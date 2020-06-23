@@ -24,7 +24,7 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.googleAnalytics(controllerName: "AdFilterList Controller")
+        self.googleAnalytics(controllerName: "Advance Search Controller")
         
         createFilterView()
     }

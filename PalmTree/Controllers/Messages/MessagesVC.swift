@@ -12,12 +12,23 @@ import NVActivityIndicatorView
 class MessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
 {   
     //MARK:- Properties
-    
+    //MenuButtons
+    @IBOutlet weak var btnHome: UIButton!
+    @IBOutlet weak var btnPalmtree: UIButton!
+    @IBOutlet weak var btnPost: UIButton!
+    @IBOutlet weak var btnWishlist: UIButton!
+    @IBOutlet weak var btnMessages: UIButton!
 
     //MARK:- Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if defaults.string(forKey: "languageCode") == "ar"
+        {
+            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            changeMenuButtons()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -32,6 +43,20 @@ class MessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         return .lightContent
     }
     
+    func changeMenuButtons()
+    {
+        btnHome.setImage(UIImage(named: "home_active_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
+        btnPalmtree.setImage(UIImage(named: "mypalmtree_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
+        btnPost.setImage(UIImage(named: "post_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
+        btnWishlist.setImage(UIImage(named: "wishlist_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
+        btnMessages.setImage(UIImage(named: "messages_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
+        
+        btnHome.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        btnPalmtree.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        btnPost.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        btnWishlist.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        btnMessages.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+    }
     
     //MARK:- Actions
     
@@ -67,8 +92,20 @@ class MessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             }
             else
             {
-                let adPostVC = self.storyboard?.instantiateViewController(withIdentifier: "AdPostVC") as! AdPostVC
-                self.navigationController?.pushViewController(adPostVC, animated: false)
+                if defaults.bool(forKey: "isLogin") == false
+                {
+                    let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+                    let navController = UINavigationController(rootViewController: loginVC)
+                    self.present(navController, animated:true, completion: nil)
+                }
+                else
+                {
+                    let adPostVC = self.storyboard?.instantiateViewController(withIdentifier: "AdPostVC") as! AdPostVC
+                    let navController = UINavigationController(rootViewController: adPostVC)
+                    navController.navigationBar.isHidden = true
+                    navController.modalPresentationStyle = .fullScreen
+                    self.present(navController, animated:true, completion: nil)
+                }
             }
         }
         else if button.tag == 1004

@@ -435,7 +435,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sWk-ES-eb1">
-                                                                <rect key="frame" x="183.5" y="99" width="8.5" height="17"/>
+                                                                <rect key="frame" x="183.5" y="99" width="8" height="17"/>
                                                                 <fontDescription key="fontDescription" name="SFUIDisplay-Light" family="SF UI Display" pointSize="14"/>
                                                                 <color key="textColor" red="0.51372549020000002" green="0.51372549020000002" blue="0.50980392159999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
@@ -708,7 +708,7 @@
                                                                             <color key="titleColor" red="0.24313725489999999" green="0.19215686269999999" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
                                                                         </state>
                                                                         <connections>
-                                                                            <action selector="termsBtnActionWithButton:" destination="hgr-9b-SdT" eventType="touchUpInside" id="egm-IJ-RxG"/>
+                                                                            <action selector="languageBtnAction:" destination="hgr-9b-SdT" eventType="touchUpInside" id="6RL-Wg-Xbk"/>
                                                                         </connections>
                                                                     </button>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jf1-Xb-A4d">
@@ -980,7 +980,7 @@
                                                                             <color key="titleColor" red="0.24313725490196078" green="0.19215686274509802" blue="0.25882352941176467" alpha="1" colorSpace="calibratedRGB"/>
                                                                         </state>
                                                                         <connections>
-                                                                            <action selector="termsBtnActionWithButton:" destination="hgr-9b-SdT" eventType="touchUpInside" id="d73-jz-sKn"/>
+                                                                            <action selector="languageBtnAction:" destination="hgr-9b-SdT" eventType="touchUpInside" id="hWp-Th-CEh"/>
                                                                         </connections>
                                                                     </button>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aAF-Fd-8XA">
@@ -2671,7 +2671,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="TxE-F9-tjG" secondAttribute="height" multiplier="5:4" id="uM5-35-Fpr"/>
                                                 </constraints>
-                                                <state key="normal" image="home"/>
+                                                <state key="normal" image="home_en"/>
                                                 <connections>
                                                     <action selector="menuBtnAction:" destination="P2x-8v-SLv" eventType="touchUpInside" id="hGc-fu-3CM"/>
                                                 </connections>
@@ -2681,14 +2681,14 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="HEt-O3-16m" secondAttribute="height" multiplier="5:4" id="jus-a2-w8w"/>
                                                 </constraints>
-                                                <state key="normal" image="mypalmtree_active"/>
+                                                <state key="normal" image="mypalmtree_active_en"/>
                                             </button>
                                             <button opaque="NO" tag="1003" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Ny-pe-Llz">
                                                 <rect key="frame" x="151" y="0.0" width="76" height="60.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="5Ny-pe-Llz" secondAttribute="height" multiplier="5:4" id="yLZ-jY-PP4"/>
                                                 </constraints>
-                                                <state key="normal" image="post"/>
+                                                <state key="normal" image="post_en"/>
                                                 <connections>
                                                     <action selector="menuBtnAction:" destination="P2x-8v-SLv" eventType="touchUpInside" id="p8h-Lj-QFi"/>
                                                 </connections>
@@ -2698,7 +2698,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="PO7-pD-J22" secondAttribute="height" multiplier="5:4" id="9tm-xO-1Oh"/>
                                                 </constraints>
-                                                <state key="normal" image="wishlist"/>
+                                                <state key="normal" image="wishlist_en"/>
                                                 <connections>
                                                     <action selector="menuBtnAction:" destination="P2x-8v-SLv" eventType="touchUpInside" id="RUb-sh-5Ky"/>
                                                 </connections>
@@ -2708,7 +2708,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="czO-cb-41v" secondAttribute="height" multiplier="6:5" id="NT2-sx-TFQ"/>
                                                 </constraints>
-                                                <state key="normal" image="messages"/>
+                                                <state key="normal" image="messages_en"/>
                                                 <connections>
                                                     <action selector="menuBtnAction:" destination="P2x-8v-SLv" eventType="touchUpInside" id="2bH-9A-AJO"/>
                                                 </connections>
@@ -2780,6 +2780,11 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnHome" destination="TxE-F9-tjG" id="Jxy-mL-FfD"/>
+                        <outlet property="btnMessages" destination="czO-cb-41v" id="5It-1w-Rug"/>
+                        <outlet property="btnPalmtree" destination="HEt-O3-16m" id="6Nd-l3-baK"/>
+                        <outlet property="btnPost" destination="5Ny-pe-Llz" id="yrr-Gi-r29"/>
+                        <outlet property="btnWishlist" destination="PO7-pD-J22" id="X5z-kC-3ng"/>
                         <outlet property="imgPicture" destination="yaf-FS-GR7" id="L5O-Ci-eqc"/>
                         <outlet property="infoView" destination="BLA-Ju-O3q" id="SH1-pn-FzU"/>
                         <outlet property="lampView" destination="sAi-ty-iO4" id="8lB-Hv-UX6"/>
@@ -3208,7 +3213,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="XyC-AV-1FA" secondAttribute="height" multiplier="5:4" id="FyJ-Lh-C6O"/>
                                                 </constraints>
-                                                <state key="normal" image="home"/>
+                                                <state key="normal" image="home_en"/>
                                                 <connections>
                                                     <action selector="menuBtnAction:" destination="06V-mZ-8Gb" eventType="touchUpInside" id="seG-Dn-TFA"/>
                                                 </connections>
@@ -3218,7 +3223,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="gjr-Lk-kAK" secondAttribute="height" multiplier="5:4" id="OO1-9K-ENP"/>
                                                 </constraints>
-                                                <state key="normal" image="mypalmtree"/>
+                                                <state key="normal" image="mypalmtree_en"/>
                                                 <connections>
                                                     <action selector="menuBtnAction:" destination="06V-mZ-8Gb" eventType="touchUpInside" id="ZSG-f6-I49"/>
                                                 </connections>
@@ -3228,7 +3233,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="wy0-2g-eVt" secondAttribute="height" multiplier="5:4" id="Va1-qg-hlx"/>
                                                 </constraints>
-                                                <state key="normal" image="post"/>
+                                                <state key="normal" image="post_en"/>
                                                 <connections>
                                                     <action selector="menuBtnAction:" destination="06V-mZ-8Gb" eventType="touchUpInside" id="Lha-L8-YkX"/>
                                                 </connections>
@@ -3238,14 +3243,14 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="bHA-vX-DMn" secondAttribute="height" multiplier="5:4" id="mF9-xX-hZH"/>
                                                 </constraints>
-                                                <state key="normal" image="wishlist_active"/>
+                                                <state key="normal" image="wishlist_active_en"/>
                                             </button>
                                             <button opaque="NO" tag="1005" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VG5-G0-RBu">
                                                 <rect key="frame" x="302.5" y="0.0" width="72.5" height="60.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="VG5-G0-RBu" secondAttribute="height" multiplier="6:5" id="1QV-Vv-abU"/>
                                                 </constraints>
-                                                <state key="normal" image="messages"/>
+                                                <state key="normal" image="messages_en"/>
                                                 <connections>
                                                     <action selector="menuBtnAction:" destination="06V-mZ-8Gb" eventType="touchUpInside" id="WMx-CA-wdF"/>
                                                 </connections>
@@ -3317,6 +3322,11 @@
                     </view>
                     <connections>
                         <outlet property="alertsTblView" destination="n38-Vv-ynn" id="iLS-wM-Ozo"/>
+                        <outlet property="btnHome" destination="XyC-AV-1FA" id="NXC-nf-nGq"/>
+                        <outlet property="btnMessages" destination="VG5-G0-RBu" id="jhP-62-A6N"/>
+                        <outlet property="btnPalmtree" destination="bHA-vX-DMn" id="3ha-1k-qyZ"/>
+                        <outlet property="btnPost" destination="wy0-2g-eVt" id="pVT-pt-ke2"/>
+                        <outlet property="btnWishlist" destination="bHA-vX-DMn" id="ESr-Pf-3yh"/>
                         <outlet property="favBtn" destination="Wtv-r3-a6k" id="iX7-VR-TF2"/>
                         <outlet property="favTblView" destination="ar0-tJ-9LG" id="JBK-RA-1uV"/>
                         <outlet property="leading" destination="axE-UM-iqa" id="d5I-uL-CW1"/>
@@ -6194,7 +6204,7 @@
                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     </textView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fap-Hh-7Nu">
-                                                        <rect key="frame" x="0.0" y="399.5" width="351" height="52.5"/>
+                                                        <rect key="frame" x="0.0" y="399.5" width="351" height="53"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="16"/>
                                                         <state key="normal" title="Register" backgroundImage="empty_btn">
@@ -6625,14 +6635,14 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="pUv-X7-0Rb" secondAttribute="height" multiplier="5:4" id="3WK-Nq-dvG"/>
                                                 </constraints>
-                                                <state key="normal" image="home_active"/>
+                                                <state key="normal" image="home_active_en"/>
                                             </button>
                                             <button opaque="NO" tag="1002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wQ1-uR-qd1">
                                                 <rect key="frame" x="75.5" y="0.0" width="75.5" height="60.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="wQ1-uR-qd1" secondAttribute="height" multiplier="5:4" id="M93-WG-cvE"/>
                                                 </constraints>
-                                                <state key="normal" image="mypalmtree"/>
+                                                <state key="normal" image="mypalmtree_en"/>
                                                 <connections>
                                                     <action selector="menuBtnAction:" destination="Ogs-qv-Z5o" eventType="touchUpInside" id="ENr-E5-kj7"/>
                                                 </connections>
@@ -6642,7 +6652,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="DnC-qQ-jSV" secondAttribute="height" multiplier="5:4" id="iCc-B0-JfK"/>
                                                 </constraints>
-                                                <state key="normal" image="post"/>
+                                                <state key="normal" image="post_en"/>
                                                 <connections>
                                                     <action selector="menuBtnAction:" destination="Ogs-qv-Z5o" eventType="touchUpInside" id="BGt-Nx-Zjz"/>
                                                 </connections>
@@ -6652,7 +6662,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="mZK-Dr-j2N" secondAttribute="height" multiplier="5:4" id="mai-fq-erc"/>
                                                 </constraints>
-                                                <state key="normal" image="wishlist"/>
+                                                <state key="normal" image="wishlist_en"/>
                                                 <connections>
                                                     <action selector="menuBtnAction:" destination="Ogs-qv-Z5o" eventType="touchUpInside" id="D2n-7h-dPo"/>
                                                 </connections>
@@ -6662,7 +6672,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="Sui-04-pkM" secondAttribute="height" multiplier="6:5" id="Egv-3h-Gak"/>
                                                 </constraints>
-                                                <state key="normal" image="messages"/>
+                                                <state key="normal" image="messages_en"/>
                                                 <connections>
                                                     <action selector="menuBtnAction:" destination="Ogs-qv-Z5o" eventType="touchUpInside" id="tIr-E2-7CG"/>
                                                 </connections>
@@ -6730,6 +6740,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="dhv-ua-4Iy"/>
                     <connections>
+                        <outlet property="btnHome" destination="pUv-X7-0Rb" id="Zml-iz-kb5"/>
+                        <outlet property="btnMessages" destination="Sui-04-pkM" id="pIh-64-aXp"/>
+                        <outlet property="btnPalmtree" destination="wQ1-uR-qd1" id="Zbg-gq-YIQ"/>
+                        <outlet property="btnPost" destination="DnC-qQ-jSV" id="V7y-zN-rzH"/>
+                        <outlet property="btnWishlist" destination="mZK-Dr-j2N" id="Ca6-rP-AUB"/>
                         <outlet property="tableView" destination="VSY-XK-tXx" id="vg1-X3-2ME"/>
                     </connections>
                 </viewController>
@@ -7172,7 +7187,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="ajq-fs-z3W" secondAttribute="height" multiplier="5:4" id="wOI-sY-PMZ"/>
                                                 </constraints>
-                                                <state key="normal" image="home"/>
+                                                <state key="normal" image="home_en"/>
                                                 <connections>
                                                     <action selector="menuBtnAction:" destination="5QI-cx-1bC" eventType="touchUpInside" id="AdA-q8-3EW"/>
                                                 </connections>
@@ -7182,7 +7197,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="YqP-jy-KpE" secondAttribute="height" multiplier="5:4" id="Afv-d9-gnA"/>
                                                 </constraints>
-                                                <state key="normal" image="mypalmtree"/>
+                                                <state key="normal" image="mypalmtree_en"/>
                                                 <connections>
                                                     <action selector="menuBtnAction:" destination="5QI-cx-1bC" eventType="touchUpInside" id="7W1-5F-b6k"/>
                                                 </connections>
@@ -7192,7 +7207,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="suo-BI-paM" secondAttribute="height" multiplier="5:4" id="9gb-Dt-nTW"/>
                                                 </constraints>
-                                                <state key="normal" image="post"/>
+                                                <state key="normal" image="post_en"/>
                                                 <connections>
                                                     <action selector="menuBtnAction:" destination="5QI-cx-1bC" eventType="touchUpInside" id="ish-Ka-WB8"/>
                                                 </connections>
@@ -7202,7 +7217,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="gWQ-ts-nfl" secondAttribute="height" multiplier="5:4" id="gbC-Cf-Xpy"/>
                                                 </constraints>
-                                                <state key="normal" image="wishlist">
+                                                <state key="normal" image="wishlist_en">
                                                     <color key="titleColor" red="0.22745098039215686" green="0.67450980392156867" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
@@ -7214,7 +7229,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="Q7t-PR-Atb" secondAttribute="height" multiplier="6:5" id="7AL-no-hi5"/>
                                                 </constraints>
-                                                <state key="normal" image="messages_active"/>
+                                                <state key="normal" image="messages_active_en"/>
                                                 <connections>
                                                     <action selector="menuBtnAction:" destination="06V-mZ-8Gb" eventType="touchUpInside" id="as3-Yb-9P0"/>
                                                 </connections>
@@ -7279,6 +7294,13 @@
                             <constraint firstItem="xal-Hh-XaD" firstAttribute="leading" secondItem="27w-vJ-nBj" secondAttribute="leading" id="vOk-eD-KMZ"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="btnHome" destination="ajq-fs-z3W" id="E0H-4g-b4K"/>
+                        <outlet property="btnMessages" destination="Q7t-PR-Atb" id="zXj-AR-M3v"/>
+                        <outlet property="btnPalmtree" destination="YqP-jy-KpE" id="u75-h1-bz4"/>
+                        <outlet property="btnPost" destination="suo-BI-paM" id="6xi-3C-Zxq"/>
+                        <outlet property="btnWishlist" destination="gWQ-ts-nfl" id="HEM-Nu-h1m"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OSg-bu-Uuh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -7784,7 +7806,7 @@
                                                     <constraint firstAttribute="trailing" secondItem="efi-io-XAy" secondAttribute="trailing" constant="20" id="z6x-C6-hmK"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bOE-w3-sT2">
+                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bOE-w3-sT2">
                                                 <rect key="frame" x="0.0" y="307" width="375" height="80"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WYT-aI-qxV">
@@ -9176,10 +9198,168 @@ Any other information drop me s message</string>
             </objects>
             <point key="canvasLocation" x="4588" y="-654"/>
         </scene>
-        <!--View Controller-->
+        <!--LanguageVC-->
+        <scene sceneID="nYg-U2-l05">
+            <objects>
+                <viewController storyboardIdentifier="LanguageVC" id="WuP-mm-fuJ" customClass="LanguageVC" customModule="Palmtree" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Voe-KV-q0h"/>
+                        <viewControllerLayoutGuide type="bottom" id="d2s-hu-eAA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="n9w-6Y-0RF">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f5f-ct-91p" userLabel="ContentView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qZh-OU-UiN">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SUg-Op-xM5">
+                                                <rect key="frame" x="10" y="16.5" width="49" height="32"/>
+                                                <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="16"/>
+                                                <state key="normal" title="Cancel"/>
+                                                <connections>
+                                                    <action selector="cancelBtnAction:" destination="WuP-mm-fuJ" eventType="touchUpInside" id="eHk-Ut-zBc"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Language" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mgQ-Bl-TSK">
+                                                <rect key="frame" x="122" y="22" width="131" height="21"/>
+                                                <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="18"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zrp-Zq-gj8">
+                                                <rect key="frame" x="327" y="16.5" width="38" height="32"/>
+                                                <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="16"/>
+                                                <state key="normal" title="Done"/>
+                                                <connections>
+                                                    <action selector="doneBtnAction:" destination="WuP-mm-fuJ" eventType="touchUpInside" id="tp9-Yk-BsF"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.24313725489999999" green="0.19215686269999999" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="mgQ-Bl-TSK" firstAttribute="centerX" secondItem="qZh-OU-UiN" secondAttribute="centerX" id="6su-Mp-HoT"/>
+                                            <constraint firstItem="mgQ-Bl-TSK" firstAttribute="centerY" secondItem="qZh-OU-UiN" secondAttribute="centerY" id="86z-vr-9nb"/>
+                                            <constraint firstAttribute="height" constant="65" id="AsB-5i-bvl"/>
+                                            <constraint firstItem="Zrp-Zq-gj8" firstAttribute="centerY" secondItem="mgQ-Bl-TSK" secondAttribute="centerY" id="DoM-lA-hK3"/>
+                                            <constraint firstItem="SUg-Op-xM5" firstAttribute="centerY" secondItem="qZh-OU-UiN" secondAttribute="centerY" id="HxE-Jm-r4y"/>
+                                            <constraint firstItem="SUg-Op-xM5" firstAttribute="leading" secondItem="qZh-OU-UiN" secondAttribute="leading" constant="10" id="Vpt-ZJ-tHo"/>
+                                            <constraint firstAttribute="trailing" secondItem="Zrp-Zq-gj8" secondAttribute="trailing" constant="10" id="gLp-xf-uY1"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qZf-2Y-urS">
+                                        <rect key="frame" x="0.0" y="85" width="375" height="102"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aCR-Dy-gDb">
+                                                <rect key="frame" x="15" y="15" width="53.5" height="20"/>
+                                                <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="17"/>
+                                                <color key="textColor" red="0.51372549020000002" green="0.51372549020000002" blue="0.50980392159999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tick_green" translatesAutoresizingMaskIntoConstraints="NO" id="KpE-Nr-uuE">
+                                                <rect key="frame" x="340.5" y="18" width="19.5" height="14.5"/>
+                                            </imageView>
+                                            <button opaque="NO" tag="1001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="brM-Hb-15W">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="51"/>
+                                                <state key="normal" title="Button"/>
+                                                <connections>
+                                                    <action selector="languageBtnAction:" destination="WuP-mm-fuJ" eventType="touchUpInside" id="jTC-5P-d0K"/>
+                                                </connections>
+                                            </button>
+                                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M9u-SJ-VHs">
+                                                <rect key="frame" x="15" y="51" width="360" height="0.5"/>
+                                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="0.5" id="fZL-eg-6m4"/>
+                                                </constraints>
+                                            </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Arabic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ze-8e-dqr">
+                                                <rect key="frame" x="15" y="66.5" width="47.5" height="20"/>
+                                                <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="17"/>
+                                                <color key="textColor" red="0.51372549020000002" green="0.51372549020000002" blue="0.50980392159999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tick_green" translatesAutoresizingMaskIntoConstraints="NO" id="c4V-E8-Bjk">
+                                                <rect key="frame" x="340.5" y="69" width="19.5" height="14.5"/>
+                                            </imageView>
+                                            <button opaque="NO" tag="1002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NDU-g8-O8v">
+                                                <rect key="frame" x="0.0" y="51" width="375" height="51"/>
+                                                <state key="normal" title="Button"/>
+                                                <connections>
+                                                    <action selector="languageBtnAction:" destination="WuP-mm-fuJ" eventType="touchUpInside" id="A3Y-3H-Lh8"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="c4V-E8-Bjk" secondAttribute="trailing" constant="15" id="02R-Fw-d4G"/>
+                                            <constraint firstItem="brM-Hb-15W" firstAttribute="top" secondItem="qZf-2Y-urS" secondAttribute="top" id="1P8-hp-jNE"/>
+                                            <constraint firstItem="aCR-Dy-gDb" firstAttribute="leading" secondItem="qZf-2Y-urS" secondAttribute="leading" constant="15" id="6r0-Pr-tAb"/>
+                                            <constraint firstItem="M9u-SJ-VHs" firstAttribute="centerY" secondItem="qZf-2Y-urS" secondAttribute="centerY" id="8jN-Rw-JhH"/>
+                                            <constraint firstAttribute="trailing" secondItem="KpE-Nr-uuE" secondAttribute="trailing" constant="15" id="BZv-AG-QH2"/>
+                                            <constraint firstItem="KpE-Nr-uuE" firstAttribute="centerY" secondItem="aCR-Dy-gDb" secondAttribute="centerY" id="HmN-vw-PbP"/>
+                                            <constraint firstItem="aCR-Dy-gDb" firstAttribute="top" secondItem="qZf-2Y-urS" secondAttribute="top" constant="15" id="Iln-W4-pLu"/>
+                                            <constraint firstItem="brM-Hb-15W" firstAttribute="leading" secondItem="qZf-2Y-urS" secondAttribute="leading" id="L4k-QF-gfT"/>
+                                            <constraint firstAttribute="trailing" secondItem="M9u-SJ-VHs" secondAttribute="trailing" id="RnE-n9-kJs"/>
+                                            <constraint firstAttribute="trailing" secondItem="NDU-g8-O8v" secondAttribute="trailing" id="VjH-Om-gA3"/>
+                                            <constraint firstItem="NDU-g8-O8v" firstAttribute="top" secondItem="M9u-SJ-VHs" secondAttribute="bottom" constant="-0.5" id="Wdx-N8-dRi"/>
+                                            <constraint firstItem="M9u-SJ-VHs" firstAttribute="top" secondItem="brM-Hb-15W" secondAttribute="bottom" id="XcG-Ud-kBz"/>
+                                            <constraint firstItem="5Ze-8e-dqr" firstAttribute="top" secondItem="M9u-SJ-VHs" secondAttribute="bottom" constant="15" id="dnw-w7-7Td"/>
+                                            <constraint firstItem="M9u-SJ-VHs" firstAttribute="leading" secondItem="qZf-2Y-urS" secondAttribute="leading" constant="15" id="g1s-Ix-0ji"/>
+                                            <constraint firstAttribute="bottom" secondItem="NDU-g8-O8v" secondAttribute="bottom" id="hwt-x9-RR4"/>
+                                            <constraint firstAttribute="height" constant="102" id="o7V-XR-eop"/>
+                                            <constraint firstItem="5Ze-8e-dqr" firstAttribute="leading" secondItem="qZf-2Y-urS" secondAttribute="leading" constant="15" id="pqE-FW-Qte"/>
+                                            <constraint firstItem="c4V-E8-Bjk" firstAttribute="centerY" secondItem="5Ze-8e-dqr" secondAttribute="centerY" id="tKf-j1-tav"/>
+                                            <constraint firstItem="NDU-g8-O8v" firstAttribute="leading" secondItem="qZf-2Y-urS" secondAttribute="leading" id="xOk-nb-gah"/>
+                                            <constraint firstAttribute="trailing" secondItem="brM-Hb-15W" secondAttribute="trailing" id="yRB-vV-iiX"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wCj-QK-Uze">
+                                        <rect key="frame" x="0.0" y="667" width="375" height="65"/>
+                                        <color key="backgroundColor" red="0.94509803920000002" green="0.94509803920000002" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="65" id="ycV-zh-ewa"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="0.94509803920000002" green="0.94509803920000002" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="qZh-OU-UiN" firstAttribute="leading" secondItem="f5f-ct-91p" secondAttribute="leading" id="9D6-qU-38x"/>
+                                    <constraint firstAttribute="bottom" secondItem="wCj-QK-Uze" secondAttribute="bottom" constant="-65" id="QVr-tP-ch5"/>
+                                    <constraint firstItem="qZh-OU-UiN" firstAttribute="top" secondItem="f5f-ct-91p" secondAttribute="top" id="Tfz-1Z-kPB"/>
+                                    <constraint firstItem="qZf-2Y-urS" firstAttribute="top" secondItem="qZh-OU-UiN" secondAttribute="bottom" constant="20" id="jp0-na-ml6"/>
+                                    <constraint firstAttribute="trailing" secondItem="qZf-2Y-urS" secondAttribute="trailing" id="ofH-6A-b4O"/>
+                                    <constraint firstAttribute="trailing" secondItem="qZh-OU-UiN" secondAttribute="trailing" id="ovz-1V-l2f"/>
+                                    <constraint firstItem="qZf-2Y-urS" firstAttribute="leading" secondItem="f5f-ct-91p" secondAttribute="leading" id="uW0-go-JyT"/>
+                                    <constraint firstItem="wCj-QK-Uze" firstAttribute="leading" secondItem="f5f-ct-91p" secondAttribute="leading" id="zQg-zp-om9"/>
+                                    <constraint firstAttribute="trailing" secondItem="wCj-QK-Uze" secondAttribute="trailing" id="ztn-tV-pqt"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="f5f-ct-91p" secondAttribute="trailing" id="4uR-eF-91T"/>
+                            <constraint firstItem="d2s-hu-eAA" firstAttribute="top" secondItem="f5f-ct-91p" secondAttribute="bottom" id="8L3-cT-VQb"/>
+                            <constraint firstItem="f5f-ct-91p" firstAttribute="leading" secondItem="n9w-6Y-0RF" secondAttribute="leading" id="EB3-11-E51"/>
+                            <constraint firstItem="f5f-ct-91p" firstAttribute="top" secondItem="Voe-KV-q0h" secondAttribute="bottom" id="YgY-00-wNQ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="arabicImg" destination="c4V-E8-Bjk" id="oy4-NO-4yq"/>
+                        <outlet property="engImg" destination="KpE-Nr-uuE" id="Xhf-5e-4Ze"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="br2-zA-rYV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4949.6000000000004" y="77.811094452773617"/>
+        </scene>
+        <!--FilterVC-->
         <scene sceneID="DPC-rf-61f">
             <objects>
-                <viewController id="Hiu-ni-T4w" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FilterVC" id="Hiu-ni-T4w" customClass="FilterVC" customModule="Palmtree" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="UDG-xa-XzV"/>
                         <viewControllerLayoutGuide type="bottom" id="cdc-Il-3Z0"/>
@@ -9195,25 +9375,27 @@ Any other information drop me s message</string>
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4xB-81-mbZ">
-                                                <rect key="frame" x="10" y="17.5" width="47" height="30"/>
+                                                <rect key="frame" x="10" y="17.5" width="46" height="30"/>
                                                 <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="15"/>
                                                 <state key="normal" title="Cancel"/>
                                                 <connections>
                                                     <action selector="backBtnAction:" destination="hgr-9b-SdT" eventType="touchUpInside" id="8Vk-tD-wlK"/>
+                                                    <action selector="cancelBtnAction:" destination="Hiu-ni-T4w" eventType="touchUpInside" id="saA-8P-05c"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Advance Search" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Lp-hc-biW">
-                                                <rect key="frame" x="121.5" y="22" width="132" height="21"/>
+                                                <rect key="frame" x="124" y="22" width="127.5" height="21"/>
                                                 <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="18"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M5V-Ae-Ked">
-                                                <rect key="frame" x="273" y="17.5" width="92" height="30"/>
+                                                <rect key="frame" x="277" y="17.5" width="88" height="30"/>
                                                 <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="15"/>
                                                 <state key="normal" title="Show Results"/>
                                                 <connections>
                                                     <action selector="backBtnAction:" destination="hgr-9b-SdT" eventType="touchUpInside" id="A5U-77-ZWC"/>
+                                                    <action selector="resultBtnAction:" destination="Hiu-ni-T4w" eventType="touchUpInside" id="H2G-ny-WVF"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -9238,7 +9420,7 @@ Any other information drop me s message</string>
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="600"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SORT OPTIONS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hmY-c1-nDo">
-                                                                <rect key="frame" x="15" y="10" width="109.5" height="18"/>
+                                                                <rect key="frame" x="15" y="10" width="104" height="18"/>
                                                                 <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="15"/>
                                                                 <color key="textColor" red="0.24313725490196078" green="0.19215686274509802" blue="0.25882352941176467" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
@@ -9265,7 +9447,7 @@ Any other information drop me s message</string>
                                                                         </connections>
                                                                     </button>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date Descending" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tZA-dI-Moy">
-                                                                        <rect key="frame" x="235.5" y="14" width="108" height="17"/>
+                                                                        <rect key="frame" x="239" y="14" width="104.5" height="17"/>
                                                                         <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="14"/>
                                                                         <color key="textColor" red="0.24313725490196078" green="0.19215686274509802" blue="0.25882352941176467" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -9301,7 +9483,7 @@ Any other information drop me s message</string>
                                                                 </constraints>
                                                             </view>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="REFINE OPTIONS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bVo-O0-Bsf">
-                                                                <rect key="frame" x="15" y="103" width="122" height="18"/>
+                                                                <rect key="frame" x="15" y="103" width="113.5" height="18"/>
                                                                 <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="15"/>
                                                                 <color key="textColor" red="0.24313725489999999" green="0.19215686269999999" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
@@ -9328,7 +9510,7 @@ Any other information drop me s message</string>
                                                                         </state>
                                                                     </button>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="For Sale" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wmU-k3-ICP">
-                                                                        <rect key="frame" x="291.5" y="14" width="52" height="17"/>
+                                                                        <rect key="frame" x="294.5" y="14" width="49" height="17"/>
                                                                         <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="14"/>
                                                                         <color key="textColor" red="0.24313725490196078" green="0.19215686274509802" blue="0.25882352941176467" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -9352,7 +9534,7 @@ Any other information drop me s message</string>
                                                                         </state>
                                                                     </button>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UAE" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5jh-j0-u5W">
-                                                                        <rect key="frame" x="315.5" y="59.5" width="28" height="17"/>
+                                                                        <rect key="frame" x="317" y="59.5" width="26.5" height="17"/>
                                                                         <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="14"/>
                                                                         <color key="textColor" red="0.24313725490196078" green="0.19215686274509802" blue="0.25882352941176467" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -9429,24 +9611,33 @@ Any other information drop me s message</string>
                                                                     <constraint firstAttribute="trailing" secondItem="pim-i2-vU9" secondAttribute="trailing" id="vBR-74-Sr8"/>
                                                                 </constraints>
                                                             </view>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FOR SALE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="91y-lN-7gP">
-                                                                <rect key="frame" x="15" y="287" width="71.5" height="18"/>
+                                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FOR SALE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="91y-lN-7gP">
+                                                                <rect key="frame" x="15" y="287" width="66.5" height="18"/>
                                                                 <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="15"/>
                                                                 <color key="textColor" red="0.24313725489999999" green="0.19215686269999999" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FNd-Hz-DXC">
+                                                                <rect key="frame" x="169" y="287" width="37" height="30"/>
+                                                                <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="15"/>
+                                                                <state key="normal" title="Reset">
+                                                                    <color key="titleColor" red="0.24313725490196078" green="0.19215686274509802" blue="0.25882352941176467" alpha="1" colorSpace="calibratedRGB"/>
+                                                                </state>
+                                                            </button>
                                                         </subviews>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstItem="91y-lN-7gP" firstAttribute="top" secondItem="fx9-Vb-FA7" secondAttribute="bottom" constant="20" id="2os-zQ-NEE"/>
                                                             <constraint firstItem="bVo-O0-Bsf" firstAttribute="leading" secondItem="fhb-3A-whs" secondAttribute="leading" constant="15" id="HDR-A8-yq0"/>
                                                             <constraint firstItem="fx9-Vb-FA7" firstAttribute="leading" secondItem="fhb-3A-whs" secondAttribute="leading" id="IBD-sE-ssB"/>
+                                                            <constraint firstItem="FNd-Hz-DXC" firstAttribute="top" secondItem="fx9-Vb-FA7" secondAttribute="bottom" constant="20" id="JiC-P8-XiB"/>
                                                             <constraint firstAttribute="trailing" secondItem="ynh-js-U8D" secondAttribute="trailing" id="Pvs-pc-AVj"/>
                                                             <constraint firstItem="ynh-js-U8D" firstAttribute="top" secondItem="hmY-c1-nDo" secondAttribute="bottom" constant="10" id="UwC-sh-o61"/>
                                                             <constraint firstAttribute="trailing" secondItem="fx9-Vb-FA7" secondAttribute="trailing" id="Yaz-gs-Jpw"/>
                                                             <constraint firstItem="ynh-js-U8D" firstAttribute="leading" secondItem="fhb-3A-whs" secondAttribute="leading" id="at4-LB-Qqx"/>
                                                             <constraint firstItem="91y-lN-7gP" firstAttribute="leading" secondItem="fhb-3A-whs" secondAttribute="leading" constant="15" id="dtO-Rg-ZR5"/>
                                                             <constraint firstItem="bVo-O0-Bsf" firstAttribute="top" secondItem="ynh-js-U8D" secondAttribute="bottom" constant="20" id="gyQ-B9-50x"/>
+                                                            <constraint firstItem="FNd-Hz-DXC" firstAttribute="centerX" secondItem="fhb-3A-whs" secondAttribute="centerX" id="kFP-aF-hua"/>
                                                             <constraint firstItem="hmY-c1-nDo" firstAttribute="leading" secondItem="fhb-3A-whs" secondAttribute="leading" constant="15" id="nSH-kd-lyN"/>
                                                             <constraint firstItem="fx9-Vb-FA7" firstAttribute="top" secondItem="bVo-O0-Bsf" secondAttribute="bottom" constant="10" id="sTf-f8-Ne9"/>
                                                             <constraint firstItem="hmY-c1-nDo" firstAttribute="top" secondItem="fhb-3A-whs" secondAttribute="top" constant="10" id="yQS-jf-QDB"/>
@@ -9546,8 +9737,8 @@ Any other information drop me s message</string>
         <image name="fb_login" width="349" height="58"/>
         <image name="filter_bar" width="210.5" height="42.5"/>
         <image name="g_login" width="349" height="53"/>
-        <image name="home" width="31.5" height="61"/>
-        <image name="home_active" width="31.5" height="61"/>
+        <image name="home_active_en" width="31.5" height="61"/>
+        <image name="home_en" width="31.5" height="61"/>
         <image name="info" width="17.5" height="17.5"/>
         <image name="lamp" width="115" height="232.5"/>
         <image name="location" width="10.5" height="14"/>
@@ -9555,20 +9746,20 @@ Any other information drop me s message</string>
         <image name="location_icon" width="20.5" height="20.5"/>
         <image name="logo" width="120" height="35"/>
         <image name="map" width="375" height="536"/>
-        <image name="messages" width="54" height="61"/>
-        <image name="messages_active" width="54" height="61"/>
+        <image name="messages_active_en" width="54" height="61"/>
+        <image name="messages_en" width="54" height="61"/>
         <image name="msg" width="50" height="50"/>
         <image name="my_shadow" width="375" height="4.5"/>
         <image name="my_signin" width="91.5" height="42"/>
-        <image name="mypalmtree" width="65.5" height="61"/>
-        <image name="mypalmtree_active" width="65.5" height="61"/>
+        <image name="mypalmtree_active_en" width="65.5" height="61"/>
+        <image name="mypalmtree_en" width="65.5" height="61"/>
         <image name="next_arrow" width="9" height="16.5"/>
         <image name="notification" width="25.5" height="26"/>
         <image name="pak" width="500" height="333"/>
         <image name="phoneIcon" width="256" height="256"/>
-        <image name="post" width="30.5" height="61"/>
         <image name="post_ad" width="170" height="42.5"/>
         <image name="post_an_ad" width="183.5" height="43"/>
+        <image name="post_en" width="30.5" height="61"/>
         <image name="post_select" width="21.5" height="21.5"/>
         <image name="preview_ad" width="170" height="42.5"/>
         <image name="product" width="119" height="119"/>
@@ -9583,11 +9774,12 @@ Any other information drop me s message</string>
         <image name="share" width="16" height="21.5"/>
         <image name="sofa" width="150" height="150"/>
         <image name="splash" width="375" height="667"/>
+        <image name="tick_green" width="19.5" height="14.5"/>
         <image name="twitter" width="36.5" height="36.5"/>
         <image name="uncheck" width="50" height="50"/>
         <image name="verified" width="19.5" height="23"/>
         <image name="waiting" width="50" height="50"/>
-        <image name="wishlist" width="33" height="61"/>
-        <image name="wishlist_active" width="33" height="61"/>
+        <image name="wishlist_active_en" width="33" height="61"/>
+        <image name="wishlist_en" width="33" height="61"/>
     </resources>
 </document>

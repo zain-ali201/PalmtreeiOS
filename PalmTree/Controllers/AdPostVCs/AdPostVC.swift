@@ -17,6 +17,11 @@ class AdPostVC: UIViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if defaults.string(forKey: "languageCode") == "ar"
+        {
+            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

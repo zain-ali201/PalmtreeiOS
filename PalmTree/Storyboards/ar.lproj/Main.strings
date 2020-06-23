@@ -1,6 +1,6 @@
 
 /* Class = "UILabel"; text = "Advacne Search"; ObjectID = "1Lp-hc-biW"; */
-"1Lp-hc-biW.text" = "Advacne Search";
+"1Lp-hc-biW.text" = "البحث المتقدم";
 
 /* Class = "UILabel"; text = "Watchlist"; ObjectID = "1W8-UI-pSg"; */
 "1W8-UI-pSg.text" = "القائمة المفضلة";
@@ -9,13 +9,13 @@
 "1eH-EV-SxA.text" = "or";
 
 /* Class = "UILabel"; text = "UAE"; ObjectID = "2lH-Rm-O6P"; */
-"2lH-Rm-O6P.text" = "UAE";
+"2lH-Rm-O6P.text" = "الإمارات";
 
 /* Class = "UITextField"; placeholder = "Type a message here"; ObjectID = "4HF-gd-6Dt"; */
-"4HF-gd-6Dt.placeholder" = "Type a message here";
+"4HF-gd-6Dt.placeholder" = "أكتب رسالتك هنا";
 
 /* Class = "UILabel"; text = "UAE"; ObjectID = "4OX-d9-PSn"; */
-"4OX-d9-PSn.text" = "UAE";
+"4OX-d9-PSn.text" = "الإمارات";
 
 /* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "4xB-81-mbZ"; */
 "4xB-81-mbZ.normalTitle" = "إلغاء";
@@ -24,10 +24,10 @@
 "5hY-6l-4gs.text" = "Dwell Lugano 2 Seater Sofa Grey Velvet RRP";
 
 /* Class = "UILabel"; text = "UAE"; ObjectID = "5jh-j0-u5W"; */
-"5jh-j0-u5W.text" = "UAE";
+"5jh-j0-u5W.text" = "الإمارات";
 
 /* Class = "UIButton"; normalTitle = "Search alert notification"; ObjectID = "5oM-Iu-C94"; */
-"5oM-Iu-C94.normalTitle" = "Search alert notification";
+"5oM-Iu-C94.normalTitle" = "إشعارات البحث";
 
 /* Class = "UILabel"; text = "You have no Messages"; ObjectID = "65I-FQ-VU2"; */
 "65I-FQ-VU2.text" = "لا توجد أية رسائل";
@@ -39,7 +39,7 @@
 "6GF-9S-A7N.text" = "Label";
 
 /* Class = "UIButton"; normalTitle = "Marketing email settings"; ObjectID = "6GO-Au-fvZ"; */
-"6GO-Au-fvZ.normalTitle" = "Marketing email settings";
+"6GO-Au-fvZ.normalTitle" = "ضبط بريد التسويقs";
 
 /* Class = "UIButton"; normalTitle = "Report"; ObjectID = "75d-cE-pSU"; */
 "75d-cE-pSU.normalTitle" = "الإبلاغ";
@@ -51,10 +51,13 @@
 "7UT-PD-Jx0.text" = "Label";
 
 /* Class = "UITextField"; placeholder = "Confirm Password"; ObjectID = "7Z9-Hq-Dc0"; */
-"7Z9-Hq-Dc0.placeholder" = "Confirm Password";
+"7Z9-Hq-Dc0.placeholder" = "تأكيد كلمة المرور";
 
 /* Class = "UIButton"; normalTitle = "Search Alerts"; ObjectID = "7ky-uV-u3b"; */
 "7ky-uV-u3b.normalTitle" = "إشعارات البحث";
+
+/* Class = "UIButton"; normalTitle = "Favourites"; ObjectID = "Wtv-r3-a6k"; */
+"Wtv-r3-a6k.normalTitle" = "المفضلة";
 
 /* Class = "UIButton"; normalTitle = "Privacy Policy"; ObjectID = "7m0-Wi-jgn"; */
 "7m0-Wi-jgn.normalTitle" = "السياسة والخصوصية";
@@ -66,13 +69,13 @@
 "7oy-wj-TkT.text" = "الأكثر مبيعا في بالمتري";
 
 /* Class = "UIButton"; normalTitle = "New message notification"; ObjectID = "8X1-cV-6cu"; */
-"8X1-cV-6cu.normalTitle" = "New message notification";
+"8X1-cV-6cu.normalTitle" = "إشعار رسالة جديدة";
 
 /* Class = "UIButton"; normalTitle = "Change Language"; ObjectID = "8Y7-EI-WJB"; */
-"8Y7-EI-WJB.normalTitle" = "Change Language";
+"8Y7-EI-WJB.normalTitle" = "تغيير اللغة";
 
 /* Class = "UILabel"; text = "FOR SALE"; ObjectID = "91y-lN-7gP"; */
-"91y-lN-7gP.text" = "FOR SALE";
+"91y-lN-7gP.text" = "للبيع";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "9Qe-Qq-wBS"; */
 "9Qe-Qq-wBS.text" = "Label";
@@ -87,34 +90,34 @@
 "Bmc-YO-1RL.placeholder" = "البريد الإلكتروني";
 
 /* Class = "UILabel"; text = "Get notified of new results! Toap the bookmarks on a search page."; ObjectID = "BqP-DY-ljo"; */
-"BqP-DY-ljo.text" = "Get notified of new results! Tap the bookmarks on a search page.";
+"BqP-DY-ljo.text" = "احصل على اشعارات النتائج الجديدة! قم بتحديد الخيارات المرجعية في صفحة البحث";
 
 /* Class = "UILabel"; text = "Homepage Gallery AED 10"; ObjectID = "CE1-6b-uMS"; */
 "CE1-6b-uMS.text" = "Homepage Gallery AED 10";
 
 /* Class = "UIButton"; normalTitle = "Change Language"; ObjectID = "CWH-S2-iZs"; */
-"CWH-S2-iZs.normalTitle" = "Change Language";
+"CWH-S2-iZs.normalTitle" = "تغيير اللغة";
 
 /* Class = "UIButton"; normalTitle = "My Details"; ObjectID = "CXl-AZ-RrJ"; */
 "CXl-AZ-RrJ.normalTitle" = "بياناتي";
 
 /* Class = "UIButton"; normalTitle = "Share App"; ObjectID = "D7u-uQ-a04"; */
-"D7u-uQ-a04.normalTitle" = "Share App";
+"D7u-uQ-a04.normalTitle" = "مشاركة التطبيق";
 
 /* Class = "UIButton"; normalTitle = "Legal Information"; ObjectID = "E6W-mK-gyB"; */
-"E6W-mK-gyB.normalTitle" = "Legal Information";
+"E6W-mK-gyB.normalTitle" = "المعلومات القانونية";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "EFf-bR-Jcv"; */
 "EFf-bR-Jcv.normalTitle" = "Button";
 
 /* Class = "UILabel"; text = "Urgent AED 3.5"; ObjectID = "ERj-z4-FUj"; */
-"ERj-z4-FUj.text" = "Urgent AED 3.5";
+"ERj-z4-FUj.text" = "3.5 عاجل درهم";
 
 /* Class = "UILabel"; text = "Thank you for posting an advert on Palmtree"; ObjectID = "FDS-jQ-RV2"; */
 "FDS-jQ-RV2.text" = "شكرا لك! للنشر والإعلان على بالمتري";
 
 /* Class = "UILabel"; text = "UAE"; ObjectID = "FEz-Cg-HmM"; */
-"FEz-Cg-HmM.text" = "UAE";
+"FEz-Cg-HmM.text" = "الإمارات";
 
 /* Class = "UILabel"; text = "$399"; ObjectID = "FNY-5m-da4"; */
 "FNY-5m-da4.text" = "$399";
@@ -147,22 +150,22 @@
 "HGE-iE-0N2.normalTitle" = "عمليات";
 
 /* Class = "UITextField"; placeholder = "Amount"; ObjectID = "HKF-Sh-jyh"; */
-"HKF-Sh-jyh.placeholder" = "Amount";
+"HKF-Sh-jyh.placeholder" = "المبلغ";
 
 /* Class = "UILabel"; text = "Promote"; ObjectID = "Hz4-66-InB"; */
-"Hz4-66-InB.text" = "Promote";
+"Hz4-66-InB.text" = "ترويج";
 
 /* Class = "UILabel"; text = "Jobs in UAE"; ObjectID = "I0B-4Q-Qgs"; */
-"I0B-4Q-Qgs.text" = "Jobs in UAE";
+"I0B-4Q-Qgs.text" = "UAE الوظائف في";
 
 /* Class = "UILabel"; text = "Try Saving a Search!"; ObjectID = "I34-MJ-dAs"; */
-"I34-MJ-dAs.text" = "Try Saving a Search!";
+"I34-MJ-dAs.text" = "!محاولة حفظ البحث";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "IK3-UC-JFk"; */
 "IK3-UC-JFk.text" = "Label";
 
 /* Class = "UITextField"; placeholder = "Your Name"; ObjectID = "IY1-FK-cqv"; */
-"IY1-FK-cqv.placeholder" = "الإسم";
+"IY1-FK-cqv.placeholder" = "إسمك";
 
 /* Class = "UITextField"; placeholder = "Search Palmtree"; ObjectID = "Icm-1V-SeI"; */
 "Icm-1V-SeI.placeholder" = "البحث في بالمتري";
@@ -171,7 +174,7 @@
 "J2I-mK-avJ.text" = "2d";
 
 /* Class = "UIButton"; normalTitle = "Help & Center"; ObjectID = "JIC-zh-jPj"; */
-"JIC-zh-jPj.normalTitle" = "Help & Center";
+"JIC-zh-jPj.normalTitle" = "المساعدة والمركز";
 
 /* Class = "UIViewController"; title = "AdFilterListVC"; ObjectID = "Jka-S4-kez"; */
 "Jka-S4-kez.title" = "AdFilterListVC";
@@ -180,7 +183,7 @@
 "K4q-CV-HEv.placeholder" = "البريد الإلكتروني";
 
 /* Class = "UILabel"; text = "Hi, is this still available?"; ObjectID = "Kod-XR-UZ2"; */
-"Kod-XR-UZ2.text" = "Hi, is this still available?";
+"Kod-XR-UZ2.text" = "مرحبا، هل هذه مازالت متوفرة؟";
 
 /* Class = "UITextField"; placeholder = "Title"; ObjectID = "KwF-en-bZP"; */
 "KwF-en-bZP.placeholder" = "العنوان";
@@ -189,7 +192,7 @@
 "Kwg-3R-eOd.text" = "Sofa";
 
 /* Class = "UILabel"; text = "Your ad will be shown on the palmtree.com homepage."; ObjectID = "KyS-EN-ljI"; */
-"KyS-EN-ljI.text" = "Your ad will be shown on the palmtree.com homepage.";
+"KyS-EN-ljI.text" = "palmtree.com ستم عرض إعلانك على الصفحة الرئيسية لـ";
 
 /* Class = "UILabel"; text = "Privacy Policy"; ObjectID = "LXX-Cb-5vq"; */
 "LXX-Cb-5vq.text" = "السياسة والخصوصية";
@@ -201,7 +204,7 @@
 "Lrl-xW-6Lm.text" = "Sofa";
 
 /* Class = "UIButton"; normalTitle = "Show Results"; ObjectID = "M5V-Ae-Ked"; */
-"M5V-Ae-Ked.normalTitle" = "Show Results";
+"M5V-Ae-Ked.normalTitle" = "عرض النتائج";
 
 /* Class = "UITextField"; placeholder = "Email"; ObjectID = "MKx-BW-jzD"; */
 "MKx-BW-jzD.placeholder" = "البريد الإلكتروني";
@@ -222,7 +225,7 @@
 "NY6-7X-MJe.title" = "HomeNavController";
 
 /* Class = "UIButton"; normalTitle = "Required Images"; ObjectID = "Obq-OU-U5w"; */
-"Obq-OU-U5w.normalTitle" = "Required Images";
+"Obq-OU-U5w.normalTitle" = "الصور مطلوبة";
 
 /* Class = "UILabel"; text = "Member since May 2020"; ObjectID = "OpU-tk-xyB"; */
 "OpU-tk-xyB.text" = "مسجل كعضو منذ May 2020";
@@ -231,19 +234,19 @@
 "OqI-Ny-WB0.text" = "Renault Megane 1.5dCi FAP Dynamique Tom...";
 
 /* Class = "UILabel"; text = "All"; ObjectID = "Oz4-Ym-pa1"; */
-"Oz4-Ym-pa1.text" = "All";
+"Oz4-Ym-pa1.text" = "الجميع";
 
 /* Class = "UILabel"; text = "Zain"; ObjectID = "PcA-et-Qe8"; */
 "PcA-et-Qe8.text" = "Zain";
 
 /* Class = "UIButton"; normalTitle = "Legal Information"; ObjectID = "Pgs-hf-ply"; */
-"Pgs-hf-ply.normalTitle" = "Legal Information";
+"Pgs-hf-ply.normalTitle" = "المعلومات القانونية";
 
 /* Class = "UIButton"; normalTitle = "Sign Out (zain@sprintsols.com)"; ObjectID = "QAk-cF-gsD"; */
-"QAk-cF-gsD.normalTitle" = "Sign Out (zain@sprintsols.com)";
+"QAk-cF-gsD.normalTitle" = "(zain@sprintsols.com) تسجيل الخروج";
 
 /* Class = "UIButton"; normalTitle = "Terms of Use"; ObjectID = "QCm-yQ-K8y"; */
-"QCm-yQ-K8y.normalTitle" = "Terms of Use";
+"QCm-yQ-K8y.normalTitle" = "الشروط والأحكام";
 
 /* Class = "UILabel"; text = "$399"; ObjectID = "Qes-rh-S0s"; */
 "Qes-rh-S0s.text" = "$399";
@@ -270,19 +273,19 @@
 "VZh-u5-QSf.text" = "demo@palmtree.com";
 
 /* Class = "UITextView"; text = "By registering, I agree to palmtree’s Terms of use and Privacy Policy and I consent to receiving marketing from Palmtree and third party offers."; ObjectID = "Vbx-o8-FV2"; */
-"Vbx-o8-FV2.text" = "By registering, I agree to palmtree’s Terms of use and Privacy Policy and I consent to receiving marketing from Palmtree and third party offers.";
+"Vbx-o8-FV2.text" = "بالتسجيل ، أوافق على شروط الاستخدام وسياسة الخصوصية لشركة بالمتري وأوافق على تلقي التسويق من عروض بالمتري والجهات الخارجية";
 
 /* Class = "UILabel"; text = "Cars"; ObjectID = "Vn3-I0-ui4"; */
 "Vn3-I0-ui4.text" = "Cars";
 
 /* Class = "UILabel"; text = "AED 300"; ObjectID = "W33-nN-SJZ"; */
-"W33-nN-SJZ.text" = "AED 300";
+"W33-nN-SJZ.text" = "300 درهم";
 
 /* Class = "UIButton"; normalTitle = "Saved"; ObjectID = "WLh-hj-BcI"; */
 "WLh-hj-BcI.normalTitle" = "المحفوظة";
 
 /* Class = "UILabel"; text = "Forgot your Password?"; ObjectID = "WYX-Eo-457"; */
-"WYX-Eo-457.text" = "Forgot your Password?";
+"WYX-Eo-457.text" = "نسيت كلمة المرور";
 
 /* Class = "UIButton"; normalTitle = "Specs"; ObjectID = "Wtt-do-HPi"; */
 "Wtt-do-HPi.normalTitle" = "المواصفات";
@@ -294,16 +297,16 @@
 "Y0S-qq-7jc.text" = "إشعار البريد الإلكتروني";
 
 /* Class = "UILabel"; text = "All Ads"; ObjectID = "Y3u-ME-rW2"; */
-"Y3u-ME-rW2.text" = "All Ads";
+"Y3u-ME-rW2.text" = "جميع الإعلانات";
 
 /* Class = "UILabel"; text = "AED"; ObjectID = "YZE-fY-uJb"; */
-"YZE-fY-uJb.text" = "AED";
+"YZE-fY-uJb.text" = "درهم";
 
 /* Class = "UILabel"; text = "Please enter your email address below and we will send you an email to change your password."; ObjectID = "Ynv-7j-EbZ"; */
-"Ynv-7j-EbZ.text" = "Please enter your email address below and we will send you an email to change your password.";
+"Ynv-7j-EbZ.text" = "يرجى إدخال عنوان بريدك الإلكتروني أدناه وسنرسل لك بريدًا إلكترونيًا لتغيير كلمة مرورك";
 
 /* Class = "UIButton"; normalTitle = "Palmtree update notification"; ObjectID = "ZBd-dk-Y9d"; */
-"ZBd-dk-Y9d.normalTitle" = "Palmtree update notification";
+"ZBd-dk-Y9d.normalTitle" = "إشعار تحديث بالمتري";
 
 /* Class = "UILabel"; text = "2d"; ObjectID = "ZQv-sH-naD"; */
 "ZQv-sH-naD.text" = "2d";
@@ -315,10 +318,16 @@
 "ZeF-8e-g8S.text" = "Renault Megane 1.5dCi FAP Daynmique Tom\n        \nBody work is not perfect but its ok hence low price...\n        \nAny other information drop me s message";
 
 /* Class = "UIButton"; normalTitle = "Forgot Password"; ObjectID = "a2p-CZ-AQw"; */
-"a2p-CZ-AQw.normalTitle" = "Forgot Password";
+"a2p-CZ-AQw.normalTitle" = "نسيت كلمة المرور";
 
 /* Class = "UILabel"; text = "English"; ObjectID = "aAF-Fd-8XA"; */
-"aAF-Fd-8XA.text" = "English";
+"aAF-Fd-8XA.text" = "الإنجليزية";
+
+/* Class = "UILabel"; text = "English"; ObjectID = "aCR-Dy-gDb"; */
+"aCR-Dy-gDbA.text" = "الإنجليزية";
+
+/* Class = "UILabel"; text = "Arabic"; ObjectID = "5Ze-8e-dqr"; */
+"5Ze-8e-dqr.text" = "العربية";
 
 /* Class = "UILabel"; text = "Share this listing"; ObjectID = "amk-pY-qno"; */
 "amk-pY-qno.text" = "مشاركة القائمة";
@@ -327,7 +336,7 @@
 "b38-jK-t6z.text" = "Label";
 
 /* Class = "UILabel"; text = "REFINE OPTIONS"; ObjectID = "bVo-O0-Bsf"; */
-"bVo-O0-Bsf.text" = "REFINE OPTIONS";
+"bVo-O0-Bsf.text" = "خيارات التنقيح";
 
 /* Class = "UILabel"; text = "Marc"; ObjectID = "bnv-JF-SzX"; */
 "bnv-JF-SzX.text" = "Marc";
@@ -342,19 +351,19 @@
 "dGE-gj-AkA.text" = "Zain";
 
 /* Class = "UILabel"; text = "Hi, is this still available?"; ObjectID = "dJC-RX-zHL"; */
-"dJC-RX-zHL.text" = "Hi, is this still available?";
+"dJC-RX-zHL.text" = "مرحبا، هل هذه مازالت متوفرة؟";
 
 /* Class = "UIButton"; normalTitle = "Help & Center"; ObjectID = "eMS-pP-wL5"; */
-"eMS-pP-wL5.normalTitle" = "Help & Center";
+"eMS-pP-wL5.normalTitle" = "المساعدة والمركز";
 
 /* Class = "UIButton"; normalTitle = "Sign In"; ObjectID = "eX0-ZJ-8TV"; */
 "eX0-ZJ-8TV.normalTitle" = "تسجيل الدخول";
 
 /* Class = "UIButton"; normalTitle = "Send Email"; ObjectID = "emX-oW-WlR"; */
-"emX-oW-WlR.normalTitle" = "Send Email";
+"emX-oW-WlR.normalTitle" = "إرسال البريد";
 
 /* Class = "UIButton"; normalTitle = "Privacy Policy"; ObjectID = "f0w-Kv-Q6O"; */
-"f0w-Kv-Q6O.normalTitle" = "Privacy Policy";
+"f0w-Kv-Q6O.normalTitle" = "السياسة والخصوصية";
 
 /* Class = "UIButton"; normalTitle = "Register"; ObjectID = "fap-Hh-7Nu"; */
 "fap-Hh-7Nu.normalTitle" = "التسجيل";
@@ -366,10 +375,10 @@
 "hYd-zm-1NX.text" = "2d";
 
 /* Class = "UILabel"; text = "SORT OPTIONS"; ObjectID = "hmY-c1-nDo"; */
-"hmY-c1-nDo.text" = "SORT OPTIONS";
+"hmY-c1-nDo.text" = "فرز الخيارات";
 
 /* Class = "UILabel"; text = "Nationwide"; ObjectID = "iBR-6Q-aKw"; */
-"iBR-6Q-aKw.text" = "Nationwide";
+"iBR-6Q-aKw.text" = "على مستوى البلد";
 
 /* Class = "UILabel"; text = "2016, 59000, Petrol, Automatic, 1499cc"; ObjectID = "iJu-hK-yhf"; */
 "iJu-hK-yhf.text" = "2016, 59000, Petrol, Automatic, 1499cc";
@@ -384,13 +393,13 @@
 "iXB-ZW-2ub.normalTitle" = "نشر الإعلان";
 
 /* Class = "UILabel"; text = "UAE"; ObjectID = "igx-OB-ypi"; */
-"igx-OB-ypi.text" = "UAE";
+"igx-OB-ypi.text" = "الإمارات";
 
 /* Class = "UIButton"; normalTitle = "Category"; ObjectID = "ilB-PX-5qc"; */
 "ilB-PX-5qc.normalTitle" = "الفئة";
 
 /* Class = "UILabel"; text = "English"; ObjectID = "jf1-Xb-A4d"; */
-"jf1-Xb-A4d.text" = "English";
+"jf1-Xb-A4d.text" = "الإنجليزية";
 
 /* Class = "UILabel"; text = "Settings"; ObjectID = "jsX-Jk-BMX"; */
 "jsX-Jk-BMX.text" = "الضبط";
@@ -405,10 +414,10 @@
 "kNo-Cq-jPG.normalTitle" = "الفلتر";
 
 /* Class = "UILabel"; text = "Sign in to get the most out of Palmtree."; ObjectID = "kWz-1V-9lf"; */
-"kWz-1V-9lf.text" = "Sign in to get the most out of Palmtree.";
+"kWz-1V-9lf.text" = "سجّل الدخول لتحصل على مميزات من بالمتري";
 
 /* Class = "UILabel"; text = "At least 10 characters, one number & symbol"; ObjectID = "lE0-uB-vAt"; */
-"lE0-uB-vAt.text" = "At least 10 characters, one number & symbol";
+"lE0-uB-vAt.text" = " أحرف على الأقل ورقم واحد ورمز 10";
 
 /* Class = "UILabel"; text = "Add Photo"; ObjectID = "lGK-Mg-6Ac"; */
 "lGK-Mg-6Ac.text" = "إضافة صورة";
@@ -417,7 +426,7 @@
 "leK-yW-rd9.text" = "الموقع";
 
 /* Class = "UIButton"; normalTitle = "Block"; ObjectID = "mPp-mT-hhT"; */
-"mPp-mT-hhT.normalTitle" = "Block";
+"mPp-mT-hhT.normalTitle" = "حظر";
 
 /* Class = "UITextField"; placeholder = "Password"; ObjectID = "nWw-xd-Oka"; */
 "nWw-xd-Oka.placeholder" = "كلمة المرور";
@@ -426,7 +435,7 @@
 "o2L-Dp-gN5.normalTitle" = "نشر إعلان آخر";
 
 /* Class = "UILabel"; text = "Processing"; ObjectID = "oVj-ZE-rP6"; */
-"oVj-ZE-rP6.text" = "Processing";
+"oVj-ZE-rP6.text" = "جاري المعالجة";
 
 /* Class = "UILabel"; text = "Post"; ObjectID = "od8-9o-Lus"; */
 "od8-9o-Lus.text" = "نشر";
@@ -456,7 +465,7 @@
 "pqF-oD-bUx.text" = "Bello Interior";
 
 /* Class = "UIButton"; normalTitle = "UAE"; ObjectID = "pxZ-Cd-reI"; */
-"pxZ-Cd-reI.normalTitle" = "UAE";
+"pxZ-Cd-reI.normalTitle" = "الإمارات";
 
 /* Class = "UILabel"; text = "Messages"; ObjectID = "qAw-an-2T5"; */
 "qAw-an-2T5.text" = "الرسائل";
@@ -468,10 +477,10 @@
 "qSn-RA-6FA.text" = "ID: 12345678";
 
 /* Class = "UILabel"; text = "New to Palmtree?"; ObjectID = "rOd-Zh-Ogi"; */
-"rOd-Zh-Ogi.text" = "New to Palmtree?";
+"rOd-Zh-Ogi.text" = "هل أنت جديد في بالمتري؟";
 
 /* Class = "UILabel"; text = "$399"; ObjectID = "rYf-VA-NQY"; */
-"rYf-VA-NQY.text" = "$399";
+"rYf-VA-NQY.text" = "399 درهم";
 
 /* Class = "UILabel"; text = "Marc"; ObjectID = "sKb-lc-nxc"; */
 "sKb-lc-nxc.text" = "Marc";
@@ -480,46 +489,46 @@
 "sWk-ES-eb1.text" = "0";
 
 /* Class = "UIButton"; normalTitle = "Share App"; ObjectID = "saP-bp-t5Q"; */
-"saP-bp-t5Q.normalTitle" = "Share App";
+"saP-bp-t5Q.normalTitle" = "مشاركة التطبيق";
 
 /* Class = "UILabel"; text = "Featured AED 1.5 - AED 4.5"; ObjectID = "sqt-l9-CHK"; */
-"sqt-l9-CHK.text" = "Featured AED 1.5 - AED 4.5";
+"sqt-l9-CHK.text" = "ميزة 1 درهم إلى 3 درهم";
 
 /* Class = "UILabel"; text = "Seller type"; ObjectID = "sup-Lu-c3l"; */
 "sup-Lu-c3l.text" = "نوع البائع";
 
 /* Class = "UILabel"; text = "Date Descending"; ObjectID = "tZA-dI-Moy"; */
-"tZA-dI-Moy.text" = "Date Descending";
+"tZA-dI-Moy.text" = "التاريخ من الأقدم";
 
 /* Class = "UIButton"; normalTitle = "Skip"; ObjectID = "trQ-qf-Z04"; */
 "trQ-qf-Z04.normalTitle" = "تخطي";
 
 /* Class = "UILabel"; text = "Select Location"; ObjectID = "twI-Bb-ASZ"; */
-"twI-Bb-ASZ.text" = "Select Location";
+"twI-Bb-ASZ.text" = "إختر الموقع";
 
 /* Class = "UILabel"; text = "Copyrights"; ObjectID = "uzC-MD-epb"; */
-"uzC-MD-epb.text" = "Copyrights";
+"uzC-MD-epb.text" = "حقوق النشر";
 
 /* Class = "UILabel"; text = "Private"; ObjectID = "v1Z-NK-bPq"; */
-"v1Z-NK-bPq.text" = "Private";
+"v1Z-NK-bPq.text" = "الخصوصية";
 
 /* Class = "UILabel"; text = "Distance"; ObjectID = "vDF-02-ujB"; */
-"vDF-02-ujB.text" = "Distance";
+"vDF-02-ujB.text" = "المسافة";
 
 /* Class = "UIButton"; normalTitle = "+"; ObjectID = "vKa-wb-BHS"; */
 "vKa-wb-BHS.normalTitle" = "+";
 
 /* Class = "UILabel"; text = "AED 50"; ObjectID = "vLf-5g-Ej8"; */
-"vLf-5g-Ej8.text" = "AED 50";
+"vLf-5g-Ej8.text" = "درهم 50";
 
 /* Class = "UILabel"; text = "For Sale - UAE"; ObjectID = "wIR-Oz-i2t"; */
-"wIR-Oz-i2t.text" = "For Sale - UAE";
+"wIR-Oz-i2t.text" = "للبيع الامارات";
 
 /* Class = "UIButton"; normalTitle = "Sort Type"; ObjectID = "wlm-H9-7RR"; */
-"wlm-H9-7RR.normalTitle" = "Sort Type";
+"wlm-H9-7RR.normalTitle" = "نوع الفرز";
 
 /* Class = "UILabel"; text = "For Sale"; ObjectID = "wmU-k3-ICP"; */
-"wmU-k3-ICP.text" = "For Sale";
+"wmU-k3-ICP.text" = "للبيع";
 
 /* Class = "UIButton"; normalTitle = "Post an Ad"; ObjectID = "xV3-6S-fLP"; */
 "xV3-6S-fLP.normalTitle" = "النشر";
@@ -528,22 +537,22 @@
 "xe0-wC-TA7.title" = "ChatVC";
 
 /* Class = "UILabel"; text = "Your ad will be shown on the top of the search results for as long as you choose."; ObjectID = "xhx-kg-Uu3"; */
-"xhx-kg-Uu3.text" = "Your ad will be shown on the top of the search results for as long as you choose.";
+"xhx-kg-Uu3.text" = "سيظهر إعلانك في أعلى نتائج البحث طالما اخترت ذلك";
 
 /* Class = "UILabel"; text = "Location & Contact"; ObjectID = "xvK-2c-SRH"; */
 "xvK-2c-SRH.text" = "الموقع / التواصل";
 
 /* Class = "UILabel"; text = "Terms of Use"; ObjectID = "yLH-Id-wvO"; */
-"yLH-Id-wvO.text" = "Terms of Use";
+"yLH-Id-wvO.text" = "الشروط والأحكام";
 
 /* Class = "UILabel"; text = "Just for you"; ObjectID = "yeg-Y6-ypR"; */
 "yeg-Y6-ypR.text" = "فقط من أجلك";
 
 /* Class = "UILabel"; text = "Member since May 2020"; ObjectID = "z1b-RA-Ks9"; */
-"z1b-RA-Ks9.text" = "Member since May 2020";
+"z1b-RA-Ks9.text" = "2020 May مسجل كعضو منذ";
 
 /* Class = "UILabel"; text = "Let people know that you want to sell, rent or hire quickly."; ObjectID = "z9C-ul-Y9D"; */
-"z9C-ul-Y9D.text" = "Let people know that you want to sell, rent or hire quickly.";
+"z9C-ul-Y9D.text" = "دع الناس يعرفون أنك تريد البيع أو الإيجار أو الاستئجار عاجلا.";
 
 /* Class = "UILabel"; text = "Drafts"; ObjectID = "zfI-Sh-mdo"; */
-"zfI-Sh-mdo.text" = "Drafts";
+"zfI-Sh-mdo.text" = "المسودات";

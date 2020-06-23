@@ -17,11 +17,15 @@ class ThankyouVC: UIViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if defaults.string(forKey: "languageCode") == "ar"
+        {
+            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }
     }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
-    }
+//    override var preferredStatusBarStyle: UIStatusBarStyle {
+//        return .default
+//    }
     
     @IBAction func crossBtnAction(_ sender: Any)
     {

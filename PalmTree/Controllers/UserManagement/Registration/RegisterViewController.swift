@@ -55,6 +55,11 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
 
 //        self.registerData()
         txtFieldsWithRtl()
+        
+        if defaults.string(forKey: "languageCode") == "ar"
+        {
+            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

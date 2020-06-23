@@ -70,6 +70,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         //self.loginDetails()
         txtFieldsWithRtl()
         
+        if defaults.string(forKey: "languageCode") == "ar"
+        {
+            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
