@@ -15,6 +15,8 @@ class CategoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     @IBOutlet weak var categoriesView: UIView!
     @IBOutlet weak var tblView: UITableView!
     
+    @IBOutlet weak var lblTitle: UILabel!
+    
     var categoryTitle = ""
     
     //MARK:- Cycle
@@ -24,9 +26,10 @@ class CategoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
         createCategoriesView()
         
-        if defaults.string(forKey: "languageCode") == "ar"
+        if languageCode == "ar"
         {
             self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
     }
     
@@ -76,10 +79,21 @@ class CategoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             
             let lbl = UILabel()
             lbl.frame = CGRect(x: 44, y: 16, width: lblWidth+20, height: 17)
-            lbl.text = objData.name
             lbl.textAlignment = .center
             lbl.font = UIFont.systemFont(ofSize: 14.0)
             lbl.backgroundColor = .clear
+            
+            if languageCode == "ar"
+            {
+                lbl.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                
+//                lbl.text = NSLocalizedString(objData.name, comment: "")
+                lbl.text = objData.name
+            }
+            else
+            {
+               lbl.text = objData.name
+            }
             
             let btn = UIButton()
             btn.frame = CGRect(x: 0, y: 0, width: Int(width), height: 50)
@@ -105,7 +119,16 @@ class CategoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
         let cell: CategoryCell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
         
-        cell.lblName.text = "All Cars"
+        if languageCode == "ar"
+        {
+//            cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            cell.lblName.text = NSLocalizedString("All Cars", comment: "")
+            cell.lblName.text = "جميع السيارات";
+        }
+        else
+        {
+            cell.lblName.text = "All Cars"
+        }
         
         return cell
     }

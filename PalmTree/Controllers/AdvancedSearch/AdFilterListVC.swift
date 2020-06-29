@@ -14,6 +14,7 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     //MARK:- Outlets
     @IBOutlet weak var txtSearch: UITextField!
     @IBOutlet weak var filtersView: UIView!
+    @IBOutlet weak var filterBtn: UIButton!
     
     //MARK:- Properties
    
@@ -25,6 +26,14 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
         
         self.googleAnalytics(controllerName: "Advance Search Controller")
+        
+        if languageCode == "ar"
+        {
+            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            filterBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            txtSearch.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            txtSearch.textAlignment = .right
+        }
         
         createFilterView()
     }
@@ -55,7 +64,8 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBAction func filterBtnAction(_ button: UIButton)
     {
-        
+        let filterVC = self.storyboard?.instantiateViewController(withIdentifier: "FilterVC") as! FilterVC
+        self.present(filterVC, animated: true, completion: nil)
     }
     
     //MARK:- Custom Functions
@@ -72,7 +82,12 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         scrollView.showsHorizontalScrollIndicator = false
         filtersView.addSubview(scrollView)
         
-        let filtersArray = ["Cars", "UAE", "Price", "Make/Model", "Color"]
+        var filtersArray = ["Cars", "UAE", "Price", "Make/Model", "Color"]
+        
+        if languageCode == ""
+        {
+            filtersArray = [NSLocalizedString("Cars", comment: ""),NSLocalizedString("UAE", comment: ""),NSLocalizedString("Price", comment: ""),NSLocalizedString("Make/Model", comment: ""),NSLocalizedString("Color", comment: "")]
+        }
         
         var xAxis = 10
         var width = 0
@@ -93,11 +108,27 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             
             let lbl = UILabel()
             lbl.frame = CGRect(x: 0, y: 0, width: width, height: 36)
-            lbl.text = filter
             lbl.textAlignment = .center
             lbl.font = UIFont.systemFont(ofSize: 14.0)
             lbl.backgroundColor = .clear
             
+            let cross = UIImageView()
+            cross.frame = CGRect(x: view.frame.width - 7, y: 11, width: 14, height: 14)
+            cross.image = UIImage(named: "cross")
+            
+            let btn = UIButton()
+            btn.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 36)
+            btn.addTarget(self, action: #selector(crossBtnAction(button:)), for: .touchUpInside)
+//            if languageCode == "ar"
+//            {
+//                lbl.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//                lbl.text = NSLocalizedString(filter, comment: "")
+//            }
+//            else
+//            {
+               lbl.text = filter
+//            }
+//            
             view.addSubview(lbl)
             scrollView.addSubview(view)
             
@@ -105,6 +136,11 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         scrollView.contentSize = CGSize(width: 450, height: 0)
+    }
+    
+    @IBAction func crossBtnAction(button: UIButton)
+    {
+    
     }
     
     //MARK:- TableView Delegates
@@ -117,6 +153,14 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell: SearchAlertTableCell = tableView.dequeueReusableCell(withIdentifier: "SearchAlertTableCell", for: indexPath) as! SearchAlertTableCell
+        
+        if languageCode == "ar"
+        {
+            cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cell.lblProcess.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cell.lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cell.lblLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }
         
         return cell
     }

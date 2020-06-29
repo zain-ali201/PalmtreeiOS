@@ -5,3 +5,10 @@
   Created by Apple on 22/06/2020.
   Copyright © 2020 apple. All rights reserved.
 */
+
+"Cars" = "السيارات";
+"Jobs" = "الوظائف";
+"Electronics" = "أجهزة كهربائية";
+"Sports" = "الرياضة";
+"For Sale" = "للبيع";
+"More" = "المزيد";

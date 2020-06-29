@@ -12,6 +12,7 @@ import NVActivityIndicatorView
 class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, NVActivityIndicatorViewable{
 
     //MARK:- Outlets
+    @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var favBtn: UIButton!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var favTblView: UITableView!
@@ -53,10 +54,13 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
         self.googleAnalytics(controllerName: "Watchlist Controller")
         
-        if defaults.string(forKey: "languageCode") == "ar"
+        if languageCode == "ar"
         {
             self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             changeMenuButtons()
+            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            searchBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            favBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
     }
 
@@ -81,11 +85,11 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     func changeMenuButtons()
     {
-        btnHome.setImage(UIImage(named: "home_active_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
-        btnPalmtree.setImage(UIImage(named: "mypalmtree_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
-        btnPost.setImage(UIImage(named: "post_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
-        btnWishlist.setImage(UIImage(named: "wishlist_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
-        btnMessages.setImage(UIImage(named: "messages_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
+        btnHome.setImage(UIImage(named: "home_" + languageCode ), for: .normal)
+        btnPalmtree.setImage(UIImage(named: "mypalmtree_" + languageCode), for: .normal)
+        btnPost.setImage(UIImage(named: "post_" + languageCode), for: .normal)
+        btnWishlist.setImage(UIImage(named: "wishlist_active_" + languageCode), for: .normal)
+        btnMessages.setImage(UIImage(named: "messages_" + languageCode ), for: .normal)
         
         btnHome.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         btnPalmtree.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -191,6 +195,21 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell: SearchAlertTableCell = tableView.dequeueReusableCell(withIdentifier: "SearchAlertTableCell", for: indexPath) as! SearchAlertTableCell
+        
+        if languageCode == "ar"
+        {
+            cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            if tableView.tag == 1001
+            {
+                cell.lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                cell.lblLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            }
+            else
+            {
+                cell.lblAlertType.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            }
+            
+        }
         
         return cell
     }

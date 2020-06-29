@@ -18,5 +18,14 @@ class SearchAlertTableCell: UITableViewCell {
     
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblAlertType: UILabel!
+    @IBOutlet weak var lblPrice: UILabel!
+    @IBOutlet weak var lblLocation: UILabel!
+    @IBOutlet weak var lblProcess: UILabel!
+    @IBOutlet weak var lblPromotion: UILabel!
     @IBOutlet weak var alertIcon: UIImageView!
+    
+    override func awakeFromNib()
+    {
+
+    }
 }

@@ -66,6 +66,7 @@ PODS:
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/Logger (~> 2.1)
     - Protobuf (~> 3.1)
+  - Gallery (2.2.2)
   - Google-Mobile-Ads-SDK (7.50.0):
     - GoogleAppMeasurement (~> 6.0)
   - GoogleAnalytics (3.17.0)
@@ -185,6 +186,7 @@ DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Messaging
+  - Gallery
   - Google-Mobile-Ads-SDK
   - GoogleAnalytics
   - GoogleMaps
@@ -234,6 +236,7 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseInstanceID
     - FirebaseMessaging
+    - Gallery
     - Google-Mobile-Ads-SDK
     - GoogleAnalytics
     - GoogleAppMeasurement
@@ -292,6 +295,7 @@ SPEC CHECKSUMS:
   FirebaseCore: 3c02ec652db3d03fdc8bc6d9154af3e20d64b6f5
   FirebaseInstanceID: 81df5805a08001e69138664bdd02c6719a9ac80f
   FirebaseMessaging: dfdcd307c2382290a1e297a81d0f18370f5b1bcd
+  Gallery: 634ea7d58b93fcb8e787a846febac73ec354e7d9
   Google-Mobile-Ads-SDK: d48dbaf5bae1ab7a94a9786f493c26c454bc6f16
   GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
   GoogleAppMeasurement: 86a82f0e1f20b8eedf8e20326530138fd71409de
@@ -332,6 +336,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: 22d4c58200d7c105e0e407ab6bfd01a5d85014be
   YouTubePlayer: 028451f6772f372d4759866db99824c676ac1473
 
-PODFILE CHECKSUM: f457058b49fda892e6a264b756116a5aade0bf07
+PODFILE CHECKSUM: 92782ad55768af24c3fa752df15c2289de37a7f5
 
 COCOAPODS: 1.9.3

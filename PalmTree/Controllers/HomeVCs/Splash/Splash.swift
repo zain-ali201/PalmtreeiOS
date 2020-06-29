@@ -88,7 +88,8 @@ class Splash: UIViewController, NVActivityIndicatorViewable {
         self.showLoader()
         UserHandler.settingsdata(success: { (successResponse) in
             self.stopAnimating()
-            if successResponse.success {
+            if successResponse.success
+            {
                 UserDefaults.standard.set(successResponse.data.alertDialog.title, forKey: "aler")
                 UserDefaults.standard.set(successResponse.data.internetDialog.okBtn, forKey: "okbtnNew")
                 UserDefaults.standard.set(successResponse.data.internetDialog.cancelBtn, forKey: "cancelBtn")
@@ -226,13 +227,13 @@ class Splash: UIViewController, NVActivityIndicatorViewable {
 //                        self.showToast(message: "else ma ha ")
 //                    }
 //                }
-                if self.isWplOn == true{
-                                   UserDefaults.standard.string(forKey: "is_wpml_active")
-                                   self.imagesArr.append(UIImage(named:"language")!)
-                                   self.settingBlogArr.append(successResponse.data.menu.wpml)
-                               }
-                
-                               
+                if self.isWplOn == true
+                {
+                    UserDefaults.standard.string(forKey: "is_wpml_active")
+                    self.imagesArr.append(UIImage(named:"language")!)
+                    self.settingBlogArr.append(successResponse.data.menu.wpml)
+                }
+                          
                 UserDefaults.standard.set(self.settingBlogArr, forKey: "setArr")
                 UserDefaults.standard.set(self.imagesArr, forKey: "setArrImg")
                 print(self.imagesArr)
@@ -277,7 +278,9 @@ class Splash: UIViewController, NVActivityIndicatorViewable {
                     self.moveToHome()
                 }
                 
-            } else {
+            }
+            else
+            {
                 let alert = Constants.showBasicAlert(message: successResponse.message)
                 self.presentVC(alert)
             }

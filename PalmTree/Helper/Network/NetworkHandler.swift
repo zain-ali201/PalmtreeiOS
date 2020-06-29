@@ -14,7 +14,8 @@ class NetworkHandler {
 
     class func postRequest(url: String, parameters: Parameters?, success: @escaping (Any) -> Void, failure: @escaping (NetworkError) -> Void) {
         
-         var langCode = UserDefaults.standard.string(forKey: "langCode")
+//         var langCode = UserDefaults.standard.string(forKey: "languageCode")
+        var langCode = languageCode
         
         if langCode == nil {
             langCode = "en"

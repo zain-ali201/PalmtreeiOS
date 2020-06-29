@@ -7,15 +7,22 @@
 //
 
 import UIKit
+import NVActivityIndicatorView
 
-class PrivacyController: UIViewController {
-
+class TermsConditionsController: UIViewController {
 
     //MARK:- Outlets
+    @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var webView: UIWebView!
     //MARK:- View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if languageCode == "ar"
+        {
+            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }
         
         webView.loadRequest(URLRequest(url: URL(string: "http://www.google.com")!))
     }
@@ -41,3 +48,4 @@ class PrivacyController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
 }
+

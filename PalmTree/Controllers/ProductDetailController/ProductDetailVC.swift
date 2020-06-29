@@ -11,17 +11,30 @@ import UIKit
 class ProductDetailVC: UIViewController{
 
     //MARK:- Outlets
-    @IBOutlet weak var txtSearch: UITextField!
-    @IBOutlet weak var tblView: UITableView!
     
     @IBOutlet weak var scrollView: UIScrollView!
     
     @IBOutlet weak var summaryBtn: UIButton!
     @IBOutlet weak var specsBtn: UIButton!
+    @IBOutlet weak var btnReport: UIButton!
+    
+    @IBOutlet weak var callBtn: UIButton!
+    @IBOutlet weak var chatBtn: UIButton!
+    @IBOutlet weak var whatsappBtn: UIButton!
     
     @IBOutlet weak var leading: NSLayoutConstraint!
     
     @IBOutlet weak var lblSummary: UILabel!
+    @IBOutlet weak var lblName: UILabel!
+    @IBOutlet weak var lblPrice: UILabel!
+    @IBOutlet weak var lblLocation: UILabel!
+    @IBOutlet weak var lblSeller: UILabel!
+    @IBOutlet weak var lblJoining: UILabel!
+    @IBOutlet weak var lblListing: UILabel!
+    @IBOutlet weak var lblSellerTypeText: UILabel!
+    @IBOutlet weak var lblSellerType: UILabel!
+    @IBOutlet weak var lblTime: UILabel!
+    @IBOutlet weak var lblID: UILabel!
     
     //MARK:- Properties
    
@@ -34,9 +47,30 @@ class ProductDetailVC: UIViewController{
         
 //        self.googleAnalytics(controllerName: "Watchlist Controller")
         
-        if defaults.string(forKey: "languageCode") == "ar"
+        if languageCode == "ar"
         {
             self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            
+            summaryBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            specsBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnReport.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            callBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            chatBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            whatsappBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblSummary.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblSeller.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblJoining.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblListing.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblSellerTypeText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblSellerType.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblTime.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblID.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            
+            callBtn.setImage(UIImage(named: "Call_ar"), for: .normal)
+            chatBtn.setImage(UIImage(named: "Chat_ar"), for: .normal)
         }
     }
 

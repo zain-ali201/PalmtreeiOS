@@ -10,6 +10,18 @@ import Foundation
 import UIKit
 import DeviceKit
 
+var userDetail:UserObject? = UserObject()
+var languageCode = ""
+
+var admobDelegate = AdMobDelegate()
+var currentVc: UIViewController!
+
+var homeVC: HomeController!
+var myAdsVC: MyAdsController!
+let defaults = UserDefaults.standard
+let screenWidth = UIScreen.main.bounds.width
+var categoryArray = [CatIcon]()
+
 class Constants
 {
     struct  URL
@@ -186,7 +198,9 @@ class Constants
 //        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
 //        return alert
 //    }
-    static func showBasicAlert (message: String) -> UIAlertController{
+    
+    static func showBasicAlert (message: String) -> UIAlertController
+    {
         let al = UserDefaults.standard.string(forKey: "aler")
         let ok = UserDefaults.standard.string(forKey: "okbtnNew")
         //let cancel = UserDefaults.standard.string(forKey: "cancelbtnNew")
@@ -194,6 +208,7 @@ class Constants
         alert.addAction(UIAlertAction(title: ok, style: UIAlertActionStyle.default, handler: nil))
         return alert
     }
+    
     //Convert data to json string
     static func json(from object:Any) -> String? {
         guard let data = try? JSONSerialization.data(withJSONObject: object, options: []) else {

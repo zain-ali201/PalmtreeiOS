@@ -35,8 +35,9 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
         }
     }
     
-    @IBOutlet weak var txtView: UITextView!
+    @IBOutlet weak var lblText: UILabel!
     @IBOutlet weak var buttonRegister: UIButton!
+    @IBOutlet weak var lblPass: UILabel!
     
     //MARK:- Properties
     
@@ -54,11 +55,24 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
         self.hideKeyboard()
 
 //        self.registerData()
-        txtFieldsWithRtl()
+//        txtFieldsWithRtl()
         
-        if defaults.string(forKey: "languageCode") == "ar"
+        if languageCode == "ar"
         {
             self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            buttonRegister.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            txtPassword.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            txtConfirmPassword.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            txtEmail.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            txtName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblPass.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            
+            txtEmail.textAlignment = .right
+            txtPassword.textAlignment = .right
+            txtName.textAlignment = .right
+            txtConfirmPassword.textAlignment = .right
+            lblText.textAlignment = .right
         }
     }
     
@@ -94,39 +108,40 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
     //MARK: - Custom
     func txtFieldsWithRtl()
     {
-        let attributedString = NSMutableAttributedString(string: txtView.text!)
+//        let attributedString = NSMutableAttributedString(string: txtView.text!)
         
-        let linkedText = NSMutableAttributedString(attributedString: attributedString)
-        let terms = linkedText.setAsLink(textToFind: "Terms of use", linkURL: "https://www.google.com/")
-        let privacy = linkedText.setAsLink(textToFind: "Privacy Policy", linkURL: "https://www.google.com/")
-        let offers = linkedText.setAsLink(textToFind: "third party offers", linkURL: "https://www.google.com/")
+//        let linkedText = NSMutableAttributedString(attributedString: attributedString)
+//        let terms = linkedText.setAsLink(textToFind: "Terms of use", linkURL: "https://www.google.com/")
+//        let privacy = linkedText.setAsLink(textToFind: "Privacy Policy", linkURL: "https://www.google.com/")
+//        let offers = linkedText.setAsLink(textToFind: "third party offers", linkURL: "https://www.google.com/")
+//
+//        if terms && privacy && offers
+//        {
+//            txtView.attributedText = NSAttributedString(attributedString: linkedText)
+//        }
         
-        if terms && privacy && offers
-        {
-            txtView.attributedText = NSAttributedString(attributedString: linkedText)
-        }
-        
-        if UserDefaults.standard.bool(forKey: "isRtl")
-        {
-            txtEmail.textAlignment = .right
-            txtPassword.textAlignment = .right
-            txtName.textAlignment = .right
-            txtConfirmPassword.textAlignment = .right
-        }
-        else
-        {
-            txtEmail.textAlignment = .left
-            txtPassword.textAlignment = .left
-            txtName.textAlignment = .left
-            txtConfirmPassword.textAlignment = .left
-        }
+//        if UserDefaults.standard.bool(forKey: "isRtl")
+//        {
+//            txtEmail.textAlignment = .right
+//            txtPassword.textAlignment = .right
+//            txtName.textAlignment = .right
+//            txtConfirmPassword.textAlignment = .right
+//        }
+//        else
+//        {
+//            txtEmail.textAlignment = .left
+//            txtPassword.textAlignment = .left
+//            txtName.textAlignment = .left
+//            txtConfirmPassword.textAlignment = .left
+//        }
     }
     
     func showLoader(){
         self.startAnimating(Constants.activitySize.size, message: Constants.loaderMessages.loadingMessage.rawValue,messageFont: UIFont.systemFont(ofSize: 14), type: NVActivityIndicatorType.ballClipRotatePulse)
     }
 
-    func populateData() {
+    func populateData()
+    {
         if UserHandler.sharedInstance.objregisterDetails != nil {
             let objData = UserHandler.sharedInstance.objregisterDetails
             
@@ -259,6 +274,7 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
                     self.page_id = pageID
                 }
                 self.populateData()
+                
             }
             else {
                 let alert = Constants.showBasicAlert(message: successResponse.message)

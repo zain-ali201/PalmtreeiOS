@@ -14,6 +14,10 @@ class ChatVC: UIViewController
     //MARK:- Properties
     @IBOutlet weak var txtChat: UITextField!
     @IBOutlet weak var bottom:NSLayoutConstraint!
+    @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var lblName: UILabel!
+    @IBOutlet weak var lblMsg: UILabel!
+    @IBOutlet weak var lblPrice: UILabel!
     
     //MARK:- Cycle
     
@@ -26,6 +30,16 @@ class ChatVC: UIViewController
         selector: #selector(self.keyboardNotification(notification:)),
         name: NSNotification.Name.UIKeyboardWillChangeFrame,
         object: nil)
+        
+        if languageCode == "ar"
+        {
+            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            txtChat.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblMsg.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }
     }
 
 //    @objc func keyboardWillShow(notification: NSNotification) {

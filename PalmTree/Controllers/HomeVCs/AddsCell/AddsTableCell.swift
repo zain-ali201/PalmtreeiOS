@@ -30,13 +30,8 @@ class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
     }
     
     @IBOutlet weak var lblSectionTitle: UILabel!
-    @IBOutlet weak var oltViewAll: UIButton! {
-        didSet{
-            if let mainColor = UserDefaults.standard.string(forKey: "mainColor"){
-                oltViewAll.backgroundColor = Constants.hexStringToUIColor(hex: mainColor)
-            }
-        }
-    }
+    @IBOutlet weak var lblJust: UILabel!
+    @IBOutlet weak var locBtn: UIButton!
     
     var locationBtnAction: (()->())?
     
@@ -57,19 +52,25 @@ class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
     
     
     //MARK:- View Life Cycle
-    override func awakeFromNib() {
+    override func awakeFromNib()
+    {
         super.awakeFromNib()
         selectionStyle = .none
         self.layoutLatest()
         self.layoutHorizontalSingleAd()
         
+        if languageCode == "ar"
+        {
+            lblSectionTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblJust.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            locBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
     }
-    
     
     //MARK:- Custom
     
@@ -169,6 +170,12 @@ class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
         }
         cell.lblName.text = "Cars"
         cell.lblPrice.text = "AED 50"
+        
+        if languageCode == "ar"
+        {
+            cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cell.lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }
         
         return cell
     }

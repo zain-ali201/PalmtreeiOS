@@ -17,15 +17,6 @@ import FirebaseInstanceID
 import GoogleMobileAds
 import IQKeyboardManagerSwift
 
-var admobDelegate = AdMobDelegate()
-var currentVc: UIViewController!
-
-var homeVC: HomeController!
-var myAdsVC: MyAdsController!
-let defaults = UserDefaults.standard
-let screenWidth = UIScreen.main.bounds.width
-var categoryArray = [CatIcon]()
-
 class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable, AddDetailDelegate, CategoryDetailDelegate, UISearchBarDelegate, MessagingDelegate,UNUserNotificationCenterDelegate, NearBySearchDelegate, BlogDetailDelegate , LocationCategoryDelegate, SwiftyAdDelegate , GADInterstitialDelegate, UIGestureRecognizerDelegate {
     
     //MARK:- Outlets
@@ -106,6 +97,8 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var btnWishlist: UIButton!
     @IBOutlet weak var btnMessages: UIButton!
     
+    @IBOutlet weak var lblSearch: UILabel!
+    
     //MARK:- View Life Cycle
     
     override func viewDidLoad() {
@@ -128,14 +121,12 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidAppear(_ animated: Bool) {
         
-        if defaults.string(forKey: "languageCode") == "ar"
+        if languageCode == "ar"
         {
             self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-//            for view in self.view.subviews
-//            {
-//                view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-//            }
+            lblSearch.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             changeMenuButtons()
+            tableView.reloadData()
         }
     }
     
@@ -159,11 +150,11 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func changeMenuButtons()
     {
-        btnHome.setImage(UIImage(named: "home_active_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
-        btnPalmtree.setImage(UIImage(named: "mypalmtree_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
-        btnPost.setImage(UIImage(named: "post_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
-        btnWishlist.setImage(UIImage(named: "wishlist_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
-        btnMessages.setImage(UIImage(named: "messages_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
+        btnHome.setImage(UIImage(named: "home_active_" + languageCode), for: .normal)
+        btnPalmtree.setImage(UIImage(named: "mypalmtree_" + languageCode), for: .normal)
+        btnPost.setImage(UIImage(named: "post_" + languageCode), for: .normal)
+        btnWishlist.setImage(UIImage(named: "wishlist_" + languageCode), for: .normal)
+        btnMessages.setImage(UIImage(named: "messages_" + languageCode), for: .normal)
         
         btnHome.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         btnPalmtree.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -383,14 +374,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
 //            let objData = dataArray[indexPath.row]
 //            let data = AddsHandler.sharedInstance.objHomeData
-//
-//            if let sectionTitle = objData.name {
-//                cell.lblSectionTitle.text = sectionTitle
-//            }
-//            if let viewAllText = data?.viewAll {
-//                cell.oltViewAll.setTitle(viewAllText, for: .normal)
-//            }
-//
+
 //            cell.btnViewAll = { () in
 //                let categoryVC = self.storyboard?.instantiateViewController(withIdentifier: "CategoryController") as! CategoryController
 //                categoryVC.categoryID = objData.catId
@@ -587,6 +571,19 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     self.featurePosition = feature
                 }
                 categoryArray = successResponse.data.catIcons
+                //For testing purpose
+                if languageCode == "ar"
+                {
+                    categoryArray[0].name = "السيارات";
+                    categoryArray[1].name = "للبيع";
+                    categoryArray[2].name = "الوظائف";
+                    categoryArray[3].name = "أجهزة كهربائية";
+                    categoryArray[4].name = "اثاث";
+                    categoryArray[5].name = "حيوانات أليفة";
+                    categoryArray[6].name = "خاصية";
+                    categoryArray[7].name = "المزيد";
+                }
+                
                 self.dataArray = successResponse.data.sliders
                 
                 //Check Feature Ads is on or off and set add Position Sorter

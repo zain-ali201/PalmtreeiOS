@@ -22,6 +22,9 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     @IBOutlet weak var lblEmailverified: UILabel!
     @IBOutlet weak var lblJoining: UILabel!
     
+    @IBOutlet weak var lblText: UILabel!
+    @IBOutlet weak var signinBtn: UIButton!
+    
     @IBOutlet weak var tblView: UITableView!
     
     //MARK:- Properties
@@ -66,10 +69,16 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         checkLogin()
         
-        if defaults.string(forKey: "languageCode") == "ar"
+        if languageCode == "ar"
         {
             self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             changeMenuButtons()
+            
+            lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblJoining.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblEmailverified.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            signinBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
     }
 
@@ -109,11 +118,11 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     func changeMenuButtons()
     {
-        btnHome.setImage(UIImage(named: "home_active_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
-        btnPalmtree.setImage(UIImage(named: "mypalmtree_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
-        btnPost.setImage(UIImage(named: "post_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
-        btnWishlist.setImage(UIImage(named: "wishlist_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
-        btnMessages.setImage(UIImage(named: "messages_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
+        btnHome.setImage(UIImage(named: "home_" + languageCode ), for: .normal)
+        btnPalmtree.setImage(UIImage(named: "mypalmtree_active_" + languageCode), for: .normal)
+        btnPost.setImage(UIImage(named: "post_" + languageCode), for: .normal)
+        btnWishlist.setImage(UIImage(named: "wishlist_" + languageCode), for: .normal)
+        btnMessages.setImage(UIImage(named: "messages_" + languageCode ), for: .normal)
         
         btnHome.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         btnPalmtree.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -300,6 +309,15 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell: SearchAlertTableCell = tableView.dequeueReusableCell(withIdentifier: "SearchAlertTableCell", for: indexPath) as! SearchAlertTableCell
+        
+        if languageCode == "ar"
+        {
+            cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cell.lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cell.lblLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cell.lblProcess.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cell.lblPromotion.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }
         
         return cell
     }

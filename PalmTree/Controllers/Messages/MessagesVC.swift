@@ -13,6 +13,7 @@ class MessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
 {   
     //MARK:- Properties
     //MenuButtons
+    @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var btnHome: UIButton!
     @IBOutlet weak var btnPalmtree: UIButton!
     @IBOutlet weak var btnPost: UIButton!
@@ -24,10 +25,11 @@ class MessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if defaults.string(forKey: "languageCode") == "ar"
+        if languageCode == "ar"
         {
             self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             changeMenuButtons()
+            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
     }
     
@@ -45,11 +47,11 @@ class MessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     func changeMenuButtons()
     {
-        btnHome.setImage(UIImage(named: "home_active_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
-        btnPalmtree.setImage(UIImage(named: "mypalmtree_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
-        btnPost.setImage(UIImage(named: "post_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
-        btnWishlist.setImage(UIImage(named: "wishlist_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
-        btnMessages.setImage(UIImage(named: "messages_" + (defaults.string(forKey: "languageCode") ?? "en")), for: .normal)
+        btnHome.setImage(UIImage(named: "home_" + languageCode ), for: .normal)
+        btnPalmtree.setImage(UIImage(named: "mypalmtree_" + languageCode), for: .normal)
+        btnPost.setImage(UIImage(named: "post_" + languageCode), for: .normal)
+        btnWishlist.setImage(UIImage(named: "wishlist_" + languageCode), for: .normal)
+        btnMessages.setImage(UIImage(named: "messages_active_" + languageCode ), for: .normal)
         
         btnHome.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         btnPalmtree.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -134,6 +136,13 @@ class MessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell: SearchAlertTableCell = tableView.dequeueReusableCell(withIdentifier: "SearchAlertTableCell", for: indexPath) as! SearchAlertTableCell
+        
+        if languageCode == "ar"
+        {
+            cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cell.lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cell.lblProcess.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }
         
         return cell
     }

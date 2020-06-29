@@ -20,6 +20,31 @@ class SettingsVC: UIViewController {
     
     @IBOutlet weak var lblLang: UILabel!
     @IBOutlet weak var lblLang1: UILabel!
+    
+    //Signout Butotns
+    @IBOutlet weak var btnSignin: UILabel!
+    @IBOutlet weak var btnShareApp: UILabel!
+    @IBOutlet weak var btnHelp: UILabel!
+    @IBOutlet weak var btnLang: UILabel!
+    @IBOutlet weak var btnPolicy: UILabel!
+    @IBOutlet weak var btnTerms: UILabel!
+    @IBOutlet weak var btnLegal: UILabel!
+    
+    //Signout Butotns
+    @IBOutlet weak var btnSignout: UILabel!
+    @IBOutlet weak var btnShareApp1: UILabel!
+    @IBOutlet weak var btnHelp1: UILabel!
+    @IBOutlet weak var btnLang1: UILabel!
+    @IBOutlet weak var btnPolicy1: UILabel!
+    @IBOutlet weak var btnTerms1: UILabel!
+    @IBOutlet weak var btnLegal1: UILabel!
+    @IBOutlet weak var btnDetails: UILabel!
+    @IBOutlet weak var btnAlert: UILabel!
+    @IBOutlet weak var btnMessage: UILabel!
+    @IBOutlet weak var btnUpdate: UILabel!
+    @IBOutlet weak var btnEmails: UILabel!
+    
+    @IBOutlet weak var logo: UIImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,23 +58,48 @@ class SettingsVC: UIViewController {
         {
             signinView.alpha = 0
             signoutView.alpha = 1
-            
         }
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy"
         
-        
         lblVersion.text = (Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String)
+        lblRights.text = String(format: "Copyrights 2000-%@ Palmtree", formatter.string(from: Date()))
         
-        if defaults.string(forKey: "languageCode") == "ar"
+        if languageCode == "ar"
         {
-//            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblRights.text = String(format: "Palmtree %@ حقوق النشر", formatter.string(from: Date()))
+            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            lblRights.text = String(format: "Palmtree 2000-%@ حقوق النشر", formatter.string(from: Date()))
+            lblRights.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblLang.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblLang1.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            
+            logo.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            
+            btnSignin.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnShareApp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnHelp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnLang.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnPolicy.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnTerms.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnLegal.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            
+            btnSignout.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnShareApp1.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnHelp1.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnLang1.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnPolicy1.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnTerms1.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnLegal1.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnDetails.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnAlert.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnMessage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnUpdate.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnEmails.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
         else
         {
-            lblRights.text = String(format: "Copyrights %@ Palmtree", formatter.string(from: Date()))
+//            lblRights.text = String(format: "Copyrights 2000-%@ Palmtree", formatter.string(from: Date()))
         }
     }
     
@@ -122,7 +172,14 @@ class SettingsVC: UIViewController {
         }
         else if button.tag == 1003
         {
-            
+            let aboutusVC = self.storyboard?.instantiateViewController(withIdentifier: "AboutusVC") as! AboutusVC
+            self.navigationController?.pushViewController(aboutusVC, animated: true)
         }
+    }
+    
+    @IBAction func myDetailsBtnAction(_ sender: Any)
+    {
+        let editProfileVC = self.storyboard?.instantiateViewController(withIdentifier: "EditProfileVC") as! EditProfileVC
+        self.navigationController?.pushViewController(editProfileVC, animated: true)
     }
 }

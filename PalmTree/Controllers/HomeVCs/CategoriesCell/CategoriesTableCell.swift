@@ -74,8 +74,18 @@ class CategoriesTableCell: UITableViewCell, UICollectionViewDelegate, UICollecti
         let cell: CategoriesCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoriesCollectionCell", for: indexPath) as! CategoriesCollectionCell
         let objData = categoryArray[indexPath.row]
     
-        if let name = objData.name {
-            cell.lblName.text = name
+        if let name = objData.name
+        {
+            if languageCode == "ar"
+            {
+                cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//                cell.lblName.text = NSLocalizedString(name, comment: "")
+                cell.lblName.text = name
+            }
+            else
+            {
+                cell.lblName.text = name
+            }
         }
         if let imgUrl = URL(string: objData.img.encodeUrl()) {
             cell.imgPicture.sd_setShowActivityIndicatorView(true)

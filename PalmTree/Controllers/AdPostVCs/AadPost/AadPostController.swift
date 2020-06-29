@@ -391,7 +391,8 @@ class AadPostController: UIViewController, NVActivityIndicatorViewable, UITableV
     }
     
     //MARK:- API Calls
-    func adPost(param: NSDictionary) {
+    func adPost(param: NSDictionary)
+    {
         print(param)
         self.showLoader()
         AddsHandler.adPost(parameter: param, success: { (successResponse) in
@@ -438,7 +439,9 @@ class AadPostController: UIViewController, NVActivityIndicatorViewable, UITableV
                 UserDefaults.standard.set(successResponse.extra.dialogSend, forKey: "dialogSend")
                 
                 self.tableView.reloadData() 
-            } else {
+            }
+            else
+            {
                 let alert = AlertView.prepare(title: "", message: successResponse.message, okAction: {
                   self.navigationController?.popViewController(animated: true)
                 })

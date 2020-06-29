@@ -680,16 +680,21 @@ class AdPostMapController: UITableViewController, GMSAutocompleteViewControllerD
     
     @IBAction func actionPostAdd(_ sender: Any) {
         
-        if isSimpleAddress == false{
+        if isSimpleAddress == false
+        {
             address = txtAddress.text!
         }
         
-        if address == "" {
+        if address == ""
+        {
             self.txtAddress.shake(6, withDelta: 10, speed: 0.06)
-        }else if isTermCond == false{
+        }
+        else if isTermCond == false
+        {
             self.txtTermCondition.shake(6, withDelta: 10, speed: 0.06)
         }
-        else {
+        else
+        {
             var parameter: [String: Any] = [
                 "images_array": imageIdArray,
                 "ad_phone": self.txtNumber.text!, //phone_number,
@@ -706,49 +711,57 @@ class AdPostMapController: UITableViewController, GMSAutocompleteViewControllerD
             print(parameter)
             let dataArray = objArray
             print(objArray)
-            for (_, value) in dataArray.enumerated() {
-            if value.fieldVal == "" {
-            continue
-            }
-            if customArray.contains(where: { $0.fieldTypeName == value.fieldTypeName}) {
-
-            if value.fieldType == "checkbox"
+            
+            for (_, value) in dataArray.enumerated()
             {
-            let points = value.fieldVal
-            let pointsArr = points!.components(separatedBy: ",")
-            print(pointsArr)
-            let uni = uniq(source: pointsArr)
-            print(uni)
+                if value.fieldVal == ""
+                {
+                    continue
+                }
+                
+                if customArray.contains(where: { $0.fieldTypeName == value.fieldTypeName})
+                {
+                    if value.fieldType == "checkbox"
+                    {
+                        let points = value.fieldVal
+                        let pointsArr = points!.components(separatedBy: ",")
+                        print(pointsArr)
+                        let uni = uniq(source: pointsArr)
+                        print(uni)
 
-            let formattedArray = (uni.map{String($0)}).joined(separator: ",")
-            print(formattedArray)
+                        let formattedArray = (uni.map{String($0)}).joined(separator: ",")
+                        print(formattedArray)
 
-            customDictionary[value.fieldTypeName] = formattedArray//value.fieldVal
-            print(customDictionary)
-            }else{
-            customDictionary[value.fieldTypeName] = value.fieldVal
-            print(customDictionary)
-            }
+                        customDictionary[value.fieldTypeName] = formattedArray//value.fieldVal
+                        print(customDictionary)
+                    }
+                    else
+                    {
+                        customDictionary[value.fieldTypeName] = value.fieldVal
+                        print(customDictionary)
+                    }
 
 
+                }
+                else
+                {
+                    addInfoDictionary[value.fieldTypeName] = value.fieldVal
+                    print(addInfoDictionary)
+                }
             }
-            else {
-            addInfoDictionary[value.fieldTypeName] = value.fieldVal
-            print(addInfoDictionary)
-            }
-            }
-            customDictionary.merge(with: localDictionary)
-            let custom = Constants.json(from: customDictionary)
-            if AddsHandler.sharedInstance.isCategoeyTempelateOn {
-            let param: [String: Any] = ["custom_fields": custom!]
-            parameter.merge(with: param)
-            }
-            parameter.merge(with: addInfoDictionary)
-            parameter.merge(with: customDictionary) //Added by Furqan
-            print(parameter)
-            //self.dummy(param: parameter as NSDictionary)
-            self.postAd(param: parameter as NSDictionary)
-            }
+                customDictionary.merge(with: localDictionary)
+                let custom = Constants.json(from: customDictionary)
+                if AddsHandler.sharedInstance.isCategoeyTempelateOn
+                {
+                    let param: [String: Any] = ["custom_fields": custom!]
+                    parameter.merge(with: param)
+                }
+                parameter.merge(with: addInfoDictionary)
+                parameter.merge(with: customDictionary) //Added by Furqan
+                print(parameter)
+                //self.dummy(param: parameter as NSDictionary)
+                self.postAd(param: parameter as NSDictionary)
+        }
 //            for (_, value) in dataArray.enumerated() {
 //                if value.fieldVal == "" {
 //                    continue

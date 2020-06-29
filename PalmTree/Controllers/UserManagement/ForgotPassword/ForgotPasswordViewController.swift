@@ -19,6 +19,10 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate, NVAct
         }
     }
     
+    @IBOutlet weak var lblHeading: UILabel!
+    @IBOutlet weak var lblText: UILabel!
+    @IBOutlet weak var btnSend: UIButton!
+    
     //MARK:- Properties
     var defaults = UserDefaults.standard
     var isFromVerification = false
@@ -31,9 +35,15 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate, NVAct
         
         txtFieldsWithRtl()
         
-        if defaults.string(forKey: "languageCode") == "ar"
+        if languageCode == "ar"
         {
             self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnSend.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblHeading.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            emailField.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            emailField.textAlignment = .right
+            lblText.textAlignment = .right
         }
     }
     

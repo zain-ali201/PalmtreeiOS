@@ -48,12 +48,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
             buttonSubmit.roundCorners()
         }
     }
+    
     @IBOutlet weak var lblOr: UILabel!
     @IBOutlet weak var btnFb: UIButton!
+    @IBOutlet weak var btnGmail: UIButton!
+    @IBOutlet weak var lblSignup: UILabel!
+    @IBOutlet weak var lblSignupBtn: UILabel!
+    
     
     //MARK:- Properties
     var getLoginDetails = [LoginData]()
-    var defaults = UserDefaults.standard
     var isVerifyOn = false
     let loginManager = LoginManager()
     
@@ -70,11 +74,21 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         //self.loginDetails()
         txtFieldsWithRtl()
         
-        if defaults.string(forKey: "languageCode") == "ar"
+        if languageCode == "ar"
         {
             self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblOr.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnFb.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnGmail.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblSignup.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblSignupBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            buttonForgotPassword.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            buttonSubmit.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            txtEmail.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            txtPassword.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            txtEmail.textAlignment = .right
+            txtPassword.textAlignment = .right
         }
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -218,10 +232,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                                 "profile_img":linkedinImg!
                             ]
                             print(param)
-                            self.defaults.set(true, forKey: "isSocial")
-                            self.defaults.set(emilaagay, forKey: "email")
-                            self.defaults.set("1122", forKey: "password")
-                            self.defaults.synchronize()
+                            defaults.set(true, forKey: "isSocial")
+                            defaults.set(emilaagay, forKey: "email")
+                            defaults.set("1122", forKey: "password")
+                            defaults.synchronize()
                             self.loginUser(parameters: param as NSDictionary)
                             // the value is an optional.
                         }
@@ -260,8 +274,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                 "password": password
             ]
             print(param)
-            self.defaults.set(email, forKey: "email")
-            self.defaults.set(password, forKey: "password")
+            defaults.set(email, forKey: "email")
+            defaults.set(password, forKey: "password")
             self.loginUser(parameters: param as NSDictionary)
         }
     }
@@ -328,10 +342,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                 "type": "social"
             ]
             print(param)
-            self.defaults.set(true, forKey: "isSocial")
-            self.defaults.set(email, forKey: "email")
-            self.defaults.set("1122", forKey: "password")
-            self.defaults.synchronize()
+            defaults.set(true, forKey: "isSocial")
+            defaults.set(email, forKey: "email")
+            defaults.set("1122", forKey: "password")
+            defaults.synchronize()
             self.loginUser(parameters: param as NSDictionary)
         }
     }
@@ -366,10 +380,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                         "type": "social"
                     ]
                     print(param)
-                    self.defaults.set(true, forKey: "isSocial")
-                    self.defaults.set(email, forKey: "email")
-                    self.defaults.set("1122", forKey: "password")
-                    self.defaults.synchronize()
+                    defaults.set(true, forKey: "isSocial")
+                    defaults.set(email, forKey: "email")
+                    defaults.set("1122", forKey: "password")
+                    defaults.synchronize()
                     
                     self.loginUser(parameters: param as NSDictionary)
                 }
@@ -413,13 +427,25 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
             self.stopAnimating()
             if successResponse.success
             {
-                self.defaults.set(true, forKey: "isLogin")
-                self.defaults.synchronize()
+                defaults.set(true, forKey: "isLogin")
+                defaults.synchronize()
                 
                 if myAdsVC != nil
                 {
                     myAdsVC.checkLogin()
                 }
+                
+                userDetail?.displayName = successResponse.data.displayName
+                userDetail?.id = successResponse.data.id
+                userDetail?.phone = successResponse.data.phone
+                userDetail?.profileImg = successResponse.data.profileImg
+                userDetail?.userEmail = successResponse.data.userEmail
+                
+                defaults.set(successResponse.data.displayName, forKey: "displayName")
+                defaults.set(successResponse.data.id, forKey: "id")
+                defaults.set(successResponse.data.phone, forKey: "phone")
+                defaults.set(successResponse.data.profileImg, forKey: "profileImg")
+                defaults.set(successResponse.data.userEmail, forKey: "userEmail")
                 
                 self.dismiss(animated: true, completion: nil)
             }

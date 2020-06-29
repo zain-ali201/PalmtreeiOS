@@ -19,6 +19,9 @@ class SearchVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     @IBOutlet weak var savedView: UIView!
     @IBOutlet weak var leading: NSLayoutConstraint!
     
+    @IBOutlet weak var lblTry: UILabel!
+    @IBOutlet weak var lblText: UILabel!
+    
     //MARK:- Properties
    
     var dataArray = [MyAdsAd]()
@@ -29,6 +32,17 @@ class SearchVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         super.viewDidLoad()
         
         self.googleAnalytics(controllerName: "Search Controller")
+        
+        if languageCode == "ar"
+        {
+            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            recentBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            savedBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblTry.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            txtSearch.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            txtSearch.textAlignment = .right
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -78,6 +92,12 @@ class SearchVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell: SearchAlertTableCell = tableView.dequeueReusableCell(withIdentifier: "SearchAlertTableCell", for: indexPath) as! SearchAlertTableCell
+        
+        if languageCode == "ar"
+        {
+            cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cell.lblAlertType.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }
         
         return cell
     }

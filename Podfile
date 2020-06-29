@@ -109,7 +109,9 @@ target 'PalmTree' do
     #Intro App
     pod 'OnboardKit'
      #pod 'LinkedinSwift'
-pod 'LinkedinSwift', '>= 1.7.9'
+     pod 'LinkedinSwift', '>= 1.7.9'
+     
+     pod 'Gallery'
 
 
    

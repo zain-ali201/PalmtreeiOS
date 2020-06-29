@@ -14,7 +14,7 @@ class AlertView {
     class func prepare(title: String, message: String, okAction: (() -> ())?) -> UIAlertController {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        let OKAction = UIAlertAction(title: "Ok", style: .default) { action in
+        let OKAction = UIAlertAction(title: "OK", style: .default) { action in
             okAction?()
         }
         

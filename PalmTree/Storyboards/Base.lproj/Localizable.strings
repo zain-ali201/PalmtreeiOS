@@ -5,3 +5,26 @@
   Created by Apple on 22/06/2020.
   Copyright © 2020 apple. All rights reserved.
 */
+
+"Cars" = "السيارات";
+"For Sale" = "للبيع";
+"Jobs" = "الوظائف";
+"Electronics" = "أجهزة كهربائية";
+"Furnitures" = "اثاث";
+"Pets" = "حيوانات أليفة";
+"Property" = "خاصية";
+"More" = "المزيد";
+
+"Price" = "السعر";
+
+"Make/Model" = "يصنع نموذجا";
+
+"Color" = "اللون";
+
+"All" = "الكل";
+
+"UAE" = "الإمارات";
+
+"All Cars" = "جميع السيارات";
+
+"" = "";

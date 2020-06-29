@@ -22,9 +22,6 @@ import NotificationBannerSwift
 import GoogleMobileAds
 import LinkedinSwift
 
-
-var languageCode = ""
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate, NotificationBannerDelegate {
     
@@ -37,7 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var deviceFcmToken = "0"
     var interstitial: GADInterstitial?
     
-    
     func createAndLoadInterstitial() -> GADInterstitial? {
         interstitial = GADInterstitial(adUnitID: "ca-app-pub-3521346996890484/7679081330")
         guard let interstitial = interstitial else {
@@ -49,6 +45,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+//        Thread.sleep(forTimeInterval: 2)
         
         keyboardManager.enable = true
         self.setUpGoogleMaps()
@@ -93,13 +91,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         UITextField.appearance().tintColor = .black
         UITextView.appearance().tintColor = .black
         
-        languageCode = UserDefaults.standard.string(forKey: "languageCode") ?? "en"
+        languageCode = UserDefaults.standard.string(forKey: "languageCode") ?? ""
         
-        if languageCode == "ar"
+        if languageCode == "ar" || (Locale.current.languageCode == "ar" && languageCode != "en")
         {
-            Bundle.setLanguage(UserDefaults.standard.string(forKey: "languageCode")!)
+            languageCode = "ar"
+            Bundle.setLanguage("ar")
             let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
             UIApplication.shared.keyWindow?.rootViewController = storyboard.instantiateInitialViewController()
+        }
+        else
+        {
+            languageCode = "en"
         }
         
         return true

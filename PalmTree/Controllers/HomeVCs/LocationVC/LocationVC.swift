@@ -12,12 +12,26 @@ import NVActivityIndicatorView
 class LocationVC: UIViewController
 {   
     //MARK:- Properties
-    
+    @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var lblHeading: UILabel!
+    @IBOutlet weak var lblLocation: UILabel!
+    @IBOutlet weak var lblDistance: UILabel!
+    @IBOutlet weak var lblType: UILabel!
 
     //MARK:- Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if languageCode == "ar"
+        {
+            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblHeading.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblDistance.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblType.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -3,314 +3,319 @@
 <plist version="1.0">
 <dict>
 	<key>SchemeUserState</key>
-	<dict/>
-	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>00F31BD5217A20974B5E9AAC6256D98E</key>
+		<key>AFNetworking.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>0130B3724283586C0E9D2A112D4F2AA1</key>
+		<key>ActionSheetPicker-3.0.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>021E3E04C2747EEA4F96B8A3DF4B302B</key>
+		<key>Alamofire-SwiftyJSON.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>072CEA044D2EF26F03496D5996BBF59F</key>
+		<key>Alamofire.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>0C1885900810601510E0C632060FAF26</key>
+		<key>AlamofireImage.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>10C5885FCB0908EF785774EE52473DAB</key>
+		<key>Cosmos.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>11D7D6FAB60A4511C39301AF41D1E3F1</key>
+		<key>DeviceKit.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>15AEBAFA43912F898FC2E1A73025C946</key>
+		<key>DropDown.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>19622742EBA51E823D6DAE3F8CDBFAD4</key>
+		<key>FBSDKCoreKit.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>20485D6CEA89F18A813D04A2DFF7D56F</key>
+		<key>FBSDKLoginKit.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>265D78AF28F751DE873B43A5E2BFD8C2</key>
+		<key>FBSDKShareKit.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>28907903AF6DD0AD321D92CD660E7E23</key>
+		<key>Firebase.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>2F2745F4FABCC3C8D07F78FE199F16EE</key>
+		<key>FirebaseAnalytics.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>3847153A6E5EEFB86565BA840768F429</key>
+		<key>FirebaseAuth.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>3E7EBBFC65BA37988A2B55D6B8F571D7</key>
+		<key>FirebaseCore.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>4402AFF83DBDC4DD07E198685FDC2DF2</key>
+		<key>FirebaseInstanceID.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>470FE31978DC918618A329D8B55C85FF</key>
+		<key>FirebaseMessaging.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>4AFB864B337D1F74C1D79F4FC8F6C67F</key>
+		<key>GTMOAuth2.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>4CDD1C6C8885D07092D8EA708AAC0E53</key>
+		<key>GTMSessionFetcher.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>56F4191D8CB8B4E6B4E5E4FA1A9F0F46</key>
+		<key>Gallery.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>5895B432FE4D2F6826C8FF25A09DB6D2</key>
+		<key>Google-Mobile-Ads-SDK.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>5935C285ED9588C594F1CBDEE2C59EA3</key>
+		<key>GoogleAnalytics.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>5BED23170308F31956246E589532254E</key>
+		<key>GoogleAppMeasurement.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>6273C43DC7FF94E93DBFF580DB584296</key>
+		<key>GoogleMaps.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>6621189B26743A496AB5226EBAE0FB1E</key>
+		<key>GooglePlacePicker.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>6746AB6F4D992402B59D1651512EA19E</key>
+		<key>GooglePlaces.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>6AE4A3D573DED275B034E20506596C62</key>
+		<key>GoogleSignIn.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>6F3964F174D0EBFB0D64F8DBC20E1429</key>
+		<key>GoogleToolboxForMac.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>78B0645ACBF4869373A8E6BBCFAA7F63</key>
+		<key>GoogleUtilities.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>7B571FD072D3CCB32EC015AE483FCCD0</key>
+		<key>IOSLinkedInAPIFix.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>885917490BC3F1DF8613D63A80B4E196</key>
+		<key>IQKeyboardManagerSwift.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>89ADB0D61D0BE9648E9853F5F8BDA717</key>
+		<key>ImageSlideshow.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>8CDC65FC6F4478223C5638E250737FDD</key>
+		<key>JGProgressHUD-JGProgressHUD.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>8D7F5D5DD528D21A72DC87ADA5B12E2D</key>
+		<key>JGProgressHUD.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>968D06ADB152B8D9FA77D570E2335002</key>
+		<key>LinkedinSwift.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>9E25537BF40D1A3B30CF43FD3E6ACD94</key>
+		<key>Mapbox-iOS-SDK.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>9E5512C452E9FA6279093D3C4B894CB3</key>
+		<key>MapboxGeocoder.swift.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>A43B25DDF20FCB9228471F8F5135C866</key>
+		<key>MarqueeLabel.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>A52C8789702347C784CCC16705FEBD0D</key>
+		<key>NVActivityIndicatorView.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>AF8A82876C43F4DFD625D1823E680EAC</key>
+		<key>NotificationBannerSwift.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>B2F46A67275CC5973EE13076CD708247</key>
+		<key>OnboardKit.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>B490E7485944099E16C9CBD79119D1D4</key>
+		<key>OpalImagePicker-OpalImagePickerResources.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>B53D977A951AFC38B21751B706C1DF83</key>
+		<key>OpalImagePicker.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>BBD6B43FA0F7FFBCD1978EBE76F99021</key>
+		<key>PersonalizedAdConsent-PersonalizedAdConsent.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>C23DB88E45B0ED14F0C8827BE9C46C95</key>
+		<key>PersonalizedAdConsent.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>C49E7A4D59E5C8BE8DE9FB1EFB150185</key>
+		<key>Pods-PalmTree.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>C9778AE8394BE451567650E0B239BA21</key>
+		<key>Popover.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>CAD3534FC55B0333104E5117C0A9A324</key>
+		<key>Protobuf.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>D09BAB8A20917611A8AD17E2E0EE8271</key>
+		<key>RangeSeekSlider.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>D118A6A04828FD3CDA8640CD2B6796D2</key>
+		<key>SDWebImage.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>D2B5E7DCCBBFB32341D857D01211A1A3</key>
+		<key>SlideMenuControllerSwift.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>D47C581D39D227080F83B16A22A56664</key>
+		<key>SnapKit.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>D48E581B3C08BB7E11E81C6BBA4E1A00</key>
+		<key>SwiftCheckboxDialog.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>D676E21115185671D7258A56944ABE98</key>
+		<key>SwiftyGif.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>DC5C3A7662FFA04D04D29F4657D032CE</key>
+		<key>SwiftyJSON.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>E5B4BBC6DD552AC8943C7E22772FC1D3</key>
+		<key>SwiftyStoreKit.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>E9F9401E9C74C0C393164FD8D86D0068</key>
+		<key>TextFieldEffects.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>EAAA1AD3A8A1B59AB91319EE40752C6D</key>
+		<key>UITextField+Shake.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>EBF90A3A56D4C5830C212D000AB67BC1</key>
+		<key>XLPagerTabStrip-XLPagerTabStrip.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>FCD4F1901DD86FEB184BFDD6673F4A7B</key>
+		<key>XLPagerTabStrip.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>FEA3B3A570634836C0457F3D7CEF1699</key>
+		<key>YouTubePlayer.xcscheme</key>
 		<dict>
-			<key>primary</key>
-			<true/>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>nanopb.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
 		</dict>
 	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict/>
 </dict>
 </plist>

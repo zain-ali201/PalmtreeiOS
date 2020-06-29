@@ -13,6 +13,20 @@ class FilterVC: UIViewController{
     //MARK:- Outlets
     
     @IBOutlet weak var savedView: UIView!
+    @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var lblSortOptions: UILabel!
+    @IBOutlet weak var btnSort: UIButton!
+    @IBOutlet weak var lblSortType: UILabel!
+    @IBOutlet weak var btnCategory: UIButton!
+    @IBOutlet weak var lblCategory: UILabel!
+    @IBOutlet weak var btnLocation: UIButton!
+    @IBOutlet weak var lblLocation: UILabel!
+    @IBOutlet weak var btnImages: UIButton!
+    @IBOutlet weak var lblRefine: UILabel!
+    @IBOutlet weak var cancelBtn: UIButton!
+    @IBOutlet weak var resultBtn: UIButton!
+    @IBOutlet weak var resetBtn: UIButton!
+    
     
     //MARK:- Properties
    

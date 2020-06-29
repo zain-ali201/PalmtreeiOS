@@ -12,10 +12,17 @@ class LanguageVC: UIViewController{
 
     //MARK:- Outlets
     
+    @IBOutlet weak var lblTitle: UILabel!
+    
     @IBOutlet weak var engImg: UIImageView!
     @IBOutlet weak var arabicImg: UIImageView!
     
-    var languageCode = "en"
+    @IBOutlet weak var btnCancel: UIButton!
+    @IBOutlet weak var btnDone: UIButton!
+    @IBOutlet weak var btnEnglish: UILabel!
+    @IBOutlet weak var btnArabic: UILabel!
+    
+    var langCode = "en"
     
     //MARK:- Properties
     
@@ -26,20 +33,26 @@ class LanguageVC: UIViewController{
         
         self.googleAnalytics(controllerName: "Language Controller")
         
-        if defaults.string(forKey: "languageCode") != nil
+        langCode = languageCode
+        
+        if languageCode == "en"
         {
-            languageCode = defaults.string(forKey: "languageCode")!
+            engImg.alpha = 1
+            arabicImg.alpha = 0
+        }
+        else
+        {
+            engImg.alpha = 0
+            arabicImg.alpha = 1
+            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             
-            if languageCode == "en"
-            {
-                engImg.alpha = 1
-                arabicImg.alpha = 0
-            }
-            else
-            {
-                engImg.alpha = 0
-                arabicImg.alpha = 1
-            }
+            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnCancel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnDone.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnEnglish.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnArabic.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            engImg.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            arabicImg.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
     }
 
@@ -53,14 +66,14 @@ class LanguageVC: UIViewController{
     {
         if button.tag == 1001
         {
-            languageCode = "en"
+            langCode = "en"
             
             engImg.alpha = 1
             arabicImg.alpha = 0
         }
         else
         {
-            languageCode = "ar"
+            langCode = "ar"
             
             engImg.alpha = 0
             arabicImg.alpha = 1
@@ -74,23 +87,11 @@ class LanguageVC: UIViewController{
     
     @IBAction func doneBtnAction(_ sender: Any)
     {
+        languageCode = langCode
         defaults.set(languageCode, forKey: "languageCode")
         
-        if languageCode == "en"
-        {
-            UIView.appearance().semanticContentAttribute = .forceLeftToRight
-        }
-        else
-        {
-            UIView.appearance().semanticContentAttribute = .forceRightToLeft
-        }
-        
-        
-        let objStoryboard = UIStoryboard.init(name: "Main", bundle: nil)
-        let rootNav = objStoryboard.instantiateViewController(withIdentifier: "HomeNavController") as! UINavigationController
-        UIApplication.shared.keyWindow?.rootViewController = rootNav
-        UIApplication.shared.keyWindow?.makeKeyAndVisible()
-        let settingsVC = objStoryboard.instantiateViewController(withIdentifier: "SettingsVC") as! SettingsVC
-        rootNav.pushViewController(settingsVC, animated: true)
+        Bundle.setLanguage(languageCode)
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        UIApplication.shared.keyWindow?.rootViewController = storyboard.instantiateInitialViewController()
     }
 }

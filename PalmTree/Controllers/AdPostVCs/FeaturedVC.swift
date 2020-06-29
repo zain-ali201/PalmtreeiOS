@@ -11,16 +11,36 @@ import UIKit
 class FeaturedVC: UIViewController
 {
     //MARK:- Properties
+    @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var lblName: UILabel!
+    @IBOutlet weak var lblDescp: UILabel!
+    @IBOutlet weak var lblType: UILabel!
+    @IBOutlet weak var lblFeatured: UILabel!
+    @IBOutlet weak var lblFeaturedDescp: UILabel!
+    @IBOutlet weak var lblUrgent: UILabel!
+    @IBOutlet weak var lblUrgentText: UILabel!
+    @IBOutlet weak var lblHeading: UILabel!
     
+    @IBOutlet weak var btnSkip: UIButton!
 
     //MARK:- Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if defaults.string(forKey: "languageCode") == "ar"
+        if languageCode == "ar"
         {
             self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblDescp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblType.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblFeatured.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblFeaturedDescp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblUrgent.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblUrgentText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblHeading.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnSkip.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
     }
     
