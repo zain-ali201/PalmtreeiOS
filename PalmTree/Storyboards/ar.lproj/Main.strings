@@ -259,7 +259,7 @@
 "96M-pj-GhZ.text" = "معلومات عنا";
 
 /* Class = "UIButton"; normalTitle = "Sign Out (zain@sprintsols.com)"; ObjectID = "4DN-oP-EHQ"; */
-"4DN-oP-EHQ.text" = "(zain@sprintsols.com) تسجيل الخروج";
+"4DN-oP-EHQ.text" = "تسجيل الخروج";
 
 /* Class = "UIButton"; normalTitle = "Terms of Use"; ObjectID = "dJ7-aK-39M"; */
 "dJ7-aK-39M.text" = "الشروط والأحكام";
@@ -278,6 +278,12 @@
 
 /* Class = "UILabel"; text = "Categories"; ObjectID = "ULA-Ge-hH5"; */
 "ULA-Ge-hH5.text" = "الفئات";
+
+/* Class = "UILabel"; text = "Select Category"; ObjectID = "ULA-Ge-hH5"; */
+"NrG-cA-VBn.text" = "اختر الفئة";
+
+/* Class = "UILabel"; text = "Categories"; ObjectID = "ULA-Ge-hH5"; */
+"Sjf-Qh-3dy.text" = "الفئات";
 
 /* Class = "UILabel"; text = "UAE"; ObjectID = "UwK-U4-2G4"; */
 "UwK-U4-2G4.text" = "الإمارات";
@@ -433,7 +439,7 @@
 "kWz-1V-9lf.text" = "سجّل الدخول لتحصل على مميزات من بالمتري";
 
 /* Class = "UILabel"; text = "At least 10 characters, one number & symbol"; ObjectID = "lE0-uB-vAt"; */
-"lE0-uB-vAt.text" = " أحرف على الأقل ورقم واحد ورمز 10";
+"lE0-uB-vAt.text" = "أحرف على الأقل ورقم واحد ورمز 10";
 
 /* Class = "UILabel"; text = "Add Photo"; ObjectID = "lGK-Mg-6Ac"; */
 "lGK-Mg-6Ac.text" = "إضافة صورة";
@@ -583,32 +589,36 @@
 
 "fkX-9g-cbN.text" = "رقم الهاتف";
 
+"cU5-PY-P5l.normalTitle" = "أضف رقم هاتفك";
+
 "yiL-fZ-0Fp.text" = "البريد الإلكتروني";
 
 "Tze-jw-fIl.normalTitle" = "تعديل";
 
 "Gp2-4c-lBm.normalTitle" = "تعديل";
 
-".text" = "غير كلمة المرور الخاصة بك";
+"VYl-da-7s3.text" = "غير كلمة المرور الخاصة بك";
 
-".text" = "كلمة المرور الحالي";
+"ixl-9R-TNP.placeholder" = "كلمة المرور الحالي";
 
-".text" = "كلمة سر جديدة";
+"Keg-7q-jA7.placeholder" = "كلمة سر جديدة";
 
-".text" = "تأكيد كلمة المرور";
+"67C-IR-4bk.text" = "أحرف على الأقل ورقم واحد ورمز 10";
 
-".text" = "تغيير كلمة المرور الخاصة بي";
+"2kF-d8-iIC.placeholder" = "تأكيد كلمة المرور";
 
-".text" = "الحقول المطلوبة";
+"mtT-sf-A6d.text" = "تغيير كلمة المرور الخاصة بي";
 
-".text" = "بيانات المتصل";
+"On5-Dv-mJQ.text" = "الحقول المطلوبة";
 
-".text" = "الاسم الاول";
+"CoY-z1-F0L.text" = "بيانات المتصل";
 
-".text" = "اسم العائلة";
+"ecz-XB-8ce.placeholder" = "الاسم الاول";
 
-".text" = "رقم الهاتف";
+"ECv-7i-wLF.placeholder" = "اسم العائلة";
 
-".text" = "حفظ التغييرات";
+"8Xb-7J-FNy.placeholder" = "رقم الهاتف";
 
-".text" = "الحقول المطلوبة";
+"63u-ut-g4r.text" = "حفظ التغييرات";
+
+"XZR-oO-Xfo.text" = "الحقول المطلوبة";

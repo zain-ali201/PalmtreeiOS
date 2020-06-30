@@ -49,16 +49,9 @@ class SettingsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if UserDefaults.standard.bool(forKey: "isLogin") == false
-        {
-            signinView.alpha = 1
-            signoutView.alpha = 0
-        }
-        else
-        {
-            signinView.alpha = 0
-            signoutView.alpha = 1
-        }
+        settingsVC = self
+        
+        checkLogin()
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy"
@@ -106,7 +99,7 @@ class SettingsVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if UserDefaults.standard.bool(forKey: "isLogin")
+        if defaults.bool(forKey: "isLogin")
         {
             scrollView.contentSize = CGSize(width: 0, height: 780)
         }
@@ -114,6 +107,29 @@ class SettingsVC: UIViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    func checkLogin()
+    {
+        if defaults.bool(forKey: "isLogin") == false
+        {
+            signinView.alpha = 1
+            signoutView.alpha = 0
+        }
+        else
+        {
+            signinView.alpha = 0
+            signoutView.alpha = 1
+            
+            if languageCode == "ar"
+            {
+                btnSignout.text = "(" + (userDetail?.userEmail ?? "") + ") تسجيل الخروج"
+            }
+            else
+            {
+                btnSignout.text = "Sign Out (" + (userDetail?.userEmail ?? "") + ")"
+            }
+        }
     }
 
     //MARK:- IBActions
@@ -131,7 +147,7 @@ class SettingsVC: UIViewController {
     
     @IBAction func signoutBtnAction(_ sender: Any)
     {
-        let alert = UIAlertController(title: nil, message: "Are you sure you want to signout?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Palmtree", message: "Are you sure you want to signout?", preferredStyle: .alert)
         let yes = UIAlertAction(title: "YES", style: .default) { (action) in
             
             defaults.set(false, forKey: "isLogin")

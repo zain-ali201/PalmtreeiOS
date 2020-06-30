@@ -43,7 +43,6 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
     
     var isAgreeTerms = false
     var page_id = ""
-    var defaults = UserDefaults.standard
     var isVerifivation = false
     var isVerifyOn = false
     
@@ -251,7 +250,7 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
             let parameters : [String: Any] = [
                 "name": name,
                 "email": email,
-                "phone": "0123456789",
+                "phone": "",
                 "password": password
             ]
             print(parameters)
@@ -292,8 +291,10 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
         self.showLoader()
         UserHandler.registerUser(parameter: param, success: { (successResponse) in
             self.stopAnimating()
-            if successResponse.success {
-                if self.isVerifivation {
+            if successResponse.success
+            {
+                if self.isVerifivation
+                {
                     let alert = AlertView.prepare(title: "", message: successResponse.message, okAction: {
                         let confirmationVC = self.storyboard?.instantiateViewController(withIdentifier: "ForgotPasswordViewController") as! ForgotPasswordViewController
                         confirmationVC.isFromVerification = true
@@ -302,14 +303,26 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
                     })
                    self.presentVC(alert)
                 }
-                else {
-                    self.defaults.set(true, forKey: "isLogin")
-                    self.defaults.synchronize()
+                else
+                {
+                    defaults.set(true, forKey: "isLogin")
                     
                     if myAdsVC != nil
                     {
                         myAdsVC.checkLogin()
                     }
+                    
+                    userDetail?.displayName = successResponse.data.displayName
+                    userDetail?.id = successResponse.data.id
+                    userDetail?.phone = successResponse.data.phone
+                    userDetail?.profileImg = successResponse.data.profileImg
+                    userDetail?.userEmail = successResponse.data.userEmail
+                    
+                    defaults.set(successResponse.data.displayName, forKey: "displayName")
+                    defaults.set(successResponse.data.id, forKey: "id")
+                    defaults.set(successResponse.data.phone, forKey: "phone")
+                    defaults.set(successResponse.data.profileImg, forKey: "profileImg")
+                    defaults.set(successResponse.data.userEmail, forKey: "userEmail")
                     
                     self.dismiss(animated: true, completion: nil)
                 }

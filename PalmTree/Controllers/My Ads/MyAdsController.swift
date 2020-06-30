@@ -67,6 +67,8 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         imgPicture.layer.cornerRadius = 34
         imgPicture.layer.masksToBounds = true
         
+        lblName.text = userDetail?.displayName ?? ""
+        
         checkLogin()
         
         if languageCode == "ar"

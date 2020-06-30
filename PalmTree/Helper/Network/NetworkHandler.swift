@@ -23,7 +23,8 @@ class NetworkHandler {
         
         if Network.isAvailable {
             var headers: HTTPHeaders
-            if UserDefaults.standard.bool(forKey: "isGuest") {
+            if UserDefaults.standard.bool(forKey: "isGuest")
+            {
                 headers = [
                     "Accept": "application/json",
                     //just add security
@@ -33,7 +34,9 @@ class NetworkHandler {
                     "Adforest-Lang-Locale" : langCode
                     ] as! HTTPHeaders
             }
-             if UserDefaults.standard.bool(forKey: "isSocial") {
+            
+            if UserDefaults.standard.bool(forKey: "isSocial")
+            {
                 var email = ""
                 var password = ""
                 if let userEmail = UserDefaults.standard.string(forKey: "email") {
@@ -56,7 +59,8 @@ class NetworkHandler {
                      "Adforest-Lang-Locale" : langCode
                     ] as! HTTPHeaders
             }
-            else {
+            else
+            {
                 var email = ""
                 var password = ""
                 if let userEmail = UserDefaults.standard.string(forKey: "email") {

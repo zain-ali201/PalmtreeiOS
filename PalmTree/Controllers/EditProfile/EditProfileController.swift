@@ -23,7 +23,8 @@ class EditProfileController: UIViewController, UITableViewDelegate, UITableViewD
 
     //MARK:- Outlets
     
-    @IBOutlet weak var tableView: UITableView! {
+    @IBOutlet weak var tableView: UITableView!
+    {
         didSet {
             tableView.delegate = self
             tableView.dataSource = self

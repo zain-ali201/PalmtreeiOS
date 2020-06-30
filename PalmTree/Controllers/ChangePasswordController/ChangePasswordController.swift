@@ -120,7 +120,8 @@ class ChangePasswordController: UIViewController, UITextFieldDelegate, NVActivit
         self.updatePass()
     }
 
-    func updatePass() {
+    func updatePass()
+    {
         guard let oldPassword = txtOldPassword.text  else {
             return
         }

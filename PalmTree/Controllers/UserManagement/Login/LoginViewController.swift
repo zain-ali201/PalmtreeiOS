@@ -428,11 +428,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
             if successResponse.success
             {
                 defaults.set(true, forKey: "isLogin")
-                defaults.synchronize()
                 
                 if myAdsVC != nil
                 {
                     myAdsVC.checkLogin()
+                }
+                
+                if settingsVC != nil
+                {
+                    settingsVC.checkLogin()
                 }
                 
                 userDetail?.displayName = successResponse.data.displayName

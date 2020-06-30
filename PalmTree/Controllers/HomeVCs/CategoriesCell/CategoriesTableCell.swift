@@ -11,6 +11,7 @@ import UIKit
 protocol CategoryDetailDelegate {
     func goToCategoryDetail()
     func goToAdFilterListVC()
+    func selectCategory()
 }
 
 class CategoriesTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -87,6 +88,7 @@ class CategoriesTableCell: UITableViewCell, UICollectionViewDelegate, UICollecti
                 cell.lblName.text = name
             }
         }
+        
         if let imgUrl = URL(string: objData.img.encodeUrl()) {
             cell.imgPicture.sd_setShowActivityIndicatorView(true)
             cell.imgPicture.sd_setIndicatorStyle(.gray)

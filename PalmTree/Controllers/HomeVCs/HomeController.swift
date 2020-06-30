@@ -104,6 +104,12 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        userDetail?.displayName = defaults.string(forKey: "displayName") ?? ""
+        userDetail?.id = defaults.integer(forKey: "id") 
+        userDetail?.phone = defaults.string(forKey: "phone") ?? ""
+        userDetail?.profileImg = defaults.string(forKey: "profileImg") ?? ""
+        userDetail?.userEmail = defaults.string(forKey: "userEmail") ?? ""
+        
         homeVC = self
         
          self.navigationController?.isNavigationBarHidden = true

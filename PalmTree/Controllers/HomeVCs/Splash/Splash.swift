@@ -13,8 +13,7 @@ class Splash: UIViewController, NVActivityIndicatorViewable {
     
     
     //MARK:- Properties
-    
-    var defaults = UserDefaults.standard
+
     var isAppOpen = false
     var settingBlogArr = [String]()
     var isBlogImg:Bool = false
@@ -47,7 +46,8 @@ class Splash: UIViewController, NVActivityIndicatorViewable {
         self.startAnimating(Constants.activitySize.size, message: Constants.loaderMessages.loadingMessage.rawValue,messageFont: UIFont.systemFont(ofSize: 14), type: NVActivityIndicatorType.ballClipRotatePulse)
     }
     
-    func checkLogin() {
+    func checkLogin()
+    {
         if defaults.bool(forKey: "isLogin") {
             guard let email = defaults.string(forKey: "email") else {
                 return
@@ -71,12 +71,13 @@ class Splash: UIViewController, NVActivityIndicatorViewable {
                 self.loginUser(parameters: param as NSDictionary)
             }
         }
-        else  {
-            if isAppOpen {
+        else
+        {
+            if isAppOpen
+            {
                 self.moveToHome()
-            } else {
-//                let newViewController = AppIntroViewController()
-//                self.navigationController?.pushViewController(newViewController, animated: true)
+            } else
+            {
                 self.appDelegate.moveToLogin()
             }
         }
@@ -90,53 +91,53 @@ class Splash: UIViewController, NVActivityIndicatorViewable {
             self.stopAnimating()
             if successResponse.success
             {
-                UserDefaults.standard.set(successResponse.data.alertDialog.title, forKey: "aler")
-                UserDefaults.standard.set(successResponse.data.internetDialog.okBtn, forKey: "okbtnNew")
-                UserDefaults.standard.set(successResponse.data.internetDialog.cancelBtn, forKey: "cancelBtn")
-                UserDefaults.standard.set(successResponse.data.alertDialog.select, forKey: "select")
-                UserDefaults.standard.set(successResponse.data.alertDialog.camera, forKey: "camera")
-                UserDefaults.standard.set(successResponse.data.alertDialog.CameraNotAvailable, forKey: "cameraNotAvavilable")
-                UserDefaults.standard.set(successResponse.data.alertDialog.gallery, forKey: "gallery")
+                defaults.set(successResponse.data.alertDialog.title, forKey: "aler")
+                defaults.set(successResponse.data.internetDialog.okBtn, forKey: "okbtnNew")
+                defaults.set(successResponse.data.internetDialog.cancelBtn, forKey: "cancelBtn")
+                defaults.set(successResponse.data.alertDialog.select, forKey: "select")
+                defaults.set(successResponse.data.alertDialog.camera, forKey: "camera")
+                defaults.set(successResponse.data.alertDialog.CameraNotAvailable, forKey: "cameraNotAvavilable")
+                defaults.set(successResponse.data.alertDialog.gallery, forKey: "gallery")
 
-                UserDefaults.standard.set(successResponse.data.internetDialog.cancelBtn, forKey: "cancelbtnNew")
-                self.defaults.set(successResponse.data.mainColor, forKey: "mainColor")
+                defaults.set(successResponse.data.internetDialog.cancelBtn, forKey: "cancelbtnNew")
+                defaults.set(successResponse.data.mainColor, forKey: "mainColor")
                 self.appDelegate.customizeNavigationBar(barTintColor: Constants.hexStringToUIColor(hex: successResponse.data.mainColor))
-                self.defaults.set(successResponse.data.isRtl, forKey: "isRtl")
-                UserDefaults.standard.set(successResponse.data.gmapLang, forKey: "langCod")
-                self.defaults.set(successResponse.data.notLoginMsg, forKey: "notLogin")
-                self.defaults.set(successResponse.data.ImgReqMessage, forKey:"ImgReqMessage")
-                self.defaults.set(successResponse.data.homescreenLayout, forKey:"homescreenLayout")
-                self.defaults.set(successResponse.data.isAppOpen, forKey: "isAppOpen")
-                self.defaults.set(successResponse.data.showNearby, forKey: "showNearBy")
-                self.defaults.set(successResponse.data.showHome, forKey: "showHome")
-                self.defaults.set(true, forKey: "showSearch")
-                self.defaults.set(successResponse.data.advanceIcon, forKey: "advanceSearch")
-                self.defaults.set(successResponse.data.buyText, forKey: "buy")
-                self.defaults.set(successResponse.data.appPageTestUrl, forKey: "shopUrl")
+                defaults.set(successResponse.data.isRtl, forKey: "isRtl")
+                defaults.set(successResponse.data.gmapLang, forKey: "langCod")
+                defaults.set(successResponse.data.notLoginMsg, forKey: "notLogin")
+                defaults.set(successResponse.data.ImgReqMessage, forKey:"ImgReqMessage")
+                defaults.set(successResponse.data.homescreenLayout, forKey:"homescreenLayout")
+                defaults.set(successResponse.data.isAppOpen, forKey: "isAppOpen")
+                defaults.set(successResponse.data.showNearby, forKey: "showNearBy")
+                defaults.set(successResponse.data.showHome, forKey: "showHome")
+                defaults.set(true, forKey: "showSearch")
+                defaults.set(successResponse.data.advanceIcon, forKey: "advanceSearch")
+                defaults.set(successResponse.data.buyText, forKey: "buy")
+                defaults.set(successResponse.data.appPageTestUrl, forKey: "shopUrl")
                 //Save Shop title to show in Shop Navigation Title
-                self.defaults.set(successResponse.data.menu.shop, forKey: "shopTitle")
+                defaults.set(successResponse.data.menu.shop, forKey: "shopTitle")
                 self.isAppOpen = successResponse.data.isAppOpen
                 self.isWplOn = successResponse.data.is_wpml_active
                 self.isToplocationOn = successResponse.data.menu.isShowMenu.toplocation
                 self.isBlogOn = successResponse.data.menu.isShowMenu.blog
                 self.isSettingsOn = successResponse.data.menu.isShowMenu.settings
-                UserDefaults.standard.set(self.isBlogOn, forKey: "isBlogOn")
-                UserDefaults.standard.set(self.isSettingsOn, forKey: "isSettingsOn")
+                defaults.set(self.isBlogOn, forKey: "isBlogOn")
+                defaults.set(self.isSettingsOn, forKey: "isSettingsOn")
 
-                UserDefaults.standard.set(self.isToplocationOn, forKey: "isToplocOn")
-                UserDefaults.standard.set(self.isWplOn, forKey: "isWpOn")
-                UserDefaults.standard.set(successResponse.data.wpml_menu_text, forKey: "meuText")
+                defaults.set(self.isToplocationOn, forKey: "isToplocOn")
+                defaults.set(self.isWplOn, forKey: "isWpOn")
+                defaults.set(successResponse.data.wpml_menu_text, forKey: "meuText")
                 self.uploadingImage = successResponse.data.ImgUplaoding
-                UserDefaults.standard.set(self.uploadingImage, forKey: "Uploading")
+                defaults.set(self.uploadingImage, forKey: "Uploading")
                 self.InValidUrl = successResponse.data.InValidUrl
-                UserDefaults.standard.set(self.InValidUrl, forKey: "InValidUrl")
+                defaults.set(self.InValidUrl, forKey: "InValidUrl")
 
                 //Offers title
-                self.defaults.set(successResponse.data.messagesScreen.mainTitle, forKey: "message")
-                self.defaults.set(successResponse.data.messagesScreen.sent, forKey: "sentOffers")
-                self.defaults.set(successResponse.data.messagesScreen.receive, forKey: "receiveOffers")
-                self.defaults.set(successResponse.data.messagesScreen.blocked, forKey: "blocked")
-                self.defaults.synchronize()
+                defaults.set(successResponse.data.messagesScreen.mainTitle, forKey: "message")
+                defaults.set(successResponse.data.messagesScreen.sent, forKey: "sentOffers")
+                defaults.set(successResponse.data.messagesScreen.receive, forKey: "receiveOffers")
+                defaults.set(successResponse.data.messagesScreen.blocked, forKey: "blocked")
+                defaults.synchronize()
                 UserHandler.sharedInstance.objSettings = successResponse.data
                 UserHandler.sharedInstance.objSettingsMenu = successResponse.data.menu.submenu.pages
                
@@ -154,7 +155,7 @@ class Splash: UIViewController, NVActivityIndicatorViewable {
                     }
                 }
                 
-                UserDefaults.standard.set(successResponse.data.wpml_menu_text, forKey: "langHeading")
+                defaults.set(successResponse.data.wpml_menu_text, forKey: "langHeading")
                 
                 if successResponse.data.menu.iStaticMenu.array == nil{
                     if  successResponse.data.menu.iStaticMenu.array == nil {
@@ -201,23 +202,23 @@ class Splash: UIViewController, NVActivityIndicatorViewable {
                 //                    UserHandler.sharedInstance.menuValuesArray = successResponse.data.menu.dynamicMenu.array
                 //                }
                 
-                UserDefaults.standard.set(successResponse.data.location_text, forKey: "loc_text")
+                defaults.set(successResponse.data.location_text, forKey: "loc_text")
                 //adding other section items in menu for leftViewController
 
                 if successResponse.data.menu.isShowMenu.blog == true{
                     self.settingBlogArr.append(successResponse.data.menu.blog)
-                    UserDefaults.standard.set(true, forKey: "isBlog")
+                    defaults.set(true, forKey: "isBlog")
                     self.imagesArr.append(UIImage(named: "blog")!)
                 }
                 if successResponse.data.menu.isShowMenu.settings == true{
-                    UserDefaults.standard.set(true, forKey: "isSet")
+                    defaults.set(true, forKey: "isSet")
                     self.imagesArr.append(UIImage(named: "settings")!)
                     self.settingBlogArr.append(successResponse.data.menu.appSettings)
                 }
 
                 if successResponse.data.menu.isShowMenu.toplocation == true{
                     print(successResponse.data.menu.isShowMenu.toplocation)
-                    UserDefaults.standard.string(forKey: "is_top_location")
+                    defaults.string(forKey: "is_top_location")
                     self.imagesArr.append(UIImage(named:"location")!)
                     self.settingBlogArr.append(successResponse.data.menu.topLocation)
                 }
@@ -229,16 +230,16 @@ class Splash: UIViewController, NVActivityIndicatorViewable {
 //                }
                 if self.isWplOn == true
                 {
-                    UserDefaults.standard.string(forKey: "is_wpml_active")
+                    defaults.string(forKey: "is_wpml_active")
                     self.imagesArr.append(UIImage(named:"language")!)
                     self.settingBlogArr.append(successResponse.data.menu.wpml)
                 }
                           
-                UserDefaults.standard.set(self.settingBlogArr, forKey: "setArr")
-                UserDefaults.standard.set(self.imagesArr, forKey: "setArrImg")
+                defaults.set(self.settingBlogArr, forKey: "setArr")
+                defaults.set(self.imagesArr, forKey: "setArrImg")
                 print(self.imagesArr)
                 
-                let isLang = UserDefaults.standard.string(forKey: "langFirst")
+                let isLang = defaults.string(forKey: "langFirst")
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 
                 if self.isWplOn == true
@@ -298,8 +299,20 @@ class Splash: UIViewController, NVActivityIndicatorViewable {
         UserHandler.loginUser(parameter: parameters , success: { (successResponse) in
             self.stopAnimating()
             if successResponse.success {
-                self.defaults.set(true, forKey: "isLogin")
-                self.defaults.synchronize()
+                defaults.set(true, forKey: "isLogin")
+                
+                userDetail?.displayName = successResponse.data.displayName
+                userDetail?.id = successResponse.data.id
+                userDetail?.phone = successResponse.data.phone
+                userDetail?.profileImg = successResponse.data.profileImg
+                userDetail?.userEmail = successResponse.data.userEmail
+                
+                defaults.set(successResponse.data.displayName, forKey: "displayName")
+                defaults.set(successResponse.data.id, forKey: "id")
+                defaults.set(successResponse.data.phone, forKey: "phone")
+                defaults.set(successResponse.data.profileImg, forKey: "profileImg")
+                defaults.set(successResponse.data.userEmail, forKey: "userEmail")
+                
                 self.moveToHome()
             }
             else {

@@ -28,10 +28,18 @@ class CategoryCell: UITableViewCell {
         }
     }
     
+    @IBOutlet weak var imgContainer: UIView!
+    var categoryBtnAction: (()->())?
+    
+    
+    
     //MARK:- View Life Cycle
     override func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .none
     }
 
+    @IBAction func catBtnAction(_ sender: Any) {
+        self.categoryBtnAction?()
+    }
 }

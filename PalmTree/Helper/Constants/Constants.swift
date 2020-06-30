@@ -18,6 +18,7 @@ var currentVc: UIViewController!
 
 var homeVC: HomeController!
 var myAdsVC: MyAdsController!
+var settingsVC: SettingsVC!
 let defaults = UserDefaults.standard
 let screenWidth = UIScreen.main.bounds.width
 var categoryArray = [CatIcon]()
@@ -204,7 +205,7 @@ class Constants
         let al = UserDefaults.standard.string(forKey: "aler")
         let ok = UserDefaults.standard.string(forKey: "okbtnNew")
         //let cancel = UserDefaults.standard.string(forKey: "cancelbtnNew")
-        let alert = UIAlertController(title: al, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Palmtree", message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: ok, style: UIAlertActionStyle.default, handler: nil))
         return alert
     }

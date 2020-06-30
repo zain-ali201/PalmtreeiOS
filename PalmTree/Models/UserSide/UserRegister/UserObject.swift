@@ -12,7 +12,7 @@ struct UserObject
 {
     var displayName : String!
     var id : Int!
-    var phone : String!
+    var phone = ""
     var profileImg : String!
     var userEmail : String!
     

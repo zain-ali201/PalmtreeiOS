@@ -81,6 +81,16 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable
         self.dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func categoryBtnACtion(_ sender: Any)
+    {
+        
+    }
+    
+    @IBAction func locationBtnACtion(_ sender: Any)
+    {
+        
+    }
+    
     @IBAction func postAdBtnACtion(_ sender: Any)
     {
         let param: [String: Any] = ["is_update": ""]
