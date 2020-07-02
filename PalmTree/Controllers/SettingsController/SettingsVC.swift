@@ -191,6 +191,11 @@ class SettingsVC: UIViewController {
             let aboutusVC = self.storyboard?.instantiateViewController(withIdentifier: "AboutusVC") as! AboutusVC
             self.navigationController?.pushViewController(aboutusVC, animated: true)
         }
+        else if button.tag == 1004
+        {
+            let contactusVC = self.storyboard?.instantiateViewController(withIdentifier: "ContactusVC") as! ContactusVC
+            self.navigationController?.pushViewController(contactusVC, animated: true)
+        }
     }
     
     @IBAction func myDetailsBtnAction(_ sender: Any)

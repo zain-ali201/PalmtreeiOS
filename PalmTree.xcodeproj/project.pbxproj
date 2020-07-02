@@ -210,6 +210,7 @@
 		182690FF2087656B00E2C966 /* CategoryAdPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182690FE2087656B00E2C966 /* CategoryAdPrice.swift */; };
 		1826AC2F205BD00200955D60 /* ReplyCommentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1826AC2E205BD00200955D60 /* ReplyCommentController.swift */; };
 		1826DC0824AE10C100468448 /* LocationContactVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1826DC0724AE10C000468448 /* LocationContactVC.swift */; };
+		1826DC0A24AE1F4D00468448 /* ContactusVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1826DC0924AE1F4D00468448 /* ContactusVC.swift */; };
 		1826F8322085D18F002BF69A /* CategoriesTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1826F8312085D18F002BF69A /* CategoriesTableCell.swift */; };
 		1826F8342085D205002BF69A /* AddsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1826F8332085D205002BF69A /* AddsTableCell.swift */; };
 		1826F8372085D3D2002BF69A /* CategoriesCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1826F8362085D3D2002BF69A /* CategoriesCollectionCell.swift */; };
@@ -812,6 +813,7 @@
 		182690FE2087656B00E2C966 /* CategoryAdPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryAdPrice.swift; sourceTree = "<group>"; };
 		1826AC2E205BD00200955D60 /* ReplyCommentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyCommentController.swift; sourceTree = "<group>"; };
 		1826DC0724AE10C000468448 /* LocationContactVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationContactVC.swift; sourceTree = "<group>"; };
+		1826DC0924AE1F4D00468448 /* ContactusVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactusVC.swift; sourceTree = "<group>"; };
 		1826F8312085D18F002BF69A /* CategoriesTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesTableCell.swift; sourceTree = "<group>"; };
 		1826F8332085D205002BF69A /* AddsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddsTableCell.swift; sourceTree = "<group>"; };
 		1826F8362085D3D2002BF69A /* CategoriesCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesCollectionCell.swift; sourceTree = "<group>"; };
@@ -1925,6 +1927,7 @@
 		184CAFA320B031D4008046C1 /* SettingsSubVCs */ = {
 			isa = PBXGroup;
 			children = (
+				1826DC0924AE1F4D00468448 /* ContactusVC.swift */,
 				182F92E624AA1D5A0031C933 /* EditProfileVC.swift */,
 				184CAFA420B031F1008046C1 /* TermsConditionsController.swift */,
 				AB24F386247155A8005296A9 /* PrivacyController.swift */,
@@ -4003,6 +4006,7 @@
 				181C88312052CDB50067B176 /* AddsStatusCell.swift in Sources */,
 				1826F8372085D3D2002BF69A /* CategoriesCollectionCell.swift in Sources */,
 				181C88172052618A0067B176 /* MessagesCell.swift in Sources */,
+				1826DC0A24AE1F4D00468448 /* ContactusVC.swift in Sources */,
 				18392418209C352800BC35F7 /* SearchExtra.swift in Sources */,
 				18A9309A212850930003336F /* Timer.swift in Sources */,
 				184EDAE82078973000A25228 /* AddDetailRateBar.swift in Sources */,

@@ -104,7 +104,6 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     func checkLogin()
     {
-        
         if UserDefaults.standard.bool(forKey: "isLogin") == false
         {
             tblView.alpha = 0

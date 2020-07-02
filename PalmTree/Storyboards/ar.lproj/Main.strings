@@ -116,8 +116,8 @@
 /* Class = "UIButton"; normalTitle = "Share App"; ObjectID = "p3U-bp-Mjy"; */
 "p3U-bp-Mjy.text" = "مشاركة التطبيق";
 
-/* Class = "UIButton"; normalTitle = "About Us"; ObjectID = "HKZ-iW-log"; */
-"HKZ-iW-log.text" = "معلومات عنا";
+/* Class = "UIButton"; normalTitle = "Contact Us"; ObjectID = "HKZ-iW-log"; */
+"HKZ-iW-log.text" = "اتصل بنا";
 
 /* Class = "UIButton"; normalTitle = "About Us"; ObjectID = "uM9-vb-yle"; */
 "uM9-vb-yle.text" = "معلومات عنا";
@@ -189,8 +189,8 @@
 /* Class = "UILabel"; text = "2d"; ObjectID = "J2I-mK-avJ"; */
 "J2I-mK-avJ.text" = "2d";
 
-/* Class = "UIButton"; normalTitle = "Help & Center"; ObjectID = "OZf-5d-Efa"; */
-"OZf-5d-Efa.text" = "المساعدة والمركز";
+/* Class = "UIButton"; normalTitle = "About Us"; ObjectID = "OZf-5d-Efa"; */
+"OZf-5d-Efa.text" = "معلومات عنا";
 
 /* Class = "UIViewController"; title = "AdFilterListVC"; ObjectID = "Jka-S4-kez"; */
 "Jka-S4-kez.title" = "AdFilterListVC";
@@ -240,7 +240,7 @@
 /* Class = "UINavigationController"; title = "HomeNavController"; ObjectID = "NY6-7X-MJe"; */
 "NY6-7X-MJe.title" = "HomeNavController";
 
-/* Class = "UIButton"; normalTitle = "Required Images"; ObjectID = "Obq-OU-U5w"; */
+/* Class = "UIButton"; normalTitle = "Required Images"; ObjectID = "Obq-OU-U5w"OZf-5d-Efa; */
 "Obq-OU-U5w.normalTitle" = "الصور مطلوبة";
 
 /* Class = "UILabel"; text = "Renault Megane 1.5dCi FAP Dynamique Tom..."; ObjectID = "OqI-Ny-WB0"; */
@@ -253,7 +253,7 @@
 "PcA-et-Qe8.text" = "Zain";
 
 /* Class = "UIButton"; normalTitle = "About Us"; ObjectID = "96M-pj-GhZ"; */
-"96M-pj-GhZ.text" = "معلومات عنا";
+"96M-pj-GhZ.text" = "اتصل بنا";
 
 /* Class = "UIButton"; normalTitle = "Sign Out (zain@sprintsols.com)"; ObjectID = "4DN-oP-EHQ"; */
 "4DN-oP-EHQ.text" = "تسجيل الخروج";
@@ -370,7 +370,7 @@
 "dJC-RX-zHL.text" = "مرحبا، هل هذه مازالت متوفرة؟";
 
 /* Class = "UIButton"; normalTitle = "Help & Center"; ObjectID = "gxM-Nr-lqE"; */
-"gxM-Nr-lqE.text" = "المساعدة والمركز";
+"gxM-Nr-lqE.text" = "معلومات عنا";
 
 /* Class = "UIButton"; normalTitle = "Sign In"; ObjectID = "JaH-pl-q84"; */
 "JaH-pl-q84.text" = "تسجيل الدخول";
@@ -631,3 +631,7 @@
 "wec-Xy-EO5.text" = "هاتف";
 
 "xNc-it-y8Y.placeholder" = "أدخل رقم الاتصال الخاص بك هنا";
+
+"mgs-OM-C0C.text" = "اتصل بنا";
+
+"" = "";
