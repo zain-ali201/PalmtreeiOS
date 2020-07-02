@@ -225,20 +225,25 @@ class AdPostPopupCell : UITableViewCell, NVActivityIndicatorViewable, SubCategor
     }
     
     //MARK:- Delegate Function
-    func subCategoryDetails(name: String, id: Int, hasSubType: Bool, hasTempelate: Bool, hasCatTempelate: Bool) {
+    func subCategoryDetails(name: String, id: Int, hasSubType: Bool, hasTempelate: Bool, hasCatTempelate: Bool)
+    {
         print(name, id, hasSubType, hasTempelate, hasCatTempelate)
-        if hasSubType {
+        if hasSubType
+        {
             let param: [String: Any] = ["subcat": id]
             print(param)
             self.subCategoryData(param: param as NSDictionary)
         }
-        else {
+        else
+        {
             self.oltPopup.setTitle(name, for: .normal)
             self.selectedKey = String(id)
             self.selectedValue = name
         }
-        if hasCatTempelate {
-            if hasTempelate {
+        if hasCatTempelate
+        {
+            if hasTempelate
+            {
                 let param: [String: Any] = ["cat_id" : id]
                 print(param)
                 self.dynamicFields(param: param as NSDictionary)
@@ -270,38 +275,22 @@ class AdPostPopupCell : UITableViewCell, NVActivityIndicatorViewable, SubCategor
 
     //MARK:- API Call
     
-    func dynamicFields(param: NSDictionary) {
+    func dynamicFields(param: NSDictionary)
+    {
         let adPostVC = AadPostController()
         adPostVC.showLoader()
         AddsHandler.adPostDynamicFields(parameter: param, success: { (successResponse) in
         NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
-            if successResponse.success {
-            AddsHandler.sharedInstance.objAdPostData = successResponse.data.fields
-            AddsHandler.sharedInstance.adPostImagesArray = successResponse.data.adImages
-
+            if successResponse.success
+            {
+                AddsHandler.sharedInstance.objAdPostData = successResponse.data.fields
+                AddsHandler.sharedInstance.adPostImagesArray = successResponse.data.adImages
             }
-            else {
+            else
+            {
                 let alert = Constants.showBasicAlert(message: successResponse.message)
                 self.appDel.presentController(ShowVC: alert)
             }
-            
-            
-            
-//            var a = UserDefaults.standard.string(forKey: "is")
-//            if a != "1"{
-//                if successResponse.isBid == true{
-//                    //UserDefaults.standard.set(true, forKey: "isBid")
-//                    UserDefaults.standard.set("1", forKey: "is")
-//                    self.isBidSelected = true
-//                }else{
-//                    //UserDefaults.standard.set(false, forKey: "isBid")
-//                    UserDefaults.standard.set("1", forKey: "is")
-//                    self.isBidSelected = false
-//                }
-//            }
-          
-           
-            //UserDefaults.standard.set(successResponse.isBid, forKey: "isBid")
             
             }) { (error) in
              NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
@@ -311,7 +300,8 @@ class AdPostPopupCell : UITableViewCell, NVActivityIndicatorViewable, SubCategor
     }
     
     // Sub category data
-    func subCategoryData(param: NSDictionary) {
+    func subCategoryData(param: NSDictionary)
+    {
         let adPostVC = AadPostController()
         adPostVC.showLoader()
         AddsHandler.adPostSubcategory(parameter: param, success: { (successResponse) in

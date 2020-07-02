@@ -25,7 +25,11 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     @IBOutlet weak var lblText: UILabel!
     @IBOutlet weak var signinBtn: UIButton!
     
-    @IBOutlet weak var tblView: UITableView!
+    @IBOutlet weak var tblView: UITableView!{
+        didSet {
+            tblView.addSubview(refreshControl)
+        }
+    }
     
     //MARK:- Properties
    
@@ -100,21 +104,31 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     func checkLogin()
     {
+        
         if UserDefaults.standard.bool(forKey: "isLogin") == false
         {
+            tblView.alpha = 0
             signinView.alpha = 1
             infoView.alpha = 0
             lampView.alpha = 1
-            count = 0
         }
         else
         {
-//            self.getAddsData()
+            tblView.alpha = 1
+            self.getAddsData()
             signinView.alpha = 0
             infoView.alpha = 1
             lampView.alpha = 0
-            count = 6
             tblView.reloadData()
+        }
+        
+        if languageCode == "ar"
+        {
+            lblJoining.text =  (defaults.string(forKey: "joining") ?? "2020") + " مسجل كعضو منذ"
+        }
+        else
+        {
+            lblJoining.text =  "Member since " + (defaults.string(forKey: "joining") ?? "2020")
         }
     }
     
@@ -305,13 +319,28 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return count
+        return self.dataArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell: SearchAlertTableCell = tableView.dequeueReusableCell(withIdentifier: "SearchAlertTableCell", for: indexPath) as! SearchAlertTableCell
         
+        let objData = dataArray[indexPath.row]
+
+        for images in objData.adImages {
+            if let imgUrl = URL(string: images.thumb) {
+                cell.imgPicture.setImage(from: imgUrl)
+            }
+        }
+
+        if let userName = objData.adTitle {
+            cell.lblName.text = userName
+        }
+        if let price = objData.adPrice.price {
+            cell.lblPrice.text = price
+        }
+
         if languageCode == "ar"
         {
             cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -325,8 +354,8 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let productDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "ProductDetailVC") as! ProductDetailVC
-        self.navigationController?.pushViewController(productDetailVC, animated: true)
+        let AdDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "AdDetailVC") as! AdDetailVC
+        self.navigationController?.pushViewController(AdDetailVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -353,7 +382,7 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
                 AddsHandler.sharedInstance.objMyAds = successResponse.data
                 self.dataArray = successResponse.data.ads
                 
-//                self.collectionView.reloadData()
+                self.tblView.reloadData()
             } else {
                 let alert = Constants.showBasicAlert(message: successResponse.message)
                 self.presentVC(alert)

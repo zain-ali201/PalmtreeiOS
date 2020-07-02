@@ -299,6 +299,7 @@ extension UIImage {
         return nil
     }
 }
+
 extension CollectionImageCell: UICollectionViewDragDelegate{
     @available(iOS 11.0, *)
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {

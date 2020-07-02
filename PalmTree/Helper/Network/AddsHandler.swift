@@ -52,6 +52,8 @@ class AddsHandler {
     var objAdPostData = [AdPostField]()
     
     var descTitle = ""
+    var phone = ""
+    var address = ""
     var htmlText = ""
     var bidTitle = ""
     var statTitle = ""

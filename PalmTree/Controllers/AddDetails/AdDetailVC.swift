@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProductDetailVC: UIViewController{
+class AdDetailVC: UIViewController{
 
     //MARK:- Outlets
     

@@ -187,8 +187,8 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //        addDetailVC.ad_id = ad_id
 //        self.navigationController?.pushViewController(addDetailVC, animated: true)
         
-        let productDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "ProductDetailVC") as! ProductDetailVC
-        self.navigationController?.pushViewController(productDetailVC, animated: true)
+        let AdDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "AdDetailVC") as! AdDetailVC
+        self.navigationController?.pushViewController(AdDetailVC, animated: true)
     }
     
     //MARK:- go to category detail
@@ -201,6 +201,12 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func goToAdFilterListVC() {
         let adFilterListVC = self.storyboard?.instantiateViewController(withIdentifier: "AdFilterListVC") as! AdFilterListVC
         self.navigationController?.pushViewController(adFilterListVC, animated: true)
+    }
+    
+    func selectCategory()
+    {
+        let selectCategoryVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectCategoryVC") as! SelectCategoryVC
+        self.navigationController?.pushViewController(selectCategoryVC, animated: true)
     }
     
     //MARK:- Go to Location detail
@@ -377,21 +383,12 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         else if section == 1
         {
             let cell: AddsTableCell  = tableView.dequeueReusableCell(withIdentifier: "AddsTableCell", for: indexPath) as! AddsTableCell
-
-//            let objData = dataArray[indexPath.row]
-//            let data = AddsHandler.sharedInstance.objHomeData
-
-//            cell.btnViewAll = { () in
-//                let categoryVC = self.storyboard?.instantiateViewController(withIdentifier: "CategoryController") as! CategoryController
-//                categoryVC.categoryID = objData.catId
-//                self.navigationController?.pushViewController(categoryVC, animated: true)
-//            }
             
             cell.locationBtnAction = { () in
                 let locationVC = self.storyboard?.instantiateViewController(withIdentifier: "LocationVC") as! LocationVC
                 self.navigationController?.pushViewController(locationVC, animated: true)
             }
-//            cell.dataArray = objData.data
+            cell.dataArray = latestAdsArray
             cell.delegate = self
             cell.reloadData()
             return cell

@@ -312,6 +312,10 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
                         myAdsVC.checkLogin()
                     }
                     
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "MMMM yyyy"
+                    defaults.set(formatter.string(from: Date()), forKey: "joining")
+                    
                     userDetail?.displayName = successResponse.data.displayName
                     userDetail?.id = successResponse.data.id
                     userDetail?.phone = successResponse.data.phone

@@ -243,9 +243,6 @@
 /* Class = "UIButton"; normalTitle = "Required Images"; ObjectID = "Obq-OU-U5w"; */
 "Obq-OU-U5w.normalTitle" = "الصور مطلوبة";
 
-/* Class = "UILabel"; text = "Member since May 2020"; ObjectID = "OpU-tk-xyB"; */
-"OpU-tk-xyB.text" = "مسجل كعضو منذ May 2020";
-
 /* Class = "UILabel"; text = "Renault Megane 1.5dCi FAP Dynamique Tom..."; ObjectID = "OqI-Ny-WB0"; */
 "OqI-Ny-WB0.text" = "Renault Megane 1.5dCi FAP Dynamique Tom...";
 
@@ -597,6 +594,8 @@
 
 "Gp2-4c-lBm.normalTitle" = "تعديل";
 
+"vfZ-Iw-AAm.text" = "عرض الاسم";
+
 "VYl-da-7s3.text" = "غير كلمة المرور الخاصة بك";
 
 "ixl-9R-TNP.placeholder" = "كلمة المرور الحالي";
@@ -607,7 +606,7 @@
 
 "2kF-d8-iIC.placeholder" = "تأكيد كلمة المرور";
 
-"mtT-sf-A6d.text" = "تغيير كلمة المرور الخاصة بي";
+"mtT-sf-A6d.normalTitle" = "تغيير كلمة المرور الخاصة بي";
 
 "On5-Dv-mJQ.text" = "الحقول المطلوبة";
 
@@ -619,6 +618,16 @@
 
 "8Xb-7J-FNy.placeholder" = "رقم الهاتف";
 
-"63u-ut-g4r.text" = "حفظ التغييرات";
+"63u-ut-g4r.normalTitle" = "حفظ التغييرات";
 
 "XZR-oO-Xfo.text" = "الحقول المطلوبة";
+
+"750-54-4Ac.text" = "الموقع والاتصال";
+
+"0Sj-7z-HbL.text" = "الموقع الحالي";
+
+"DnD-zi-NRw.text" = "أود أن اتصل بي";
+
+"wec-Xy-EO5.text" = "هاتف";
+
+"xNc-it-y8Y.placeholder" = "أدخل رقم الاتصال الخاص بك هنا";

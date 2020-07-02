@@ -12,6 +12,7 @@ import DeviceKit
 
 var userDetail:UserObject? = UserObject()
 var languageCode = ""
+var languageBundle : Bundle?
 
 var admobDelegate = AdMobDelegate()
 var currentVc: UIViewController!

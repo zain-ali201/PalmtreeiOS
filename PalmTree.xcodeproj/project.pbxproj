@@ -209,6 +209,7 @@
 		182690FD2087655600E2C966 /* CategoryAdSaved.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182690FC2087655600E2C966 /* CategoryAdSaved.swift */; };
 		182690FF2087656B00E2C966 /* CategoryAdPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182690FE2087656B00E2C966 /* CategoryAdPrice.swift */; };
 		1826AC2F205BD00200955D60 /* ReplyCommentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1826AC2E205BD00200955D60 /* ReplyCommentController.swift */; };
+		1826DC0824AE10C100468448 /* LocationContactVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1826DC0724AE10C000468448 /* LocationContactVC.swift */; };
 		1826F8322085D18F002BF69A /* CategoriesTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1826F8312085D18F002BF69A /* CategoriesTableCell.swift */; };
 		1826F8342085D205002BF69A /* AddsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1826F8332085D205002BF69A /* AddsTableCell.swift */; };
 		1826F8372085D3D2002BF69A /* CategoriesCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1826F8362085D3D2002BF69A /* CategoriesCollectionCell.swift */; };
@@ -587,7 +588,7 @@
 		ABDBD3B7248E5C5B00DCFB0E /* ThankyouVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDBD3B5248E5C5A00DCFB0E /* ThankyouVC.swift */; };
 		ABDBD3B9248E65FD00DCFB0E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ABDBD3B8248E65FC00DCFB0E /* GoogleService-Info.plist */; };
 		ABDBD3BB248E663E00DCFB0E /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDBD3BA248E663E00DCFB0E /* SearchVC.swift */; };
-		ABDBD3BD248E9E3700DCFB0E /* ProductDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDBD3BC248E9E3700DCFB0E /* ProductDetailVC.swift */; };
+		ABDBD3BD248E9E3700DCFB0E /* AdDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDBD3BC248E9E3700DCFB0E /* AdDetailVC.swift */; };
 		ABF59BC524900BF900416EBC /* RadioColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF59BB624900BF400416EBC /* RadioColorCollectionViewCell.swift */; };
 		ABF59BC624900BF900416EBC /* SeekBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF59BB724900BF500416EBC /* SeekBar.swift */; };
 		ABF59BC724900BF900416EBC /* SearchAutoCompleteTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF59BB824900BF500416EBC /* SearchAutoCompleteTextField.swift */; };
@@ -810,6 +811,7 @@
 		182690FC2087655600E2C966 /* CategoryAdSaved.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryAdSaved.swift; sourceTree = "<group>"; };
 		182690FE2087656B00E2C966 /* CategoryAdPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryAdPrice.swift; sourceTree = "<group>"; };
 		1826AC2E205BD00200955D60 /* ReplyCommentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyCommentController.swift; sourceTree = "<group>"; };
+		1826DC0724AE10C000468448 /* LocationContactVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationContactVC.swift; sourceTree = "<group>"; };
 		1826F8312085D18F002BF69A /* CategoriesTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesTableCell.swift; sourceTree = "<group>"; };
 		1826F8332085D205002BF69A /* AddsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddsTableCell.swift; sourceTree = "<group>"; };
 		1826F8362085D3D2002BF69A /* CategoriesCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesCollectionCell.swift; sourceTree = "<group>"; };
@@ -1207,7 +1209,7 @@
 		ABDBD3B5248E5C5A00DCFB0E /* ThankyouVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThankyouVC.swift; sourceTree = "<group>"; };
 		ABDBD3B8248E65FC00DCFB0E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ABDBD3BA248E663E00DCFB0E /* SearchVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
-		ABDBD3BC248E9E3700DCFB0E /* ProductDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductDetailVC.swift; path = ProductDetailController/ProductDetailVC.swift; sourceTree = "<group>"; };
+		ABDBD3BC248E9E3700DCFB0E /* AdDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdDetailVC.swift; sourceTree = "<group>"; };
 		ABF59BB624900BF400416EBC /* RadioColorCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RadioColorCollectionViewCell.swift; path = PalmTree/Controllers/AdvancedSearch/SearchVCs/RadioColorCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
 		ABF59BB724900BF500416EBC /* SeekBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SeekBar.swift; path = PalmTree/Controllers/AdvancedSearch/SearchVCs/SeekBar.swift; sourceTree = SOURCE_ROOT; };
 		ABF59BB824900BF500416EBC /* SearchAutoCompleteTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchAutoCompleteTextField.swift; path = PalmTree/Controllers/AdvancedSearch/SearchVCs/SearchAutoCompleteTextField.swift; sourceTree = SOURCE_ROOT; };
@@ -1267,7 +1269,6 @@
 		07AED45F22B23A5900FA5967 /* LangController */ = {
 			isa = PBXGroup;
 			children = (
-				189FF2A6249CB02B00EDA557 /* LanguageVC.swift */,
 				07AED46022B23A7C00FA5967 /* LangViewController.swift */,
 				07AED46222B23BE900FA5967 /* LangCollectionViewCell.swift */,
 			);
@@ -1773,6 +1774,7 @@
 		18276131205D005300ADAC4C /* AddDetails */ = {
 			isa = PBXGroup;
 			children = (
+				ABDBD3BC248E9E3700DCFB0E /* AdDetailVC.swift */,
 				18276132205D006F00ADAC4C /* AddDetailController.swift */,
 				180BF6DD219A950A0006D392 /* AddDetailCell.swift */,
 				185B13CA207CD2A400914AF0 /* AddDetailDescriptionCell.swift */,
@@ -1838,7 +1840,7 @@
 		182C8B862158BE970007DFF9 /* SettingsController */ = {
 			isa = PBXGroup;
 			children = (
-				184CAFA320B031D4008046C1 /* SettingsSubVCc */,
+				184CAFA320B031D4008046C1 /* SettingsSubVCs */,
 				182C8B872158BEFE0007DFF9 /* SettingsController.swift */,
 				AB24F388247169F0005296A9 /* SettingsVC.swift */,
 				180519DE215A199E00F74662 /* AppShareCell */,
@@ -1920,15 +1922,16 @@
 			path = FeedbackController;
 			sourceTree = "<group>";
 		};
-		184CAFA320B031D4008046C1 /* SettingsSubVCc */ = {
+		184CAFA320B031D4008046C1 /* SettingsSubVCs */ = {
 			isa = PBXGroup;
 			children = (
 				182F92E624AA1D5A0031C933 /* EditProfileVC.swift */,
 				184CAFA420B031F1008046C1 /* TermsConditionsController.swift */,
 				AB24F386247155A8005296A9 /* PrivacyController.swift */,
 				1809E52924A34922001793D6 /* AboutusVC.swift */,
+				189FF2A6249CB02B00EDA557 /* LanguageVC.swift */,
 			);
-			path = SettingsSubVCc;
+			path = SettingsSubVCs;
 			sourceTree = "<group>";
 		};
 		184CAFA620B28255008046C1 /* Terms&Conditions */ = {
@@ -2536,7 +2539,6 @@
 		18BBFAB8205109A30067662F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				ABDBD3BC248E9E3700DCFB0E /* ProductDetailVC.swift */,
 				18BBFAF220511E510067662F /* UserManagement */,
 				18BBFAF8205154C10067662F /* HomeVCs */,
 				182690D32087380500E2C966 /* CategoryControllers */,
@@ -3232,6 +3234,7 @@
 			isa = PBXGroup;
 			children = (
 				ABDBD3B2248E5B9C00DCFB0E /* AdPostVC.swift */,
+				1826DC0724AE10C000468448 /* LocationContactVC.swift */,
 				ABDBD3B4248E5C5A00DCFB0E /* FeaturedVC.swift */,
 				ABDBD3B5248E5C5A00DCFB0E /* ThankyouVC.swift */,
 				181EED8D20919E4C0018BB03 /* AdPostMap */,
@@ -3637,7 +3640,7 @@
 				185BBEF520AFF950004748D5 /* NearByAddSearchLat.swift in Sources */,
 				181A5F2120A9A7C20015833D /* AdPostSubCategoryValues.swift in Sources */,
 				186A9F892080D928008E646C /* PublicProfileText.swift in Sources */,
-				ABDBD3BD248E9E3700DCFB0E /* ProductDetailVC.swift in Sources */,
+				ABDBD3BD248E9E3700DCFB0E /* AdDetailVC.swift in Sources */,
 				182690FB2087654200E2C966 /* CategoryAdStatus.swift in Sources */,
 				182690DB208742E100E2C966 /* CategoryFeatureCell.swift in Sources */,
 				184EDAF82078981800A25228 /* AddDetailPagination.swift in Sources */,
@@ -4043,6 +4046,7 @@
 				18191A5F20737D2B00FF67C8 /* UserRatings.swift in Sources */,
 				187EBCBF20BD6BB300B3277B /* CollectionViewSettings.swift in Sources */,
 				18191A56207353FA00FF67C8 /* ProfileUpdateRateBar.swift in Sources */,
+				1826DC0824AE10C100468448 /* LocationContactVC.swift in Sources */,
 				180A4F5F2328D9FB002BC411 /* RejectedAdsUserTypeButton.swift in Sources */,
 				181888902081D35E008736F7 /* OfferAdsMessageAdImage.swift in Sources */,
 				186EE0452078FD29002463AF /* ReportController.swift in Sources */,

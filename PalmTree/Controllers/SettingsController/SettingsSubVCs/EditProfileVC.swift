@@ -76,13 +76,20 @@ class EditProfileVC: UIViewController, NVActivityIndicatorViewable {
         if languageCode == "ar"
         {
             self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            
             lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblEmail.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblEmail1.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblNumber.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblEmailText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblPwdText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblContactDetails.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblNumberText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblEmail1Text.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblNameText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblDisplayName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             
             txtNumber.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             txtNewPass.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)

@@ -121,55 +121,40 @@ class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
         }
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return dataArray.count
-        return 8
+        return dataArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell:  AddsCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddsCollectionCell", for: indexPath) as! AddsCollectionCell
-//        let objData = dataArray[indexPath.row]
+        let objData = dataArray[indexPath.row]
+
+        cell.imgPicture.image = UIImage(named: "placeholder")
+        
+        for item in objData.adImages {
+            if let imgUrl = URL(string: item.thumb.encodeUrl()) {
+                cell.imgPicture.sd_setShowActivityIndicatorView(true)
+                cell.imgPicture.sd_setIndicatorStyle(.gray)
+                cell.imgPicture.sd_setImage(with: imgUrl, completed: nil)
+            }
+        }
 //
-//        for item in objData.adImages {
-//            if let imgUrl = URL(string: item.thumb.encodeUrl()) {
-//                cell.imgPicture.sd_setShowActivityIndicatorView(true)
-//                cell.imgPicture.sd_setIndicatorStyle(.gray)
-//                cell.imgPicture.sd_setImage(with: imgUrl, completed: nil)
-//            }
-//        }
-//
-//        if let name = objData.adTitle {
-//            cell.lblName.text = name
-//            let word = objData.adTimer.timer
-//            if objData.adTimer.isShow {
-//                let first10 = String(word!.prefix(10))
-//                print(first10)
-//                cell.lblTimer.isHidden = false
-//
-//                if first10 != ""{
-//                    let endDate = first10
-//                    self.isEndTime = endDate
-//                    Timer.every(1.second) {
-//                        self.countDown(date: endDate)
-//                        cell.lblTimer.text = "\(self.day) : \(self.hour) : \(self.minute) : \(self.second) "
-//
-//                    }
-//                }
-//            }else{
-//                cell.lblTimer.isHidden = true
-//            }
-//        }
+        if let name = objData.adTitle {
+            cell.lblName.text = name
+        }
+        
 //        if let location = objData.adLocation.address {
 //            cell.lblLocation.text = location
 //        }
-//        if let price = objData.adPrice.price {
-//            cell.lblPrice.text = price
-//        }
+        if let price = objData.adPrice.price {
+            cell.lblPrice.text = price
+        }
+        
         cell.btnFullAction = { () in
 //            self.delegate?.goToAddDetail(ad_id: objData.adId)
             self.delegate?.goToAddDetail(ad_id: 1)
         }
-        cell.lblName.text = "Cars"
-        cell.lblPrice.text = "AED 50"
+//        cell.lblName.text = "Cars"
+//        cell.lblPrice.text = "AED 50"
         
         if languageCode == "ar"
         {

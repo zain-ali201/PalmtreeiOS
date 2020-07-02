@@ -16,6 +16,7 @@ class SearchAlertTableCell: UITableViewCell {
         }
     }
     
+    @IBOutlet weak var imgPicture: UIImageView!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblAlertType: UILabel!
     @IBOutlet weak var lblPrice: UILabel!

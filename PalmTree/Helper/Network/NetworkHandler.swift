@@ -582,7 +582,8 @@ class NetworkHandler {
             if let parameters = params {
                 for (key, value) in parameters {
                     print("Key \(key), Value\(value)")
-                    multipartFormData.append((value as! String).data(using: String.Encoding.utf8)!, withName: key)
+                    let valuesStr = String(format: "%d", value as! Int)
+                    multipartFormData.append(valuesStr.data(using: String.Encoding.utf8)!, withName: key)
                 }
             }
         }, usingThreshold: UInt64.init(), to: url, method: .post, headers: headers, encodingCompletion: { encodingResult in

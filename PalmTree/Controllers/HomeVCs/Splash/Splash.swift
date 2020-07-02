@@ -298,8 +298,16 @@ class Splash: UIViewController, NVActivityIndicatorViewable {
         self.showLoader()
         UserHandler.loginUser(parameter: parameters , success: { (successResponse) in
             self.stopAnimating()
-            if successResponse.success {
+            if successResponse.success
+            {
                 defaults.set(true, forKey: "isLogin")
+                
+                if defaults.string(forKey: "joining") == nil
+                {
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "MMM yyyy"
+                    defaults.set(formatter.string(from: Date()), forKey: "joining")
+                }
                 
                 userDetail?.displayName = successResponse.data.displayName
                 userDetail?.id = successResponse.data.id

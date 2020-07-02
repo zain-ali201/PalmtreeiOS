@@ -345,7 +345,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
             defaults.set(true, forKey: "isSocial")
             defaults.set(email, forKey: "email")
             defaults.set("1122", forKey: "password")
-            defaults.synchronize()
+            
             self.loginUser(parameters: param as NSDictionary)
         }
     }
@@ -383,7 +383,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                     defaults.set(true, forKey: "isSocial")
                     defaults.set(email, forKey: "email")
                     defaults.set("1122", forKey: "password")
-                    defaults.synchronize()
                     
                     self.loginUser(parameters: param as NSDictionary)
                 }
@@ -437,6 +436,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                 if settingsVC != nil
                 {
                     settingsVC.checkLogin()
+                }
+                
+                if defaults.string(forKey: "joining") == nil
+                {
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "MMMM yyyy"
+                    defaults.set(formatter.string(from: Date()), forKey: "joining")
                 }
                 
                 userDetail?.displayName = successResponse.data.displayName
