@@ -382,7 +382,14 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
                 self.dataArray = successResponse.data.ads
                 
                 self.tblView.reloadData()
-            } else {
+                
+                if self.dataArray.count == 0
+                {
+                    self.lampView.alpha = 1
+                }
+            }
+            else
+            {
                 let alert = Constants.showBasicAlert(message: successResponse.message)
                 self.presentVC(alert)
             }

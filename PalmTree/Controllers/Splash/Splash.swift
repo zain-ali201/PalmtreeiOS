@@ -30,6 +30,7 @@ class Splash: UIViewController, NVActivityIndicatorViewable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.settingsdata()
     }
     
@@ -42,6 +43,7 @@ class Splash: UIViewController, NVActivityIndicatorViewable {
     }
     
     //MARK: - Custom
+    
     func showLoader(){
         self.startAnimating(Constants.activitySize.size, message: Constants.loaderMessages.loadingMessage.rawValue,messageFont: UIFont.systemFont(ofSize: 14), type: NVActivityIndicatorType.ballClipRotatePulse)
     }

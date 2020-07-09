@@ -54,7 +54,8 @@ class AddDetailCell: UITableViewCell {
         selectionStyle = .none
     }
     
-    func imageSliderSetting() {
+    func imageSliderSetting()
+    {
         for image in localImages {
             let alamofireSource = AlamofireSource(urlString: image.encodeUrl())!
             sourceImages.append(alamofireSource)
@@ -83,9 +84,6 @@ class AddDetailCell: UITableViewCell {
                    sourceImages.removeAll()
           
         }
-        
-       
-       
     }
     
    

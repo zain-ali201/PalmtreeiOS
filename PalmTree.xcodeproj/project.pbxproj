@@ -424,6 +424,9 @@
 		1890A0AC2382A4B700CDAD1F /* ExpireAdsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1890A0AB2382A4B700CDAD1F /* ExpireAdsViewController.swift */; };
 		1890A0B02382AD7500CDAD1F /* ExpireAdsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1890A0AF2382AD7400CDAD1F /* ExpireAdsCollectionViewCell.swift */; };
 		189280A220DCB4A300BFBCD1 /* HomeNearAdsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189280A120DCB4A300BFBCD1 /* HomeNearAdsCell.swift */; };
+		18963ECD24B718CE0080FFD5 /* ListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18963ECA24B718CC0080FFD5 /* ListVC.swift */; };
+		18963ECE24B718CE0080FFD5 /* PropertyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18963ECB24B718CD0080FFD5 /* PropertyVC.swift */; };
+		18963ECF24B718CE0080FFD5 /* VehicleDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18963ECC24B718CE0080FFD5 /* VehicleDetailVC.swift */; };
 		189DC78B213FA35B007FC150 /* UserPublicReply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189DC78A213FA35B007FC150 /* UserPublicReply.swift */; };
 		189E4090231FD66C00605804 /* BlockedUserChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E408F231FD66C00605804 /* BlockedUserChatViewController.swift */; };
 		189E4092231FD6BF00605804 /* BlockedUserChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E4091231FD6BF00605804 /* BlockedUserChatTableViewCell.swift */; };
@@ -1030,6 +1033,9 @@
 		1890A0AB2382A4B700CDAD1F /* ExpireAdsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpireAdsViewController.swift; sourceTree = "<group>"; };
 		1890A0AF2382AD7400CDAD1F /* ExpireAdsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpireAdsCollectionViewCell.swift; sourceTree = "<group>"; };
 		189280A120DCB4A300BFBCD1 /* HomeNearAdsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNearAdsCell.swift; sourceTree = "<group>"; };
+		18963ECA24B718CC0080FFD5 /* ListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListVC.swift; sourceTree = "<group>"; };
+		18963ECB24B718CD0080FFD5 /* PropertyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyVC.swift; sourceTree = "<group>"; };
+		18963ECC24B718CE0080FFD5 /* VehicleDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VehicleDetailVC.swift; sourceTree = "<group>"; };
 		189DC78A213FA35B007FC150 /* UserPublicReply.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPublicReply.swift; sourceTree = "<group>"; };
 		189E408F231FD66C00605804 /* BlockedUserChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BlockedUserChatViewController.swift; path = erSwift/BlockedUserChatViewController.swift; sourceTree = "<group>"; };
 		189E4091231FD6BF00605804 /* BlockedUserChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BlockedUserChatTableViewCell.swift; path = llSwift/BlockedUserChatTableViewCell.swift; sourceTree = "<group>"; };
@@ -2542,6 +2548,7 @@
 		18BBFAB8205109A30067662F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				18BBFABC20510A8A0067662F /* Splash */,
 				18BBFAF220511E510067662F /* UserManagement */,
 				18BBFAF8205154C10067662F /* HomeVCs */,
 				182690D32087380500E2C966 /* CategoryControllers */,
@@ -2794,7 +2801,6 @@
 			isa = PBXGroup;
 			children = (
 				96E0CAC424334374009EEA56 /* HomeController.swift */,
-				18BBFABC20510A8A0067662F /* Splash */,
 				18A550342134001F002FCD02 /* SearchSectionCell */,
 				1826F8382085D3F0002BF69A /* AddsCell */,
 				1825D23F20BE7A450059F29C /* HomeFeatureAdd */,
@@ -3237,6 +3243,9 @@
 			isa = PBXGroup;
 			children = (
 				ABDBD3B2248E5B9C00DCFB0E /* AdPostVC.swift */,
+				18963ECB24B718CD0080FFD5 /* PropertyVC.swift */,
+				18963ECC24B718CE0080FFD5 /* VehicleDetailVC.swift */,
+				18963ECA24B718CC0080FFD5 /* ListVC.swift */,
 				1826DC0724AE10C000468448 /* LocationContactVC.swift */,
 				ABDBD3B4248E5C5A00DCFB0E /* FeaturedVC.swift */,
 				ABDBD3B5248E5C5A00DCFB0E /* ThankyouVC.swift */,
@@ -3733,6 +3742,7 @@
 				18630F77206943D600DC16DC /* VerifyNumberController.swift in Sources */,
 				18C32C4621412F520005D568 /* SellersSocialIcon.swift in Sources */,
 				1852B0E4208353A70014AF99 /* OfferOnAdDetailData.swift in Sources */,
+				18963ECD24B718CE0080FFD5 /* ListVC.swift in Sources */,
 				182652B92075F8CE007F6A21 /* PaymentSuccessData.swift in Sources */,
 				189DC78B213FA35B007FC150 /* UserPublicReply.swift in Sources */,
 				182690F52087650000E2C966 /* CategoryImage.swift in Sources */,
@@ -3775,6 +3785,7 @@
 				180DC40B2057F21500A75C60 /* BlogDetailController.swift in Sources */,
 				181DDA8A23335918001FF048 /* ReplyReactionCell.swift in Sources */,
 				18AD93C0206D199200330ABF /* BlogDetailPagination.swift in Sources */,
+				18963ECF24B718CE0080FFD5 /* VehicleDetailVC.swift in Sources */,
 				187C6072249B9852006BD164 /* FilterVC.swift in Sources */,
 				18C2CD08206A502200235E0E /* MyAdsAdPrice.swift in Sources */,
 				18C2CCF6206A4F3000235E0E /* MyAdsProfile.swift in Sources */,
@@ -4003,6 +4014,7 @@
 				ABF59BD324900BF900416EBC /* SearchTwoTextField.swift in Sources */,
 				182690E1208763FA00E2C966 /* CategoryRoot.swift in Sources */,
 				18BBFAD820510FA90067662F /* SettingsRegisterbuttonShow.swift in Sources */,
+				18963ECE24B718CE0080FFD5 /* PropertyVC.swift in Sources */,
 				181C88312052CDB50067B176 /* AddsStatusCell.swift in Sources */,
 				1826F8372085D3D2002BF69A /* CategoriesCollectionCell.swift in Sources */,
 				181C88172052618A0067B176 /* MessagesCell.swift in Sources */,

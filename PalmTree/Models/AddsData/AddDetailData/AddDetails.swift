@@ -8,8 +8,8 @@
 
 import Foundation
 
-struct AddDetails {
-    
+struct AddDetails
+{
     var adAuthorId : String!
     var adBidding : String!
     var adCats : [AnyObject]!
@@ -220,4 +220,33 @@ struct AddDetails {
         return dictionary
     }
     
+}
+
+class AdDetailObject: NSObject
+{
+    var userID : Int!
+    var adId : Int!
+    var categoryID : Int!
+    var adTitle : String!
+    var adCategory : String!
+    var adCurrency : String!
+    var adDate : String!
+    var adDesc : String!
+    var adPrice : String!
+    var images : [UIImage]!
+    var isFeature : Bool!
+    var location : AddDetailLocationObject!
+    var locationTop : String!
+    var name : String!
+    var phone : String!
+    var specs : String!
+    var sellerType : String!
+}
+
+class AddDetailLocationObject: NSObject
+{
+    var address : String!
+    var lat : Double!
+    var lng : Double!
+    var title : String!
 }

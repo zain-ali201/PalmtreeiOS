@@ -379,6 +379,7 @@ class AddDetailController: UIViewController, UITableViewDelegate, UITableViewDat
             else {
                 cell.lblFeatured.isHidden = true
             }
+            
             if let sliderImage = objData.adDetail.images {
                 var imgArr = [String]()
                 for ob in objData.adDetail.images{
@@ -1231,7 +1232,8 @@ class AddDetailController: UIViewController, UITableViewDelegate, UITableViewDat
                 if self.addRatingArray.count == 0 {
                     self.ratingReviewTitle = successResponse.data.adRatting.noRatingMessage
                 }
-                else {
+                else
+                {
                     self.ratingReviewTitle = successResponse.data.adRatting.sectionTitle
                 }
                 

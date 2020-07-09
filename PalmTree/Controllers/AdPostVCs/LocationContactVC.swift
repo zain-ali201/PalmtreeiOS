@@ -18,6 +18,7 @@ class LocationContactVC: UIViewController
     @IBOutlet weak var lblText: UILabel!
     @IBOutlet weak var lblPhone: UILabel!
     @IBOutlet weak var txtPhone: UITextField!
+    @IBOutlet weak var btnSave: UIButton!
     
     var locFlag = false
     var numberFlag = false
@@ -28,6 +29,7 @@ class LocationContactVC: UIViewController
         super.viewDidLoad()
         
         txtPhone.text = userDetail?.phone
+        lblLocation.text = userDetail?.currentAddress
         
         if languageCode == "ar"
         {
@@ -36,7 +38,9 @@ class LocationContactVC: UIViewController
             lblLocText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblPhone.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             txtPhone.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnSave.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             
             txtPhone.textAlignment = .right
         }
@@ -63,17 +67,30 @@ class LocationContactVC: UIViewController
     {
         if locFlag
         {
-            AddsHandler.sharedInstance.address = "UAE"
+            AddsHandler.sharedInstance.address = userDetail?.currentAddress ?? ""
+            self.navigationController?.popViewController(animated: true)
         }
         else if numberFlag
         {
             if !txtPhone.text!.isEmpty
             {
                 AddsHandler.sharedInstance.address = txtPhone.text!
+                self.navigationController?.popViewController(animated: true)
             }
             else
             {
+                let alert = Constants.showBasicAlert(message: "")
                 
+                if languageCode == "ar"
+                {
+                    alert.message = "يرجى إدخال رقم الهاتف الخاص بك"
+                }
+                else
+                {
+                    alert.message = "Please enter your contact number"
+                }
+                
+                self.presentVC(alert)
             }
         }
     }

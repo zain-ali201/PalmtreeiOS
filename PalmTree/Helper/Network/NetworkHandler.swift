@@ -603,7 +603,6 @@ class NetworkHandler {
                     }
                     success(returnValue)
                 }
-                
             case .failure(let error):
                 print(error.localizedDescription)
                 var networkError = NetworkError()

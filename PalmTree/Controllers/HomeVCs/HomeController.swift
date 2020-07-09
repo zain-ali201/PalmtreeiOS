@@ -16,8 +16,9 @@ import FirebaseCore
 import FirebaseInstanceID
 import GoogleMobileAds
 import IQKeyboardManagerSwift
+import CoreLocation
 
-class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable, AddDetailDelegate, CategoryDetailDelegate, UISearchBarDelegate, MessagingDelegate,UNUserNotificationCenterDelegate, NearBySearchDelegate, BlogDetailDelegate , LocationCategoryDelegate, SwiftyAdDelegate , GADInterstitialDelegate, UIGestureRecognizerDelegate {
+class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable, AddDetailDelegate, CategoryDetailDelegate, UISearchBarDelegate, MessagingDelegate,UNUserNotificationCenterDelegate, NearBySearchDelegate, BlogDetailDelegate , LocationCategoryDelegate, SwiftyAdDelegate , GADInterstitialDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
     
     //MARK:- Outlets
     @IBOutlet weak var tableView: UITableView! {
@@ -99,6 +100,9 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBOutlet weak var lblSearch: UILabel!
     
+    var locManager = CLLocationManager()
+    lazy var geocoder = CLGeocoder()
+    
     //MARK:- View Life Cycle
     
     override func viewDidLoad() {
@@ -111,6 +115,15 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         userDetail?.userEmail = defaults.string(forKey: "userEmail") ?? ""
         
         homeVC = self
+        
+        //Location manager
+        if (CLLocationManager.locationServicesEnabled()) {
+            locManager.startUpdatingLocation()
+            locManager.delegate = self
+            locManager.desiredAccuracy = kCLLocationAccuracyBest
+            locManager.requestAlwaysAuthorization()
+            locManager.startUpdatingLocation()
+        }
         
          self.navigationController?.isNavigationBarHidden = true
         inters = GADInterstitial(adUnitID:"ca-app-pub-2596107136418753/4126592208")
@@ -154,6 +167,40 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.refreshControl.endRefreshing()
     }
     
+    //MARK:- Cutom Functions
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        let location = locations.last as! CLLocation
+        print("Location: \(location)")
+        userDetail?.currentLocation = location
+        
+        if userDetail?.currentLocation != nil
+        {
+            geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+                self.processResponse(withPlacemarks: placemarks, error: error)
+            }
+        }
+        locManager.stopUpdatingLocation()
+    }
+    
+    private func processResponse(withPlacemarks placemarks: [CLPlacemark]?, error: Error?) {
+        // Update View
+
+        if let error = error
+        {
+            print("Unable to Reverse Geocode Location (\(error))")
+        }
+        else
+        {
+            if let placemarks = placemarks, let placemark = placemarks.first
+            {
+                userDetail?.currentAddress = placemark.compactAddress ?? ""
+                userDetail?.country = placemark.currentCountry ?? ""
+                tableView.reloadData()
+            }
+        }
+    }
+    
     func changeMenuButtons()
     {
         btnHome.setImage(UIImage(named: "home_active_" + languageCode), for: .normal)
@@ -169,7 +216,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         btnMessages.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
     }
     
-    //MARK:- Topic Message
+    
     func subscribeToTopicMessage() {
         if defaults.bool(forKey: "isLogin") {
             Messaging.messaging().shouldEstablishDirectChannel = true
@@ -388,6 +435,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 let locationVC = self.storyboard?.instantiateViewController(withIdentifier: "LocationVC") as! LocationVC
                 self.navigationController?.pushViewController(locationVC, animated: true)
             }
+            cell.locBtn.setTitle(userDetail?.country, for: .normal)
             cell.dataArray = latestAdsArray
             cell.delegate = self
             cell.reloadData()
@@ -779,4 +827,41 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.presentVC(alert)
         }
     }
+}
+
+extension CLPlacemark {
+
+    var compactAddress: String? {
+        if let name = name {
+            var result = name
+
+            if let street = thoroughfare {
+                result += ", \(street)"
+            }
+
+            if let city = locality {
+                result += ", \(city)"
+            }
+
+            if let country = country {
+                userDetail?.country = country
+                result += ", \(country)"
+            }
+
+            return result
+        }
+
+        return nil
+    }
+    
+    var currentCountry: String?
+    {
+        if let country = country
+        {
+            return country
+        }
+
+        return nil
+    }
+
 }

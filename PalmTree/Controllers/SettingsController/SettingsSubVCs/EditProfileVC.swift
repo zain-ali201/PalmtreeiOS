@@ -194,22 +194,50 @@ class EditProfileVC: UIViewController, NVActivityIndicatorViewable {
         
         if oldPassword == ""
         {
-            alert.message = "Please enter your current password"
+            if languageCode == "ar"
+            {
+                alert.message = "الرجاء إدخال كلمة المرور الحالية"
+            }
+            else
+            {
+                alert.message = "Please enter your current password"
+            }
             self.presentVC(alert)
         }
         else if newPassword == ""
         {
-            alert.message = "Please enter your new password"
+            if languageCode == "ar"
+            {
+                alert.message = "يرجى إدخال كلمة المرور الجديدة الخاصة بك"
+            }
+            else
+            {
+                alert.message = "Please enter your new password"
+            }
             self.presentVC(alert)
         }
         else if confirmPassword == ""
         {
-            alert.message = "Password enter password for confirmation"
+            if languageCode == "ar"
+            {
+                alert.message = "يرجى إدخال كلمة المرور للتأكيد"
+            }
+            else
+            {
+                alert.message = "Please enter password for confirmation"
+            }
             self.presentVC(alert)
         }
         else if newPassword != confirmPassword
         {
-            alert.message = "Password does not match"
+            if languageCode == "ar"
+            {
+                alert.message = "كلمة السر غير متطابقة"
+            }
+            else
+            {
+                alert.message = "Password does not match"
+            }
             self.presentVC(alert)
         }
         else
@@ -238,12 +266,27 @@ class EditProfileVC: UIViewController, NVActivityIndicatorViewable {
         
         if name == ""
         {
-            alert.message = "Please enter your full name"
+            if languageCode == "ar"
+            {
+                alert.message = "من فضلك ادخل اسمك الكامل"
+            }
+            else
+            {
+                alert.message = "Please enter your full name"
+            }
+            
             self.presentVC(alert)
         }
         else if phone == ""
         {
-            alert.message = "Please enter your phone number"
+            if languageCode == "ar"
+            {
+                alert.message = "يرجى إدخال رقم الهاتف الخاص بك"
+            }
+            else
+            {
+                alert.message = "Please enter your contact number"
+            }
             self.presentVC(alert)
         }
         else

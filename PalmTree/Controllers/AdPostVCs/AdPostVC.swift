@@ -27,17 +27,21 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     @IBOutlet weak var txtPrice: UITextField!
     
     @IBOutlet weak var lblTitle: UILabel!
-    @IBOutlet weak var lblDescp: UILabel!
+    @IBOutlet weak var lblDescp: UITextField!
     @IBOutlet weak var lblCurrency: UILabel!
     @IBOutlet weak var lblEmail: UILabel!
     @IBOutlet weak var lblText: UILabel!
     @IBOutlet weak var lblPhoto : UILabel!
+    @IBOutlet weak var lblCategoryText : UILabel!
     @IBOutlet weak var lblCategory : UILabel!
+    @IBOutlet weak var lblFixedPrice : UILabel!
     
     @IBOutlet weak var btnCancel: UIButton!
     @IBOutlet weak var btnPreview: UIButton!
     @IBOutlet weak var btnPost: UIButton!
     @IBOutlet weak var btnCategory: UIButton!
+    @IBOutlet weak var btnPhoto: UIButton!
+    @IBOutlet weak var btnPhoto1: UIButton!
     
     var fromVC = ""
     
@@ -46,8 +50,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     var imgCtrlCount = 0
     var imageIDArray = [Int]()
     
-    var phone = ""
-    var address = ""
+    var adDetailObj: AdDetailObject = AdDetailObject()
     
     //MARK:- Collectionview Properties
     var isDrag : Bool = false
@@ -55,7 +58,8 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     @IBOutlet weak var viewDragImage: UIView!
     @IBOutlet weak var lblArrangeImage: UILabel!
     @IBOutlet weak var collectionView: UICollectionView! {
-        didSet{
+        didSet
+        {
             collectionView.delegate = self
             collectionView.dataSource = self
             if #available(iOS 11.0, *) {
@@ -64,10 +68,11 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
                 collectionView.dropDelegate = self
                 collectionView.reorderingCadence = .immediate //default value - .immediate
 
-            } else {
+            }
+            else
+            {
                 // Fallback on earlier versions
             }
-            collectionView.backgroundColor = UIColor.groupTableViewBackground
         }
     }
 
@@ -75,6 +80,8 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.removeFromSuperview()
         
         if languageCode == "ar"
         {
@@ -85,10 +92,13 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             txtPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblDescp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblCurrency.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblFixedPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             btnCategory.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblEmail.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblPhoto.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblCategoryText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblCategory.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             btnCancel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             btnPreview.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -98,6 +108,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             txtTitle.textAlignment = .right
             txtDescp.textAlignment = .right
             txtPrice.textAlignment = .right
+            lblDescp.textAlignment = .right
         }
     }
     
@@ -116,6 +127,16 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         }
         
         lblEmail.text = contactStr
+        
+        if !txtDescp.text.isEmpty
+        {
+            lblDescp.alpha = 0
+        }
+        
+        if AddsHandler.sharedInstance.selectedCategory != nil
+        {
+            lblCategory.text = AddsHandler.sharedInstance.selectedCategory.name
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -183,7 +204,8 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     
     @IBAction func categoryBtnACtion(_ sender: Any)
     {
-        
+        let selectCategoryVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectCategoryVC") as! SelectCategoryVC
+        self.navigationController?.pushViewController(selectCategoryVC, animated: true)
     }
     
     @IBAction func locationBtnACtion(_ sender: Any)
@@ -192,11 +214,36 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         self.navigationController?.pushViewController(contactVC, animated: true)
     }
     
+    @IBAction func previewBtnACtion(_ sender: Any)
+    {
+        adDetailObj.adTitle = txtTitle.text
+        adDetailObj.adDesc = txtDescp.text
+        adDetailObj.adCategory = lblCategory.text
+        adDetailObj.images = self.photoArray
+        adDetailObj.adCurrency = "AED"
+        adDetailObj.adId = AddsHandler.sharedInstance.adPostAdId
+        adDetailObj.adPrice = txtPrice.text
+        adDetailObj.specs = ""
+        adDetailObj.location = AddDetailLocationObject()
+        adDetailObj.location.address = AddsHandler.sharedInstance.address
+        adDetailObj.location.lat = userDetail?.currentLocation.coordinate.latitude ?? 0
+        adDetailObj.location.lng = userDetail?.currentLocation.coordinate.longitude ?? 0
+        
+        let adDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "AdDetailVC") as! AdDetailVC
+        adDetailVC.adDetailObj = adDetailObj
+        adDetailVC.fromVC = "Post"
+        self.navigationController?.pushViewController(adDetailVC, animated: true)
+    }
+    
     @IBAction func postAdBtnACtion(_ sender: Any)
     {
         if txtTitle.text!.isEmpty
         {
             self.txtTitle.shake(6, withDelta: 10, speed: 0.06)
+        }
+        else if !(txtDescp.text!.isEmpty) && txtDescp.text.count < 20
+        {
+            self.lblDescp.shake(6, withDelta: 10, speed: 0.06)
         }
         else if txtPrice.text!.isEmpty
         {
@@ -231,7 +278,13 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     {
         if !images.isEmpty
         {
+            for var image in images
+            {
+                image = resizeImage(image: image, targetSize: CGSize(width: 300, height: 300))
+            }
+            
             self.photoArray = images
+            hideShowControls(controls1Alpha: 1, controlsAlpha: 0)
             collectionView.alpha = 1
             collectionView.reloadData()
         }
@@ -247,14 +300,25 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     {
         if (info[UIImagePickerControllerOriginalImage] as? UIImage) != nil
         {
-            if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage
+            if var pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage
             {
+                pickedImage = resizeImage(image: pickedImage, targetSize: CGSize(width: 300, height: 300))
+                
                 self.photoArray = [pickedImage]
+                hideShowControls(controls1Alpha: 1, controlsAlpha: 0)
                 collectionView.alpha = 1
                 collectionView.reloadData()
             }
             dismiss(animated: true, completion: nil)
         }
+    }
+    
+    func hideShowControls(controls1Alpha: CGFloat, controlsAlpha: CGFloat)
+    {
+        btnPhoto1.alpha = controls1Alpha
+        
+        btnPhoto.alpha = controlsAlpha
+        lblPhoto.alpha = controlsAlpha
     }
     
     //MARK:- Textview Delegate
@@ -267,11 +331,11 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         
         if textView.text.isEmpty
         {
-            lblDescp.alpha = 0
+            lblDescp.alpha = 1
         }
         else
         {
-            lblDescp.alpha = 1
+            lblDescp.alpha = 0
         }
     }
     
@@ -280,17 +344,18 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     {
         let parameter: [String: Any] = [
             "images_array": self.imageIDArray,
-            "ad_phone": "+923225582024",
-            "ad_location": "Sialkot Road",
-            "location_lat": "32.1774414",
-            "location_long": "74.2001039",
-            "ad_country": "Pakistan",
+            "ad_phone": AddsHandler.sharedInstance.phone,
+            "ad_location": AddsHandler.sharedInstance.address,
+            "location_lat": userDetail?.currentLocation.coordinate.latitude ?? "",
+            "location_long": userDetail?.currentLocation.coordinate.longitude ?? "",
+            "ad_country": userDetail?.country ?? "",
             "ad_featured_ad": false,
             "ad_id": AddsHandler.sharedInstance.adPostAdId,
             "ad_bump_ad": true,
             "name": self.txtTitle.text!,
             "ad_price" : self.txtPrice.text!,
             "ad_title": self.txtTitle.text!,
+            "ad_description" : txtDescp.text
         ]
         
         self.adPostLive(param: parameter as NSDictionary)
@@ -308,7 +373,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
                 AddsHandler.sharedInstance.adPostAdId = successResponse.data.adId
                 AddsHandler.sharedInstance.objAdPost = successResponse
                 
-                let param: [String: Any] = ["cat_id": 3]
+                let param: [String: Any] = ["cat_id": AddsHandler.sharedInstance.selectedCategory.catId]
                 print(param)
                 self.dynamicFields(param: param as NSDictionary)
             }
@@ -333,7 +398,12 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             {
                 let param: [String: Any] = ["ad_id": AddsHandler.sharedInstance.adPostAdId]
                 print(param)
-                self.uploadImages(param: param as NSDictionary, images: self.photoArray)
+                
+//                for image in self.photoArray
+//                {
+//                    self.uploadImages(param: param as NSDictionary, images: self.photoArray)
+                self.uploadImages(param: param as NSDictionary, images: [UIImage(named:"placeholder")!])
+//                }
             }
             else
             {
@@ -354,14 +424,15 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         AddsHandler.adPostLive(parameter: param, success: { (successResponse) in
             self.stopAnimating()
             if successResponse.success {
-                let alert = AlertView.prepare(title: "", message: successResponse.message, okAction: {
-                    self.navigationController?.popToRootViewController(animated: true)
+                let alert = AlertView.prepare(title: "Palmtree", message: successResponse.message, okAction: {
+                    self.dismiss(animated: true, completion: nil)
                 })
                 self.presentVC(alert)
                 
                 self.imageIDArray.removeAll()
             }
-            else {
+            else
+            {
                 let alert = Constants.showBasicAlert(message: successResponse.message)
                 self.presentVC(alert)
             }
@@ -516,6 +587,13 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     //Remove item at selected Index
     func removeItem(index: Int) {
         photoArray.remove(at: index)
+        
+        if photoArray.count == 0
+        {
+            hideShowControls(controls1Alpha: 0, controlsAlpha: 1)
+            collectionView.alpha = 0
+        }
+        
         self.collectionView.reloadData()
     }
 }
@@ -568,4 +646,29 @@ extension AdPostVC: UICollectionViewDropDelegate{
 
          }
      }
+}
+
+func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage
+{
+    let size = image.size
+
+    let widthRatio  = targetSize.width  / size.width
+    let heightRatio = targetSize.height / size.height
+
+    // Figure out what our orientation is, and use that to form the rectangle
+    var newSize: CGSize
+    if(widthRatio > heightRatio) {
+        newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+    } else {
+        newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
+    }
+
+    let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+
+    UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+    image.draw(in: rect)
+    let newImage = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+
+    return newImage!
 }

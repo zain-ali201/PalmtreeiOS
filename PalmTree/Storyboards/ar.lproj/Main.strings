@@ -328,13 +328,16 @@
 "ZQv-sH-naD.text" = "2d";
 
 /* Class = "UILabel"; text = "Description"; ObjectID = "ZXk-qF-GLx"; */
-"ZXk-qF-GLx.text" = "الوصف";
+"ZXk-qF-GLx.text" = "الوصف (20 حرفًا على الأقل)";
 
 /* Class = "UILabel"; text = "Renault Megane 1.5dCi FAP Daynmique Tom\n        \nBody work is not perfect but its ok hence low price...\n        \nAny other information drop me s message"; ObjectID = "ZeF-8e-g8S"; */
 "ZeF-8e-g8S.text" = "Renault Megane 1.5dCi FAP Daynmique Tom\n        \nBody work is not perfect but its ok hence low price...\n        \nAny other information drop me s message";
 
 /* Class = "UIButton"; normalTitle = "Forgot Password"; ObjectID = "a2p-CZ-AQw"; */
 "a2p-CZ-AQw.normalTitle" = "نسيت كلمة المرور";
+
+/* Class = "UIButton"; normalTitle = "Read More"; ObjectID = "Fsm-b1-KWO"; */
+"Fsm-b1-KWO.normalTitle" = "قراءة المزيد";
 
 /* Class = "UILabel"; text = "English"; ObjectID = "aAF-Fd-8XA"; */
 "aAF-Fd-8XA.text" = "الإنجليزية";
@@ -440,6 +443,9 @@
 
 /* Class = "UILabel"; text = "Add Photo"; ObjectID = "lGK-Mg-6Ac"; */
 "lGK-Mg-6Ac.text" = "إضافة صورة";
+
+/* Class = "UILabel"; text = "Add Photo"; ObjectID = "ZI7-cg-eaM"; */
+"ZI7-cg-eaM.text" = "إضافة صورة";
 
 /* Class = "UILabel"; text = "YOUR LOCATION"; ObjectID = "leK-yW-rd9"; */
 "leK-yW-rd9.text" = "الموقع";
@@ -633,5 +639,7 @@
 "xNc-it-y8Y.placeholder" = "أدخل رقم الاتصال الخاص بك هنا";
 
 "mgs-OM-C0C.text" = "اتصل بنا";
+
+"cv4-8n-JY5.normalTitle" = "حفظ";
 
 "" = "";

@@ -62,6 +62,7 @@ class AddsHandler {
     
     var isCategoeyTempelateOn = false
     var adPostAdId = 0
+    var selectedCategory:CatIcon!
     
     var topLocationArray = [HomeAppTopLocation]()
     

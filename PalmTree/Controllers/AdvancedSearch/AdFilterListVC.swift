@@ -20,10 +20,16 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
    
     var dataArray = [MyAdsAd]()
     
+    var filtersArray = ["Cars", "UAE", "Price", "Make/Model", "Color"]
     //MARK:- View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if languageCode == ""
+        {
+            filtersArray = [NSLocalizedString("Cars", comment: ""),NSLocalizedString("UAE", comment: ""),NSLocalizedString("Price", comment: ""),NSLocalizedString("Make/Model", comment: ""),NSLocalizedString("Color", comment: "")]
+        }
         
         self.googleAnalytics(controllerName: "Advance Search Controller")
         
@@ -82,13 +88,6 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         scrollView.showsHorizontalScrollIndicator = false
         filtersView.addSubview(scrollView)
         
-        var filtersArray = ["Cars", "UAE", "Price", "Make/Model", "Color"]
-        
-        if languageCode == ""
-        {
-            filtersArray = [NSLocalizedString("Cars", comment: ""),NSLocalizedString("UAE", comment: ""),NSLocalizedString("Price", comment: ""),NSLocalizedString("Make/Model", comment: ""),NSLocalizedString("Color", comment: "")]
-        }
-        
         var xAxis = 10
         var width = 0
         
@@ -97,7 +96,7 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             let filter: String = filtersArray[i]
             
             width = Int((filter.html2AttributedString?.width(withConstrainedHeight: 36))!)
-            width += 50
+            width += 70
             
             let view = UIView()
             view.frame = CGRect(x: Int(xAxis), y: 7, width: Int(width), height: 36)
@@ -112,13 +111,15 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             lbl.font = UIFont.systemFont(ofSize: 14.0)
             lbl.backgroundColor = .clear
             
-            let cross = UIImageView()
-            cross.frame = CGRect(x: view.frame.width - 7, y: 11, width: 14, height: 14)
-            cross.image = UIImage(named: "cross")
+            let crossBtn = UIButton()
+            crossBtn.frame = CGRect(x: view.frame.width - 18, y: 13, width: 10, height: 10)
+            crossBtn.setImage(UIImage(named: "cross_grey"), for: .normal)
+            crossBtn.addTarget(self, action: #selector(crossBtnAction(button:)), for: .touchUpInside)
+            crossBtn.tag = i
             
             let btn = UIButton()
             btn.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 36)
-            btn.addTarget(self, action: #selector(crossBtnAction(button:)), for: .touchUpInside)
+            
 //            if languageCode == "ar"
 //            {
 //                lbl.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -130,17 +131,19 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
 //            }
 //            
             view.addSubview(lbl)
+            view.addSubview(btn)
+            view.addSubview(crossBtn)
             scrollView.addSubview(view)
             
             xAxis += (Int(width) + 10)
         }
         
-        scrollView.contentSize = CGSize(width: 450, height: 0)
+        scrollView.contentSize = CGSize(width: 570, height: 0)
     }
     
     @IBAction func crossBtnAction(button: UIButton)
     {
-    
+        filtersArray.remove(at: button.tag)
     }
     
     //MARK:- TableView Delegates
@@ -180,7 +183,8 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 }
 
-extension NSAttributedString {
+extension NSAttributedString
+{
     func height(withConstrainedWidth width: CGFloat) -> CGFloat {
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
         let boundingBox = boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, context: nil)

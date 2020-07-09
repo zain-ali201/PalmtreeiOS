@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 struct UserObject
 {
@@ -15,6 +16,8 @@ struct UserObject
     var phone = ""
     var profileImg : String!
     var userEmail : String!
-    
+    var currentLocation: CLLocation! = CLLocation()
+    var currentAddress = ""
+    var country = ""
     var isAccountConfirm : Bool!
 }

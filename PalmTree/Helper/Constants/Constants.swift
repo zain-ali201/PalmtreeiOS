@@ -162,25 +162,25 @@ class Constants
         static let timeOutInterval: TimeInterval = 20
         
         static let error = "Error"
-        static let internetNotAvailable = "Internet Not Available"
-        static let pleaseTryAgain = "Please Try Again"
+        static let internetNotAvailable = "Internet not available"
+        static let pleaseTryAgain = "Please try again"
         
         static let generic = 4000
-        static let genericError = "Please Try Again."
+        static let genericError = "Something went wrong. Please try again."
         
         static let serverErrorCode = 5000
-        static let serverNotAvailable = "Server Not Available"
-        static let serverError = "Server Not Availabe, Please Try Later."
+        static let serverNotAvailable = "Server not available"
+        static let serverError = "Server not availabe, Please try later."
         
         static let timout = 4001
-        static let timoutError = "Network Time Out, Please Try Again."
+        static let timoutError = "Network time out, Please try again."
         
         static let login = 4003
-        static let loginMessage = "Unable To Login"
-        static let loginError = "Please Try Again."
+        static let loginMessage = "Unable to login"
+        static let loginError = "Please try again."
         
         static let internet = 4004
-        static let internetError = "Internet Not Available"
+        static let internetError = "Internet not available"
     }
     
     struct NetworkSuccess {
