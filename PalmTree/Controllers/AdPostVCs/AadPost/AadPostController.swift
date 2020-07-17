@@ -432,9 +432,12 @@ class AadPostController: UIViewController, NVActivityIndicatorViewable, UITableV
                         print(param)
                         self.dynamicFields(param: param as NSDictionary)
                     }
-                }else{
+                }
+                else
+                {
                     print("Not Called...")
                 }
+                
                 UserDefaults.standard.set(successResponse.extra.dialgCancel, forKey: "dialgCancel")
                 UserDefaults.standard.set(successResponse.extra.dialogSend, forKey: "dialogSend")
                 

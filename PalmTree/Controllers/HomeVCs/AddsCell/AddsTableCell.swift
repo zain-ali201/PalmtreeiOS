@@ -9,6 +9,8 @@
 import UIKit
 protocol AddDetailDelegate{
     func goToAddDetail(ad_id : Int)
+    func goToAddDetailVC(detail : HomeAdd)
+    func addToFavourites(ad_id : Int)
 }
 class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -150,8 +152,11 @@ class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
         }
         
         cell.btnFullAction = { () in
-//            self.delegate?.goToAddDetail(ad_id: objData.adId)
-            self.delegate?.goToAddDetail(ad_id: 1)
+            self.delegate?.goToAddDetailVC(detail: objData)
+        }
+        
+        cell.favBtnAction = { () in
+            self.delegate?.addToFavourites(ad_id: objData.adId)
         }
 //        cell.lblName.text = "Cars"
 //        cell.lblPrice.text = "AED 50"
@@ -161,6 +166,16 @@ class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
             cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             cell.lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
+        
+//        if self.defaults.bool(forKey: "isLogin") == false {
+//            if let msg = self.defaults.string(forKey: "notLogin") {
+//                self.showToast(message: msg)
+//            }
+//        }
+//        else {
+//            let parameter: [String: Any] = ["ad_id": objData.adDetail.adId]
+//            self.makeAddFavourite(param: parameter as NSDictionary)
+//        }
         
         return cell
     }

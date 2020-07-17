@@ -11,10 +11,7 @@ import NVActivityIndicatorView
 import Alamofire
 import OpalImagePicker
 
-struct AdPostObject
-{
-    
-}
+var adDetailObj: AdDetailObject = AdDetailObject()
 
 class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate, UIImagePickerControllerDelegate, OpalImagePickerControllerDelegate
 {
@@ -35,6 +32,8 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     @IBOutlet weak var lblCategoryText : UILabel!
     @IBOutlet weak var lblCategory : UILabel!
     @IBOutlet weak var lblFixedPrice : UILabel!
+    @IBOutlet weak var lblDetailText : UILabel!
+    @IBOutlet weak var lblDetail : UILabel!
     
     @IBOutlet weak var btnCancel: UIButton!
     @IBOutlet weak var btnPreview: UIButton!
@@ -43,14 +42,21 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     @IBOutlet weak var btnPhoto: UIButton!
     @IBOutlet weak var btnPhoto1: UIButton!
     
+    @IBOutlet weak var detailView: UIView!
+    @IBOutlet weak var top: NSLayoutConstraint!
+    @IBOutlet weak var height: NSLayoutConstraint!
+    
+    @IBOutlet weak var priceView: UIView!
+    @IBOutlet weak var fixedTick: UIImageView!
+    @IBOutlet weak var negotiateTick: UIImageView!
+    
     var fromVC = ""
+    var priceFlag = false
     
     var photoArray = [UIImage]()
     var imageArray = [AdPostImageArray]()
     var imgCtrlCount = 0
     var imageIDArray = [Int]()
-    
-    var adDetailObj: AdDetailObject = AdDetailObject()
     
     //MARK:- Collectionview Properties
     var isDrag : Bool = false
@@ -81,7 +87,10 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.removeFromSuperview()
+        if homeVC != nil
+        {
+            homeVC.getGPSLocation()
+        }
         
         if languageCode == "ar"
         {
@@ -116,14 +125,19 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         
         var contactStr = userDetail?.userEmail ?? ""
         
-        if AddsHandler.sharedInstance.phone != ""
+        if adDetailObj.phone != ""
         {
-            contactStr = contactStr + ", " + AddsHandler.sharedInstance.phone
+            contactStr = contactStr + ", " + adDetailObj.phone
         }
         
-        if AddsHandler.sharedInstance.address != ""
+        if adDetailObj.whatsapp != ""
         {
-            contactStr = contactStr + ", " + AddsHandler.sharedInstance.address
+            contactStr = contactStr + ", " + adDetailObj.whatsapp
+        }
+        
+        if adDetailObj.location.address != ""
+        {
+            contactStr = contactStr + ", " + adDetailObj.location.address
         }
         
         lblEmail.text = contactStr
@@ -136,6 +150,27 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         if AddsHandler.sharedInstance.selectedCategory != nil
         {
             lblCategory.text = AddsHandler.sharedInstance.selectedCategory.name
+        }
+        
+        if adDetailObj.adCategory == "Motors" || adDetailObj.adCategory == "Property"
+        {
+            lblDetail.text = adDetailObj.specs
+            detailView.alpha = 1
+            top.constant = 85
+        }
+        else
+        {
+            detailView.alpha = 0
+            top.constant = 12
+        }
+
+        if adDetailObj.subcatID > 0
+        {
+            lblCategory.text = adDetailObj.adSubCategory
+        }
+        else if adDetailObj.catID > 0
+        {
+            lblCategory.text = adDetailObj.adCategory
         }
     }
     
@@ -179,16 +214,16 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         
         let gallery = languageCode == "ar" ? "إلبوم الصور" : "Photo Gallery"
         actionSheet.addAction(UIAlertAction(title: gallery, style: .default, handler: { (action) -> Void in
-          
+
             let imagePicker = OpalImagePickerController()
             imagePicker.maximumSelectionsAllowed = self.maximumImagesAllowed
-            
+
             let configuration = OpalImagePickerConfiguration()
             configuration.maximumSelectionsAllowedMessage = "You cannot select more than 9 images."
             imagePicker.configuration = configuration
             imagePicker.imagePickerDelegate = self
             self.present(imagePicker, animated: true, completion: nil)
-        
+
         }))
         let cancel = languageCode == "ar" ? "إلغاء" : "Cancel"
             actionSheet.addAction(UIAlertAction(title: cancel, style: .destructive, handler: { (action) -> Void in
@@ -199,13 +234,50 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     
     @IBAction func cancelBtnACtion(_ sender: Any)
     {
+        adDetailObj = AdDetailObject()
         self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func categoryBtnACtion(_ sender: Any)
     {
-        let selectCategoryVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectCategoryVC") as! SelectCategoryVC
+        let selectCategoryVC = self.storyboard?.instantiateViewController(withIdentifier: "TblViewController") as! TblViewController
         self.navigationController?.pushViewController(selectCategoryVC, animated: true)
+    }
+    
+    @IBAction func priceBtnACtion(_ sender: Any)
+    {
+        priceView.alpha = 1
+    }
+    
+    @IBAction func clickBtnACtion(button: UIButton)
+    {
+        if button.tag == 1001
+        {
+            lblFixedPrice.text = "Fixed Price"
+            fixedTick.alpha = 1
+            negotiateTick.alpha = 0
+        }
+        else
+        {
+            lblFixedPrice.text = "Negotiable"
+            fixedTick.alpha = 0
+            negotiateTick.alpha = 1
+        }
+        priceView.alpha = 0
+    }
+    
+    @IBAction func detailBtnACtion(_ sender: Any)
+    {
+        if adDetailObj.adCategory == "Motors"
+        {
+            let detailVC = self.storyboard?.instantiateViewController(withIdentifier: "VehicleDetailVC") as! VehicleDetailVC
+            self.navigationController?.pushViewController(detailVC, animated: true)
+        }
+        else if adDetailObj.adCategory == "Property"
+        {
+            let propertyVC = self.storyboard?.instantiateViewController(withIdentifier: "PropertyVC") as! PropertyVC
+            self.navigationController?.pushViewController(propertyVC, animated: true)
+        }
     }
     
     @IBAction func locationBtnACtion(_ sender: Any)
@@ -218,33 +290,25 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     {
         adDetailObj.adTitle = txtTitle.text
         adDetailObj.adDesc = txtDescp.text
-        adDetailObj.adCategory = lblCategory.text
         adDetailObj.images = self.photoArray
         adDetailObj.adCurrency = "AED"
-        adDetailObj.adId = AddsHandler.sharedInstance.adPostAdId
         adDetailObj.adPrice = txtPrice.text
-        adDetailObj.specs = ""
-        adDetailObj.location = AddDetailLocationObject()
-        adDetailObj.location.address = AddsHandler.sharedInstance.address
-        adDetailObj.location.lat = userDetail?.currentLocation.coordinate.latitude ?? 0
-        adDetailObj.location.lng = userDetail?.currentLocation.coordinate.longitude ?? 0
         
-        let adDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "AdDetailVC") as! AdDetailVC
-        adDetailVC.adDetailObj = adDetailObj
-        adDetailVC.fromVC = "Post"
-        self.navigationController?.pushViewController(adDetailVC, animated: true)
+        let previewAdVC = self.storyboard?.instantiateViewController(withIdentifier: "PreviewAdVC") as! PreviewAdVC
+        previewAdVC.adDetailObj = adDetailObj
+        self.navigationController?.pushViewController(previewAdVC, animated: true)
     }
     
-    @IBAction func postAdBtnACtion(_ sender: Any)
+    @IBAction func postAdBtnAction(_ sender: Any)
     {
         if txtTitle.text!.isEmpty
         {
             self.txtTitle.shake(6, withDelta: 10, speed: 0.06)
         }
-        else if !(txtDescp.text!.isEmpty) && txtDescp.text.count < 20
-        {
-            self.lblDescp.shake(6, withDelta: 10, speed: 0.06)
-        }
+//        else if !(txtDescp.text!.isEmpty) && txtDescp.text.count < 20
+//        {
+//            self.lblDescp.shake(6, withDelta: 10, speed: 0.06)
+//        }
         else if txtPrice.text!.isEmpty
         {
             self.txtPrice.shake(6, withDelta: 10, speed: 0.06)
@@ -260,8 +324,27 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
 //        self.navigationController?.pushViewController(featuredVC, animated: true)
     }
     
+    //MARK:- Customs
+    
+    @objc func hideLoader()
+    {
+        self.stopAnimating()
+        
+        if adDetailObj.adCategory == "Motors"
+        {
+            let detailVC = self.storyboard?.instantiateViewController(withIdentifier: "VehicleDetailVC") as! VehicleDetailVC
+            self.navigationController?.pushViewController(detailVC, animated: true)
+        }
+        else if adDetailObj.adCategory == "Property"
+        {
+            let propertyVC = self.storyboard?.instantiateViewController(withIdentifier: "PropertyVC") as! PropertyVC
+            self.navigationController?.pushViewController(propertyVC, animated: true)
+        }
+    }
+    
     func hideKeypad()
     {
+        priceView.alpha = 0
         txtDescp.resignFirstResponder()
         txtPrice.resignFirstResponder()
         txtTitle.resignFirstResponder()
@@ -281,9 +364,9 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             for var image in images
             {
                 image = resizeImage(image: image, targetSize: CGSize(width: 300, height: 300))
+                self.photoArray.append(image)
             }
             
-            self.photoArray = images
             hideShowControls(controls1Alpha: 1, controlsAlpha: 0)
             collectionView.alpha = 1
             collectionView.reloadData()
@@ -304,7 +387,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             {
                 pickedImage = resizeImage(image: pickedImage, targetSize: CGSize(width: 300, height: 300))
                 
-                self.photoArray = [pickedImage]
+                self.photoArray.append(pickedImage)
                 hideShowControls(controls1Alpha: 1, controlsAlpha: 0)
                 collectionView.alpha = 1
                 collectionView.reloadData()
@@ -344,10 +427,10 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     {
         let parameter: [String: Any] = [
             "images_array": self.imageIDArray,
-            "ad_phone": AddsHandler.sharedInstance.phone,
-            "ad_location": AddsHandler.sharedInstance.address,
-            "location_lat": userDetail?.currentLocation.coordinate.latitude ?? "",
-            "location_long": userDetail?.currentLocation.coordinate.longitude ?? "",
+            "ad_phone": adDetailObj.phone,
+            "ad_location": adDetailObj.location.address,
+            "location_lat": adDetailObj.location.lat ?? "",
+            "location_long": adDetailObj.location.lng ?? "",
             "ad_country": userDetail?.country ?? "",
             "ad_featured_ad": false,
             "ad_id": AddsHandler.sharedInstance.adPostAdId,
@@ -373,7 +456,8 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
                 AddsHandler.sharedInstance.adPostAdId = successResponse.data.adId
                 AddsHandler.sharedInstance.objAdPost = successResponse
                 
-                let param: [String: Any] = ["cat_id": AddsHandler.sharedInstance.selectedCategory.catId]
+                adDetailObj.adId = AddsHandler.sharedInstance.adPostAdId
+                let param: [String: Any] = ["cat_id": adDetailObj.catID, "ad_id": adDetailObj.adId]
                 print(param)
                 self.dynamicFields(param: param as NSDictionary)
             }
@@ -401,8 +485,10 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
                 
 //                for image in self.photoArray
 //                {
-//                    self.uploadImages(param: param as NSDictionary, images: self.photoArray)
-                self.uploadImages(param: param as NSDictionary, images: [UIImage(named:"placeholder")!])
+                    DispatchQueue.main.async {
+//                        self.uploadImages(param: param as NSDictionary, images: [image])
+                        self.uploadImages(param: param as NSDictionary, images: self.photoArray)
+                    }
 //                }
             }
             else
@@ -424,12 +510,13 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         AddsHandler.adPostLive(parameter: param, success: { (successResponse) in
             self.stopAnimating()
             if successResponse.success {
-                let alert = AlertView.prepare(title: "Palmtree", message: successResponse.message, okAction: {
-                    self.dismiss(animated: true, completion: nil)
-                })
-                self.presentVC(alert)
                 
                 self.imageIDArray.removeAll()
+                adDetailObj = AdDetailObject()
+                
+                let thankyouVC = self.storyboard?.instantiateViewController(withIdentifier: "ThankyouVC") as! ThankyouVC
+                self.navigationController?.pushViewController(thankyouVC, animated: true)
+                
             }
             else
             {
@@ -471,7 +558,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         }
     }
     
-    func adPostUploadImages(parameter: NSDictionary , imagesArray: [UIImage], fileName: String, uploadProgress: @escaping(Int)-> Void, success: @escaping(AdPostImagesRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
+    func adPostUploadImages(parameter: NSDictionary, imagesArray: [UIImage], fileName: String, uploadProgress: @escaping(Int)-> Void, success: @escaping(AdPostImagesRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
         
         let url = Constants.URL.baseUrl+Constants.URL.adPostUploadImages
         print(url)

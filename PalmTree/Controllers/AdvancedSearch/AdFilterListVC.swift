@@ -114,8 +114,9 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             let crossBtn = UIButton()
             crossBtn.frame = CGRect(x: view.frame.width - 18, y: 13, width: 10, height: 10)
             crossBtn.setImage(UIImage(named: "cross_grey"), for: .normal)
-            crossBtn.addTarget(self, action: #selector(crossBtnAction(button:)), for: .touchUpInside)
             crossBtn.tag = i
+            crossBtn.addTarget(self, action: #selector(crossBtnAction(button:)), for: .touchUpInside)
+            
             
             let btn = UIButton()
             btn.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 36)
@@ -143,7 +144,7 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBAction func crossBtnAction(button: UIButton)
     {
-        filtersArray.remove(at: button.tag)
+        //filtersArray.remove(at: button.tag)
     }
     
     //MARK:- TableView Delegates

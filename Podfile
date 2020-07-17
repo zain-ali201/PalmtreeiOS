@@ -112,7 +112,7 @@ target 'PalmTree' do
      pod 'LinkedinSwift', '>= 1.7.9'
      
      pod 'Gallery'
-
+     pod 'ExpandableCell'
 
    
 end

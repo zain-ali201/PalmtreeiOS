@@ -62,6 +62,8 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             searchBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             favBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
+        
+        self.favouriteAdsData()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -75,7 +77,7 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     //MARK: - Custom
 
     @objc func refreshTableView() {
-       getAddsData()
+       favouriteAdsData()
     }
     
     func showLoader()
@@ -189,12 +191,50 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 8
+        if tableView.tag == 1001
+        {
+            return dataArray.count
+        }
+        else
+        {
+            return 8
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell: SearchAlertTableCell = tableView.dequeueReusableCell(withIdentifier: "SearchAlertTableCell", for: indexPath) as! SearchAlertTableCell
+        
+        if tableView.tag == 1001
+        {
+            let objData = dataArray[indexPath.row]
+            
+            for images in objData.adImages {
+                if let imgUrl = URL(string: images.thumb) {
+                    cell.imgPicture.setImage(from: imgUrl)
+                }
+            }
+
+            if let userName = objData.adTitle {
+                cell.lblName.text = userName
+            }
+            if let price = objData.adPrice.price {
+                cell.lblPrice.text = price
+            }
+            
+            cell.crossAction = { () in
+                let alert = UIAlertController(title: "Palmtree", message: "Are you sure you want to remove from favourites?", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Yes", style: .default, handler: { (okAction) in
+                    let parameter : [String: Any] = ["ad_id": objData.adId]
+                    print(parameter)
+                    self.removeFavourite(param: parameter as NSDictionary)
+                })
+                let cancelAction = UIAlertAction(title: "No", style: .default, handler: nil)
+                alert.addAction(cancelAction)
+                alert.addAction(okAction)
+                self.presentVC(alert)
+            }
+        }
         
         if languageCode == "ar"
         {
@@ -208,15 +248,14 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             {
                 cell.lblAlertType.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             }
-            
         }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let AdDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "AdDetailVC") as! AdDetailVC
-        self.navigationController?.pushViewController(AdDetailVC, animated: true)
+//        let AdDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "AdDetailVC") as! AdDetailVC
+//        self.navigationController?.pushViewController(AdDetailVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -229,21 +268,20 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     
     //MARK:- API Calls
-    //Ads Data
-    func getAddsData() {
+    
+    //Get Favourite Ads Data
+    func favouriteAdsData() {
         self.showLoader()
-        AddsHandler.myAds(success: { (successResponse) in
+        AddsHandler.favouriteAds(success: { (successResponse) in
             self.stopAnimating()
             self.refreshControl.endRefreshing()
             if successResponse.success {
                 self.noAddTitle = successResponse.message
                 self.currentPage = successResponse.data.pagination.currentPage
                 self.maximumPage = successResponse.data.pagination.maxNumPages
-                
                 AddsHandler.sharedInstance.objMyAds = successResponse.data
                 self.dataArray = successResponse.data.ads
-                
-//                self.collectionView.reloadData()
+                self.favTblView.reloadData()
             } else {
                 let alert = Constants.showBasicAlert(message: successResponse.message)
                 self.presentVC(alert)
@@ -255,16 +293,40 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         }
     }
     
+    //Load More Data
     func loadMoreData(param: NSDictionary) {
         self.showLoader()
-        AddsHandler.moreMyAdsData(param: param, success: { (successResponse) in
+        AddsHandler.moreFavouriteData(param: param, success: { (successResponse) in
             self.stopAnimating()
             self.refreshControl.endRefreshing()
             if successResponse.success {
                 AddsHandler.sharedInstance.objMyAds = successResponse.data
                 self.dataArray.append(contentsOf: successResponse.data.ads)
-                
-//                self.collectionView.reloadData()
+                self.favTblView.reloadData()
+            }
+            else {
+                let alert = Constants.showBasicAlert(message: successResponse.message)
+                self.presentVC(alert)
+            }
+        }) { (error) in
+            self.stopAnimating()
+            let alert = Constants.showBasicAlert(message: error.message)
+            self.presentVC(alert)
+        }
+    }
+    
+    
+    //remove favourite
+    func removeFavourite(param: NSDictionary) {
+        self.showLoader()
+        AddsHandler.removeFavAdd(parameter: param, success: { (successResponse) in
+            self.stopAnimating()
+            if successResponse.success {
+                let alert = AlertView.prepare(title: "", message: successResponse.message, okAction: {
+                    self.favouriteAdsData()
+                    self.favTblView.reloadData()
+                })
+                self.presentVC(alert)
             }
             else {
                 let alert = Constants.showBasicAlert(message: successResponse.message)

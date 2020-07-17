@@ -11,7 +11,6 @@ import UIKit
 protocol CategoryDetailDelegate {
     func goToCategoryDetail()
     func goToAdFilterListVC()
-    func selectCategory()
 }
 
 class CategoriesTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -95,18 +94,18 @@ class CategoriesTableCell: UITableViewCell, UICollectionViewDelegate, UICollecti
             cell.imgPicture.sd_setImage(with: imgUrl, completed: nil)
         }
         
-        if indexPath.row == categoryArray.count - 1
-        {
-            cell.btnFullAction = { () in
-                self.delegate?.goToCategoryDetail()
-            }
-        }
-        else
-        {
+//        if indexPath.row == categoryArray.count - 1
+//        {
+//            cell.btnFullAction = { () in
+//                self.delegate?.goToCategoryDetail()
+//            }
+//        }
+//        else
+//        {
             cell.btnFullAction = { () in
                 self.delegate?.goToAdFilterListVC()
             }
-        }
+//        }
         
         return cell
     }

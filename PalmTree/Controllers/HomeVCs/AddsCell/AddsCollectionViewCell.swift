@@ -14,7 +14,6 @@ class AddsCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblPrice: UILabel!
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         if UserDefaults.standard.bool(forKey: "isRtl") {

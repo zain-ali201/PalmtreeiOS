@@ -16,16 +16,14 @@ class AddsCollectionCell: UICollectionViewCell {
         }
     }
     @IBOutlet weak var lblTimer: UILabel!
-    @IBOutlet weak var imgPicture: UIImageView!{
-        didSet {
-            imgPicture.cornerRadius(radius: 3)
-        }
-    }
+    @IBOutlet weak var imgPicture: UIImageView!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblLocation: UILabel!
     @IBOutlet weak var lblPrice: UILabel! 
     //MARK:- Properties
     var btnFullAction: (()->())?
+    var favBtnAction: (()->())?
+    
     var latestHorizontalSingleAd: String = UserDefaults.standard.string(forKey: "homescreenLayout")!
     var  imageView: UIImageView!
     var  imageViewLoc: UIImageView!
@@ -36,6 +34,10 @@ class AddsCollectionCell: UICollectionViewCell {
     //MARK:- IBActions
     @IBAction func actionFullButton(_ sender: Any) {
         self.btnFullAction?()
+    }
+    
+    @IBAction func favBtnAction(_ sender: Any) {
+        self.favBtnAction?()
     }
     
     override func awakeFromNib() {

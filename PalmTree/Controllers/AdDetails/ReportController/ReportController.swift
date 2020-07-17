@@ -55,7 +55,7 @@ class ReportController: UIViewController , NVActivityIndicatorViewable {
     
     //MARK:- Properties
     var delegate: ReportPopToHomeDelegate?
-    var dropDownArray = [String]()
+    var dropDownArray = ["Spam", "Offensive", "Duplicate", "Fake"]
     var selectedValue = ""
     var adID = 0
     let defaults = UserDefaults.standard
@@ -85,7 +85,9 @@ class ReportController: UIViewController , NVActivityIndicatorViewable {
     }
     
     func spamPopUp() {
+    
         spamDropDown.anchorView = oltPopUp
+        spamDropDown.bottomOffset = CGPoint(x: 0, y:(spamDropDown.anchorView?.plainView.bounds.height)!)
         spamDropDown.dataSource = dropDownArray
         spamDropDown.selectionAction = { [unowned self]
             (index, item) in
@@ -95,38 +97,7 @@ class ReportController: UIViewController , NVActivityIndicatorViewable {
     }
     
     func populateData() {
-        if AddsHandler.sharedInstance.objReportPopUp != nil {
-            let objData = AddsHandler.sharedInstance.objReportPopUp
-            if let cancelButtonText = objData?.btnCancel {
-                self.oltCancel.setTitle(cancelButtonText, for: .normal)
-            }
-            if let sendButtonText = objData?.btnSend {
-                self.oltSend.setTitle(sendButtonText, for: .normal)
-            }
-            
-            if let placeHolderText = objData?.inputTextarea {
-                self.txtMessage.placeholder = placeHolderText
-            }
-            if let popUpButtonText = objData?.select.key {
-                self.oltPopUp.setTitle(popUpButtonText, for: .normal)
-            }
-            if let nameText = objData?.select.name {
-                self.dropDownArray = nameText
-            }
-            
-            if defaults.bool(forKey: "isRtl") {
-                oltPopUp.contentHorizontalAlignment = .right
-                txtMessage.textAlignment = .right
-            } else {
-                oltPopUp.contentHorizontalAlignment = .left
-                txtMessage.textAlignment = .left
-            }
-            
-            self.spamPopUp()
-        }
-        else {
-            print("Empty Data")
-        }
+        self.spamPopUp()
     }
     
     //MARK:- IBActions

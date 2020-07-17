@@ -69,8 +69,6 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>App needs to access Camera while posting ad as well as for profile picture!</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>App needs to access your location while searching nearby adds</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>App needs to access your location while searching nearby adds</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

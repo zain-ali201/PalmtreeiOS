@@ -1229,7 +1229,8 @@ class AddDetailController: UIViewController, UITableViewDelegate, UITableViewDat
                 
                 self.addRatingArray = successResponse.data.adRatting.ratings
                 //set rating section title
-                if self.addRatingArray.count == 0 {
+                if self.addRatingArray.count == 0
+                {
                     self.ratingReviewTitle = successResponse.data.adRatting.noRatingMessage
                 }
                 else

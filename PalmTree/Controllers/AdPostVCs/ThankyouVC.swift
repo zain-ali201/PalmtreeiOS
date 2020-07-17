@@ -20,6 +20,10 @@ class ThankyouVC: UIViewController
         
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
+    }
+    
     @IBAction func crossBtnAction(_ sender: Any)
     {
         self.dismiss(animated: true, completion: nil)

@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import DeviceKit
+import Gallery
 
 var userDetail:UserObject? = UserObject()
 var languageCode = ""
@@ -23,6 +24,7 @@ var settingsVC: SettingsVC!
 let defaults = UserDefaults.standard
 let screenWidth = UIScreen.main.bounds.width
 var categoryArray = [CatIcon]()
+var categoriesArray = [CategoryObject]()
 
 class Constants
 {
@@ -130,7 +132,7 @@ class Constants
     
     struct googlePlacesAPIKey {
         
-        static let placesKey =  "placesKey"
+        static let placesKey =  "AIzaSyB5R0wNHQ4DSumsV23DTw1e4gK55UwvlT0"
     }
     
     struct AppColor {

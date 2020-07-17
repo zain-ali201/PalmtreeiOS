@@ -226,27 +226,65 @@ class AdDetailObject: NSObject
 {
     var userID : Int!
     var adId : Int!
-    var categoryID : Int!
     var adTitle : String!
-    var adCategory : String!
+    var catID = 0
+    var subcatID = 0
+    var adCategory  = ""
+    var adSubCategory = ""
     var adCurrency : String!
     var adDate : String!
-    var adDesc : String!
+    var adDesc = ""
     var adPrice : String!
     var images : [UIImage]!
     var isFeature : Bool!
-    var location : AddDetailLocationObject!
+    var location : AddDetailLocationObject = AddDetailLocationObject()
     var locationTop : String!
     var name : String!
-    var phone : String!
-    var specs : String!
+    var phone = ""
+    var whatsapp = ""
+    var specs = ""
     var sellerType : String!
+    var year : String!
+    var detailVC = ""
+    var motorCatObj : MotorCategoryObject = MotorCategoryObject()
+    var propertyCatObj : PropertyCategoryObject = PropertyCategoryObject()
+    var categoryObj: CategoryObject = CategoryObject()
 }
 
 class AddDetailLocationObject: NSObject
 {
-    var address : String!
+    var address = ""
     var lat : Double!
     var lng : Double!
-    var title : String!
+    var title = ""
+}
+
+class PropertyCategoryObject: NSObject
+{
+    var bedrooms = ""
+    var sellerType = ""
+    var propertyType = ""
+}
+
+class MotorCategoryObject: NSObject
+{
+    var regNo = ""
+    var sellerType = ""
+    var make = ""
+    var model = ""
+    var year = ""
+    var mileage = ""
+    var bodyType = ""
+    var fuelType = ""
+    var transmission = ""
+    var colour = ""
+    var engineSize = ""
+}
+
+class CategoryObject: NSObject
+{
+    var catId : Int!
+    var name : String!
+    var img : String!
+    var subCatObj: SubCategoryData?
 }

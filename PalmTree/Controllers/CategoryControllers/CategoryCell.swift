@@ -29,6 +29,7 @@ class CategoryCell: UITableViewCell {
     }
     
     @IBOutlet weak var imgContainer: UIView!
+    @IBOutlet weak var tick: UIImageView!
     var categoryBtnAction: (()->())?
     
     

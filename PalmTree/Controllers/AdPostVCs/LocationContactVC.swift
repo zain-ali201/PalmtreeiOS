@@ -18,10 +18,12 @@ class LocationContactVC: UIViewController
     @IBOutlet weak var lblText: UILabel!
     @IBOutlet weak var lblPhone: UILabel!
     @IBOutlet weak var txtPhone: UITextField!
+    @IBOutlet weak var txtWhatsapp: UITextField!
     @IBOutlet weak var btnSave: UIButton!
     
     var locFlag = false
     var numberFlag = false
+    var whatsappFlag = false
 
     //MARK:- Cycle
     
@@ -29,6 +31,7 @@ class LocationContactVC: UIViewController
         super.viewDidLoad()
         
         txtPhone.text = userDetail?.phone
+        txtWhatsapp.text = userDetail?.phone
         lblLocation.text = userDetail?.currentAddress
         
         if languageCode == "ar"
@@ -63,18 +66,22 @@ class LocationContactVC: UIViewController
         self.navigationController?.popViewController(animated: true)
     }
     
+    @IBAction func locBtnAction(_ sender: Any)
+    {
+        let locVC = self.storyboard?.instantiateViewController(withIdentifier: "LocationViewController") as! LocationViewController
+        locVC.locContactVC = self
+        self.navigationController?.pushViewController(locVC, animated: true)
+    }
+    
     @IBAction func saveBtnAction(_ sender: Any)
     {
-        if locFlag
-        {
-            AddsHandler.sharedInstance.address = userDetail?.currentAddress ?? ""
-            self.navigationController?.popViewController(animated: true)
-        }
-        else if numberFlag
+        adDetailObj.location.address = lblLocation.text!
+        
+        if numberFlag
         {
             if !txtPhone.text!.isEmpty
             {
-                AddsHandler.sharedInstance.address = txtPhone.text!
+                adDetailObj.phone = txtPhone.text!
                 self.navigationController?.popViewController(animated: true)
             }
             else
@@ -91,8 +98,36 @@ class LocationContactVC: UIViewController
                 }
                 
                 self.presentVC(alert)
+                return
             }
         }
+        
+        if whatsappFlag
+        {
+            if !txtPhone.text!.isEmpty
+            {
+                adDetailObj.whatsapp = txtPhone.text!
+                self.navigationController?.popViewController(animated: true)
+            }
+            else
+            {
+                let alert = Constants.showBasicAlert(message: "")
+                
+                if languageCode == "ar"
+                {
+                    alert.message = "يرجى إدخال رقم WhatsApp الخاص بك"
+                }
+                else
+                {
+                    alert.message = "Please enter your WhatsApp number"
+                }
+                
+                self.presentVC(alert)
+                return
+            }
+        }
+        
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func switchAction(switchC: UISwitch)
@@ -108,7 +143,7 @@ class LocationContactVC: UIViewController
                 locFlag = false
             }
         }
-        else
+        else if switchC.tag == 1002
         {
             if switchC.isOn
             {
@@ -119,9 +154,21 @@ class LocationContactVC: UIViewController
                 numberFlag = false
             }
         }
+        else if switchC.tag == 1003
+        {
+            if switchC.isOn
+            {
+                whatsappFlag = true
+            }
+            else
+            {
+                whatsappFlag = false
+            }
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         txtPhone.resignFirstResponder()
+        txtWhatsapp.resignFirstResponder()
     }
 }

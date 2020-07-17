@@ -24,6 +24,7 @@ PODS:
   - Cosmos (13.0.0)
   - DeviceKit (1.4.0)
   - DropDown (2.0.2)
+  - ExpandableCell (1.3.0)
   - FBSDKCoreKit (5.10.0):
     - FBSDKCoreKit/Basics (= 5.10.0)
     - FBSDKCoreKit/Core (= 5.10.0)
@@ -180,6 +181,7 @@ DEPENDENCIES:
   - Cosmos
   - DeviceKit
   - DropDown
+  - ExpandableCell
   - FBSDKCoreKit
   - FBSDKLoginKit
   - FBSDKShareKit
@@ -227,6 +229,7 @@ SPEC REPOS:
     - Cosmos
     - DeviceKit
     - DropDown
+    - ExpandableCell
     - FBSDKCoreKit
     - FBSDKLoginKit
     - FBSDKShareKit
@@ -286,6 +289,7 @@ SPEC CHECKSUMS:
   Cosmos: af3973becc045af335b64498c9812034876b7661
   DeviceKit: fa74d97499660e88081718b16688e19217595dba
   DropDown: 75562633a203f57a917021b4edb96c76f293b0ec
+  ExpandableCell: 69ca7d71971c171473a7a30964d2127f4c6ceaf6
   FBSDKCoreKit: f9bae468a078f20c05c73450825ccd54cfafbbb7
   FBSDKLoginKit: 4ece964272a52c4e1363d5c048a545e33761491b
   FBSDKShareKit: 09c3b7166802a3629970fa00d45d59cf6942df37
@@ -336,6 +340,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: 22d4c58200d7c105e0e407ab6bfd01a5d85014be
   YouTubePlayer: 028451f6772f372d4759866db99824c676ac1473
 
-PODFILE CHECKSUM: 92782ad55768af24c3fa752df15c2289de37a7f5
+PODFILE CHECKSUM: c136341cdbbea253d7dc2e184c49e1dc3bbacf9d
 
 COCOAPODS: 1.9.3

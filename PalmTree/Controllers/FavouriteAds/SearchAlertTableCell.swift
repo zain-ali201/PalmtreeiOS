@@ -25,8 +25,14 @@ class SearchAlertTableCell: UITableViewCell {
     @IBOutlet weak var lblPromotion: UILabel!
     @IBOutlet weak var alertIcon: UIImageView!
     
+    var crossAction: (()->())?
+    
     override func awakeFromNib()
     {
 
+    }
+    
+    @IBAction func actionCancel(_ sender: Any) {
+        crossAction?()
     }
 }

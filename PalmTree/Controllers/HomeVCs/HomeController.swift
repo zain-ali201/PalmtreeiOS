@@ -100,7 +100,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBOutlet weak var lblSearch: UILabel!
     
-    var locManager = CLLocationManager()
+    var locationManager = CLLocationManager()
     lazy var geocoder = CLGeocoder()
     
     //MARK:- View Life Cycle
@@ -116,16 +116,12 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         homeVC = self
         
-        //Location manager
-        if (CLLocationManager.locationServicesEnabled()) {
-            locManager.startUpdatingLocation()
-            locManager.delegate = self
-            locManager.desiredAccuracy = kCLLocationAccuracyBest
-            locManager.requestAlwaysAuthorization()
-            locManager.startUpdatingLocation()
-        }
+        locationManager.requestWhenInUseAuthorization()
         
-         self.navigationController?.isNavigationBarHidden = true
+        //Location manager
+        getGPSLocation()
+        
+        self.navigationController?.isNavigationBarHidden = true
         inters = GADInterstitial(adUnitID:"ca-app-pub-2596107136418753/4126592208")
         let request = GADRequest()
         // request.testDevices = [(kGADSimulatorID as! String),"79e5cafdc063cca47a7b4158f482669ad5a74c2b"]
@@ -145,8 +141,9 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblSearch.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             changeMenuButtons()
-            tableView.reloadData()
         }
+        
+        tableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -162,12 +159,31 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @objc func refreshTableView() {
         self.homeData()
-        //        self.perform(#selector(self.nokri_showNavController1), with: nil, afterDelay: 0.5)
         tableView.reloadData()
         self.refreshControl.endRefreshing()
     }
     
     //MARK:- Cutom Functions
+    
+    func getGPSLocation()
+    {
+        var currentLoc: CLLocation!
+        if(CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+        CLLocationManager.authorizationStatus() == .authorizedAlways) {
+            currentLoc = locationManager.location
+            userDetail?.currentLocation = currentLoc
+            
+            if userDetail?.currentLocation != nil
+            {
+                geocoder.reverseGeocodeLocation(currentLoc) { (placemarks, error) in
+                    self.processResponse(withPlacemarks: placemarks, error: error)
+                }
+            }
+            
+//            print("Latitude: \(currentLoc.coordinate.latitude)")
+//            print("Longitude: \(currentLoc.coordinate.longitude)")
+        }
+    }
     
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         let location = locations.last as! CLLocation
@@ -180,7 +196,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 self.processResponse(withPlacemarks: placemarks, error: error)
             }
         }
-        locManager.stopUpdatingLocation()
+//        locManager.stopUpdatingLocation()
     }
     
     private func processResponse(withPlacemarks placemarks: [CLPlacemark]?, error: Error?) {
@@ -230,12 +246,21 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     //MARK:- go to add detail controller
     func goToAddDetail(ad_id: Int) {
-//        let addDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "AddDetailController") as! AddDetailController
-//        addDetailVC.ad_id = ad_id
-//        self.navigationController?.pushViewController(addDetailVC, animated: true)
-        
         let AdDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "AdDetailVC") as! AdDetailVC
         self.navigationController?.pushViewController(AdDetailVC, animated: true)
+    }
+    
+    //MARK:- go to add detail controller
+    func goToAddDetailVC(detail: HomeAdd) {
+        let adDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "AdDetailVC") as! AdDetailVC
+        adDetailVC.adDetailDataObj = detail
+        self.navigationController?.pushViewController(adDetailVC, animated: true)
+    }
+    
+    //MARK:- Add to favourites
+    func addToFavourites(ad_id: Int) {
+        let parameter: [String: Any] = ["ad_id": ad_id]
+        self.makeAddFavourite(param: parameter as NSDictionary)
     }
     
     //MARK:- go to category detail
@@ -248,12 +273,6 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func goToAdFilterListVC() {
         let adFilterListVC = self.storyboard?.instantiateViewController(withIdentifier: "AdFilterListVC") as! AdFilterListVC
         self.navigationController?.pushViewController(adFilterListVC, animated: true)
-    }
-    
-    func selectCategory()
-    {
-        let selectCategoryVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectCategoryVC") as! SelectCategoryVC
-        self.navigationController?.pushViewController(selectCategoryVC, animated: true)
     }
     
     //MARK:- Go to Location detail
@@ -435,17 +454,23 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 let locationVC = self.storyboard?.instantiateViewController(withIdentifier: "LocationVC") as! LocationVC
                 self.navigationController?.pushViewController(locationVC, animated: true)
             }
-            cell.locBtn.setTitle(userDetail?.country, for: .normal)
+            if userDetail?.country != ""
+            {
+                cell.locBtn.setTitle(userDetail?.country, for: .normal)
+            }
+            
             cell.dataArray = latestAdsArray
             cell.delegate = self
             cell.reloadData()
+            
             return cell
         }
         
         return UITableViewCell()
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
         let section = indexPath.section
         var totalHeight : CGFloat = 0
         var height: CGFloat = 0
@@ -461,7 +486,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         else if section == 1
         {
-            height = 1080
+            height = 1000
         }
             
         return height
@@ -636,7 +661,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
                 
                 self.dataArray = successResponse.data.sliders
-                
+                self.getGPSLocation()
                 //Check Feature Ads is on or off and set add Position Sorter
                 if self.isShowFeature {
                     self.featuredArray = successResponse.data.featuredAds.ads
@@ -827,6 +852,53 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.presentVC(alert)
         }
     }
+    
+    //MARK:- Get SubCategroies
+    
+    func subCategoryData(param: NSDictionary)
+    {
+        let adPostVC = AadPostController()
+        adPostVC.showLoader()
+        AddsHandler.adPostSubcategory(parameter: param, success: { (successResponse) in
+            NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+            if successResponse.success {
+                
+                AddsHandler.sharedInstance.objSearchCategory = successResponse.data
+                
+                
+              //UserDefaults.standard.set(successResponse.isBid, forKey: "isBid")
+            }
+            else {
+                let alert = Constants.showBasicAlert(message: successResponse.message)
+                self.presentVC(alert)
+            }
+        }) { (error) in
+            NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+            let alert = Constants.showBasicAlert(message: error.message)
+            self.presentVC(alert)
+        }
+    }
+    
+    //MARK:- Make Add Favourites
+    
+    func makeAddFavourite(param: NSDictionary) {
+        self.showLoader()
+        AddsHandler.makeAddFavourite(parameter: param, success: { (successResponse) in
+            self.stopAnimating()
+            if successResponse.success {
+                let alert = Constants.showBasicAlert(message: successResponse.message)
+                self.presentVC(alert)
+            }
+            else {
+                let alert = Constants.showBasicAlert(message: successResponse.message)
+                self.presentVC(alert)
+            }
+        }) { (error) in
+            self.stopAnimating()
+            let alert = Constants.showBasicAlert(message: error.message)
+            self.presentVC(alert)
+        }
+    }
 }
 
 extension CLPlacemark {
@@ -835,16 +907,16 @@ extension CLPlacemark {
         if let name = name {
             var result = name
 
-            if let street = thoroughfare {
-                result += ", \(street)"
-            }
+//            if let street = thoroughfare {
+//                result += ", \(street)"
+//            }
 
             if let city = locality {
                 result += ", \(city)"
             }
 
             if let country = country {
-                userDetail?.country = country
+//                userDetail?.country = country
                 result += ", \(country)"
             }
 
@@ -863,5 +935,19 @@ extension CLPlacemark {
 
         return nil
     }
+}
 
+class DynamicHeightCollectionView: UICollectionView
+{
+    override func layoutSubviews()
+    {
+        super.layoutSubviews()
+        if bounds.size != intrinsicContentSize {
+            self.invalidateIntrinsicContentSize()
+        }
+    }
+    override var intrinsicContentSize: CGSize
+    {
+        return collectionViewLayout.collectionViewContentSize
+    }
 }
