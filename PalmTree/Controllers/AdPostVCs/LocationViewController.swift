@@ -34,6 +34,7 @@ class LocationViewController:  UIViewController, GMSMapViewDelegate, GMSAutocomp
     
     @IBOutlet weak var pinView: UIImageView!
     @IBOutlet weak var locationBtn: UIButton!
+    @IBOutlet weak var searchBtn: UIButton!
     
     @IBOutlet weak var tblView: UITableView!
     

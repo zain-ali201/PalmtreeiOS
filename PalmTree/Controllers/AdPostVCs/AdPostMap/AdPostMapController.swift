@@ -124,9 +124,6 @@ class AdPostMapController: UITableViewController, GMSAutocompleteViewControllerD
     var localVariable = ""
     var isSimpleAddress = true
     
-    
-    
-    
     //this array get data from previous controller
     var objArray = [AdPostField]()
     

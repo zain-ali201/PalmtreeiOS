@@ -61,7 +61,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable
     
     var txtHeight = 0
     var ad_id = 0
-    var adDate = ""
+    var phone = ""
     
     //MARK:- View Life Cycle
     
@@ -98,6 +98,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable
             chatBtn.setImage(UIImage(named: "Chat_ar"), for: .normal)
         }
         
+        getUserDetail()
         populateData()
     }
 
@@ -111,19 +112,15 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable
     
     func populateData()
     {
-        getUserDetail()
-        
         lblName.text = adDetailDataObj?.adTitle
         lblPrice.text = adDetailDataObj?.adPrice.price
         lblLocation.text = adDetailDataObj?.adLocation.address
         lblSummary.text = adDetailDataObj?.adDesc
         lblID.text = String(format: "ID: %i", adDetailDataObj?.adId ?? 0)
         
-        sellerView.removeFromSuperview()
-        
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM dd, yyyy"
-        let date = formatter.date(from: adDate)
+        let date = formatter.date(from: adDetailDataObj?.adDate ?? "")
         
         if date != nil
         {
@@ -140,12 +137,29 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable
 //            lblJoining.text =  "Member since 2020"
 //        }
         
+        if tabView != nil
+        {
+            tabView.removeFromSuperview()
+        }
+        height.constant = 60
+        
         let txtHeight = lblSummary.text?.html2AttributedString?.height(withConstrainedWidth: 345) ?? 0
         
-        if txtHeight > 85.0
+        if txtHeight > 60.0
         {
             readBtn.alpha = 1
             height.constant = txtHeight
+        }
+        
+        if phone == ""
+        {
+            callBtn.isEnabled = false
+            whatsappBtn.isEnabled = false
+        }
+        
+        if imagesArray.count > 0
+        {
+            fillSlideShow()
         }
     }
     
@@ -164,8 +178,11 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable
         
         for image in imagesArray
         {
-            let alamofireSource = AlamofireSource(urlString: image.full)!
-            inputImages.append(alamofireSource)
+            if image.full != nil
+            {
+                let alamofireSource = AlamofireSource(urlString: image.full)!
+                inputImages.append(alamofireSource)
+            }
         }
         
         slideshow.setImageInputs(inputImages)
@@ -220,6 +237,14 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable
         activityViewController.popoverPresentationController?.sourceView = self.view
 
         present(activityViewController, animated: true, completion: nil)
+    }
+    
+    @IBAction func locationBtnAction(_ sender: Any)
+    {
+        let mapVC = self.storyboard?.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
+        mapVC.latitudeStr = adDetailDataObj?.adLocation.lat ?? ""
+        mapVC.latitudeStr = adDetailDataObj?.adLocation.longField ?? ""
+        self.navigationController?.pushViewController(mapVC, animated: true)
     }
     
     @IBAction func socialBtnAction(_ button: UIButton)
@@ -330,7 +355,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable
     
     @IBAction func callBtnAction(_ button: UIButton)
     {
-        if let phoneURL = URL(string: String(format: "tel://%@", adDetailDataObj?))
+        if let phoneURL = URL(string: String(format: "tel://%@", phone))
         {
             UIApplication.shared.open(phoneURL, options: [:], completionHandler: nil)
         }
@@ -338,7 +363,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable
     
     @IBAction func whatsappBtnAction(_ button: UIButton)
     {
-        let whatsappURL = URL(string: String(format: "whatsapp://send?text=Hello"))
+        let whatsappURL = URL(string: String(format: "whatsapp://%@", phone))
         if UIApplication.shared.canOpenURL(whatsappURL!) {
             UIApplication.shared.open(whatsappURL!, options: [:], completionHandler: nil)
         }
@@ -350,7 +375,6 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable
         reportVC.modalPresentationStyle = .overCurrentContext
         reportVC.modalTransitionStyle = .crossDissolve
         reportVC.adID = adDetailDataObj?.adId ?? 0
-        reportVC.delegate = self
         self.presentVC(reportVC)
     }
     
@@ -374,8 +398,8 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable
            if successResponse.success
            {
                 self.imagesArray = successResponse.data.adDetail.images
-                self.adDate = successResponse.data.adDetail.adDate
-                self.fillSlideShow()
+                self.phone = successResponse.data.adDetail.phone
+                self.populateData()
            }
            else
            {

@@ -301,7 +301,11 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     
     @IBAction func postAdBtnAction(_ sender: Any)
     {
-        if txtTitle.text!.isEmpty
+        if self.photoArray.count == 0
+        {
+            self.showToast(message: "Please add atleast one photo.")
+        }
+        else if txtTitle.text!.isEmpty
         {
             self.txtTitle.shake(6, withDelta: 10, speed: 0.06)
         }

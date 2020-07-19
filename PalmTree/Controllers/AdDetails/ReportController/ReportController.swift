@@ -33,9 +33,6 @@ class ReportController: UIViewController , NVActivityIndicatorViewable {
     @IBOutlet weak var oltCancel: UIButton!{
         didSet{
             oltCancel.roundCornors()
-            if let mainColor = defaults.string(forKey: "mainColor"){
-                oltCancel.backgroundColor = Constants.hexStringToUIColor(hex: mainColor)
-            }
         }
     }
     @IBOutlet weak var txtMessage: HoshiTextField!
@@ -136,7 +133,7 @@ class ReportController: UIViewController , NVActivityIndicatorViewable {
             if successResponse.success {
                 let alert = AlertView.prepare(title: "", message: successResponse.message, okAction: {
                     self.dismissVC(completion: {
-                        self.delegate?.moveToHome(isMove: true)
+                        self.navigationController?.popToViewController(homeVC, animated: true)
                     })
                 })
                 self.presentVC(alert)
