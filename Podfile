@@ -116,5 +116,5 @@ target 'PalmTree' do
 
      pod 'Stripe'
      pod 'AFNetworking'
-     pod 'Mapbox-iOS-SDK', '~> 6.0.0'
+     pod 'Mapbox-iOS-SDK'
 end

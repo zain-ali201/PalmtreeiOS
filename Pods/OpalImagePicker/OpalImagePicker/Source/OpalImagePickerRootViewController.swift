@@ -446,7 +446,7 @@ extension OpalImagePickerRootViewController: UICollectionViewDelegate {
             //We exceeded maximum allowed, so alert user. Don't allow selection
             let message = configuration?.maximumSelectionsAllowedMessage ?? NSLocalizedString("You cannot select more than \(maximumSelectionsAllowed) images. Please deselect another image before trying to select again.", comment: "You cannot select more than (x) images. Please deselect another image before trying to select again. (OpalImagePicker)")
             let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
-            let okayString = configuration?.okayString ?? NSLocalizedString("OK", comment: "OK")
+            let okayString = "OK"
             let action = UIAlertAction(title: okayString, style: .cancel, handler: nil)
             alert.addAction(action)
             present(alert, animated: true, completion: nil)

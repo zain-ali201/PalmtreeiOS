@@ -449,8 +449,8 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
             self.stopAnimating()
             if successResponse.success {
                 let alert = AlertView.prepare(title: "", message: successResponse.message, okAction: {
-                    self.adForest_getAddsData()
-                    self.collectionView.reloadData()
+//                    self.adForest_getAddsData()
+//                    self.collectionView.reloadData()
                 })
                 self.presentVC(alert)
             } else {

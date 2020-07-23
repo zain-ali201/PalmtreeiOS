@@ -50,12 +50,18 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     @IBOutlet weak var fixedTick: UIImageView!
     @IBOutlet weak var negotiateTick: UIImageView!
     
+    @IBOutlet weak var txtPhone: UITextField!
+    @IBOutlet weak var txtWhatsapp: UITextField!
+    
     var fromVC = ""
     var priceFlag = false
 
     var imageArray = [AdPostImageArray]()
     var imgCtrlCount = 0
     var imageIDArray = [Int]()
+    
+    var numberFlag = false
+    var whatsappFlag = false
     
     //MARK:- Collectionview Properties
     var isDrag : Bool = false
@@ -90,6 +96,9 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         {
             homeVC.getGPSLocation()
         }
+        
+        txtPhone.text = userDetail?.phone
+        txtWhatsapp.text = userDetail?.phone
         
         if languageCode == "ar"
         {
@@ -285,8 +294,38 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     
     @IBAction func locationBtnACtion(_ sender: Any)
     {
-        let contactVC = self.storyboard?.instantiateViewController(withIdentifier: "LocationContactVC") as! LocationContactVC
-        self.navigationController?.pushViewController(contactVC, animated: true)
+//        let contactVC = self.storyboard?.instantiateViewController(withIdentifier: "LocationContactVC") as! LocationContactVC
+//        self.navigationController?.pushViewController(contactVC, animated: true)
+        
+        let locVC = self.storyboard?.instantiateViewController(withIdentifier: "LocationViewController") as! LocationViewController
+        locVC.adPostVC = self
+        self.navigationController?.pushViewController(locVC, animated: true)
+    }
+    
+    @IBAction func switchAction(switchC: UISwitch)
+    {
+        if switchC.tag == 1001
+        {
+            if switchC.isOn
+            {
+                numberFlag = true
+            }
+            else
+            {
+                numberFlag = false
+            }
+        }
+        else if switchC.tag == 1002
+        {
+            if switchC.isOn
+            {
+                whatsappFlag = true
+            }
+            else
+            {
+                whatsappFlag = false
+            }
+        }
     }
     
     @IBAction func previewBtnACtion(_ sender: Any)
@@ -305,22 +344,54 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     {
         if adDetailObj.images.count == 0
         {
-            self.showToast(message: "Please add atleast one photo.")
+            var msg = "Please add atleast one photo."
+            
+            if languageCode == "ar"
+            {
+                msg = "يرجى إضافة صورة واحدة على الأقل"
+            }
+            
+            self.showToast(message: msg)
         }
         else if txtTitle.text!.isEmpty
         {
             self.txtTitle.shake(6, withDelta: 10, speed: 0.06)
         }
-//        else if !(txtDescp.text!.isEmpty) && txtDescp.text.count < 20
-//        {
-//            self.lblDescp.shake(6, withDelta: 10, speed: 0.06)
-//        }
+        else if !(txtDescp.text!.isEmpty) && txtDescp.text.count < 20
+        {
+            self.lblDescp.shake(6, withDelta: 10, speed: 0.06)
+        }
         else if txtPrice.text!.isEmpty
         {
             self.txtPrice.shake(6, withDelta: 10, speed: 0.06)
         }
+        else if numberFlag && txtPhone.text!.isEmpty
+        {
+            var msg = "Please enter your contact number"
+            
+            if languageCode == "ar"
+            {
+                msg = "يرجى إدخال رقم الهاتف الخاص بك"
+            }
+            
+            self.showToast(message: msg)
+        }
+        else if whatsappFlag && txtPhone.text!.isEmpty
+        {
+            var msg = "Please add your whatsapp number."
+            
+            if languageCode == "ar"
+            {
+                msg = "يرجى إدخال رقم WhatsApp الخاص بك"
+            }
+            
+            self.showToast(message: msg)
+        }
         else
         {
+            adDetailObj.phone = txtPhone.text!
+            adDetailObj.whatsapp = txtPhone.text!
+            
             let param: [String: Any] = ["is_update": ""]
             print(param)
             self.adPost(param: param as NSDictionary)
@@ -354,6 +425,8 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         txtDescp.resignFirstResponder()
         txtPrice.resignFirstResponder()
         txtTitle.resignFirstResponder()
+        txtPhone.resignFirstResponder()
+        txtWhatsapp.resignFirstResponder()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
@@ -450,15 +523,15 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         
         var customDictionary: [String: Any] = [String: Any]()
         
-//        if adDetailObj.motorCatObj.regNo != ""
-//        {
-//            customDictionary.merge(with: ["regNo" : adDetailObj.motorCatObj.regNo])
-//        }
-//
-//        if adDetailObj.motorCatObj.sellerType != ""
-//        {
-//            customDictionary.merge(with: ["sellerType" : adDetailObj.motorCatObj.sellerType])
-//        }
+        if adDetailObj.motorCatObj.regNo != ""
+        {
+            customDictionary.merge(with: ["regNo" : adDetailObj.motorCatObj.regNo])
+        }
+
+        if adDetailObj.motorCatObj.sellerType != ""
+        {
+            customDictionary.merge(with: ["sellerType" : adDetailObj.motorCatObj.sellerType])
+        }
         
         if adDetailObj.motorCatObj.make != ""
         {
@@ -470,60 +543,60 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             customDictionary.merge(with: ["model" : adDetailObj.motorCatObj.model])
         }
         
-//        if adDetailObj.motorCatObj.year != ""
-//        {
-//            customDictionary.merge(with: ["year" : adDetailObj.motorCatObj.year])
-//        }
-//        
-//        if adDetailObj.motorCatObj.mileage != ""
-//        {
-//            customDictionary.merge(with: ["mileage" : adDetailObj.motorCatObj.mileage])
-//        }
-//        
-//        if adDetailObj.motorCatObj.bodyType != ""
-//        {
-//            customDictionary.merge(with: ["bodyType" : adDetailObj.motorCatObj.bodyType])
-//        }
-//        
-//        if adDetailObj.motorCatObj.fuelType != ""
-//        {
-//            customDictionary.merge(with: ["fuelType" : adDetailObj.motorCatObj.fuelType])
-//        }
-//        
-//        if adDetailObj.motorCatObj.transmission != ""
-//        {
-//            customDictionary.merge(with: ["transmission" : adDetailObj.motorCatObj.transmission])
-//        }
-//        
-//        if adDetailObj.motorCatObj.colour != ""
-//        {
-//            customDictionary.merge(with: ["colour" : adDetailObj.motorCatObj.colour])
-//        }
-//        
-//        if adDetailObj.motorCatObj.engineSize != ""
-//        {
-//            customDictionary.merge(with: ["engineSize" : adDetailObj.motorCatObj.engineSize])
-//        }
-//        
-//        if adDetailObj.propertyCatObj.propertyType != ""
-//        {
-//            customDictionary.merge(with: ["propertyType" : adDetailObj.propertyCatObj.propertyType])
-//        }
-//        
-//        if adDetailObj.propertyCatObj.bedrooms != ""
-//        {
-//            customDictionary.merge(with: ["bedrooms" : adDetailObj.propertyCatObj.bedrooms])
-//        }
-//        
-//        if adDetailObj.propertyCatObj.sellerType != ""
-//        {
-//            customDictionary.merge(with: ["psellerType" : adDetailObj.propertyCatObj.sellerType])
-//        }
-//        
-//        if adDetailObj.whatsapp != ""
-//        {
-//            customDictionary.merge(with: ["whatsapp" : adDetailObj.whatsapp])
-//        }
+        if adDetailObj.motorCatObj.year != ""
+        {
+            customDictionary.merge(with: ["year" : adDetailObj.motorCatObj.year])
+        }
+        
+        if adDetailObj.motorCatObj.mileage != ""
+        {
+            customDictionary.merge(with: ["mileage" : adDetailObj.motorCatObj.mileage])
+        }
+        
+        if adDetailObj.motorCatObj.bodyType != ""
+        {
+            customDictionary.merge(with: ["bodyType" : adDetailObj.motorCatObj.bodyType])
+        }
+        
+        if adDetailObj.motorCatObj.fuelType != ""
+        {
+            customDictionary.merge(with: ["fuelType" : adDetailObj.motorCatObj.fuelType])
+        }
+        
+        if adDetailObj.motorCatObj.transmission != ""
+        {
+            customDictionary.merge(with: ["transmission" : adDetailObj.motorCatObj.transmission])
+        }
+        
+        if adDetailObj.motorCatObj.colour != ""
+        {
+            customDictionary.merge(with: ["colour" : adDetailObj.motorCatObj.colour])
+        }
+        
+        if adDetailObj.motorCatObj.engineSize != ""
+        {
+            customDictionary.merge(with: ["engineSize" : adDetailObj.motorCatObj.engineSize])
+        }
+        
+        if adDetailObj.propertyCatObj.propertyType != ""
+        {
+            customDictionary.merge(with: ["propertyType" : adDetailObj.propertyCatObj.propertyType])
+        }
+        
+        if adDetailObj.propertyCatObj.bedrooms != ""
+        {
+            customDictionary.merge(with: ["bedrooms" : adDetailObj.propertyCatObj.bedrooms])
+        }
+        
+        if adDetailObj.propertyCatObj.sellerType != ""
+        {
+            customDictionary.merge(with: ["psellerType" : adDetailObj.propertyCatObj.sellerType])
+        }
+        
+        if adDetailObj.whatsapp != ""
+        {
+            customDictionary.merge(with: ["whatsapp" : adDetailObj.whatsapp])
+        }
         
         if customDictionary.count > 0
         {

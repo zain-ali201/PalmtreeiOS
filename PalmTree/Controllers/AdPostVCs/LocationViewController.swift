@@ -44,7 +44,7 @@ class LocationViewController:  UIViewController, GMSMapViewDelegate, GMSAutocomp
     
     var locationName : String!
     
-    var locContactVC: LocationContactVC!
+    var adPostVC: AdPostVC!
     
     var locationManager = CLLocationManager()
     

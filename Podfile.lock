@@ -202,6 +202,7 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift
   - JGProgressHUD
   - LinkedinSwift (>= 1.7.9)
+  - Mapbox-iOS-SDK
   - Mapbox-iOS-SDK (~> 5.4)
   - MapboxGeocoder.swift (~> 0.11)
   - NotificationBannerSwift
@@ -345,6 +346,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: 22d4c58200d7c105e0e407ab6bfd01a5d85014be
   YouTubePlayer: 028451f6772f372d4759866db99824c676ac1473
 
-PODFILE CHECKSUM: 8378a1cb30847c95bfc0bd36bb9f38412dafffce
+PODFILE CHECKSUM: 309ecfd3a68eb0fbef793167c7b1b1604f3f5179
 
 COCOAPODS: 1.9.3
