@@ -353,6 +353,8 @@ class EditProfileVC: UIViewController, NVActivityIndicatorViewable {
                     self.lblName.text = userDetail?.displayName ?? ""
                     self.lblDisplayName.text = userDetail?.displayName ?? ""
                     self.lblNumber.text = userDetail?.phone ?? ""
+                    self.btnAddPhone.alpha = 0
+                    self.lblNumber.alpha = 1
                 })
                 self.presentVC(alert)
             }

@@ -8,8 +8,8 @@
 
 import Foundation
 import Alamofire
-class UserHandler {
-    
+class UserHandler
+{
     static let sharedInstance = UserHandler()
     
     var objSettings: SettingsData?

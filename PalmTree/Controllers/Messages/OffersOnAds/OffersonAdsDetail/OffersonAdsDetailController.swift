@@ -27,14 +27,16 @@ class OffersonAdsDetailController: UIViewController, UITableViewDelegate, UITabl
     var ad_id = 0
     var dataArray = [OfferOnAdDetailItem]()
     var currentPage = 0
-    var maximumPage = 0
+    var maximumPage = 0    
     
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:
             #selector(refreshTableView),
                                  for: UIControlEvents.valueChanged)
-        refreshControl.tintColor = UIColor.red
+        if let mainColor = defaults.string(forKey: "mainColor") {
+            refreshControl.tintColor = Constants.hexStringToUIColor(hex: mainColor)
+        }
         
         return refreshControl
     }()
@@ -54,6 +56,11 @@ class OffersonAdsDetailController: UIViewController, UITableViewDelegate, UITabl
         print(param)
         self.showLoader()
         self.getDetailsData(param: param as NSDictionary)
+    }
+    
+    @IBAction func backBtnAction(_ sender: Any)
+    {
+        self.navigationController?.popViewController(animated: true)
     }
     
     //MARK:- Custom
@@ -131,6 +138,7 @@ class OffersonAdsDetailController: UIViewController, UITableViewDelegate, UITabl
         let objData = dataArray[indexPath.row]
         let chatVC = self.storyboard?.instantiateViewController(withIdentifier: "ChatController") as! ChatController
         chatVC.ad_id = String(objData.adId)
+        chatVC.name = objData.messageAuthorName
         chatVC.sender_id = objData.messageSenderId
         chatVC.receiver_id = objData.messageReceiverId
         chatVC.messageType = "receive"
@@ -197,8 +205,4 @@ class OffersonAdsDetailController: UIViewController, UITableViewDelegate, UITabl
             self.presentVC(alert)
         }
     }
-    
-    
-    
-    
 }

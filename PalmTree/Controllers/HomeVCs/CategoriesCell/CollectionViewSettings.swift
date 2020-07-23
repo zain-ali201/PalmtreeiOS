@@ -22,6 +22,11 @@ class CollectionViewSettings {
         let totalWidth = boundWidth - (offset + offset) - ((column - 1) * minItemSpacing)
         return totalWidth / column
     }
+    
+    static func getAdItemWidth(boundWidth: CGFloat) -> CGFloat {
+        let totalWidth = boundWidth - (offset + offset) - ((column - 1) * minItemSpacing)
+        return totalWidth / 2
+    }
 }
 
 

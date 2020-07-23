@@ -23,9 +23,12 @@ class SearchAlertTableCell: UITableViewCell {
     @IBOutlet weak var lblLocation: UILabel!
     @IBOutlet weak var lblProcess: UILabel!
     @IBOutlet weak var lblPromotion: UILabel!
+    @IBOutlet weak var lblDate: UILabel!
     @IBOutlet weak var alertIcon: UIImageView!
+    @IBOutlet weak var btnLocation: UIButton!
     
     var crossAction: (()->())?
+    var locationAction: (()->())?
     
     override func awakeFromNib()
     {
@@ -34,5 +37,10 @@ class SearchAlertTableCell: UITableViewCell {
     
     @IBAction func actionCancel(_ sender: Any) {
         crossAction?()
+    }
+    
+    @IBAction func locationBtnAction(_ sender: Any)
+    {
+        locationAction?()
     }
 }

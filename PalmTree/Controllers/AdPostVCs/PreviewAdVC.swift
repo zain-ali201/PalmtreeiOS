@@ -221,12 +221,36 @@ class PreviewAdVC: UIViewController
             specsHeight += 65
         }
         
+        if adDetailObj.propertyCatObj.propertyType != ""
+        {
+            let view = createView(yAxis: specsHeight, text: "Property Type", value: adDetailObj.propertyCatObj.propertyType)
+            specsView.addSubview(view)
+            specsHeight += 65
+        }
+        
+        if adDetailObj.propertyCatObj.bedrooms != ""
+        {
+            let view = createView(yAxis: specsHeight, text: "No of Bedrooms", value: adDetailObj.propertyCatObj.bedrooms)
+            specsView.addSubview(view)
+            specsHeight += 65
+        }
+        
+        if adDetailObj.propertyCatObj.sellerType != ""
+        {
+            let view = createView(yAxis: specsHeight, text: "Seller Type", value: adDetailObj.propertyCatObj.sellerType)
+            specsView.addSubview(view)
+            specsHeight += 65
+        }
+        
         if specsHeight > 10
         {
             height.constant = specsHeight
+            scrollView.contentSize = CGSize(width: 0, height: 720 + specsHeight)
         }
-        
-        scrollView.contentSize = CGSize(width: 0, height: 720 + specsHeight)
+        else
+        {
+            specsView.removeFromSuperview()
+        }
     }
     
     func createView(yAxis: CGFloat, text: String, value: String) -> UIView

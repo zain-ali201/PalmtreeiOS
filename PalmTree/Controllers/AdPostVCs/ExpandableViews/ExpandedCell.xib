@@ -44,7 +44,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="lblName" destination="QY7-Fw-lwp" id="8Cf-1A-Lif"/>
+                <outlet property="nameLbl" destination="QY7-Fw-lwp" id="nHK-Gs-Bud"/>
             </connections>
             <point key="canvasLocation" x="140" y="155"/>
         </tableViewCell>

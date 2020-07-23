@@ -222,6 +222,7 @@
 		1826F83A2085D40E002BF69A /* AddsCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1826F8392085D40E002BF69A /* AddsCollectionCell.swift */; };
 		1826F83D2085E273002BF69A /* HomeRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1826F83C2085E273002BF69A /* HomeRoot.swift */; };
 		18276133205D006F00ADAC4C /* AddDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18276132205D006F00ADAC4C /* AddDetailController.swift */; };
+		18285F4124C6EEAA000A4842 /* CheckoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18285F4024C6EEAA000A4842 /* CheckoutViewController.swift */; };
 		182A70EB20E0FC5200A0F38C /* PackagesDataIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182A70EA20E0FC5200A0F38C /* PackagesDataIO.swift */; };
 		182A70ED20E0FE6200A0F38C /* PackageDataAppCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182A70EC20E0FE6200A0F38C /* PackageDataAppCode.swift */; };
 		182A70EF20E0FE9E00A0F38C /* PackageDataMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182A70EE20E0FE9E00A0F38C /* PackageDataMessage.swift */; };
@@ -274,7 +275,6 @@
 		183C65D5215B9520004A94EC /* AppSettingFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C65D4215B9520004A94EC /* AppSettingFeedback.swift */; };
 		183C65D7215B9532004A94EC /* AppSettingForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C65D6215B9532004A94EC /* AppSettingForm.swift */; };
 		183C65DA215BA1F5004A94EC /* FeedbackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C65D9215BA1F5004A94EC /* FeedbackController.swift */; };
-		183E1F1D2492537A00B50AAE /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183E1F1C2492537900B50AAE /* ChatVC.swift */; };
 		1844FD52213D4028005CD5FF /* AddDetailAdTypeBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1844FD51213D4028005CD5FF /* AddDetailAdTypeBar.swift */; };
 		184CAFA220B02176008046C1 /* ProfileDetailsDeleteAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184CAFA120B02176008046C1 /* ProfileDetailsDeleteAccount.swift */; };
 		184CAFA520B031F1008046C1 /* TermsConditionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184CAFA420B031F1008046C1 /* TermsConditionsController.swift */; };
@@ -590,7 +590,6 @@
 		ABA1285A248CD31800201454 /* LocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA12859248CD31800201454 /* LocationVC.swift */; };
 		ABA1285C248CDFD000201454 /* CategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA1285B248CDFD000201454 /* CategoryVC.swift */; };
 		ABA1285F248D154D00201454 /* FavouritesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA1285E248D154D00201454 /* FavouritesVC.swift */; };
-		ABA12861248D1AAF00201454 /* MessagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA12860248D1AAF00201454 /* MessagesVC.swift */; };
 		ABC9DA14248F7A5D0065D8BE /* AdFilterListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9DA13248F7A5D0065D8BE /* AdFilterListVC.swift */; };
 		ABDBD3B1248E217500DCFB0E /* SearchAlertTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDBD3B0248E217400DCFB0E /* SearchAlertTableCell.swift */; };
 		ABDBD3B3248E5B9C00DCFB0E /* AdPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDBD3B2248E5B9C00DCFB0E /* AdPostVC.swift */; };
@@ -834,6 +833,7 @@
 		1826F8392085D40E002BF69A /* AddsCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddsCollectionCell.swift; sourceTree = "<group>"; };
 		1826F83C2085E273002BF69A /* HomeRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRoot.swift; sourceTree = "<group>"; };
 		18276132205D006F00ADAC4C /* AddDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDetailController.swift; sourceTree = "<group>"; };
+		18285F4024C6EEAA000A4842 /* CheckoutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutViewController.swift; sourceTree = "<group>"; };
 		182A70EA20E0FC5200A0F38C /* PackagesDataIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagesDataIO.swift; sourceTree = "<group>"; };
 		182A70EC20E0FE6200A0F38C /* PackageDataAppCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDataAppCode.swift; sourceTree = "<group>"; };
 		182A70EE20E0FE9E00A0F38C /* PackageDataMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDataMessage.swift; sourceTree = "<group>"; };
@@ -886,7 +886,6 @@
 		183C65D4215B9520004A94EC /* AppSettingFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingFeedback.swift; sourceTree = "<group>"; };
 		183C65D6215B9532004A94EC /* AppSettingForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingForm.swift; sourceTree = "<group>"; };
 		183C65D9215BA1F5004A94EC /* FeedbackController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackController.swift; sourceTree = "<group>"; };
-		183E1F1C2492537900B50AAE /* ChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
 		1844FD51213D4028005CD5FF /* AddDetailAdTypeBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDetailAdTypeBar.swift; sourceTree = "<group>"; };
 		184CAFA120B02176008046C1 /* ProfileDetailsDeleteAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailsDeleteAccount.swift; sourceTree = "<group>"; };
 		184CAFA420B031F1008046C1 /* TermsConditionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsConditionsController.swift; sourceTree = "<group>"; };
@@ -1219,7 +1218,6 @@
 		ABA1285B248CDFD000201454 /* CategoryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryVC.swift; sourceTree = "<group>"; };
 		ABA1285D248D092900201454 /* HarmoniaSansProCyr-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "HarmoniaSansProCyr-SemiBold.ttf"; sourceTree = "<group>"; };
 		ABA1285E248D154D00201454 /* FavouritesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavouritesVC.swift; sourceTree = "<group>"; };
-		ABA12860248D1AAF00201454 /* MessagesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesVC.swift; sourceTree = "<group>"; };
 		ABB9CF6E246C1C08000AE15B /* sf-ui-display-medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "sf-ui-display-medium.ttf"; sourceTree = "<group>"; };
 		ABC9DA13248F7A5D0065D8BE /* AdFilterListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdFilterListVC.swift; sourceTree = "<group>"; };
 		ABDBD3AF248E1E7600DCFB0E /* sf-ui-display-ultralight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "sf-ui-display-ultralight.ttf"; sourceTree = "<group>"; };
@@ -1738,7 +1736,6 @@
 		1826AC2D205BCFDD00955D60 /* ReplyComment */ = {
 			isa = PBXGroup;
 			children = (
-				1826AC2E205BD00200955D60 /* ReplyCommentController.swift */,
 			);
 			path = ReplyComment;
 			sourceTree = "<group>";
@@ -1807,6 +1804,7 @@
 				18FBBBB924BB9A9000BD086F /* AdDetailVC.swift */,
 				185C228024C1E6D200C36332 /* MapViewController.swift */,
 				18276132205D006F00ADAC4C /* AddDetailController.swift */,
+				1826AC2E205BD00200955D60 /* ReplyCommentController.swift */,
 				180BF6DD219A950A0006D392 /* AddDetailCell.swift */,
 				185B13CA207CD2A400914AF0 /* AddDetailDescriptionCell.swift */,
 				185B13CE207D0C3E00914AF0 /* SimilarAdsTableCell.swift */,
@@ -2581,7 +2579,6 @@
 				18BBFB0F205166670067662F /* My Ads */,
 				18BBFB09205166440067662F /* Messages */,
 				18276131205D005300ADAC4C /* AdDetails */,
-				181C88212052837C0067B176 /* ChatController */,
 				18BBFB18205166990067662F /* FavouriteAds */,
 				182C8B862158BE970007DFF9 /* SettingsController */,
 				07AED45F22B23A5900FA5967 /* LangController */,
@@ -2876,10 +2873,9 @@
 		18BBFB09205166440067662F /* Messages */ = {
 			isa = PBXGroup;
 			children = (
-				ABA12860248D1AAF00201454 /* MessagesVC.swift */,
 				18BBFB0A205166550067662F /* MessagesController.swift */,
-				183E1F1C2492537900B50AAE /* ChatVC.swift */,
 				181C8814205261620067B176 /* NibForOffers */,
+				181C88212052837C0067B176 /* ChatController */,
 				181C880B205256E20067B176 /* OffersOnAds */,
 				181C880A205256D50067B176 /* SentOffers */,
 			);
@@ -3274,6 +3270,7 @@
 				1826DC0724AE10C000468448 /* LocationContactVC.swift */,
 				180959C624BC5CC000E2185F /* LocationViewController.swift */,
 				ABDBD3B4248E5C5A00DCFB0E /* FeaturedVC.swift */,
+				18285F4024C6EEAA000A4842 /* CheckoutViewController.swift */,
 				ABDBD3B5248E5C5A00DCFB0E /* ThankyouVC.swift */,
 				181EED8D20919E4C0018BB03 /* AdPostMap */,
 				181EED8C20919E340018BB03 /* AdPostImages */,
@@ -3471,6 +3468,7 @@
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SlideMenuControllerSwift/SlideMenuControllerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Stripe/Stripe.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftCheckboxDialog/SwiftCheckboxDialog.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
@@ -3522,6 +3520,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SlideMenuControllerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Stripe.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftCheckboxDialog.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyGif.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
@@ -3619,8 +3618,8 @@
 				185EB4702080BF4F009E5CFC /* UserPublicProfile.swift in Sources */,
 				181982E120B6BB4A00F1F19D /* AddDetailsBlockUser.swift in Sources */,
 				18C2CCFA206A4F6A00235E0E /* MyAdsSocialIcon.swift in Sources */,
-				ABA12861248D1AAF00201454 /* MessagesVC.swift in Sources */,
 				18C8173A2073B14A00674C90 /* PackagesDataPaypal.swift in Sources */,
+				18285F4124C6EEAA000A4842 /* CheckoutViewController.swift in Sources */,
 				18585EB0207F875400675153 /* BidsCell.swift in Sources */,
 				180A4F772328E367002BC411 /* TimerString.swift in Sources */,
 				184EDADE2078962000A25228 /* AddDetailReportPopup.swift in Sources */,
@@ -4009,7 +4008,6 @@
 				18800F552344C2EE000F8358 /* PackagesMoreCatViewController.swift in Sources */,
 				182B4B492090694B00324D4E /* AdPostPriceTypeData.swift in Sources */,
 				18C55C67213677A700FD07FD /* CalendarCell.swift in Sources */,
-				183E1F1D2492537A00B50AAE /* ChatVC.swift in Sources */,
 				18860C8B232FA705003910FC /* SetLocationCell.swift in Sources */,
 				18A31FE6213E95A200A5B6EB /* PublicUserRatingController.swift in Sources */,
 				182B4B4B2090696200324D4E /* AdPostData.swift in Sources */,

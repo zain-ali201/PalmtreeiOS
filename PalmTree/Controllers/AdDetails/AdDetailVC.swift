@@ -11,8 +11,9 @@ import NVActivityIndicatorView
 import ImageSlideshow
 import Social
 
-class AdDetailVC: UIViewController, NVActivityIndicatorViewable
+class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesDelegate
 {
+    
     //MARK:- Outlets
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -62,6 +63,10 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable
     var txtHeight = 0
     var ad_id = 0
     var phone = ""
+    var sellerName = ""
+    var sendMsgbuttonType = ""
+    
+    var fieldsData : [AddDetailFieldsData]!
     
     //MARK:- View Life Cycle
     
@@ -118,6 +123,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable
         lblSummary.text = adDetailDataObj?.adDesc
         lblID.text = String(format: "ID: %i", adDetailDataObj?.adId ?? 0)
         
+        
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM dd, yyyy"
         let date = formatter.date(from: adDetailDataObj?.adDate ?? "")
@@ -137,10 +143,6 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable
 //            lblJoining.text =  "Member since 2020"
 //        }
         
-        if tabView != nil
-        {
-            tabView.removeFromSuperview()
-        }
         height.constant = 60
         
         let txtHeight = lblSummary.text?.html2AttributedString?.height(withConstrainedWidth: 345) ?? 0
@@ -155,6 +157,11 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable
         {
             callBtn.isEnabled = false
             whatsappBtn.isEnabled = false
+        }
+        else
+        {
+            callBtn.isEnabled = true
+            whatsappBtn.isEnabled = true
         }
         
         if imagesArray.count > 0
@@ -178,11 +185,11 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable
         
         for image in imagesArray
         {
-            if image.full != nil
-            {
+//            if image.imgId != nil
+//            {
                 let alamofireSource = AlamofireSource(urlString: image.full)!
                 inputImages.append(alamofireSource)
-            }
+//            }
         }
         
         slideshow.setImageInputs(inputImages)
@@ -198,6 +205,145 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable
             slideshow.addGestureRecognizer(recognizer)
                    inputImages.removeAll()
         }
+    }
+    
+    func createSpecsView()
+    {
+        var specsHeight: CGFloat = 10.0
+        
+        if adDetailObj.motorCatObj.make != ""
+        {
+            let makeView = createView(yAxis: specsHeight, text: "Make", value: adDetailObj.motorCatObj.make)
+            specsView.addSubview(makeView)
+            specsHeight += 65
+        }
+        
+        if adDetailObj.motorCatObj.model != ""
+        {
+            let makeView = createView(yAxis: specsHeight, text: "Model", value: adDetailObj.motorCatObj.model)
+            specsView.addSubview(makeView)
+            specsHeight += 65
+        }
+        
+        if adDetailObj.motorCatObj.year != ""
+        {
+            let view = createView(yAxis: specsHeight, text: "Year", value: adDetailObj.motorCatObj.year)
+            specsView.addSubview(view)
+            specsHeight += 65
+        }
+        
+        if adDetailObj.motorCatObj.mileage != ""
+        {
+            let view = createView(yAxis: specsHeight, text: "Mileage", value: adDetailObj.motorCatObj.mileage)
+            specsView.addSubview(view)
+            specsHeight += 65
+        }
+        
+        if adDetailObj.motorCatObj.bodyType != ""
+        {
+            let view = createView(yAxis: specsHeight, text: "Body Type", value: adDetailObj.motorCatObj.bodyType)
+            specsView.addSubview(view)
+            specsHeight += 65
+        }
+        
+        if adDetailObj.motorCatObj.fuelType != ""
+        {
+            let view = createView(yAxis: specsHeight, text: "Fuel Type", value: adDetailObj.motorCatObj.fuelType)
+            specsView.addSubview(view)
+            specsHeight += 65
+        }
+        
+        if adDetailObj.motorCatObj.transmission != ""
+        {
+            let view = createView(yAxis: specsHeight, text: "Transmission", value: adDetailObj.motorCatObj.transmission)
+            specsView.addSubview(view)
+            specsHeight += 65
+        }
+        
+        if adDetailObj.motorCatObj.colour != ""
+        {
+            let view = createView(yAxis: specsHeight, text: "Colour", value: adDetailObj.motorCatObj.colour)
+            specsView.addSubview(view)
+            specsHeight += 65
+        }
+        
+        if adDetailObj.motorCatObj.engineSize != ""
+        {
+            let view = createView(yAxis: specsHeight, text: "Engine Size", value: adDetailObj.motorCatObj.engineSize)
+            specsView.addSubview(view)
+            specsHeight += 65
+        }
+        
+        if adDetailObj.propertyCatObj.propertyType != ""
+        {
+            let view = createView(yAxis: specsHeight, text: "Property Type", value: adDetailObj.propertyCatObj.propertyType)
+            specsView.addSubview(view)
+            specsHeight += 65
+        }
+        
+        if adDetailObj.propertyCatObj.bedrooms != ""
+        {
+            let view = createView(yAxis: specsHeight, text: "No of Bedrooms", value: adDetailObj.propertyCatObj.bedrooms)
+            specsView.addSubview(view)
+            specsHeight += 65
+        }
+        
+        if adDetailObj.propertyCatObj.sellerType != ""
+        {
+            let view = createView(yAxis: specsHeight, text: "Seller Type", value: adDetailObj.propertyCatObj.sellerType)
+            specsView.addSubview(view)
+            specsHeight += 65
+        }
+        
+        if specsHeight > 10
+        {
+            height.constant = specsHeight
+            scrollView.contentSize = CGSize(width: 0, height: 720 + specsHeight)
+        }
+        else
+        {
+            tabView.removeFromSuperview()
+        }
+    }
+    
+    func createView(yAxis: CGFloat, text: String, value: String) -> UIView
+    {
+        let view = UIView()
+        view.frame = CGRect(x: 15, y: yAxis, width: screenWidth - 30, height: 50)
+        view.backgroundColor = .clear
+        
+        let lblText = UILabel()
+        lblText.frame = CGRect(x: 0, y: 15, width: 100, height: 20)
+        lblText.backgroundColor = .clear
+        lblText.text = text
+        lblText.font = UIFont.systemFont(ofSize: 15)
+        lblText.textColor = UIColor(red: 130.0/255.0, green: 130.0/255.0, blue: 131.0/255.0, alpha: 1)
+        
+        let lblValue = UILabel()
+        lblValue.frame = CGRect(x: view.frame.width - 100, y: 15, width: 100, height: 20)
+        lblValue.backgroundColor = .clear
+        lblValue.text = value
+        lblValue.font = UIFont.systemFont(ofSize: 15)
+        lblValue.textAlignment = .right
+        lblValue.textColor = UIColor(red: 62.0/255.0, green: 49.0/255.0, blue: 66.0/255.0, alpha: 1)
+        
+        let lineView = UIView()
+        lineView.frame = CGRect(x: 0, y: 49.5, width: view.frame.width, height: 0.5)
+        lineView.backgroundColor = .lightGray
+        lineView.alpha = 0.5
+        
+        view.addSubview(lblText)
+        view.addSubview(lblValue)
+        view.addSubview(lineView)
+        
+        return view
+    }
+    
+    func isMoveMessages(isMove: Bool)
+    {
+        let messagesVC = self.storyboard?.instantiateViewController(withIdentifier: MessagesController.className) as! MessagesController
+        messagesVC.isFromAdDetail = true
+        self.navigationController?.pushViewController(messagesVC, animated: true)
     }
     
     @available(iOS 13.0, *)
@@ -243,7 +389,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable
     {
         let mapVC = self.storyboard?.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
         mapVC.latitudeStr = adDetailDataObj?.adLocation.lat ?? ""
-        mapVC.latitudeStr = adDetailDataObj?.adLocation.longField ?? ""
+        mapVC.longitudeStr = adDetailDataObj?.adLocation.longField ?? ""
         self.navigationController?.pushViewController(mapVC, animated: true)
     }
     
@@ -349,8 +495,33 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable
     
     @IBAction func chatBtnAction(_ button: UIButton)
     {
-        let chatVC = self.storyboard?.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
-        self.navigationController?.pushViewController(chatVC, animated: true)
+//        let chatVC = self.storyboard?.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
+//        self.navigationController?.pushViewController(chatVC, animated: true)
+        
+        if defaults.bool(forKey: "isLogin") == false {
+            if let msg = defaults.string(forKey: "notLogin") {
+                let alert = Constants.showBasicAlert(message: msg)
+                presentVC(alert)
+            }
+        } else {
+            if sendMsgbuttonType == "receive"
+            {
+                let msgVC = self.storyboard?.instantiateViewController(withIdentifier: "MessagesController") as! MessagesController
+                msgVC.isFromAdDetail = true
+                self.navigationController?.pushViewController(msgVC, animated: true)
+            }
+            else
+            {
+                let sendMsgVC = storyboard?.instantiateViewController(withIdentifier: ReplyCommentController.className) as! ReplyCommentController
+                sendMsgVC.modalPresentationStyle = .overCurrentContext
+                sendMsgVC.modalTransitionStyle = .flipHorizontal
+                sendMsgVC.isFromMsg = true
+                sendMsgVC.objAddDetailData = AddsHandler.sharedInstance.objAddDetails
+                sendMsgVC.ad_id = adDetailDataObj?.adId ?? 0
+                sendMsgVC.delegate = self
+                present(sendMsgVC, animated: true, completion: nil)
+            }
+        }
     }
     
     @IBAction func callBtnAction(_ button: UIButton)
@@ -363,7 +534,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable
     
     @IBAction func whatsappBtnAction(_ button: UIButton)
     {
-        let whatsappURL = URL(string: String(format: "whatsapp://%@", phone))
+        let whatsappURL = URL(string: String(format: "https://wa.me/%@", phone))
         if UIApplication.shared.canOpenURL(whatsappURL!) {
             UIApplication.shared.open(whatsappURL!, options: [:], completionHandler: nil)
         }
@@ -399,6 +570,9 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable
            {
                 self.imagesArray = successResponse.data.adDetail.images
                 self.phone = successResponse.data.adDetail.phone
+                self.lblSeller.text = successResponse.data.profileDetail.displayName
+                self.lblJoining.text = successResponse.data.profileDetail.userEmail
+                self.fieldsData = successResponse.data.adDetail.fieldsData
                 self.populateData()
            }
            else
@@ -478,25 +652,88 @@ public func timeAgoSince(_ date: Date) -> String {
     }
     
     if let hour = components.hour, hour >= 2 {
-        return "\(hour) hours ago"
+        return "Today"
     }
     
     if let hour = components.hour, hour >= 1 {
-        return "An hour ago"
+        return "Today"
     }
     
     if let minute = components.minute, minute >= 2 {
-        return "\(minute) minutes ago"
+        return "Today"
     }
     
     if let minute = components.minute, minute >= 1 {
-        return "A minute ago"
+        return "Today"
     }
     
     if let second = components.second, second >= 3 {
-        return "\(second) seconds ago"
+        return "Today"
     }
     
-    return "Just now"
+    return "Today"
+    
+}
+
+public func timeAgoSinceShort(_ date: Date) -> String {
+    
+    let calendar = Calendar.current
+    let now = Date()
+    let unitFlags: NSCalendar.Unit = [.second, .minute, .hour, .day, .weekOfYear, .month, .year]
+    let components = (calendar as NSCalendar).components(unitFlags, from: date, to: now, options: [])
+    
+    if let year = components.year, year >= 2 {
+        return "\(year)y"
+    }
+    
+    if let year = components.year, year >= 1 {
+        return "1y"
+    }
+    
+    if let month = components.month, month >= 2 {
+        return "\(month)m"
+    }
+    
+    if let month = components.month, month >= 1 {
+        return "1mo"
+    }
+    
+    if let week = components.weekOfYear, week >= 2 {
+        return "\(week)w"
+    }
+    
+    if let week = components.weekOfYear, week >= 1 {
+        return "1w"
+    }
+    
+    if let day = components.day, day >= 2 {
+        return "\(day)d"
+    }
+    
+    if let day = components.day, day >= 1 {
+        return "1d"
+    }
+    
+    if let hour = components.hour, hour >= 2 {
+        return "\(hour)h"
+    }
+    
+    if let hour = components.hour, hour >= 1 {
+        return "1h"
+    }
+    
+    if let minute = components.minute, minute >= 2 {
+        return "\(minute)m"
+    }
+    
+    if let minute = components.minute, minute >= 1 {
+        return "1m"
+    }
+    
+    if let second = components.second, second >= 3 {
+        return "\(second)s"
+    }
+    
+    return "1s"
     
 }

@@ -32,7 +32,6 @@ class LocationViewController:  UIViewController, GMSMapViewDelegate, GMSAutocomp
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var lblLocation: UILabel!
     
-    @IBOutlet weak var pinView: UIImageView!
     @IBOutlet weak var locationBtn: UIButton!
     @IBOutlet weak var searchBtn: UIButton!
     
@@ -97,7 +96,10 @@ class LocationViewController:  UIViewController, GMSMapViewDelegate, GMSAutocomp
             
             mapView.isMyLocationEnabled = true
             mapView.settings.myLocationButton = true
-            pinView.alpha  = 1
+            
+            let marker = GMSMarker()
+            marker.position = CLLocationCoordinate2D(latitude: CLLocationDegrees(Double(latitudeStr!)!), longitude: CLLocationDegrees(Double(longitudeStr!)!))
+            marker.map = mapView
         }
         else if userDetail?.currentLocation != nil && userDetail?.currentLocation.coordinate.latitude != 0.0
         {
@@ -106,7 +108,10 @@ class LocationViewController:  UIViewController, GMSMapViewDelegate, GMSAutocomp
 
             mapView.isMyLocationEnabled = true
             mapView.settings.myLocationButton = true
-            pinView.alpha  = 1
+            
+            let marker = GMSMarker()
+            marker.position = CLLocationCoordinate2D(latitude: (userDetail?.currentLocation.coordinate.latitude)!, longitude: (userDetail?.currentLocation.coordinate.longitude)!)
+            marker.map = mapView
         }
     }
     

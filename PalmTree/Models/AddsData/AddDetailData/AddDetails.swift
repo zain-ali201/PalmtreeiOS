@@ -235,7 +235,8 @@ class AdDetailObject: NSObject
     var adDate : String!
     var adDesc = ""
     var adPrice : String!
-    var images : [UIImage]!
+    var priceType : String!
+    var images : [UIImage] = [UIImage]()
     var isFeature : Bool!
     var location : AddDetailLocationObject = AddDetailLocationObject()
     var locationTop : String!
@@ -249,6 +250,7 @@ class AdDetailObject: NSObject
     var motorCatObj : MotorCategoryObject = MotorCategoryObject()
     var propertyCatObj : PropertyCategoryObject = PropertyCategoryObject()
     var categoryObj: CategoryObject = CategoryObject()
+    var objAdPostData = [AdPostField]()
 }
 
 class AddDetailLocationObject: NSObject

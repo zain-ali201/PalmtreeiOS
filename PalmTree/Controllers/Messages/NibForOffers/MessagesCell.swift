@@ -18,12 +18,12 @@ class MessagesCell: UITableViewCell {
     @IBOutlet weak var imgPicture: UIImageView!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblDetail: UILabel!
+    @IBOutlet weak var lblMessage: UILabel!
     @IBOutlet weak var imgBell: UIImageView! {
         didSet {
             
         }
     }
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()

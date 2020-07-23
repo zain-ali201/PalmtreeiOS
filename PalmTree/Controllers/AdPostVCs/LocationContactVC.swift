@@ -77,6 +77,12 @@ class LocationContactVC: UIViewController
     {
         adDetailObj.location.address = lblLocation.text!
         
+        if adDetailObj.location.lat == nil
+        {
+            adDetailObj.location.lat = userDetail?.currentLocation.coordinate.latitude
+            adDetailObj.location.lng = userDetail?.currentLocation.coordinate.longitude
+        }
+        
         if numberFlag
         {
             if !txtPhone.text!.isEmpty

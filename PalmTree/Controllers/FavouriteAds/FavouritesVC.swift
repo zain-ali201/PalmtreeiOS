@@ -42,7 +42,9 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         refreshControl.addTarget(self, action:
             #selector(refreshTableView),
                                  for: UIControlEvents.valueChanged)
-//        refreshControl.tintColor = UIColor.red
+        if let mainColor = defaults.string(forKey: "mainColor") {
+            refreshControl.tintColor = Constants.hexStringToUIColor(hex: mainColor)
+        }
         
         return refreshControl
     }()
@@ -181,7 +183,7 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             }
             else
             {
-                let messagesVC = self.storyboard?.instantiateViewController(withIdentifier: "MessagesVC") as! MessagesVC
+                let messagesVC = self.storyboard?.instantiateViewController(withIdentifier: "MessagesController") as! MessagesController
                 self.navigationController?.pushViewController(messagesVC, animated: false)
             }
         }
@@ -218,8 +220,21 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             if let userName = objData.adTitle {
                 cell.lblName.text = userName
             }
+            
             if let price = objData.adPrice.price {
                 cell.lblPrice.text = price
+            }
+            
+            if let address = objData.adLocation?.address {
+                cell.btnLocation.setTitle(address, for: .normal)
+            }
+            
+            if let date = objData.adDate {
+                let formatter = DateFormatter()
+                formatter.dateFormat = "MMMM dd, yyyy"
+                let date = formatter.date(from: date)
+                
+                cell.lblDate.text = timeAgoSinceShort(date!)
             }
             
             cell.crossAction = { () in
@@ -233,6 +248,13 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                 alert.addAction(cancelAction)
                 alert.addAction(okAction)
                 self.presentVC(alert)
+            }
+            
+            cell.locationAction = { () in
+                let mapVC = self.storyboard?.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
+                mapVC.latitudeStr = objData.adLocation.lat ?? ""
+                mapVC.latitudeStr = objData.adLocation.longField ?? ""
+                self.navigationController?.pushViewController(mapVC, animated: true)
             }
         }
         

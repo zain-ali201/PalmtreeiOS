@@ -310,7 +310,8 @@ extension AppDelegate
     }
 }
 
-extension AppDelegate  {
+extension AppDelegate
+{
     // MARK: UNUserNotificationCenter Delegate
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         //  let content = notification.request.content
@@ -456,7 +457,6 @@ extension AppDelegate  {
                 return
             }
             
-            
             let state = UIApplication.shared.applicationState
             
             if state == .background {
@@ -498,18 +498,17 @@ extension AppDelegate  {
                 banner.dismiss()
             }
             
-        }else{
-            
+        }
+        else
+        {
             guard let data = remoteMessage.appData[AnyHashable("data")]as? String else  {
                 return
             }
-            
             
             let dict = convertToDictionary(text: data)
             print("Dictionary is: \(dict!)")
             let title = dict!["title"] as! String
             let message = dict!["message"] as! String
-            
             
             let  banner = NotificationBanner(title: title, subtitle:message, style: .success)
             banner.autoDismiss = true
@@ -534,13 +533,11 @@ extension AppDelegate  {
                     self.window?.makeKeyAndVisible()
                 }
             }
+            
             banner.onSwipeUp = {
                 banner.dismiss()
             }
-            
         }
-        
-        
     }
 
     

@@ -75,7 +75,6 @@ class AadPostController: UIViewController, NVActivityIndicatorViewable, UITableV
         super.viewWillAppear(true)
         UserDefaults.standard.set(true, forKey: "isBid")
         UserDefaults.standard.set("0", forKey: "is")
-        
     }
     
     //MARK: - Custom
@@ -97,7 +96,7 @@ class AadPostController: UIViewController, NVActivityIndicatorViewable, UITableV
         } else {
                 button.setBackgroundImage(#imageLiteral(resourceName: "forwardButton"), for: .normal)
         }
-        button.addTarget(self, action: #selector(onForwardButtonClciked), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(onForwardButtonClciked), for: .touchUpInside)
         let forwardBarButton = UIBarButtonItem(customView: button)
         self.navigationItem.rightBarButtonItem = forwardBarButton
     }
@@ -182,7 +181,7 @@ class AadPostController: UIViewController, NVActivityIndicatorViewable, UITableV
         }
     }
   
-    @objc func onForwardButtonClciked()
+    @IBAction func onForwardButtonClciked(_ sender: Any)
     {
         var option = ""
         
@@ -320,7 +319,6 @@ class AadPostController: UIViewController, NVActivityIndicatorViewable, UITableV
             for item in objData.values {
                 if item.id == "" {
                     continue
-                    
                 }
                 if i == 1 {
                     if cell.selectedValue == ""{
@@ -357,7 +355,8 @@ class AadPostController: UIViewController, NVActivityIndicatorViewable, UITableV
                     cell.hasSubArray.append(items.hasSub)
                     self.id = items.id
 
-                    if objData.fieldTypeName == "ad_cats1"{
+                    if objData.fieldTypeName == "ad_cats1"
+                    {
                         cell.isBiddingArray.append(items.isBid)
                         cell.isPayArray.append(items.isPay)
                         cell.isImageArray.append(items.isImg)

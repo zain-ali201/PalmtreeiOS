@@ -81,7 +81,9 @@ class FavouriteAdsController: UIViewController, UIScrollViewDelegate, UICollecti
         refreshControl.addTarget(self, action:
             #selector(refreshTableView),
                                  for: UIControlEvents.valueChanged)
-        refreshControl.tintColor = UIColor.red
+        if let mainColor = defaults.string(forKey: "mainColor") {
+            refreshControl.tintColor = Constants.hexStringToUIColor(hex: mainColor)
+        }
         
         return refreshControl
     }()

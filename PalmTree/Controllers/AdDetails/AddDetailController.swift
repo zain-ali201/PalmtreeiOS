@@ -1174,7 +1174,8 @@ class AddDetailController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     //MARK:- IBActions
-    @IBAction func actionSendMessage(_ sender: Any) {
+    @IBAction func actionSendMessage(_ sender: Any)
+    {
         if defaults.bool(forKey: "isLogin") == false {
             if let msg = defaults.string(forKey: "notLogin") {
                 let alert = Constants.showBasicAlert(message: msg)

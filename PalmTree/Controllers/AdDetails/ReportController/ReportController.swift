@@ -41,14 +41,7 @@ class ReportController: UIViewController , NVActivityIndicatorViewable {
             oltPopUp.contentHorizontalAlignment = .left
         }
     }
-    @IBOutlet weak var oltSend: UIButton! {
-        didSet {
-            oltSend.roundCornors()
-            if let mainColor = defaults.string(forKey: "mainColor"){
-                oltSend.backgroundColor = Constants.hexStringToUIColor(hex: mainColor)
-            }
-        }
-    }
+    @IBOutlet weak var oltSend: UIButton! 
     
     //MARK:- Properties
     var delegate: ReportPopToHomeDelegate?

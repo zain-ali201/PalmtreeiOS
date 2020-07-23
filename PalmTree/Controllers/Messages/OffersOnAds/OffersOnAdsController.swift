@@ -77,21 +77,25 @@ class OffersOnAdsController: UIViewController, UITableViewDelegate, UITableViewD
         let cell: MessagesCell = tableView.dequeueReusableCell(withIdentifier: "MessagesCell", for: indexPath) as! MessagesCell
         let objData = dataArray[indexPath.row]
         
-        
-    
-        for item in objData.messageAdImg {
+        for item in objData.messageAdImg
+        {
             if let imgUrl = URL(string: item.thumb) {
                 cell.imgPicture.sd_setShowActivityIndicatorView(true)
                 cell.imgPicture.sd_setIndicatorStyle(.gray)
                 cell.imgPicture.sd_setImage(with: imgUrl, completed: nil)
             }
         }
+        
         if let name = objData.messageAdTitle {
             cell.lblName.text = name
         }
-        if objData.messageReadStatus == true {
+        
+        if objData.messageReadStatus == true
+        {
             cell.imgBell.image = UIImage(named: "bell")
-        } else {
+        }
+        else
+        {
             let image = UIImage(named: "bell")
             let tintImage = image?.tint(with: UIColor.red)
             cell.imgBell.image = tintImage
@@ -129,7 +133,9 @@ class OffersOnAdsController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     //MARK:- API Call
-    func getOffersData() {
+    
+    func getOffersData()
+    {
         UserHandler.offerOnAds(success: { (successResponse) in
             self.stopAnimating()
             self.refreshControl.endRefreshing()

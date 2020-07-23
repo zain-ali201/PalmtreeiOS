@@ -66,46 +66,58 @@ class CategoriesTableCell: UITableViewCell, UICollectionViewDelegate, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return categoryArray.count
+        return categoryArray.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell: CategoriesCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoriesCollectionCell", for: indexPath) as! CategoriesCollectionCell
-        let objData = categoryArray[indexPath.row]
-    
-        if let name = objData.name
+        
+        if indexPath.row == categoryArray.count
         {
             if languageCode == "ar"
             {
                 cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-//                cell.lblName.text = NSLocalizedString(name, comment: "")
-                cell.lblName.text = name
+                cell.lblName.text = "المزيد"
             }
             else
             {
-                cell.lblName.text = name
+                cell.lblName.text = "More"
+            }
+            
+            cell.imgPicture.image = UIImage(named: "more")
+            
+            cell.btnFullAction = { () in
+                self.delegate?.goToCategoryDetail()
             }
         }
+        else
+        {
+            let objData = categoryArray[indexPath.row]
         
-        if let imgUrl = URL(string: objData.img.encodeUrl()) {
-            cell.imgPicture.sd_setShowActivityIndicatorView(true)
-            cell.imgPicture.sd_setIndicatorStyle(.gray)
-            cell.imgPicture.sd_setImage(with: imgUrl, completed: nil)
-        }
+            if let name = objData.name
+            {
+                if languageCode == "ar"
+                {
+                    cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    cell.lblName.text = name
+                }
+                else
+                {
+                    cell.lblName.text = name
+                }
+            }
+            
+            if let imgUrl = URL(string: objData.img.encodeUrl()) {
+                cell.imgPicture.sd_setShowActivityIndicatorView(true)
+                cell.imgPicture.sd_setIndicatorStyle(.gray)
+                cell.imgPicture.sd_setImage(with: imgUrl, completed: nil)
+            }
         
-//        if indexPath.row == categoryArray.count - 1
-//        {
-//            cell.btnFullAction = { () in
-//                self.delegate?.goToCategoryDetail()
-//            }
-//        }
-//        else
-//        {
             cell.btnFullAction = { () in
                 self.delegate?.goToAdFilterListVC()
             }
-//        }
+        }
         
         return cell
     }

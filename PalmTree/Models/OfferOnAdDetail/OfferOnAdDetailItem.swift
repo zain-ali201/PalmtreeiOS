@@ -20,7 +20,6 @@ struct OfferOnAdDetailItem {
     var messageSenderId : String!
     var is_block : String!
     
-    
     /**
      * Instantiate the instance using the passed dictionary values to set the properties values
      */

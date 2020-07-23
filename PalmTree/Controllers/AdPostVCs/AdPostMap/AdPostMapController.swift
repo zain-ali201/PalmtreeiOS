@@ -737,8 +737,6 @@ class AdPostMapController: UITableViewController, GMSAutocompleteViewControllerD
                         customDictionary[value.fieldTypeName] = value.fieldVal
                         print(customDictionary)
                     }
-
-
                 }
                 else
                 {

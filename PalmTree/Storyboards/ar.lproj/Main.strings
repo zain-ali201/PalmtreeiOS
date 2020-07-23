@@ -8,6 +8,9 @@
 /* Class = "UILabel"; text = "Search palmtree"; ObjectID = "hsE-N1-dMM"; */
 "hsE-N1-dMM.text" = "البحث في بالمتري";
 
+/* Class = "UILabel"; text = "Search palmtree"; ObjectID = "EcL-UV-gqQ"; */
+"EcL-UV-gqQ.text" = "البحث في بالمتري";
+
 /* Class = "UILabel"; text = "or"; ObjectID = "1eH-EV-SxA"; */
 "1eH-EV-SxA.text" = "أو";
 

@@ -26,7 +26,10 @@ class MapViewController:  UIViewController, MKMapViewDelegate
         
         mapView.delegate = self
         
-        if latitudeStr != ""
+        print(latitudeStr)
+        print(longitudeStr)
+        
+        if latitudeStr != "" && longitudeStr != ""
         {
             initialLocation = CLLocation(latitude: Double(latitudeStr)!, longitude: Double(longitudeStr)!)
             self.centerMapOnLocation(location: initialLocation)

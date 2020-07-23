@@ -125,8 +125,8 @@ class TblViewController: UIViewController
     }
 }
 
-extension TblViewController: ExpandableDelegate {
-    
+extension TblViewController: ExpandableDelegate
+{
     func expandableTableView(_ expandableTableView: ExpandableTableView, expandedCellsForRowAt indexPath: IndexPath) -> [UITableViewCell]? {
         
         let catObj = categoryList[indexPath.row]
@@ -139,7 +139,9 @@ extension TblViewController: ExpandableDelegate {
             cell.catID = catObj.catId
             cell.adCategory = catObj.name
             cell.subcatID = subcatObj.id
-            cell.lblName.text = subcatObj.name
+            DispatchQueue.main.async {
+                cell.nameLbl.text = subcatObj.name
+            }
             cellsArray.append(cell)
         }
         
@@ -147,7 +149,17 @@ extension TblViewController: ExpandableDelegate {
     }
     
     func expandableTableView(_ expandableTableView: ExpandableTableView, heightsForExpandedRowAt indexPath: IndexPath) -> [CGFloat]? {
-        return [40]
+        
+        let catObj = categoryList[indexPath.row]
+        
+        var heightsArray = [CGFloat]()
+        
+        for _ in 0..<catObj.subCatObj!.values.count
+        {
+            heightsArray.append(40)
+        }
+        
+        return heightsArray
     }
     
     func numberOfSections(in tableView: ExpandableTableView) -> Int {
@@ -160,7 +172,7 @@ extension TblViewController: ExpandableDelegate {
 
     func expandableTableView(_ expandableTableView: ExpandableTableView, didSelectRowAt indexPath: IndexPath) {
 //        print("didSelectRow:\(indexPath)")
-        
+//        expandableTableView.reloadData()
     }
     
     func expandableTableView(_ expandableTableView: ExpandableTableView, didSelectExpandedRowAt indexPath: IndexPath) {
@@ -169,10 +181,10 @@ extension TblViewController: ExpandableDelegate {
     
     func expandableTableView(_ expandableTableView: ExpandableTableView, expandedCell: UITableViewCell, didSelectExpandedRowAt indexPath: IndexPath) {
         if let cell = expandedCell as? ExpandedCell {
-            print("\(cell.lblName.text ?? "")")
+            print("\(cell.nameLbl.text ?? "")")
             
             adDetailObj.adCategory = cell.adCategory
-            adDetailObj.adSubCategory = cell.lblName.text ?? ""
+            adDetailObj.adSubCategory = cell.nameLbl.text ?? ""
             adDetailObj.catID = cell.catID
             adDetailObj.subcatID = cell.subcatID
             

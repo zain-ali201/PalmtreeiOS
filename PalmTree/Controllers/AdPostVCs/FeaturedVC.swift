@@ -11,6 +11,8 @@ import UIKit
 class FeaturedVC: UIViewController
 {
     //MARK:- Properties
+    @IBOutlet weak var imgView: UIImageView!
+    
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblDescp: UILabel!
@@ -22,10 +24,16 @@ class FeaturedVC: UIViewController
     @IBOutlet weak var lblHeading: UILabel!
     
     @IBOutlet weak var btnSkip: UIButton!
+    
+    @IBOutlet weak var packageView: UIView!
+    
+    var amount = ""
+    var days = ""
 
     //MARK:- Cycle
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         
         if languageCode == "ar"
@@ -41,7 +49,17 @@ class FeaturedVC: UIViewController
             lblUrgentText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblHeading.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             btnSkip.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            packageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
+        
+        if adDetailObj.images.count > 0
+        {
+            imgView.image = adDetailObj.images[0]
+        }
+        
+        lblName.text = adDetailObj.adTitle
+        lblDescp.text = adDetailObj.adDesc
+        lblType.text = adDetailObj.location.address
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,7 +76,54 @@ class FeaturedVC: UIViewController
     
     @IBAction func skipBtnACtion(_ sender: Any)
     {
+        adDetailObj = AdDetailObject()
         let thankyouVC = self.storyboard?.instantiateViewController(withIdentifier: "ThankyouVC") as! ThankyouVC
         self.navigationController?.pushViewController(thankyouVC, animated: true)
+    }
+    
+    @IBAction func clickBtnAction(button: UIButton)
+    {
+        if button.tag == 1001
+        {
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
+            packageView.alpha = 1
+        }
+        else
+        {
+            let checkoutVC = self.storyboard?.instantiateViewController(withIdentifier: "CheckoutViewController") as! CheckoutViewController
+            self.navigationController?.pushViewController(checkoutVC, animated: true)
+        }
+    }
+    
+    @IBAction func packageBtnAction(button: UIButton)
+    {
+        if button.tag == 1001
+        {
+            amount = "3.9"
+            days = "3"
+        }
+        else if button.tag == 1002
+        {
+            amount = "5.9"
+            days = "5"
+        }
+        else if button.tag == 1003
+        {
+            amount = "7.9"
+            days = "7"
+        }
+        
+        let checkoutVC = self.storyboard?.instantiateViewController(withIdentifier: "CheckoutViewController") as! CheckoutViewController
+        self.navigationController?.pushViewController(checkoutVC, animated: true)
+    }
+    
+    @IBAction func crossBtnAction(button: UIButton)
+    {
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+        packageView.alpha = 0
     }
 }

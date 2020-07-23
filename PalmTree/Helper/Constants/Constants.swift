@@ -23,8 +23,13 @@ var myAdsVC: MyAdsController!
 var settingsVC: SettingsVC!
 let defaults = UserDefaults.standard
 let screenWidth = UIScreen.main.bounds.width
+let screenHeight = UIScreen.main.bounds.height
 var categoryArray = [CatIcon]()
 var categoriesArray = [CategoryObject]()
+
+var stripeAPIKey = "pk_test_ZDUz26JhS1bTxJzimCXdVR6C"
+var stripeBaseURL = "https://sprintsols.com/palmtree/create.php"
+var mapboxToken = "pk.eyJ1IjoicGFsbXRyZWUiLCJhIjoiY2tjeW56ZXR4MDRhcTJybXNiZjhjbjI5NCJ9.luXGYrraO0lqWAxR22x2Hg"
 
 class Constants
 {

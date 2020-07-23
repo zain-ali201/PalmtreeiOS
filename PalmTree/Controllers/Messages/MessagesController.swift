@@ -12,84 +12,92 @@ import SlideMenuControllerSwift
 import NVActivityIndicatorView
 import IQKeyboardManagerSwift
 
-class MessagesController: ButtonBarPagerTabStripViewController, NVActivityIndicatorViewable, UISearchBarDelegate,NearBySearchDelegate,UIGestureRecognizerDelegate {
+class MessagesController: ButtonBarPagerTabStripViewController, NVActivityIndicatorViewable, UIGestureRecognizerDelegate {
+    
+    @IBOutlet weak var lblTitle: UILabel!
+    
+    @IBOutlet weak var mainView: UIView!
+    @IBOutlet weak var topView: UIView!
+    @IBOutlet weak var bottomView: UIView!
+    
+    //MenuButtons
+    @IBOutlet weak var btnHome: UIButton!
+    @IBOutlet weak var btnPalmtree: UIButton!
+    @IBOutlet weak var btnPost: UIButton!
+    @IBOutlet weak var btnWishlist: UIButton!
+    @IBOutlet weak var btnMessages: UIButton!
+    @IBOutlet weak var btnBack: UIButton!
 
     //MARK:- Properties
     var menuDelegate: leftMenuProtocol?
     var isFromAdDetail = false
-    let defaults = UserDefaults.standard
-    
-  
-    var nearByTitle = ""
-    var latitude: Double = 0
-    var longitude: Double = 0
-    var searchDistance:CGFloat = 0
-    var isNavSearchBarShowing = false
-    let searchBarNavigation = UISearchBar()
-    var backgroundView = UIView()
-    let keyboardManager = IQKeyboardManager.sharedManager()
     var barButtonItems = [UIBarButtonItem]()
-    
     
     //MARK:- View Life Cycle
     override func viewDidLoad() {
         self.customizePagerTabStrip()
         super.viewDidLoad()
-        if let messageTitle = defaults.string(forKey: "message") {
-            self.title = messageTitle
-        }
+        
+        self.view.bringSubview(toFront: topView)
+        self.view.bringSubview(toFront: bottomView)
+        
         self.googleAnalytics(controllerName: "Messages Controller")
        
-        if isFromAdDetail {
-            self.showBackButton()
-        } else {
-            self.addBackButtonToNavigationBar()
+        if isFromAdDetail
+        {
+            btnBack.alpha = 1
+        } else
+        {
+            btnBack.alpha = 0
         }
-        navigationButtons()
         
+        if languageCode == "ar"
+        {
+            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            changeMenuButtons()
+            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }
+        
+        self.navigationController?.navigationBar.isHidden = false
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        if isFromAdDetail {
-//            self.showBackButton()
-//        } else {
-//             self.addBackButtonToNavigationBar()
-//        }
-//        navigationButtons()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.view.bringSubview(toFront: topView)
+        self.view.bringSubview(toFront: bottomView)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     //MARK: - Custom
-    
     
     func showLoader() {
         self.startAnimating(Constants.activitySize.size, message: Constants.loaderMessages.loadingMessage.rawValue,messageFont: UIFont.systemFont(ofSize: 14), type: NVActivityIndicatorType.ballClipRotatePulse)
     }
     
-    func customizePagerTabStrip() {
+    func customizePagerTabStrip()
+    {
         settings.style.buttonBarBackgroundColor = .white
-        if let mainColor = UserDefaults.standard.string(forKey: "mainColor") {
-            settings.style.buttonBarItemBackgroundColor = Constants.hexStringToUIColor(hex: mainColor)
-            settings.style.buttonBarItemTitleColor = Constants.hexStringToUIColor(hex: mainColor)
-        }
-        settings.style.selectedBarBackgroundColor = .darkGray
-        settings.style.buttonBarItemFont = .boldSystemFont(ofSize: 16)
-        settings.style.selectedBarHeight = 2.0
+        settings.style.buttonBarItemBackgroundColor = .white
+        settings.style.buttonBarItemTitleColor = .white
+        settings.style.selectedBarBackgroundColor = UIColor(red: 62.0/255.0, green: 49.0/255.0, blue: 66.0/255.0, alpha: 1)
+        settings.style.buttonBarItemFont = .systemFont(ofSize: 16)
+        
+        settings.style.selectedBarHeight = 1.0
         settings.style.buttonBarMinimumLineSpacing = 0.0
         settings.style.buttonBarItemsShouldFillAvailiableWidth = true
         settings.style.buttonBarLeftContentInset = 0
         settings.style.buttonBarRightContentInset = 0
         changeCurrentIndexProgressive = { (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
             guard changeCurrentIndex == true else {return}
-            oldCell?.label.textColor = .white
-            newCell?.label.textColor = .white
+            oldCell?.label.textColor = UIColor(red: 62.0/255.0, green: 49.0/255.0, blue: 66.0/255.0, alpha: 1)
+            newCell?.label.textColor = UIColor(red: 62.0/255.0, green: 49.0/255.0, blue: 66.0/255.0, alpha: 1)
         }
-    }
-    
-    func addBackButtonToNavigationBar() {
-        let leftButton = UIBarButtonItem(image: #imageLiteral(resourceName: "backbutton"), style: .done, target: self, action: #selector(moveToParentController))
-        leftButton.tintColor = UIColor.white
-        self.navigationItem.leftBarButtonItem = leftButton
     }
     
     @objc func moveToParentController() {
@@ -100,223 +108,83 @@ class MessagesController: ButtonBarPagerTabStripViewController, NVActivityIndica
         let SB = UIStoryboard(name: "Main", bundle: nil)
         let sentOffers = SB.instantiateViewController(withIdentifier: "SentOffersController") as! SentOffersController
         let addsOffer = SB.instantiateViewController(withIdentifier: "OffersOnAdsController") as! OffersOnAdsController
-        let blockedController = SB.instantiateViewController(withIdentifier: "BlockedUserChatViewController") as! BlockedUserChatViewController
+//        let blockedController = SB.instantiateViewController(withIdentifier: "BlockedUserChatViewController") as! BlockedUserChatViewController
         
         
-        let childVC = [sentOffers, addsOffer, blockedController]
+        let childVC = [sentOffers, addsOffer]
         return childVC
     }
     
-    
-    //MARK:- Near by search Delaget method
-         func nearbySearchParams(lat: Double, long: Double, searchDistance: CGFloat, isSearch: Bool) {
-             self.latitude = lat
-             self.longitude = long
-             self.searchDistance = searchDistance
-             if isSearch {
-                 let param: [String: Any] = ["nearby_latitude": lat, "nearby_longitude": long, "nearby_distance": searchDistance]
-                 print(param)
-                 self.nearBySearch(param: param as NSDictionary)
-             } else {
-                 let param: [String: Any] = ["nearby_latitude": 0.0, "nearby_longitude": 0.0, "nearby_distance": searchDistance]
-                 print(param)
-                 self.nearBySearch(param: param as NSDictionary)
-             }
-         }
-         
-         
-         func navigationButtons() {
-             
-             //Home Button
-             let HomeButton = UIButton(type: .custom)
-             let ho = UIImage(named: "home")?.withRenderingMode(.alwaysTemplate)
-             HomeButton.setBackgroundImage(ho, for: .normal)
-             HomeButton.tintColor = UIColor.white
-             HomeButton.setImage(ho, for: .normal)
-             if #available(iOS 11, *) {
-                 searchBarNavigation.widthAnchor.constraint(equalToConstant: 30).isActive = true
-                 searchBarNavigation.heightAnchor.constraint(equalToConstant: 30).isActive = true
-             } else {
-                 HomeButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-             }
-             HomeButton.addTarget(self, action: #selector(actionHome), for: .touchUpInside)
-             let homeItem = UIBarButtonItem(customView: HomeButton)
-             if defaults.bool(forKey: "showHome") {
-                 barButtonItems.append(homeItem)
-                 //self.barButtonItems.append(homeItem)
-             }
-           
-             //Location Search
-             let locationButton = UIButton(type: .custom)
-             if #available(iOS 11, *) {
-                 locationButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
-                 locationButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-             }
-             else {
-                 locationButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-             }
-             let image = UIImage(named: "location")?.withRenderingMode(.alwaysTemplate)
-             locationButton.setBackgroundImage(image, for: .normal)
-             locationButton.tintColor = UIColor.white
-             locationButton.addTarget(self, action: #selector(onClicklocationButton), for: .touchUpInside)
-             let barButtonLocation = UIBarButtonItem(customView: locationButton)
-             if defaults.bool(forKey: "showNearBy") {
-                 self.barButtonItems.append(barButtonLocation)
-             }
-             //Search Button
-             let searchButton = UIButton(type: .custom)
-             if defaults.bool(forKey: "advanceSearch") == true{
-                 let con = UIImage(named: "controls")?.withRenderingMode(.alwaysTemplate)
-                 searchButton.setBackgroundImage(con, for: .normal)
-                 searchButton.tintColor = UIColor.white
-                 searchButton.setImage(con, for: .normal)
-             }else{
-                 let con = UIImage(named: "search")?.withRenderingMode(.alwaysTemplate)
-                 searchButton.setBackgroundImage(con, for: .normal)
-                 searchButton.tintColor = UIColor.white
-                 searchButton.setImage(con, for: .normal)
-             }
-             if #available(iOS 11, *) {
-                 searchBarNavigation.widthAnchor.constraint(equalToConstant: 30).isActive = true
-                 searchBarNavigation.heightAnchor.constraint(equalToConstant: 30).isActive = true
-             } else {
-                 searchButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-             }
-             searchButton.addTarget(self, action: #selector(actionSearch), for: .touchUpInside)
-             let searchItem = UIBarButtonItem(customView: searchButton)
-             if defaults.bool(forKey: "showSearch") {
-                 barButtonItems.append(searchItem)
-                 //self.barButtonItems.append(searchItem)
-             }
-         
-             self.navigationItem.rightBarButtonItems = barButtonItems
-            
-         }
-         
-         @objc func actionHome() {
-             appDelegate.moveToHome()
-         }
-
-         @objc func onClicklocationButton() {
-             let locationVC = self.storyboard?.instantiateViewController(withIdentifier: "LocationSearch") as! LocationSearch
-             locationVC.delegate = self
-             view.transform = CGAffineTransform(scaleX: 0.8, y: 1.2)
-             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: [], animations: {
-                 self.view.transform = .identity
-             }) { (success) in
-                 self.navigationController?.pushViewController(locationVC, animated: true)
-             }
-         }
-         
+    func changeMenuButtons()
+    {
+        btnHome.setImage(UIImage(named: "home_" + languageCode ), for: .normal)
+        btnPalmtree.setImage(UIImage(named: "mypalmtree_" + languageCode), for: .normal)
+        btnPost.setImage(UIImage(named: "post_" + languageCode), for: .normal)
+        btnWishlist.setImage(UIImage(named: "wishlist_active_" + languageCode), for: .normal)
+        btnMessages.setImage(UIImage(named: "messages_" + languageCode ), for: .normal)
         
-         //MARK:- Search Controller
-         
-         @objc func actionSearch(_ sender: Any) {
-         
-             if defaults.bool(forKey: "advanceSearch") == true{
-                 let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-                 let proVc = storyBoard.instantiateViewController(withIdentifier: "AdvancedSearchController") as! AdvancedSearchController
-                 self.pushVC(proVc, completion: nil)
-             }else{
-                 
-                 //setupNavigationBar(title: "okk...")
-                 
-                 keyboardManager.enable = true
-                 if isNavSearchBarShowing {
-                     navigationItem.titleView = nil
-                     self.searchBarNavigation.text = ""
-                     self.backgroundView.removeFromSuperview()
-                     self.addTitleView()
-
-                 } else {
-                     self.backgroundView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
-                     self.backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-                     self.backgroundView.isOpaque = true
-                     let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
-                     tap.delegate = self
-                     self.backgroundView.addGestureRecognizer(tap)
-                     self.backgroundView.isUserInteractionEnabled = true
-                     self.view.addSubview(self.backgroundView)
-                     self.adNavSearchBar()
-                 }
-             }
-             
-         }
-         
-         @objc func handleTap(_ gestureRocognizer: UITapGestureRecognizer) {
-             self.actionSearch("")
-         }
-         
-         func adNavSearchBar() {
-             searchBarNavigation.placeholder = "Search Ads"
-             searchBarNavigation.barStyle = .default
-             searchBarNavigation.isTranslucent = false
-             searchBarNavigation.barTintColor = UIColor.groupTableViewBackground
-             searchBarNavigation.backgroundImage = UIImage()
-             searchBarNavigation.sizeToFit()
-             searchBarNavigation.delegate = self
-             self.isNavSearchBarShowing = true
-             searchBarNavigation.isHidden = false
-             navigationItem.titleView = searchBarNavigation
-             searchBarNavigation.becomeFirstResponder()
-         }
-         
-         func addTitleView() {
-             self.searchBarNavigation.endEditing(true)
-             self.isNavSearchBarShowing = false
-             self.searchBarNavigation.isHidden = true
-             self.view.isUserInteractionEnabled = true
-         }
-         
-         //MARK:- Search Bar Delegates
-         func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-             
-         }
-         
-         func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-             //self.searchBarNavigation.endEditing(true)
-             searchBar.endEditing(true)
-             self.view.endEditing(true)
-         }
-         
-         func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-             searchBar.endEditing(true)
-             self.searchBarNavigation.endEditing(true)
-             guard let searchText = searchBar.text else {return}
-             if searchText == "" {
-                 
-             } else {
-                 let categoryVC = self.storyboard?.instantiateViewController(withIdentifier: "CategoryController") as! CategoryController
-                 categoryVC.searchText = searchText
-                 categoryVC.isFromTextSearch = true
-                 self.navigationController?.pushViewController(categoryVC, animated: true)
-             }
-         }
-         
-       
-       
-       //MARK:- Near By Search
-          func nearBySearch(param: NSDictionary) {
-              self.showLoader()
-              AddsHandler.nearbyAddsSearch(params: param, success: { (successResponse) in
-                  self.stopAnimating()
-                  if successResponse.success {
-                      let categoryVC = self.storyboard?.instantiateViewController(withIdentifier: "CategoryController") as! CategoryController
-                      categoryVC.latitude = self.latitude
-                      categoryVC.longitude = self.longitude
-                      categoryVC.nearByDistance = self.searchDistance
-                      categoryVC.isFromNearBySearch = true
-                      self.navigationController?.pushViewController(categoryVC, animated: true)
-                  } else {
-                      let alert = Constants.showBasicAlert(message: successResponse.message)
-                      self.presentVC(alert)
-                  }
-              }) { (error) in
-                  self.stopAnimating()
-                  let alert = Constants.showBasicAlert(message: error.message)
-                  self.presentVC(alert)
-              }
-          }
-       
+        btnHome.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        btnPalmtree.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        btnPost.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        btnWishlist.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        btnMessages.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+    }
     
+    @IBAction func backBtnAction(_ button: UIButton)
+    {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func menuBtnAction(_ button: UIButton)
+    {
+        if button.tag == 1001
+        {
+            self.navigationController?.popToViewController(homeVC, animated: false)
+        }
+        else if button.tag == 1002
+        {
+            let myAdsVC = self.storyboard?.instantiateViewController(withIdentifier: "MyAdsController") as! MyAdsController
+            self.navigationController?.pushViewController(myAdsVC, animated: false)
+        }
+        else if button.tag == 1003
+        {
+            if defaults.bool(forKey: "isLogin") == false
+            {
+                let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+                let navController = UINavigationController(rootViewController: loginVC)
+                self.present(navController, animated:true, completion: nil)
+            }
+            else
+            {
+                if defaults.bool(forKey: "isLogin") == false
+                {
+                    let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+                    let navController = UINavigationController(rootViewController: loginVC)
+                    self.present(navController, animated:true, completion: nil)
+                }
+                else
+                {
+                    let adPostVC = self.storyboard?.instantiateViewController(withIdentifier: "AdPostVC") as! AdPostVC
+                    let navController = UINavigationController(rootViewController: adPostVC)
+                    navController.navigationBar.isHidden = true
+                    navController.modalPresentationStyle = .fullScreen
+                    self.present(navController, animated:true, completion: nil)
+                }
+            }
+        }
+        else if button.tag == 1004
+        {
+            if defaults.bool(forKey: "isLogin") == false
+            {
+                let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+                let navController = UINavigationController(rootViewController: loginVC)
+                self.present(navController, animated:true, completion: nil)
+            }
+            else
+            {
+                let favouritesVC = self.storyboard?.instantiateViewController(withIdentifier: "FavouritesVC") as! FavouritesVC
+                self.navigationController?.pushViewController(favouritesVC, animated: false)
+            }
+        }
+    }
 }

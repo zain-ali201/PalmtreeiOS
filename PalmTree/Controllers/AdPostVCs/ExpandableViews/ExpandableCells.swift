@@ -22,6 +22,6 @@ class ExpandedCell: UITableViewCell {
     var catID = 0
     var adCategory = ""
     var subcatID = 0
-    @IBOutlet var lblName: UILabel!
+    @IBOutlet var nameLbl: UILabel!
 }
 

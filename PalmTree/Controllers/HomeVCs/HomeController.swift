@@ -18,7 +18,7 @@ import GoogleMobileAds
 import IQKeyboardManagerSwift
 import CoreLocation
 
-class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable, AddDetailDelegate, CategoryDetailDelegate, UISearchBarDelegate, MessagingDelegate,UNUserNotificationCenterDelegate, NearBySearchDelegate, BlogDetailDelegate , LocationCategoryDelegate, SwiftyAdDelegate , GADInterstitialDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
+class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable, AddDetailDelegate, CategoryDetailDelegate, UISearchBarDelegate, MessagingDelegate,UNUserNotificationCenterDelegate, NearBySearchDelegate, BlogDetailDelegate , LocationCategoryDelegate, SwiftyAdDelegate , GADInterstitialDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, UITextFieldDelegate {
     
     //MARK:- Outlets
     @IBOutlet weak var tableView: UITableView! {
@@ -42,6 +42,9 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         refreshControl.addTarget(self, action:
             #selector(refreshTableView),
                                  for: UIControlEvents.valueChanged)
+        if let mainColor = defaults.string(forKey: "mainColor") {
+            refreshControl.tintColor = Constants.hexStringToUIColor(hex: mainColor)
+        }
         
         return refreshControl
     }()
@@ -99,9 +102,12 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var btnMessages: UIButton!
     
     @IBOutlet weak var lblSearch: UILabel!
+    @IBOutlet weak var txtSearch: UITextField!
     
     var locationManager = CLLocationManager()
     lazy var geocoder = CLGeocoder()
+    
+    var fromVC = ""
     
     //MARK:- View Life Cycle
     
@@ -140,6 +146,8 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         {
             self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblSearch.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            txtSearch.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            txtSearch.textAlignment = .right
             changeMenuButtons()
         }
         
@@ -150,7 +158,14 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewWillAppear(animated)
         
         currentVc = self
-                //self.homeData()
+                
+        if fromVC == "PostAd"
+        {
+            fromVC = ""
+            self.homeData()
+        }
+        
+        tableView.reloadData()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -212,6 +227,8 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             {
                 userDetail?.currentAddress = placemark.compactAddress ?? ""
                 userDetail?.country = placemark.currentCountry ?? ""
+                defaults.set(userDetail?.currentAddress, forKey: "address")
+                defaults.set(userDetail?.country, forKey: "country")
                 tableView.reloadData()
             }
         }
@@ -242,6 +259,14 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func showLoader(){
         self.startAnimating(Constants.activitySize.size, message: Constants.loaderMessages.loadingMessage.rawValue,messageFont: UIFont.systemFont(ofSize: 14), type: NVActivityIndicatorType.ballClipRotatePulse)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        txtSearch.resignFirstResponder()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
     }
     
     //MARK:- go to add detail controller
@@ -478,7 +503,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if section == 0
         {
             let itemHeight = CollectionViewSettings.getItemWidth(boundWidth: tableView.bounds.size.width)
-            let totalRow = ceil(CGFloat(categoryArray.count) / CollectionViewSettings.column)
+            let totalRow = ceil(CGFloat(categoryArray.count + 1) / CollectionViewSettings.column)
             let totalTopBottomOffSet = CollectionViewSettings.offset + CollectionViewSettings.offset
             let totalSpacing = CGFloat(totalRow - 1) * CollectionViewSettings.minLineSpacing
             totalHeight = ((itemHeight * CGFloat(totalRow)) + totalTopBottomOffSet + totalSpacing)
@@ -486,7 +511,14 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         else if section == 1
         {
-            height = 1000
+            let itemHeight = CollectionViewSettings.getAdItemWidth(boundWidth: tableView.bounds.size.width)
+            let totalRow = ceil(CGFloat(latestAdsArray.count) / 2)
+            let totalTopBottomOffSet = CollectionViewSettings.offset + CollectionViewSettings.offset
+            let totalSpacing = CGFloat(totalRow - 1) * CollectionViewSettings.minLineSpacing
+            totalHeight = ((itemHeight * CGFloat(totalRow)) + totalTopBottomOffSet + totalSpacing)
+            height =  totalHeight + 200
+            
+//            height =  1000
         }
             
         return height
@@ -501,7 +533,6 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             })
         }
     }
-    
     
 //    private var finishedLoadingInitialTableCells = false
 //     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -596,7 +627,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
             else
             {
-                let messagesVC = self.storyboard?.instantiateViewController(withIdentifier: "MessagesVC") as! MessagesVC
+                let messagesVC = self.storyboard?.instantiateViewController(withIdentifier: "MessagesController") as! MessagesController
                 self.navigationController?.pushViewController(messagesVC, animated: false)
             }
         }
@@ -650,14 +681,12 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 //For testing purpose
                 if languageCode == "ar"
                 {
-                    categoryArray[0].name = "السيارات";
-                    categoryArray[1].name = "للبيع";
-                    categoryArray[2].name = "الوظائف";
-                    categoryArray[3].name = "أجهزة كهربائية";
-                    categoryArray[4].name = "اثاث";
-                    categoryArray[5].name = "حيوانات أليفة";
-                    categoryArray[6].name = "خاصية";
-                    categoryArray[7].name = "المزيد";
+                    categoryArray[0].name = "السيارات"
+                    categoryArray[1].name = "للبيع"
+                    categoryArray[2].name = "الوظائف"
+                    categoryArray[3].name = "أجهزة كهربائية"
+                    categoryArray[4].name = "اثاث"
+                    categoryArray[5].name = "حيوانات أليفة"
                 }
                 
                 self.dataArray = successResponse.data.sliders
@@ -848,32 +877,6 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }) { (error) in
             self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
-            self.presentVC(alert)
-        }
-    }
-    
-    //MARK:- Get SubCategroies
-    
-    func subCategoryData(param: NSDictionary)
-    {
-        let adPostVC = AadPostController()
-        adPostVC.showLoader()
-        AddsHandler.adPostSubcategory(parameter: param, success: { (successResponse) in
-            NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
-            if successResponse.success {
-                
-                AddsHandler.sharedInstance.objSearchCategory = successResponse.data
-                
-                
-              //UserDefaults.standard.set(successResponse.isBid, forKey: "isBid")
-            }
-            else {
-                let alert = Constants.showBasicAlert(message: successResponse.message)
-                self.presentVC(alert)
-            }
-        }) { (error) in
-            NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
             let alert = Constants.showBasicAlert(message: error.message)
             self.presentVC(alert)
         }

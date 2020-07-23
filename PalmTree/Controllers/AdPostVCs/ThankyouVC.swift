@@ -26,6 +26,7 @@ class ThankyouVC: UIViewController
     
     @IBAction func crossBtnAction(_ sender: Any)
     {
+        homeVC.fromVC = "PostAd"
         self.dismiss(animated: true, completion: nil)
     }
     

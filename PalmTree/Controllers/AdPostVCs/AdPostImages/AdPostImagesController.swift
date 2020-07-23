@@ -204,7 +204,7 @@ class AdPostImagesController: UIViewController, UITableViewDelegate, UITableView
 //        }
 //    }
     
-    @objc func onForwardButtonClciked() {
+    @IBAction func onForwardButtonClciked(_ sender: Any) {
 
         localVariable = ""
         for index in  0..<fieldsArray.count {

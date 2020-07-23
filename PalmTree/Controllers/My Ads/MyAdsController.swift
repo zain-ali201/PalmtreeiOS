@@ -48,7 +48,9 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         refreshControl.addTarget(self, action:
             #selector(refreshTableView),
                                  for: UIControlEvents.valueChanged)
-//        refreshControl.tintColor = UIColor.red
+        if let mainColor = defaults.string(forKey: "mainColor") {
+            refreshControl.tintColor = Constants.hexStringToUIColor(hex: mainColor)
+        }
         
         return refreshControl
     }()
@@ -227,7 +229,7 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
             }
             else
             {
-                let messagesVC = self.storyboard?.instantiateViewController(withIdentifier: "MessagesVC") as! MessagesVC
+                let messagesVC = self.storyboard?.instantiateViewController(withIdentifier: "MessagesController") as! MessagesController
                 self.navigationController?.pushViewController(messagesVC, animated: false)
             }
         }
@@ -339,6 +341,25 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         if let price = objData.adPrice.price {
             cell.lblPrice.text = price
         }
+        
+        if let address = objData.adLocation?.address {
+            cell.btnLocation.setTitle(address, for: .normal)
+        }
+        
+        if let date = objData.adDate {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MMMM dd, yyyy"
+            let date = formatter.date(from: date)
+            
+            cell.lblDate.text = timeAgoSinceShort(date!)
+        }
+        
+        cell.locationAction = { () in
+            let mapVC = self.storyboard?.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
+            mapVC.latitudeStr = objData.adLocation.lat ?? ""
+            mapVC.latitudeStr = objData.adLocation.longField ?? ""
+            self.navigationController?.pushViewController(mapVC, animated: true)
+        }
 
         if languageCode == "ar"
         {
@@ -412,6 +433,27 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
                 self.tblView.reloadData()
             }
             else {
+                let alert = Constants.showBasicAlert(message: successResponse.message)
+                self.presentVC(alert)
+            }
+        }) { (error) in
+            self.stopAnimating()
+            let alert = Constants.showBasicAlert(message: error.message)
+            self.presentVC(alert)
+        }
+    }
+    
+    func deleteAd(param: NSDictionary) {
+        self.showLoader()
+        AddsHandler.deleteAdd(param: param, success: { (successResponse) in
+            self.stopAnimating()
+            if successResponse.success {
+                let alert = AlertView.prepare(title: "", message: successResponse.message, okAction: {
+                    self.adForest_getAddsData()
+                    self.collectionView.reloadData()
+                })
+                self.presentVC(alert)
+            } else {
                 let alert = Constants.showBasicAlert(message: successResponse.message)
                 self.presentVC(alert)
             }

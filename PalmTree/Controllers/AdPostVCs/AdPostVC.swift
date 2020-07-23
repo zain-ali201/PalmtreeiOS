@@ -1,5 +1,5 @@
 //
-//  Splash.swift
+//  AdPostVC.swift
 //  PalmTree
 //
 //  Created by SprintSols on 3/7/20.
@@ -52,8 +52,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     
     var fromVC = ""
     var priceFlag = false
-    
-    var photoArray = [UIImage]()
+
     var imageArray = [AdPostImageArray]()
     var imgCtrlCount = 0
     var imageIDArray = [Int]()
@@ -119,6 +118,8 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             txtPrice.textAlignment = .right
             lblDescp.textAlignment = .right
         }
+        
+        adDetailObj.priceType = "Fixed"
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -256,12 +257,14 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             lblFixedPrice.text = "Fixed Price"
             fixedTick.alpha = 1
             negotiateTick.alpha = 0
+            adDetailObj.priceType = "Fixed"
         }
         else
         {
             lblFixedPrice.text = "Negotiable"
             fixedTick.alpha = 0
             negotiateTick.alpha = 1
+            adDetailObj.priceType = "Negotiable"
         }
         priceView.alpha = 0
     }
@@ -290,7 +293,6 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     {
         adDetailObj.adTitle = txtTitle.text
         adDetailObj.adDesc = txtDescp.text
-        adDetailObj.images = self.photoArray
         adDetailObj.adCurrency = "AED"
         adDetailObj.adPrice = txtPrice.text
         
@@ -301,7 +303,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     
     @IBAction func postAdBtnAction(_ sender: Any)
     {
-        if self.photoArray.count == 0
+        if adDetailObj.images.count == 0
         {
             self.showToast(message: "Please add atleast one photo.")
         }
@@ -368,7 +370,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             for var image in images
             {
                 image = resizeImage(image: image, targetSize: CGSize(width: 300, height: 300))
-                self.photoArray.append(image)
+                adDetailObj.images.append(image)
             }
             
             hideShowControls(controls1Alpha: 1, controlsAlpha: 0)
@@ -391,7 +393,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             {
                 pickedImage = resizeImage(image: pickedImage, targetSize: CGSize(width: 300, height: 300))
                 
-                self.photoArray.append(pickedImage)
+                adDetailObj.images.append(pickedImage)
                 hideShowControls(controls1Alpha: 1, controlsAlpha: 0)
                 collectionView.alpha = 1
                 collectionView.reloadData()
@@ -429,7 +431,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     //MARK:- Ad Post APIs
     func addPostLiveAPI()
     {
-        let parameter: [String: Any] = [
+        var parameter: [String: Any] = [
             "images_array": self.imageIDArray,
             "ad_phone": adDetailObj.phone,
             "ad_location": adDetailObj.location.address,
@@ -442,9 +444,98 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             "name": self.txtTitle.text!,
             "ad_price" : self.txtPrice.text!,
             "ad_title": self.txtTitle.text!,
-            "ad_description" : txtDescp.text
+            "ad_description" : txtDescp.text,
+            "ad_cats1" : adDetailObj.catID
         ]
         
+        var customDictionary: [String: Any] = [String: Any]()
+        
+//        if adDetailObj.motorCatObj.regNo != ""
+//        {
+//            customDictionary.merge(with: ["regNo" : adDetailObj.motorCatObj.regNo])
+//        }
+//
+//        if adDetailObj.motorCatObj.sellerType != ""
+//        {
+//            customDictionary.merge(with: ["sellerType" : adDetailObj.motorCatObj.sellerType])
+//        }
+        
+        if adDetailObj.motorCatObj.make != ""
+        {
+            customDictionary.merge(with: ["make" : adDetailObj.motorCatObj.make])
+        }
+        
+        if adDetailObj.motorCatObj.model != ""
+        {
+            customDictionary.merge(with: ["model" : adDetailObj.motorCatObj.model])
+        }
+        
+//        if adDetailObj.motorCatObj.year != ""
+//        {
+//            customDictionary.merge(with: ["year" : adDetailObj.motorCatObj.year])
+//        }
+//        
+//        if adDetailObj.motorCatObj.mileage != ""
+//        {
+//            customDictionary.merge(with: ["mileage" : adDetailObj.motorCatObj.mileage])
+//        }
+//        
+//        if adDetailObj.motorCatObj.bodyType != ""
+//        {
+//            customDictionary.merge(with: ["bodyType" : adDetailObj.motorCatObj.bodyType])
+//        }
+//        
+//        if adDetailObj.motorCatObj.fuelType != ""
+//        {
+//            customDictionary.merge(with: ["fuelType" : adDetailObj.motorCatObj.fuelType])
+//        }
+//        
+//        if adDetailObj.motorCatObj.transmission != ""
+//        {
+//            customDictionary.merge(with: ["transmission" : adDetailObj.motorCatObj.transmission])
+//        }
+//        
+//        if adDetailObj.motorCatObj.colour != ""
+//        {
+//            customDictionary.merge(with: ["colour" : adDetailObj.motorCatObj.colour])
+//        }
+//        
+//        if adDetailObj.motorCatObj.engineSize != ""
+//        {
+//            customDictionary.merge(with: ["engineSize" : adDetailObj.motorCatObj.engineSize])
+//        }
+//        
+//        if adDetailObj.propertyCatObj.propertyType != ""
+//        {
+//            customDictionary.merge(with: ["propertyType" : adDetailObj.propertyCatObj.propertyType])
+//        }
+//        
+//        if adDetailObj.propertyCatObj.bedrooms != ""
+//        {
+//            customDictionary.merge(with: ["bedrooms" : adDetailObj.propertyCatObj.bedrooms])
+//        }
+//        
+//        if adDetailObj.propertyCatObj.sellerType != ""
+//        {
+//            customDictionary.merge(with: ["psellerType" : adDetailObj.propertyCatObj.sellerType])
+//        }
+//        
+//        if adDetailObj.whatsapp != ""
+//        {
+//            customDictionary.merge(with: ["whatsapp" : adDetailObj.whatsapp])
+//        }
+        
+        if customDictionary.count > 0
+        {
+            customDictionary.merge(with: ["ad_price" : adDetailObj.adPrice])
+            customDictionary.merge(with: ["ad_price_type" : adDetailObj.priceType])
+            
+            let custom = Constants.json(from: customDictionary)
+            let param: [String: Any] = ["custom_fields": custom!]
+            parameter.merge(with: param)
+            parameter.merge(with: customDictionary)
+        }
+            
         self.adPostLive(param: parameter as NSDictionary)
     }
     
@@ -461,43 +552,16 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
                 AddsHandler.sharedInstance.objAdPost = successResponse
                 
                 adDetailObj.adId = AddsHandler.sharedInstance.adPostAdId
-                let param: [String: Any] = ["cat_id": adDetailObj.catID, "ad_id": adDetailObj.adId]
-                print(param)
-                self.dynamicFields(param: param as NSDictionary)
-            }
-            else
-            {
-                let alert = Constants.showBasicAlert(message: successResponse.message)
-                self.presentVC(alert)
-            }
-        }) { (error) in
-            self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
-            self.presentVC(alert)
-        }
-    }
-    
-    func dynamicFields(param: NSDictionary)
-    {
-        self.showLoader()
-        AddsHandler.adPostDynamicFields(parameter: param, success: { (successResponse) in
-            
-            if successResponse.success
-            {
+
                 let param: [String: Any] = ["ad_id": AddsHandler.sharedInstance.adPostAdId]
                 print(param)
                 
-//                for image in self.photoArray
-//                {
-                    DispatchQueue.main.async {
-//                        self.uploadImages(param: param as NSDictionary, images: [image])
-                        self.uploadImages(param: param as NSDictionary, images: self.photoArray)
-                    }
-//                }
+                DispatchQueue.main.async {
+                    self.uploadImages(param: param as NSDictionary, images: adDetailObj.images)
+                }
             }
             else
             {
-                self.stopAnimating()
                 let alert = Constants.showBasicAlert(message: successResponse.message)
                 self.presentVC(alert)
             }
@@ -516,11 +580,9 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             if successResponse.success {
                 
                 self.imageIDArray.removeAll()
-                adDetailObj = AdDetailObject()
                 
-                let thankyouVC = self.storyboard?.instantiateViewController(withIdentifier: "ThankyouVC") as! ThankyouVC
-                self.navigationController?.pushViewController(thankyouVC, animated: true)
-                
+                let featuredVC = self.storyboard?.instantiateViewController(withIdentifier: "FeaturedVC") as! FeaturedVC
+                self.navigationController?.pushViewController(featuredVC, animated: true)
             }
             else
             {
@@ -604,13 +666,13 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
                     print(dIndexPath.row)
                     collectionView.deleteItems(at: [sourceIndexPath])
                     collectionView.insertItems(at: [dIndexPath])
-                    self.photoArray.remove(at: sourceIndexPath.row)
+                    adDetailObj.images.remove(at: sourceIndexPath.row)
                     
                     item.dragItem.itemProvider.loadObject(ofClass: UIImage.self, completionHandler: {(newImage, error) -> Void in
                         
                         if let image = newImage as? UIImage
                         {
-                            self.photoArray.insert(image, at: dIndexPath.row)
+                            adDetailObj.images.insert(image, at: dIndexPath.row)
                         }
                     })
                 }
@@ -627,14 +689,14 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         return 1
     }
         func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photoArray.count
+        return adDetailObj.images.count
             
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: ImagesCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagesCell", for: indexPath) as! ImagesCell
         
-        let image = photoArray[indexPath.row]
+        let image = adDetailObj.images[indexPath.row]
 
         cell.imgPictures.image = image
         
@@ -677,9 +739,9 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     
     //Remove item at selected Index
     func removeItem(index: Int) {
-        photoArray.remove(at: index)
+        adDetailObj.images.remove(at: index)
         
-        if photoArray.count == 0
+        if adDetailObj.images.count == 0
         {
             hideShowControls(controls1Alpha: 0, controlsAlpha: 1)
             collectionView.alpha = 0

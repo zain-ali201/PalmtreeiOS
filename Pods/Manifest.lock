@@ -165,6 +165,7 @@ PODS:
   - SDWebImage/Core (4.2.3)
   - SlideMenuControllerSwift (4.0.0)
   - SnapKit (4.0.1)
+  - Stripe (19.3.0)
   - SwiftCheckboxDialog (1.0.0)
   - SwiftyGif (4.2.0)
   - SwiftyJSON (4.0.0)
@@ -176,6 +177,7 @@ PODS:
 
 DEPENDENCIES:
   - ActionSheetPicker-3.0
+  - AFNetworking
   - Alamofire
   - Alamofire-SwiftyJSON
   - Cosmos
@@ -211,6 +213,7 @@ DEPENDENCIES:
   - RangeSeekSlider
   - SDWebImage
   - SlideMenuControllerSwift
+  - Stripe
   - SwiftCheckboxDialog
   - SwiftyGif
   - SwiftyStoreKit
@@ -271,6 +274,7 @@ SPEC REPOS:
     - SDWebImage
     - SlideMenuControllerSwift
     - SnapKit
+    - Stripe
     - SwiftCheckboxDialog
     - SwiftyGif
     - SwiftyJSON
@@ -331,6 +335,7 @@ SPEC CHECKSUMS:
   SDWebImage: 791bb72962b3492327ddcac4b1880bd1b5458431
   SlideMenuControllerSwift: 021d6318201c53d4d4d3710517d43d6c556c7dd0
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
+  Stripe: dd5bfdd5f1daed4f9ddbfb47e9449ec302f9f708
   SwiftCheckboxDialog: 961526e6a278298b2c7857cd4a5a1e7f034ddb6b
   SwiftyGif: a149bf84df23370592f3f075561ae02c8632a314
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
@@ -340,6 +345,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: 22d4c58200d7c105e0e407ab6bfd01a5d85014be
   YouTubePlayer: 028451f6772f372d4759866db99824c676ac1473
 
-PODFILE CHECKSUM: c136341cdbbea253d7dc2e184c49e1dc3bbacf9d
+PODFILE CHECKSUM: 8378a1cb30847c95bfc0bd36bb9f38412dafffce
 
 COCOAPODS: 1.9.3

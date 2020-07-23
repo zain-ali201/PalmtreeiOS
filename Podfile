@@ -114,5 +114,7 @@ target 'PalmTree' do
      pod 'Gallery'
      pod 'ExpandableCell'
 
-   
+     pod 'Stripe'
+     pod 'AFNetworking'
+     pod 'Mapbox-iOS-SDK', '~> 6.0.0'
 end

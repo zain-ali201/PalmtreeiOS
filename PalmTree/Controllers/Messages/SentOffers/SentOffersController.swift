@@ -83,12 +83,14 @@ class SentOffersController: UIViewController, UITableViewDelegate, UITableViewDa
         let objData = dataArray[indexPath.row]
         
         
-        if let title = objData.messageAdTitle {
+        if let title = objData.messageAuthorName {
             cell.lblName.text = title
         }
-        if let name = objData.messageAuthorName {
+        
+        if let name = objData.messageAdTitle {
             cell.lblDetail.text = name
         }
+        
         for item in objData.messageAdImg {
             if let imgUrl = URL(string: item.thumb) {
                 cell.imgPicture.sd_setShowActivityIndicatorView(true)
@@ -96,6 +98,7 @@ class SentOffersController: UIViewController, UITableViewDelegate, UITableViewDa
                 cell.imgPicture.sd_setImage(with: imgUrl, completed: nil)
             }
         }
+        
         if objData.messageReadStatus == true {
             cell.imgBell.isHidden = true
         } else {
