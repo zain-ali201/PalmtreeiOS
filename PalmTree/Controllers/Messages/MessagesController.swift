@@ -29,7 +29,6 @@ class MessagesController: ButtonBarPagerTabStripViewController, NVActivityIndica
     @IBOutlet weak var btnBack: UIButton!
 
     //MARK:- Properties
-    var menuDelegate: leftMenuProtocol?
     var isFromAdDetail = false
     var barButtonItems = [UIBarButtonItem]()
     
@@ -100,10 +99,6 @@ class MessagesController: ButtonBarPagerTabStripViewController, NVActivityIndica
         }
     }
     
-    @objc func moveToParentController() {
-        self.menuDelegate?.changeViewController(.main)
-    }
-    
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let SB = UIStoryboard(name: "Main", bundle: nil)
         let sentOffers = SB.instantiateViewController(withIdentifier: "SentOffersController") as! SentOffersController
@@ -164,6 +159,7 @@ class MessagesController: ButtonBarPagerTabStripViewController, NVActivityIndica
                 }
                 else
                 {
+                    adDetailObj = AdDetailObject()
                     let adPostVC = self.storyboard?.instantiateViewController(withIdentifier: "AdPostVC") as! AdPostVC
                     let navController = UINavigationController(rootViewController: adPostVC)
                     navController.navigationBar.isHidden = true

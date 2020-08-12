@@ -27,6 +27,8 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     @IBOutlet weak var btnWishlist: UIButton!
     @IBOutlet weak var btnMessages: UIButton!
     
+    @IBOutlet weak var norecordsView: UIView!
+    
     //MARK:- Properties
    
     var dataArray = [MyAdsAd]()
@@ -165,6 +167,7 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                 }
                 else
                 {
+                    adDetailObj = AdDetailObject()
                     let adPostVC = self.storyboard?.instantiateViewController(withIdentifier: "AdPostVC") as! AdPostVC
                     let navController = UINavigationController(rootViewController: adPostVC)
                     navController.navigationBar.isHidden = true
@@ -252,8 +255,9 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             
             cell.locationAction = { () in
                 let mapVC = self.storyboard?.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
-                mapVC.latitudeStr = objData.adLocation.lat ?? ""
-                mapVC.latitudeStr = objData.adLocation.longField ?? ""
+                mapVC.address = objData.adLocation.address ?? ""
+                mapVC.latitude = Double(objData.adLocation.lat ?? "0.0")
+                mapVC.longitude = Double(objData.adLocation.longField ?? "0.0")
                 self.navigationController?.pushViewController(mapVC, animated: true)
             }
         }
@@ -264,7 +268,7 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             if tableView.tag == 1001
             {
                 cell.lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-                cell.lblLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                cell.btnLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             }
             else
             {
@@ -303,6 +307,12 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                 self.maximumPage = successResponse.data.pagination.maxNumPages
                 AddsHandler.sharedInstance.objMyAds = successResponse.data
                 self.dataArray = successResponse.data.ads
+                
+                if self.dataArray.count == 0
+                {
+                    self.norecordsView.alpha = 1
+                }
+                
                 self.favTblView.reloadData()
             } else {
                 let alert = Constants.showBasicAlert(message: successResponse.message)

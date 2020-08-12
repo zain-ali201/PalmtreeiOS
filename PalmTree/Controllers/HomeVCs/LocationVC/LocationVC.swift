@@ -123,6 +123,7 @@ class LocationVC: UIViewController, CLLocationManagerDelegate
             if let placemarks = placemarks, let placemark = placemarks.first
             {
                 userDetail?.currentAddress = placemark.compactAddress ?? ""
+                userDetail?.locationName = placemark.name ?? ""
                 userDetail?.country = placemark.currentCountry ?? ""
                 defaults.set(userDetail?.currentAddress, forKey: "address")
                 defaults.set(userDetail?.country, forKey: "country")

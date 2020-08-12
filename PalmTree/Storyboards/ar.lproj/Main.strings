@@ -30,7 +30,7 @@
 "5hY-6l-4gs.text" = "Dwell Lugano 2 Seater Sofa Grey Velvet RRP";
 
 /* Class = "UILabel"; text = "UAE"; ObjectID = "5jh-j0-u5W"; */
-"5jh-j0-u5W.text" = "الإمارات";
+//"5jh-j0-u5W.text" = "الإمارات";
 
 /* Class = "UIButton"; normalTitle = "Search alert notification"; ObjectID = "cD5-qJ-T54"; */
 "cD5-qJ-T54.text" = "إشعارات البحث";
@@ -282,6 +282,9 @@
 /* Class = "UILabel"; text = "Select Category"; ObjectID = "ULA-Ge-hH5"; */
 "NrG-cA-VBn.text" = "اختر الفئة";
 
+/* Class = "UILabel"; text = "Select Category"; ObjectID = "Oe8-We-H37"; */
+"Oe8-We-H37.text" = "اختر";
+
 /* Class = "UILabel"; text = "Categories"; ObjectID = "ULA-Ge-hH5"; */
 "Sjf-Qh-3dy.text" = "الفئات";
 
@@ -384,6 +387,24 @@
 /* Class = "UIButton"; normalTitle = "Send Email"; ObjectID = "emX-oW-WlR"; */
 "emX-oW-WlR.normalTitle" = "إرسال البريد";
 
+/* Class = "UIButton"; normalTitle = "Send"; ObjectID = "DZy-ip-l3L"; */
+"DZy-ip-l3L.normalTitle" = "إرسال";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "d23-Lf-euG"; */
+"d23-Lf-euG.normalTitle" = "إلغاء";
+
+/* Class = "UIButton"; normalTitle = "Edit"; ObjectID = "gAd-zF-kFb"; */
+"gAd-zF-kFb.normalTitle" = "تعديل";
+
+/* Class = "UIButton"; normalTitle = "Select option"; ObjectID = "LP6-ox-RMO"; */
+"LP6-ox-RMO.normalTitle" = "حدد الخيار";
+
+/* Class = "UIButton"; normalTitle = "Send"; ObjectID = "spM-2P-Udn"; */
+"spM-2P-Udn.normalTitle" = "إرسال";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "zYU-wK-RAB"; */
+"zYU-wK-RAB.normalTitle" = "إلغاء";
+
 /* Class = "UIButton"; normalTitle = "Privacy Policy"; ObjectID = "CiO-Ja-8rB"; */
 "CiO-Ja-8rB.text" = "السياسة والخصوصية";
 
@@ -401,6 +422,21 @@
 
 /* Class = "UILabel"; text = "Nationwide"; ObjectID = "iBR-6Q-aKw"; */
 "iBR-6Q-aKw.text" = "على مستوى البلد";
+
+/* Class = "UILabel"; text = "I would like to be contacted by"; ObjectID = "NPd-zr-UaO"; */
+"NPd-zr-UaO.text" = "أود أن يتم الاتصال بي من قبل";
+
+/* Class = "UILabel"; text = "Description"; ObjectID = "jYG-s6-f2b"; */
+"jYG-s6-f2b.text" = "الوصف (20 حرفًا على الأقل)";
+
+/* Class = "UILabel"; text = "Phone"; ObjectID = "q5h-6E-BqM"; */
+"q5h-6E-BqM.text" = "هاتف";
+
+/* Class = "UITextField"; placeholder = "Please enter your contact"; ObjectID = "XV9-2s-f78"; */
+"XV9-2s-f78.placeholder" = "أدخل رقم هاتفك هنا";
+
+/* Class = "UITextField"; placeholder = "Please enter your contact"; ObjectID = "aE2-wj-CJh"; */
+"aE2-wj-CJh.placeholder" = "أدخل رقم هاتفك هنا";
 
 /* Class = "UILabel"; text = "2016, 59000, Petrol, Automatic, 1499cc"; ObjectID = "iJu-hK-yhf"; */
 "iJu-hK-yhf.text" = "2016, 59000, Petrol, Automatic, 1499cc";
@@ -458,6 +494,12 @@
 
 /* Class = "UITextField"; placeholder = "Password"; ObjectID = "nWw-xd-Oka"; */
 "nWw-xd-Oka.placeholder" = "كلمة المرور";
+
+/* Class = "UITextField"; placeholder = "Type your message"; ObjectID = "Zhj-V4-Szz"; */
+"Zhj-V4-Szz.placeholder" = "اكتب رسالتك";
+
+/* Class = "UITextField"; placeholder = "Type your message"; ObjectID = "jcj-03-Rra"; */
+"jcj-03-Rra.placeholder" = "اكتب رسالتك";
 
 /* Class = "UIButton"; normalTitle = "Post another ad"; ObjectID = "o2L-Dp-gN5"; */
 "o2L-Dp-gN5.normalTitle" = "نشر إعلان آخر";
@@ -526,7 +568,7 @@
 "sup-Lu-c3l.text" = "نوع البائع";
 
 /* Class = "UILabel"; text = "Date Descending"; ObjectID = "tZA-dI-Moy"; */
-"tZA-dI-Moy.text" = "التاريخ من الأقدم";
+//"tZA-dI-Moy.text" = "التاريخ من الأقدم";
 
 /* Class = "UIButton"; normalTitle = "Skip"; ObjectID = "trQ-qf-Z04"; */
 "trQ-qf-Z04.normalTitle" = "تخطي";
@@ -556,7 +598,7 @@
 "wlm-H9-7RR.normalTitle" = "نوع الفرز";
 
 /* Class = "UILabel"; text = "For Sale"; ObjectID = "wmU-k3-ICP"; */
-"wmU-k3-ICP.text" = "للبيع";
+//"wmU-k3-ICP.text" = "للبيع";
 
 /* Class = "UIButton"; normalTitle = "Post an Ad"; ObjectID = "xV3-6S-fLP"; */
 "xV3-6S-fLP.normalTitle" = "النشر";

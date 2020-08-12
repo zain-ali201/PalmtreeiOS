@@ -42,6 +42,10 @@ class Splash: UIViewController, NVActivityIndicatorViewable {
         super.viewWillDisappear(animated)
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     //MARK: - Custom
     
     func showLoader(){
@@ -103,7 +107,6 @@ class Splash: UIViewController, NVActivityIndicatorViewable {
 
                 defaults.set(successResponse.data.internetDialog.cancelBtn, forKey: "cancelbtnNew")
                 defaults.set(successResponse.data.mainColor, forKey: "mainColor")
-                self.appDelegate.customizeNavigationBar(barTintColor: Constants.hexStringToUIColor(hex: successResponse.data.mainColor))
                 defaults.set(successResponse.data.isRtl, forKey: "isRtl")
                 defaults.set(successResponse.data.gmapLang, forKey: "langCod")
                 defaults.set(successResponse.data.notLoginMsg, forKey: "notLogin")
@@ -248,8 +251,7 @@ class Splash: UIViewController, NVActivityIndicatorViewable {
                 {
                     if isLang != "1"
                     {
-                        let langCtrl = storyboard.instantiateViewController(withIdentifier: LangViewController.className) as! LangViewController
-                        self.navigationController?.pushViewController(langCtrl, animated: true)
+                        
                     }
                     else
                     {

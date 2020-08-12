@@ -100,6 +100,7 @@ class CheckoutViewController: UIViewController, NVActivityIndicatorViewable
         // Collect card details
         let cardParams = cardTextField.cardParams
         let paymentMethodParams = STPPaymentMethodParams(card: cardParams, billingDetails: nil, metadata: nil)
+        
         let paymentIntentParams = STPPaymentIntentParams(clientSecret: paymentIntentClientSecret)
         paymentIntentParams.paymentMethodParams = paymentMethodParams
 
@@ -109,10 +110,10 @@ class CheckoutViewController: UIViewController, NVActivityIndicatorViewable
             switch (status)
             {
                 case .failed:
-                  self.displayAlert(title: "Payment failed", message: error?.localizedDescription ?? "")
+//                  self.displayAlert(title: "Payment failed", message: error?.localizedDescription ?? "")
                   break
                 case .canceled:
-                  self.displayAlert(title: "Payment canceled", message: error?.localizedDescription ?? "")
+//                  self.displayAlert(title: "Payment canceled", message: error?.localizedDescription ?? "")
                   break
                 case .succeeded:
                 //          self.displayAlert(title: "Payment succeeded", message: paymentIntent?.description ?? "")

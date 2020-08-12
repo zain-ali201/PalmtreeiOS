@@ -1,5 +1,4 @@
 PODS:
-  - ActionSheetPicker-3.0 (2.3.0)
   - AFNetworking (4.0.0):
     - AFNetworking/NSURLSession (= 4.0.0)
     - AFNetworking/Reachability (= 4.0.0)
@@ -21,10 +20,8 @@ PODS:
     - SwiftyJSON (~> 4.0.0)
   - AlamofireImage (3.3.1):
     - Alamofire (~> 4.5)
-  - Cosmos (13.0.0)
   - DeviceKit (1.4.0)
   - DropDown (2.0.2)
-  - ExpandableCell (1.3.0)
   - FBSDKCoreKit (5.10.0):
     - FBSDKCoreKit/Basics (= 5.10.0)
     - FBSDKCoreKit/Core (= 5.10.0)
@@ -67,16 +64,7 @@ PODS:
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/Logger (~> 2.1)
     - Protobuf (~> 3.1)
-  - Gallery (2.2.2)
-  - Google-Mobile-Ads-SDK (7.50.0):
-    - GoogleAppMeasurement (~> 6.0)
   - GoogleAnalytics (3.17.0)
-  - GoogleAppMeasurement (6.1.1):
-    - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
-    - GoogleUtilities/MethodSwizzler (~> 6.0)
-    - GoogleUtilities/Network (~> 6.0)
-    - "GoogleUtilities/NSData+zlib (~> 6.0)"
-    - nanopb (~> 0.3)
   - GoogleMaps (3.1.0):
     - GoogleMaps/Maps (= 3.1.0)
   - GoogleMaps/Base (3.1.0)
@@ -104,22 +92,6 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.1.3)
     - "GoogleToolboxForMac/NSString+URLArguments (= 2.1.3)"
   - "GoogleToolboxForMac/NSString+URLArguments (2.1.3)"
-  - GoogleUtilities/AppDelegateSwizzler (6.3.0):
-    - GoogleUtilities/Environment
-    - GoogleUtilities/Logger
-    - GoogleUtilities/Network
-  - GoogleUtilities/Environment (6.3.0)
-  - GoogleUtilities/Logger (6.3.0):
-    - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (6.3.0):
-    - GoogleUtilities/Logger
-  - GoogleUtilities/Network (6.3.0):
-    - GoogleUtilities/Logger
-    - "GoogleUtilities/NSData+zlib"
-    - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (6.3.0)"
-  - GoogleUtilities/Reachability (6.3.0):
-    - GoogleUtilities/Logger
   - GTMOAuth2 (1.1.6):
     - GTMSessionFetcher (~> 1.1)
   - GTMSessionFetcher (1.1.12):
@@ -133,13 +105,8 @@ PODS:
     - AlamofireImage (~> 3.0)
     - ImageSlideshow/Core
   - ImageSlideshow/Core (1.8.1)
-  - IOSLinkedInAPIFix (2.0.4):
-    - AFNetworking (>= 2.0.0)
   - IQKeyboardManagerSwift (5.0.7)
   - JGProgressHUD (2.0.3)
-  - LinkedinSwift (1.7.9):
-    - AFNetworking (>= 3.1.0)
-    - IOSLinkedInAPIFix (>= 2.0.4)
   - Mapbox-iOS-SDK (5.4.0)
   - MapboxGeocoder.swift (0.11.0)
   - MarqueeLabel/Swift (3.2.0)
@@ -154,44 +121,32 @@ PODS:
   - NVActivityIndicatorView (4.1.1):
     - NVActivityIndicatorView/Presenter (= 4.1.1)
   - NVActivityIndicatorView/Presenter (4.1.1)
-  - OnboardKit (1.0.0)
   - OpalImagePicker (2.0.0)
-  - PersonalizedAdConsent (1.0.3)
-  - Popover (1.2.2)
   - Protobuf (3.5.0)
-  - RangeSeekSlider (1.7.0)
   - SDWebImage (4.2.3):
     - SDWebImage/Core (= 4.2.3)
   - SDWebImage/Core (4.2.3)
   - SlideMenuControllerSwift (4.0.0)
   - SnapKit (4.0.1)
   - Stripe (19.3.0)
-  - SwiftCheckboxDialog (1.0.0)
-  - SwiftyGif (4.2.0)
   - SwiftyJSON (4.0.0)
-  - SwiftyStoreKit (0.12.0)
   - TextFieldEffects (1.4.0)
   - "UITextField+Shake (1.2.1)"
   - XLPagerTabStrip (8.1.0)
-  - YouTubePlayer (0.4.0)
+  - YNExpandableCell (1.2.1)
 
 DEPENDENCIES:
-  - ActionSheetPicker-3.0
   - AFNetworking
   - Alamofire
   - Alamofire-SwiftyJSON
-  - Cosmos
   - DeviceKit
   - DropDown
-  - ExpandableCell
   - FBSDKCoreKit
   - FBSDKLoginKit
   - FBSDKShareKit
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Messaging
-  - Gallery
-  - Google-Mobile-Ads-SDK
   - GoogleAnalytics
   - GoogleMaps
   - GooglePlacePicker
@@ -201,39 +156,29 @@ DEPENDENCIES:
   - ImageSlideshow/Alamofire
   - IQKeyboardManagerSwift
   - JGProgressHUD
-  - LinkedinSwift (>= 1.7.9)
   - Mapbox-iOS-SDK
   - Mapbox-iOS-SDK (~> 5.4)
+  - MapboxGeocoder.swift
   - MapboxGeocoder.swift (~> 0.11)
   - NotificationBannerSwift
   - NVActivityIndicatorView
-  - OnboardKit
   - OpalImagePicker
-  - PersonalizedAdConsent
-  - Popover
-  - RangeSeekSlider
   - SDWebImage
   - SlideMenuControllerSwift
   - Stripe
-  - SwiftCheckboxDialog
-  - SwiftyGif
-  - SwiftyStoreKit
   - TextFieldEffects
   - "UITextField+Shake"
   - XLPagerTabStrip (~> 8.1)
-  - YouTubePlayer
+  - YNExpandableCell
 
 SPEC REPOS:
   trunk:
-    - ActionSheetPicker-3.0
     - AFNetworking
     - Alamofire
     - Alamofire-SwiftyJSON
     - AlamofireImage
-    - Cosmos
     - DeviceKit
     - DropDown
-    - ExpandableCell
     - FBSDKCoreKit
     - FBSDKLoginKit
     - FBSDKShareKit
@@ -243,58 +188,42 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseInstanceID
     - FirebaseMessaging
-    - Gallery
-    - Google-Mobile-Ads-SDK
     - GoogleAnalytics
-    - GoogleAppMeasurement
     - GoogleMaps
     - GooglePlacePicker
     - GooglePlaces
     - GoogleSignIn
     - GoogleToolboxForMac
-    - GoogleUtilities
     - GTMOAuth2
     - GTMSessionFetcher
     - ImageSlideshow
-    - IOSLinkedInAPIFix
     - IQKeyboardManagerSwift
     - JGProgressHUD
-    - LinkedinSwift
     - Mapbox-iOS-SDK
     - MapboxGeocoder.swift
     - MarqueeLabel
     - nanopb
     - NotificationBannerSwift
     - NVActivityIndicatorView
-    - OnboardKit
     - OpalImagePicker
-    - PersonalizedAdConsent
-    - Popover
     - Protobuf
-    - RangeSeekSlider
     - SDWebImage
     - SlideMenuControllerSwift
     - SnapKit
     - Stripe
-    - SwiftCheckboxDialog
-    - SwiftyGif
     - SwiftyJSON
-    - SwiftyStoreKit
     - TextFieldEffects
     - "UITextField+Shake"
     - XLPagerTabStrip
-    - YouTubePlayer
+    - YNExpandableCell
 
 SPEC CHECKSUMS:
-  ActionSheetPicker-3.0: eef157d75e151f255c5333d26656c7fbfe905a51
   AFNetworking: d9fdf484a3c723ec3c558a41cc5754c7e845ee77
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   Alamofire-SwiftyJSON: 2b3649d57dc7bb2880fb8b86f8bb969397666916
   AlamofireImage: 3b35b586853abaf94ca1250f4e94cff3c21a4c0d
-  Cosmos: af3973becc045af335b64498c9812034876b7661
   DeviceKit: fa74d97499660e88081718b16688e19217595dba
   DropDown: 75562633a203f57a917021b4edb96c76f293b0ec
-  ExpandableCell: 69ca7d71971c171473a7a30964d2127f4c6ceaf6
   FBSDKCoreKit: f9bae468a078f20c05c73450825ccd54cfafbbb7
   FBSDKLoginKit: 4ece964272a52c4e1363d5c048a545e33761491b
   FBSDKShareKit: 09c3b7166802a3629970fa00d45d59cf6942df37
@@ -304,48 +233,35 @@ SPEC CHECKSUMS:
   FirebaseCore: 3c02ec652db3d03fdc8bc6d9154af3e20d64b6f5
   FirebaseInstanceID: 81df5805a08001e69138664bdd02c6719a9ac80f
   FirebaseMessaging: dfdcd307c2382290a1e297a81d0f18370f5b1bcd
-  Gallery: 634ea7d58b93fcb8e787a846febac73ec354e7d9
-  Google-Mobile-Ads-SDK: d48dbaf5bae1ab7a94a9786f493c26c454bc6f16
   GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
-  GoogleAppMeasurement: 86a82f0e1f20b8eedf8e20326530138fd71409de
   GoogleMaps: 5c13302e6fe6bb6e686b267196586b91cd594225
   GooglePlacePicker: fa975116ac202ac29822c0a79758ea1c4db5a95f
   GooglePlaces: e874db179f2675c4f3eeda0b686b540273a578b0
   GoogleSignIn: 3fdaa34a2ba04dbd7a25d7db39aecb0da98d5bdc
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
-  GoogleUtilities: 9c2c544202301110b29f7974a82e77fdcf12bf51
   GTMOAuth2: e8b6512c896235149df975c41d9a36c868ab7fba
   GTMSessionFetcher: ebaa1f79a5366922c1735f1566901f50beba23b7
   ImageSlideshow: 634865d7d4e96f21e3830a31b51bde768cc94cea
-  IOSLinkedInAPIFix: a520fd805a03dade35f42904c7d89ded2a84c752
   IQKeyboardManagerSwift: 30fb3a61de1af53a95e02b80fb54ed0a19d5ede5
   JGProgressHUD: 12b20a8f4ffe05258f8635c1ab92816e451f904d
-  LinkedinSwift: f92083bf0404938768cc2cfd8c277205b566236f
   Mapbox-iOS-SDK: 2b58f752d94e57e95b8e54f3b52569199f6efdba
   MapboxGeocoder.swift: b78a3d2f42bef7d51edbb2444768634e5de722db
   MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NotificationBannerSwift: 5d0191ae57c4b38e484dab4912e32d1ed99fce61
   NVActivityIndicatorView: 60109b9bf46efc2e71ab81453196ccdfdfeea870
-  OnboardKit: 6828f2a4cd8a0f5451f7ebcaa308f84a29df3d1e
   OpalImagePicker: efc91612ef5b3849314801f68fddc26200da9435
-  PersonalizedAdConsent: b50a8a5d6065b6db23121e8fcc0dce2ae983f6ea
-  Popover: 21e357f86d45c8d9e29a41a4adbca3664d6e511f
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
-  RangeSeekSlider: 0386c5a9aa5ebcb2fa5238e8a627280cf46c7c0a
   SDWebImage: 791bb72962b3492327ddcac4b1880bd1b5458431
   SlideMenuControllerSwift: 021d6318201c53d4d4d3710517d43d6c556c7dd0
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   Stripe: dd5bfdd5f1daed4f9ddbfb47e9449ec302f9f708
-  SwiftCheckboxDialog: 961526e6a278298b2c7857cd4a5a1e7f034ddb6b
-  SwiftyGif: a149bf84df23370592f3f075561ae02c8632a314
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
-  SwiftyStoreKit: 59c57f4aa11d3c564e7e5f589eae8bf98ac59f3d
   TextFieldEffects: 4ee41b5216e674d55fb6ac25107bf1af7629176f
   "UITextField+Shake": 298ac5a0f239d731bdab999b19b628c956ca0ac3
   XLPagerTabStrip: 22d4c58200d7c105e0e407ab6bfd01a5d85014be
-  YouTubePlayer: 028451f6772f372d4759866db99824c676ac1473
+  YNExpandableCell: f71457eddc5f2d607de5a2aef545325b0b7622e4
 
-PODFILE CHECKSUM: 309ecfd3a68eb0fbef793167c7b1b1604f3f5179
+PODFILE CHECKSUM: aeba3cffcededc3ee6f46088432a98d38d64a03d
 
 COCOAPODS: 1.9.3

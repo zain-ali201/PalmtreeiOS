@@ -436,13 +436,6 @@ class ChatController: UIViewController, UITableViewDelegate, UITableViewDataSour
       //}
     }
     
-    @IBAction func actionNotificationName(_ sender: UIButton)
-    {
-        let addDetailVc = self.storyboard?.instantiateViewController(withIdentifier: "AddDetailController") as! AddDetailController
-        addDetailVc.ad_id = Int(ad_id)!
-        self.navigationController?.pushViewController(addDetailVc, animated: true)
-    }
-    
     //MARK:- API Call
     
     func getChatData(parameter: NSDictionary) {

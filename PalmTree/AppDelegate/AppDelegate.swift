@@ -17,10 +17,7 @@ import SlideMenuControllerSwift
 import IQKeyboardManagerSwift
 import GoogleMaps
 import GooglePlacePicker
-import SwiftyStoreKit
 import NotificationBannerSwift
-import GoogleMobileAds
-import LinkedinSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate, NotificationBannerDelegate {
@@ -32,17 +29,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
     let defaults = UserDefaults.standard
     var deviceFcmToken = "0"
-    var interstitial: GADInterstitial?
-    
-    func createAndLoadInterstitial() -> GADInterstitial? {
-        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3521346996890484/7679081330")
-        guard let interstitial = interstitial else {
-            return nil
-        }
-        let request = GADRequest()
-        interstitial.load(request)
-        return interstitial
-    }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -74,19 +60,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         defaults.removeObject(forKey: "isGuest")
         defaults.synchronize()
 
-        //For in App Purchase
-        SwiftyStoreKit.completeTransactions(atomically: true) { (purchases) in
-            for purchase in purchases {
-                switch purchase.transaction.transactionState {
-                case .purchased, .restored:
-                    if purchase.needsFinishTransaction{
-                        SwiftyStoreKit.finishTransaction(purchase.transaction)
-                    }
-                case .failed, .purchasing, .deferred:
-                    break
-                }
-            }
-        }
         
         UITextField.appearance().tintColor = .black
         UITextView.appearance().tintColor = .black
@@ -112,10 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let willHandleByFacebook = ApplicationDelegate.shared.application(app, open: url, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String, annotation: options[UIApplicationOpenURLOptionsKey.annotation])
 
         let willHandleByGoogle =  GIDSignIn.sharedInstance().handle(url, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String, annotation: options[UIApplicationOpenURLOptionsKey.annotation])
-        // Linkedin sdk handle redirect
-        if LinkedinSwiftHelper.shouldHandle(url) {
-            return LinkedinSwiftHelper.application(app, open: url, sourceApplication: nil, annotation: nil)
-        }
+       
         
         return willHandleByGoogle || willHandleByFacebook || false
     }
@@ -194,56 +164,7 @@ extension AppDelegate
     
     func moveToHome()
     {
-        let HomeVC = storyboard.instantiateViewController(withIdentifier: HomeController.className) as! HomeController
         
-        if defaults.bool(forKey: "isRtl")
-        {
-            let rightViewController = storyboard.instantiateViewController(withIdentifier: LeftController.className) as! LeftController
-            let navi: UINavigationController = UINavigationController(rootViewController: HomeVC)
-            let slideMenuController = SlideMenuController(mainViewController: navi, rightMenuViewController: rightViewController)
-            navi.modalPresentationStyle = .fullScreen
-            self.window?.rootViewController = slideMenuController
-        }
-        else
-        {
-            let leftVC = storyboard.instantiateViewController(withIdentifier: LeftController.className) as! LeftController
-            let navi : UINavigationController = UINavigationController(rootViewController: HomeVC)
-            let slideMenuController = SlideMenuController(mainViewController: navi, leftMenuViewController: leftVC)
-            navi.modalPresentationStyle = .fullScreen
-            self.window?.rootViewController = slideMenuController
-        }
-        self.window?.makeKeyAndVisible()
-    }
-    
-    func moveToLanguageCtrl()
-    {
-        let HomeVC = storyboard.instantiateViewController(withIdentifier: LangViewController.className) as! LangViewController
-        if defaults.bool(forKey: "isRtl")
-        {
-            let rightViewController = storyboard.instantiateViewController(withIdentifier: LeftController.className) as! LeftController
-            let navi: UINavigationController = UINavigationController(rootViewController: HomeVC)
-             navi.modalPresentationStyle = .fullScreen
-            let slideMenuController = SlideMenuController(mainViewController: navi, rightMenuViewController: rightViewController)
-            self.window?.rootViewController = slideMenuController
-        }
-        else
-        {
-            let leftVC = storyboard.instantiateViewController(withIdentifier: LeftController.className) as! LeftController
-            let navi : UINavigationController = UINavigationController(rootViewController: HomeVC)
-             navi.modalPresentationStyle = .fullScreen
-            let slideMenuController = SlideMenuController(mainViewController: navi, leftMenuViewController: leftVC)
-            self.window?.rootViewController = slideMenuController
-        }
-        
-        self.window?.makeKeyAndVisible()
-    }
- 
-    func moveToLanguage() {
-        let langVC = storyboard.instantiateViewController(withIdentifier: LangViewController.className) as! LangViewController
-        let nav: UINavigationController = UINavigationController(rootViewController: langVC)
-         nav.modalPresentationStyle = .fullScreen
-        self.window?.rootViewController = nav
-        self.window?.makeKeyAndVisible()
     }
     
     func moveToLogin() {
@@ -253,44 +174,6 @@ extension AppDelegate
         self.window?.rootViewController = nav
         self.window?.makeKeyAndVisible()
     }
-   
-    
-    func moveToProfile() {
-        let proVc = storyboard.instantiateViewController(withIdentifier: ProfileController.className) as! ProfileController
-        if defaults.bool(forKey: "isRtl") {
-            let rightViewController = storyboard.instantiateViewController(withIdentifier: LeftController.className) as! LeftController
-            let navi: UINavigationController = UINavigationController(rootViewController: proVc)
-            let slideMenuController = SlideMenuController(mainViewController: navi, rightMenuViewController: rightViewController)
-             navi.modalPresentationStyle = .fullScreen
-            self.window?.rootViewController = slideMenuController
-        } else {
-            let leftVC = storyboard.instantiateViewController(withIdentifier: LeftController.className) as! LeftController
-            let navi : UINavigationController = UINavigationController(rootViewController: proVc)
-             navi.modalPresentationStyle = .fullScreen
-            let slideMenuController = SlideMenuController(mainViewController: navi, leftMenuViewController: leftVC)
-            self.window?.rootViewController = slideMenuController
-        }
-        self.window?.makeKeyAndVisible()
-    }
-    
-    func moveToAdvanceSearch() {
-        let proVc = storyboard.instantiateViewController(withIdentifier: AdvancedSearchController.className) as! AdvancedSearchController
-        if defaults.bool(forKey: "isRtl") {
-            let rightViewController = storyboard.instantiateViewController(withIdentifier: LeftController.className) as! LeftController
-            let navi: UINavigationController = UINavigationController(rootViewController: proVc)
-             navi.modalPresentationStyle = .fullScreen
-            let slideMenuController = SlideMenuController(mainViewController: navi, rightMenuViewController: rightViewController)
-            self.window?.rootViewController = slideMenuController
-        } else {
-            let leftVC = storyboard.instantiateViewController(withIdentifier: LeftController.className) as! LeftController
-            let navi : UINavigationController = UINavigationController(rootViewController: proVc)
-             navi.modalPresentationStyle = .fullScreen
-            let slideMenuController = SlideMenuController(mainViewController: navi, leftMenuViewController: leftVC)
-            self.window?.rootViewController = slideMenuController
-        }
-        self.window?.makeKeyAndVisible()
-    }
-    
     
     
     func presentController(ShowVC: UIViewController) {

@@ -17,7 +17,6 @@ import AuthenticationServices
 import CryptoKit
 import Firebase
 import AuthenticationServices
-import LinkedinSwift
 
 class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndicatorViewable, GIDSignInUIDelegate, GIDSignInDelegate, UIScrollViewDelegate{
     
@@ -60,8 +59,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
     var getLoginDetails = [LoginData]()
     var isVerifyOn = false
     let loginManager = LoginManager()
-    
-    var accessToken: LISDKAccessToken?
 
     // MARK: Application Life Cycle
     
@@ -195,61 +192,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
     @IBAction func actionSubmit(_ sender: Any)
     {
         self.logIn()
-    }
-    
-    @IBAction func actionLinkedinSubmit(_ sender: Any)
-    {
-         let linkedinHelper = LinkedinSwiftHelper(configuration: LinkedinSwiftConfiguration(clientId: "Enter your LinkedIn clientId here", clientSecret: "Enter your LinkedIn clientSecret here", state: "dwweewg43v", permissions: ["r_liteprofile", "r_emailaddress"], redirectUrl: "Enter your LinkedIn redirectUrl here"),nativeAppChecker: WebLoginOnly())
-        linkedinHelper.authorizeSuccess({ (token) in
-
-                print(token)
-
-                let url = "https://api.linkedin.com/v2/me"
-                linkedinHelper.requestURL(url, requestType: LinkedinSwiftRequestGet, success: { (response) -> Void in
-                  let dict = response.jsonObject
-                  print(dict!)
-                  let weatherArray = dict!["profilePicture"] as? [String:Any]
-                    print(weatherArray)
-                    let imgProfile = weatherArray as? [String:Any]
-                    let linkedinImg = imgProfile!["displayImage"]
-                        print(linkedinImg)
-                
-                   let emailurl = "https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))"
-                    linkedinHelper.requestURL(emailurl, requestType: LinkedinSwiftRequestGet, success: { (response) -> Void in
-                        print(response)
-                        let dict = response.jsonObject
-                        print(dict!)
-                        if let weatherArray = dict!["elements"] as? [[String:Any]],
-                           let weather = weatherArray.first {
-                            let handle = weather["handle~"]
-                               print(handle)
-                            let email = handle as? [String:Any]
-                            let emilaagay = email!["emailAddress"]
-                            print(emilaagay)
-                            let param: [String: Any] = [
-                                "email":emilaagay!,
-                                "type":"social",
-                                "profile_img":linkedinImg!
-                            ]
-                            print(param)
-                            defaults.set(true, forKey: "isSocial")
-                            defaults.set(emilaagay, forKey: "email")
-                            defaults.set("1122", forKey: "password")
-                            defaults.synchronize()
-                            self.loginUser(parameters: param as NSDictionary)
-                            // the value is an optional.
-                        }
-                    })
-
-                }) {(error) -> Void in
-                    print(error.localizedDescription)
-                    //handle the error
-            }
-        }, error: { (error) -> Void in
-            //Encounter error: error.localizedDescription
-        }, cancel: { () -> Void in
-            //User Cancelled!
-        })
     }
     
     func logIn() {

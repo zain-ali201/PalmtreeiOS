@@ -9,13 +9,12 @@
 import Foundation
 import UIKit
 import DeviceKit
-import Gallery
+//import Gallery
 
 var userDetail:UserObject? = UserObject()
 var languageCode = ""
 var languageBundle : Bundle?
 
-var admobDelegate = AdMobDelegate()
 var currentVc: UIViewController!
 
 var homeVC: HomeController!
@@ -28,14 +27,16 @@ var categoryArray = [CatIcon]()
 var categoriesArray = [CategoryObject]()
 
 var stripeAPIKey = "pk_test_ZDUz26JhS1bTxJzimCXdVR6C"
-var stripeBaseURL = "https://sprintsols.com/palmtree/create.php"
+var stripeBaseURL = "https://palmtreestore.net/create.php"
+//var stripeBaseURL = "https://sprintsols.com/palmtree/create.php"
 var mapboxToken = "pk.eyJ1IjoicGFsbXRyZWUiLCJhIjoiY2tjeW56ZXR4MDRhcTJybXNiZjhjbjI5NCJ9.luXGYrraO0lqWAxR22x2Hg"
 
 class Constants
 {
     struct  URL
     {
-        static let baseUrl = "https://sprintsols.com/palmtree/wp-json/adforest/v1/"
+        static let baseUrl = "https://palmtreestore.net/wp-json/adforest/v1/"
+//        static let baseUrl = "https://sprintsols.com/palmtree/wp-json/adforest/v1/"
         
         static let homeData = "home"
         static let category = "ad_post/category"

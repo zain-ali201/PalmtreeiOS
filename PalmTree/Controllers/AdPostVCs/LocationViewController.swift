@@ -89,16 +89,17 @@ class LocationViewController:  UIViewController, GMSMapViewDelegate, GMSAutocomp
     
     func updateMapLocation()
     {
-        if latitudeStr != nil && longitudeStr != nil && latitudeStr != "0.0"
+        if latitude != nil && longitude != nil && latitude != 0
         {
-            let camera = GMSCameraPosition.camera(withLatitude: Double(latitudeStr!)!, longitude: Double(longitudeStr!)!, zoom: 15.0)
+            let camera = GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: 15.0)
             mapView.camera = camera
             
             mapView.isMyLocationEnabled = true
             mapView.settings.myLocationButton = true
             
             let marker = GMSMarker()
-            marker.position = CLLocationCoordinate2D(latitude: CLLocationDegrees(Double(latitudeStr!)!), longitude: CLLocationDegrees(Double(longitudeStr!)!))
+            marker.position = CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
+            marker.isDraggable = true
             marker.map = mapView
         }
         else if userDetail?.currentLocation != nil && userDetail?.currentLocation.coordinate.latitude != 0.0
@@ -171,7 +172,7 @@ class LocationViewController:  UIViewController, GMSMapViewDelegate, GMSAutocomp
         adDetailObj.location.address = locationName
         DispatchQueue.main.async
         {
-            self.locContactVC.lblLocation.text = self.locationName
+//            self.locContactVC.lblLocation.text = self.locationName
             self.navigationController?.popViewController(animated: true)
         }
     }

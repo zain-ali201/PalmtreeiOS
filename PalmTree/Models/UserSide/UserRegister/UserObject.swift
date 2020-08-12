@@ -18,6 +18,7 @@ struct UserObject
     var userEmail : String!
     var currentLocation: CLLocation! = CLLocation()
     var currentAddress = ""
+    var locationName = ""
     var country = ""
     var isAccountConfirm : Bool!
 }

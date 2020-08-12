@@ -34,6 +34,9 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     @IBOutlet weak var lblFixedPrice : UILabel!
     @IBOutlet weak var lblDetailText : UILabel!
     @IBOutlet weak var lblDetail : UILabel!
+    @IBOutlet weak var lblContactText : UILabel!
+    @IBOutlet weak var lblPhone : UILabel!
+    @IBOutlet weak var lblWhatsapp : UILabel!
     
     @IBOutlet weak var btnCancel: UIButton!
     @IBOutlet weak var btnPreview: UIButton!
@@ -53,6 +56,9 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     @IBOutlet weak var txtPhone: UITextField!
     @IBOutlet weak var txtWhatsapp: UITextField!
     
+    @IBOutlet weak var phoneSwitch: UISwitch!
+    @IBOutlet weak var whatsappSwitch: UISwitch!
+    
     var fromVC = ""
     var priceFlag = false
 
@@ -60,8 +66,8 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     var imgCtrlCount = 0
     var imageIDArray = [Int]()
     
-    var numberFlag = false
-    var whatsappFlag = false
+    var numberFlag = true
+    var whatsappFlag = true
     
     //MARK:- Collectionview Properties
     var isDrag : Bool = false
@@ -92,13 +98,18 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if homeVC != nil
+        if fromVC == "myads"
         {
-            homeVC.getGPSLocation()
+            let parameter: [String: Any] = ["ad_id": adDetailObj.adId]
+            self.addDetail(param: parameter as NSDictionary)
         }
-        
-        txtPhone.text = userDetail?.phone
-        txtWhatsapp.text = userDetail?.phone
+        else
+        {
+            if homeVC != nil
+            {
+                homeVC.getGPSLocation()
+            }
+        }
         
         if languageCode == "ar"
         {
@@ -107,8 +118,13 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             txtTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             txtDescp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             txtPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            txtPhone.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            txtWhatsapp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblDescp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblContactText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblPhone.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblWhatsapp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblCurrency.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblFixedPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             btnCategory.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -125,41 +141,68 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             txtTitle.textAlignment = .right
             txtDescp.textAlignment = .right
             txtPrice.textAlignment = .right
+            txtPhone.textAlignment = .right
+            txtWhatsapp.textAlignment = .right
             lblDescp.textAlignment = .right
         }
         
-        adDetailObj.priceType = "Fixed"
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
-        var contactStr = userDetail?.userEmail ?? ""
-        
-        if adDetailObj.phone != ""
+    
+        populateData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    func populateData()
+    {
+        if adDetailObj.location.address == ""
         {
-            contactStr = contactStr + ", " + adDetailObj.phone
+            adDetailObj.location.address = userDetail?.currentAddress ?? ""
+            adDetailObj.location.lat = userDetail?.currentLocation.coordinate.latitude
+            adDetailObj.location.lng = userDetail?.currentLocation.coordinate.longitude
+            lblEmail.text = userDetail?.currentAddress
+        }
+        else
+        {
+            lblEmail.text = adDetailObj.location.address
         }
         
-        if adDetailObj.whatsapp != ""
+        if adDetailObj.adTitle != "" && fromVC == "myads"
         {
-            contactStr = contactStr + ", " + adDetailObj.whatsapp
+            txtTitle.text = adDetailObj.adTitle
         }
-        
-        if adDetailObj.location.address != ""
-        {
-            contactStr = contactStr + ", " + adDetailObj.location.address
-        }
-        
-        lblEmail.text = contactStr
         
         if !txtDescp.text.isEmpty
         {
             lblDescp.alpha = 0
         }
         
-        if AddsHandler.sharedInstance.selectedCategory != nil
+        if adDetailObj.adDesc != "" && fromVC == "myads"
         {
-            lblCategory.text = AddsHandler.sharedInstance.selectedCategory.name
+            lblDescp.alpha = 0
+            txtDescp.attributedText = adDetailObj.adDesc.htmlToAttributedString
+        }
+        
+        if adDetailObj.adSubCategory != ""
+        {
+            lblCategory.text = adDetailObj.adSubCategory
+        }
+        else if adDetailObj.adCategory != ""
+        {
+            lblCategory.text = adDetailObj.adCategory
         }
         
         if adDetailObj.adCategory == "Motors" || adDetailObj.adCategory == "Property"
@@ -182,18 +225,52 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         {
             lblCategory.text = adDetailObj.adCategory
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        
+        if adDetailObj.phone != ""
+        {
+            txtPhone.text = adDetailObj.phone
+            txtWhatsapp.text = adDetailObj.phone
+            
+            numberFlag = true
+            whatsappFlag = true
+            
+            phoneSwitch.setOn(true, animated: false)
+            whatsappSwitch.setOn(true, animated: false)
+        }
+        else
+        {
+            if fromVC == "myads"
+            {
+                numberFlag = false
+                whatsappFlag = false
+                
+                phoneSwitch.setOn(false, animated: false)
+                whatsappSwitch.setOn(false, animated: false)
+            }
+            else
+            {
+                numberFlag = true
+                whatsappFlag = true
+                
+                txtPhone.text = userDetail?.phone
+                txtWhatsapp.text = userDetail?.phone
+            }
+        }
+        
+        if adDetailObj.priceType != "" && fromVC == "myads"
+        {
+            lblFixedPrice.text = adDetailObj.priceType
+        }
+        else
+        {
+            lblFixedPrice.text = "Fixed"
+            adDetailObj.priceType = "Fixed"
+        }
+        
+        if adDetailObj.adPrice != "" && fromVC == "myads"
+        {
+            txtPrice.text = adDetailObj.adPrice
+        }
     }
     
     //MARK:- IBActions
@@ -250,8 +327,12 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     
     @IBAction func categoryBtnACtion(_ sender: Any)
     {
-        let selectCategoryVC = self.storyboard?.instantiateViewController(withIdentifier: "TblViewController") as! TblViewController
-        self.navigationController?.pushViewController(selectCategoryVC, animated: true)
+//        let selectCategoryVC = self.storyboard?.instantiateViewController(withIdentifier: "TblViewController") as! TblViewController
+//        self.navigationController?.pushViewController(selectCategoryVC, animated: true)
+        
+        let categoryVC = self.storyboard?.instantiateViewController(withIdentifier: "CategoryVC") as! CategoryVC
+        categoryVC.fromVC = "adPost"
+        self.navigationController?.pushViewController(categoryVC, animated: true)
     }
     
     @IBAction func priceBtnACtion(_ sender: Any)
@@ -294,12 +375,16 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     
     @IBAction func locationBtnACtion(_ sender: Any)
     {
-//        let contactVC = self.storyboard?.instantiateViewController(withIdentifier: "LocationContactVC") as! LocationContactVC
-//        self.navigationController?.pushViewController(contactVC, animated: true)
+//        let mapboxVC = self.storyboard?.instantiateViewController(withIdentifier: "MapBoxViewController") as! MapBoxViewController
+//        mapboxVC.latitude = userDetail?.currentLocation.coordinate.latitude
+//        mapboxVC.longitude = userDetail?.currentLocation.coordinate.longitude
+//        self.navigationController?.pushViewController(mapboxVC, animated: true)
         
         let locVC = self.storyboard?.instantiateViewController(withIdentifier: "LocationViewController") as! LocationViewController
-        locVC.adPostVC = self
+        locVC.latitude = userDetail?.currentLocation.coordinate.latitude
+        locVC.longitude = userDetail?.currentLocation.coordinate.longitude
         self.navigationController?.pushViewController(locVC, animated: true)
+        
     }
     
     @IBAction func switchAction(switchC: UISwitch)
@@ -342,7 +427,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     
     @IBAction func postAdBtnAction(_ sender: Any)
     {
-        if adDetailObj.images.count == 0
+        if adDetailObj.images.count == 0 && fromVC == ""
         {
             var msg = "Please add atleast one photo."
             
@@ -357,9 +442,16 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         {
             self.txtTitle.shake(6, withDelta: 10, speed: 0.06)
         }
-        else if !(txtDescp.text!.isEmpty) && txtDescp.text.count < 20
+        else if txtDescp.text!.isEmpty || txtDescp.text.count < 20
         {
-            self.lblDescp.shake(6, withDelta: 10, speed: 0.06)
+            var msg = "Please enter minimum 20 characters in description"
+            
+            if languageCode == "ar"
+            {
+                msg = "الرجاء إدخال 20 حرفًا كحد أدنى في الوصف"
+            }
+            
+            self.showToast(message: msg)
         }
         else if txtPrice.text!.isEmpty
         {
@@ -378,7 +470,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         }
         else if whatsappFlag && txtPhone.text!.isEmpty
         {
-            var msg = "Please add your whatsapp number."
+            var msg = "Please add your whatsApp number."
             
             if languageCode == "ar"
             {
@@ -389,12 +481,24 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         }
         else
         {
-            adDetailObj.phone = txtPhone.text!
-            adDetailObj.whatsapp = txtPhone.text!
-            
-            let param: [String: Any] = ["is_update": ""]
-            print(param)
-            self.adPost(param: param as NSDictionary)
+            if fromVC == "myads"
+            {
+                adDetailObj.phone = txtPhone.text!
+                adDetailObj.whatsapp = txtWhatsapp.text!
+                
+                let param: [String: Any] = ["is_update": adDetailObj.adId]
+                print(param)
+                self.adPost(param: param as NSDictionary)
+            }
+            else
+            {
+                adDetailObj.phone = txtPhone.text!
+                adDetailObj.whatsapp = txtWhatsapp.text!
+                
+                let param: [String: Any] = ["is_update": ""]
+                print(param)
+                self.adPost(param: param as NSDictionary)
+            }
         }
         
 //        let featuredVC = self.storyboard?.instantiateViewController(withIdentifier: "FeaturedVC") as! FeaturedVC
@@ -516,98 +620,99 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             "ad_bump_ad": true,
             "name": self.txtTitle.text!,
             "ad_price" : self.txtPrice.text!,
+            "ad_price_type" : lblFixedPrice.text!,
             "ad_title": self.txtTitle.text!,
             "ad_description" : txtDescp.text,
-            "ad_cats1" : adDetailObj.catID
+            "ad_cats1" : adDetailObj.subcatID > 0 ? adDetailObj.subcatID : adDetailObj.catID
         ]
         
-        var customDictionary: [String: Any] = [String: Any]()
-        
-        if adDetailObj.motorCatObj.regNo != ""
-        {
-            customDictionary.merge(with: ["regNo" : adDetailObj.motorCatObj.regNo])
-        }
-
-        if adDetailObj.motorCatObj.sellerType != ""
-        {
-            customDictionary.merge(with: ["sellerType" : adDetailObj.motorCatObj.sellerType])
-        }
-        
-        if adDetailObj.motorCatObj.make != ""
-        {
-            customDictionary.merge(with: ["make" : adDetailObj.motorCatObj.make])
-        }
-        
-        if adDetailObj.motorCatObj.model != ""
-        {
-            customDictionary.merge(with: ["model" : adDetailObj.motorCatObj.model])
-        }
-        
-        if adDetailObj.motorCatObj.year != ""
-        {
-            customDictionary.merge(with: ["year" : adDetailObj.motorCatObj.year])
-        }
-        
-        if adDetailObj.motorCatObj.mileage != ""
-        {
-            customDictionary.merge(with: ["mileage" : adDetailObj.motorCatObj.mileage])
-        }
-        
-        if adDetailObj.motorCatObj.bodyType != ""
-        {
-            customDictionary.merge(with: ["bodyType" : adDetailObj.motorCatObj.bodyType])
-        }
-        
-        if adDetailObj.motorCatObj.fuelType != ""
-        {
-            customDictionary.merge(with: ["fuelType" : adDetailObj.motorCatObj.fuelType])
-        }
-        
-        if adDetailObj.motorCatObj.transmission != ""
-        {
-            customDictionary.merge(with: ["transmission" : adDetailObj.motorCatObj.transmission])
-        }
-        
-        if adDetailObj.motorCatObj.colour != ""
-        {
-            customDictionary.merge(with: ["colour" : adDetailObj.motorCatObj.colour])
-        }
-        
-        if adDetailObj.motorCatObj.engineSize != ""
-        {
-            customDictionary.merge(with: ["engineSize" : adDetailObj.motorCatObj.engineSize])
-        }
-        
-        if adDetailObj.propertyCatObj.propertyType != ""
-        {
-            customDictionary.merge(with: ["propertyType" : adDetailObj.propertyCatObj.propertyType])
-        }
-        
-        if adDetailObj.propertyCatObj.bedrooms != ""
-        {
-            customDictionary.merge(with: ["bedrooms" : adDetailObj.propertyCatObj.bedrooms])
-        }
-        
-        if adDetailObj.propertyCatObj.sellerType != ""
-        {
-            customDictionary.merge(with: ["psellerType" : adDetailObj.propertyCatObj.sellerType])
-        }
-        
-        if adDetailObj.whatsapp != ""
-        {
-            customDictionary.merge(with: ["whatsapp" : adDetailObj.whatsapp])
-        }
-        
-        if customDictionary.count > 0
-        {
-            customDictionary.merge(with: ["ad_price" : adDetailObj.adPrice])
-            customDictionary.merge(with: ["ad_price_type" : adDetailObj.priceType])
-            
-            let custom = Constants.json(from: customDictionary)
-            let param: [String: Any] = ["custom_fields": custom!]
-            parameter.merge(with: param)
-            parameter.merge(with: customDictionary)
-        }
+//        var customDictionary: [String: Any] = [String: Any]()
+//
+//        if adDetailObj.motorCatObj.regNo != ""
+//        {
+//            customDictionary.merge(with: ["regNo" : adDetailObj.motorCatObj.regNo])
+//        }
+//
+//        if adDetailObj.motorCatObj.sellerType != ""
+//        {
+//            customDictionary.merge(with: ["sellerType" : adDetailObj.motorCatObj.sellerType])
+//        }
+//
+//        if adDetailObj.motorCatObj.make != ""
+//        {
+//            customDictionary.merge(with: ["make" : adDetailObj.motorCatObj.make])
+//        }
+//
+//        if adDetailObj.motorCatObj.model != ""
+//        {
+//            customDictionary.merge(with: ["model" : adDetailObj.motorCatObj.model])
+//        }
+//
+//        if adDetailObj.motorCatObj.year != ""
+//        {
+//            customDictionary.merge(with: ["year" : adDetailObj.motorCatObj.year])
+//        }
+//
+//        if adDetailObj.motorCatObj.mileage != ""
+//        {
+//            customDictionary.merge(with: ["mileage" : adDetailObj.motorCatObj.mileage])
+//        }
+//
+//        if adDetailObj.motorCatObj.bodyType != ""
+//        {
+//            customDictionary.merge(with: ["bodyType" : adDetailObj.motorCatObj.bodyType])
+//        }
+//
+//        if adDetailObj.motorCatObj.fuelType != ""
+//        {
+//            customDictionary.merge(with: ["fuelType" : adDetailObj.motorCatObj.fuelType])
+//        }
+//
+//        if adDetailObj.motorCatObj.transmission != ""
+//        {
+//            customDictionary.merge(with: ["transmission" : adDetailObj.motorCatObj.transmission])
+//        }
+//
+//        if adDetailObj.motorCatObj.colour != ""
+//        {
+//            customDictionary.merge(with: ["colour" : adDetailObj.motorCatObj.colour])
+//        }
+//
+//        if adDetailObj.motorCatObj.engineSize != ""
+//        {
+//            customDictionary.merge(with: ["engineSize" : adDetailObj.motorCatObj.engineSize])
+//        }
+//
+//        if adDetailObj.propertyCatObj.propertyType != ""
+//        {
+//            customDictionary.merge(with: ["propertyType" : adDetailObj.propertyCatObj.propertyType])
+//        }
+//
+//        if adDetailObj.propertyCatObj.bedrooms != ""
+//        {
+//            customDictionary.merge(with: ["bedrooms" : adDetailObj.propertyCatObj.bedrooms])
+//        }
+//
+//        if adDetailObj.propertyCatObj.sellerType != ""
+//        {
+//            customDictionary.merge(with: ["psellerType" : adDetailObj.propertyCatObj.sellerType])
+//        }
+//
+//        if adDetailObj.whatsapp != ""
+//        {
+//            customDictionary.merge(with: ["whatsapp" : adDetailObj.whatsapp])
+//        }
+//
+//        if customDictionary.count > 0
+//        {
+//            customDictionary.merge(with: ["ad_price" : adDetailObj.adPrice])
+//            customDictionary.merge(with: ["ad_price_type" : adDetailObj.priceType])
+//
+//            let custom = Constants.json(from: customDictionary)
+//            let param: [String: Any] = ["custom_fields": custom!]
+//            parameter.merge(with: param)
+//            parameter.merge(with: customDictionary)
+//        }
             
         self.adPostLive(param: parameter as NSDictionary)
     }
@@ -626,12 +731,20 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
                 
                 adDetailObj.adId = AddsHandler.sharedInstance.adPostAdId
 
-                let param: [String: Any] = ["ad_id": AddsHandler.sharedInstance.adPostAdId]
-                print(param)
-                
-                DispatchQueue.main.async {
-                    self.uploadImages(param: param as NSDictionary, images: adDetailObj.images)
+                if self.fromVC == "myads"
+                {
+                    self.addPostLiveAPI()
                 }
+                else
+                {
+                    let param: [String: Any] = ["ad_id": AddsHandler.sharedInstance.adPostAdId]
+                    print(param)
+                    
+                    DispatchQueue.main.async {
+                        self.uploadImages(param: param as NSDictionary, images: adDetailObj.images)
+                    }
+                }
+                
             }
             else
             {
@@ -652,10 +765,18 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             self.stopAnimating()
             if successResponse.success {
                 
-                self.imageIDArray.removeAll()
-                
-                let featuredVC = self.storyboard?.instantiateViewController(withIdentifier: "FeaturedVC") as! FeaturedVC
-                self.navigationController?.pushViewController(featuredVC, animated: true)
+                if self.fromVC == "myads"
+                {
+                    self.showToast(message: "Ad updated successfully.")
+                    self.dismiss(animated: true, completion: nil)
+                }
+                else
+                {
+                    self.imageIDArray.removeAll()
+                    
+                    let featuredVC = self.storyboard?.instantiateViewController(withIdentifier: "FeaturedVC") as! FeaturedVC
+                    self.navigationController?.pushViewController(featuredVC, animated: true)
+                }
             }
             else
             {
@@ -756,12 +877,41 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         }
     }
         
+    func addDetail(param: NSDictionary)
+    {
+      self.showLoader()
+      AddsHandler.addDetails(parameter: param, success: { (successResponse) in
+          self.stopAnimating()
+          if successResponse.success
+          {
+                AddsHandler.sharedInstance.objAddDetails = successResponse.data
+                adDetailObj.phone = AddsHandler.sharedInstance.objAddDetails?.adDetail.phone ?? ""
+                adDetailObj.adDesc = AddsHandler.sharedInstance.objAddDetails?.adDetail.adDesc ?? ""
+                adDetailObj.adPrice = AddsHandler.sharedInstance.objAddDetails?.adDetail.adPrice.price ?? ""
+                adDetailObj.priceType = AddsHandler.sharedInstance.objAddDetails?.adDetail.adPrice.priceType ?? ""
+                adDetailObj.adPrice = adDetailObj.adPrice.replacingOccurrences(of: "AED ", with: "")
+                self.populateData()
+          }
+          else
+          {
+              let alert = Constants.showBasicAlert(message: successResponse.message)
+              self.presentVC(alert)
+          }
+          
+      }) { (error) in
+          self.stopAnimating()
+          let alert = Constants.showBasicAlert(message: error.message)
+          self.presentVC(alert)
+      }
+    }
 
     //MARK:- Collection View Delegate Methods
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
         return adDetailObj.images.count
             
     }
@@ -897,4 +1047,18 @@ func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage
     UIGraphicsEndImageContext()
 
     return newImage!
+}
+
+extension String {
+    var htmlToAttributedString: NSAttributedString? {
+        guard let data = data(using: .utf8) else { return nil }
+        do {
+            return try NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding:String.Encoding.utf8.rawValue], documentAttributes: nil)
+        } catch {
+            return nil
+        }
+    }
+    var htmlToString: String {
+        return htmlToAttributedString?.string ?? ""
+    }
 }

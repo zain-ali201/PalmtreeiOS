@@ -7,33 +7,35 @@
 //
 
 import UIKit
-import MapKit
+import GoogleMaps
 
-class MapViewController:  UIViewController, MKMapViewDelegate
+class MapViewController:  UIViewController, GMSMapViewDelegate
 {
-    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var mapView: GMSMapView!
+    @IBOutlet weak var lblAddress: UILabel!
+
+    var latitude : Double!
+    var longitude : Double!
     
-    let regionRadius: CLLocationDistance = 1000
-    var initialLocation = CLLocation(latitude: 25.276987, longitude: 55.296249)
-    var latitudeStr = ""
-    var longitudeStr = ""
-    
-    var fromVC = ""
+    var address = ""
 
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        mapView.delegate = self
+        lblAddress.text = address
         
-        print(latitudeStr)
-        print(longitudeStr)
-        
-        if latitudeStr != "" && longitudeStr != ""
+        if latitude != nil && longitude != nil && latitude != 0
         {
-            initialLocation = CLLocation(latitude: Double(latitudeStr)!, longitude: Double(longitudeStr)!)
-            self.centerMapOnLocation(location: initialLocation)
-            self.addAnnotations(coords: [initialLocation])
+            let camera = GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: 15.0)
+            mapView.camera = camera
+            
+            mapView.isMyLocationEnabled = true
+            mapView.settings.myLocationButton = true
+            
+            let marker = GMSMarker()
+            marker.position = CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
+            marker.map = mapView
         }
     }
 
@@ -60,37 +62,5 @@ class MapViewController:  UIViewController, MKMapViewDelegate
     @IBAction func backBtnAction(_ sender: Any)
     {
         self.navigationController?.popViewController(animated: true)
-    }
-    
-    // MARK: - Map
-    func centerMapOnLocation (location: CLLocation){
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius * 2.0, regionRadius * 2.0)
-        mapView.setRegion(coordinateRegion, animated: true)
-    }
-    func addAnnotations(coords: [CLLocation]){
-        
-        for coord in coords{
-            let CLLCoordType = CLLocationCoordinate2D(latitude: coord.coordinate.latitude,
-                                                      longitude: coord.coordinate.longitude);
-            let anno = MKPointAnnotation();
-            anno.coordinate = CLLCoordType;
-            mapView.addAnnotation(anno);
-        }
-    }
-    
-    private func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation is MKUserLocation{
-            return nil;
-        }else {
-            let pinIdent = "Pin"
-            var pinView: MKPinAnnotationView
-            if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: pinIdent) as? MKPinAnnotationView {
-                dequeuedView.annotation = annotation;
-                pinView = dequeuedView;
-            }else{
-                pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: pinIdent);
-            }
-            return pinView;
-        }
     }
 }

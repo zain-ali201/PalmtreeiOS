@@ -26,21 +26,35 @@ class SearchAlertTableCell: UITableViewCell {
     @IBOutlet weak var lblDate: UILabel!
     @IBOutlet weak var alertIcon: UIImageView!
     @IBOutlet weak var btnLocation: UIButton!
+    @IBOutlet weak var editBtn: UIButton!
     
     var crossAction: (()->())?
     var locationAction: (()->())?
+    var favouriteAction: (()->())?
+    var editAdAction: (()->())?
     
     override func awakeFromNib()
     {
 
     }
     
-    @IBAction func actionCancel(_ sender: Any) {
+    @IBAction func actionCancel(_ sender: Any)
+    {
         crossAction?()
     }
     
     @IBAction func locationBtnAction(_ sender: Any)
     {
         locationAction?()
+    }
+    
+    @IBAction func favnBtnAction(_ sender: Any)
+    {
+        favouriteAction?()
+    }
+    
+    @IBAction func editBtnAction(_ sender: Any)
+    {
+        editAdAction?()
     }
 }

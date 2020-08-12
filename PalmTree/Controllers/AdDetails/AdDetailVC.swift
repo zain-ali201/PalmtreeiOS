@@ -50,6 +50,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     @IBOutlet weak var specsView: UIView!
     
     @IBOutlet weak var favBtn: UIButton!
+    @IBOutlet weak var btnLocation: UIButton!
     
     //MARK:- Properties
     var adDetailDataObj:HomeAdd?
@@ -63,6 +64,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     var txtHeight = 0
     var ad_id = 0
     var phone = ""
+    var priceType = ""
     var sellerName = ""
     var sendMsgbuttonType = ""
     
@@ -86,6 +88,8 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
             chatBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             whatsappBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             readBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnLocation.contentHorizontalAlignment = .right
             
             lblSummary.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -98,9 +102,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
             lblSellerType.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblTime.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblID.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            
-            callBtn.setImage(UIImage(named: "Call_ar"), for: .normal)
-            chatBtn.setImage(UIImage(named: "Chat_ar"), for: .normal)
+            lblName.textAlignment = .right
         }
         
         getUserDetail()
@@ -118,7 +120,20 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     func populateData()
     {
         lblName.text = adDetailDataObj?.adTitle
-        lblPrice.text = adDetailDataObj?.adPrice.price
+        
+        var price = adDetailDataObj?.adPrice.price ?? ""
+        
+        if priceType != ""
+        {
+            if languageCode == "ar"
+            {
+                priceType = NSLocalizedString(priceType, comment: "")
+            }
+            
+            price = String(format: "%@ (%@)", price, priceType)
+        }
+        
+        lblPrice.text = price
         lblLocation.text = adDetailDataObj?.adLocation.address
         lblSummary.text = adDetailDataObj?.adDesc
         lblID.text = String(format: "ID: %i", adDetailDataObj?.adId ?? 0)
@@ -152,6 +167,8 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
             readBtn.alpha = 1
             height.constant = txtHeight
         }
+        
+        createSpecsView()
         
         if phone == ""
         {
@@ -302,7 +319,10 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
         }
         else
         {
-            tabView.removeFromSuperview()
+            if tabView != nil
+            {
+                tabView.removeFromSuperview()
+            }
         }
     }
     
@@ -388,8 +408,9 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     @IBAction func locationBtnAction(_ sender: Any)
     {
         let mapVC = self.storyboard?.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
-        mapVC.latitudeStr = adDetailDataObj?.adLocation.lat ?? ""
-        mapVC.longitudeStr = adDetailDataObj?.adLocation.longField ?? ""
+        mapVC.address = adDetailDataObj?.adLocation.address ?? ""
+        mapVC.latitude = Double(adDetailDataObj?.adLocation.lat ?? "0.0")
+        mapVC.longitude = Double(adDetailDataObj?.adLocation.longField ?? "0.0")
         self.navigationController?.pushViewController(mapVC, animated: true)
     }
     
@@ -560,7 +581,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
         self.addDetail(param: parameter as NSDictionary)
     }
     
-     //MARK:- API Call
+    //MARK:- API Call
    func addDetail(param: NSDictionary)
    {
        self.showLoader()
@@ -572,6 +593,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
                 self.phone = successResponse.data.adDetail.phone
                 self.lblSeller.text = successResponse.data.profileDetail.displayName
                 self.lblJoining.text = successResponse.data.profileDetail.userEmail
+            self.priceType = successResponse.data.adDetail.adPrice.priceType
                 self.fieldsData = successResponse.data.adDetail.fieldsData
                 self.populateData()
            }

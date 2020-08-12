@@ -66,6 +66,18 @@ class ReplyCommentController: UIViewController , NVActivityIndicatorViewable{
         self.hideKeyboard()
         self.googleAnalytics(controllerName: "Reply Comment Controller")
         self.checkComingSide()
+        
+        if languageCode == "ar"
+        {
+            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            
+            buttonCancel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            buttonOK.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            
+            txtComment.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            txtComment.textAlignment = .right
+            
+        }
     }
 
     //MARK: - Custom

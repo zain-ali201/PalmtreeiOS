@@ -9,6 +9,5 @@
 #import "GAIFields.h"
 #import "GAIDictionaryBuilder.h"
 #import <Foundation/Foundation.h>
-#import <linkedin-sdk/LISDK.h>
 
 

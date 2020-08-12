@@ -35,7 +35,7 @@ target 'PalmTree' do
     pod 'XLPagerTabStrip', '~> 8.1'
     
     # Star control
-    pod 'Cosmos'
+#    pod 'Cosmos'
     
     #TextField Effects
     pod "TextFieldEffects"
@@ -55,7 +55,7 @@ target 'PalmTree' do
     pod 'SDWebImage'
     
     #Youtube Video Player
-    pod 'YouTubePlayer'
+#    pod 'YouTubePlayer'
     
     #For Image Sliding
     pod 'ImageSlideshow'
@@ -68,14 +68,14 @@ target 'PalmTree' do
     pod 'OpalImagePicker'
     
     #ProgressBar
-    pod 'RangeSeekSlider'
+#    pod 'RangeSeekSlider'
     
     #AdMob
-    pod 'Google-Mobile-Ads-SDK'
-    pod 'PersonalizedAdConsent'
+#    pod 'Google-Mobile-Ads-SDK'
+#    pod 'PersonalizedAdConsent'
     
     #In App Purchases
-    pod 'SwiftyStoreKit'
+#    pod 'SwiftyStoreKit'
     
     #Textfield Shake
     pod 'UITextField+Shake'
@@ -84,7 +84,7 @@ target 'PalmTree' do
     pod 'NotificationBannerSwift'
     
     #Show Action Sheet
-    pod 'ActionSheetPicker-3.0'
+#    pod 'ActionSheetPicker-3.0'
     
     #Picker Library
     # pod 'TCPickerView'
@@ -94,12 +94,12 @@ target 'PalmTree' do
     # pod 'MessageInputBar'
     #pod 'JSQMessagesViewController', '7.3.3'
     
-    pod 'SwiftCheckboxDialog'
+#    pod 'SwiftCheckboxDialog'
     pod 'JGProgressHUD'
 
     #Play Gif 
-    pod 'SwiftyGif'
-    pod 'Popover'
+#    pod 'SwiftyGif'
+#    pod 'Popover'
     
     
     pod 'MapboxGeocoder.swift', '~> 0.11'
@@ -107,14 +107,17 @@ target 'PalmTree' do
     pod 'Alamofire-SwiftyJSON'
      
     #Intro App
-    pod 'OnboardKit'
+#    pod 'OnboardKit'
      #pod 'LinkedinSwift'
-     pod 'LinkedinSwift', '>= 1.7.9'
+#     pod 'LinkedinSwift', '>= 1.7.9'
      
-     pod 'Gallery'
-     pod 'ExpandableCell'
+#     pod 'Gallery'
+#     pod 'ExpandableCell'
 
      pod 'Stripe'
      pod 'AFNetworking'
      pod 'Mapbox-iOS-SDK'
+     pod 'MapboxGeocoder.swift'
+     
+     pod 'YNExpandableCell'
 end

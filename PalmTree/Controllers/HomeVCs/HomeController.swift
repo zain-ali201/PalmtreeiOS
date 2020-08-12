@@ -14,11 +14,10 @@ import FirebaseMessaging
 import UserNotifications
 import FirebaseCore
 import FirebaseInstanceID
-import GoogleMobileAds
 import IQKeyboardManagerSwift
 import CoreLocation
 
-class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable, AddDetailDelegate, CategoryDetailDelegate, UISearchBarDelegate, MessagingDelegate,UNUserNotificationCenterDelegate, NearBySearchDelegate, BlogDetailDelegate , LocationCategoryDelegate, SwiftyAdDelegate , GADInterstitialDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, UITextFieldDelegate {
+class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable, AddDetailDelegate, CategoryDetailDelegate, UISearchBarDelegate, MessagingDelegate,UNUserNotificationCenterDelegate, BlogDetailDelegate , LocationCategoryDelegate , UIGestureRecognizerDelegate, CLLocationManagerDelegate, UITextFieldDelegate {
     
     //MARK:- Outlets
     @IBOutlet weak var tableView: UITableView! {
@@ -84,7 +83,6 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var numberOfColumns:CGFloat = 0
     var heightConstraintTitleLatestad = 0
     var heightConstraintTitlead = 0
-    var inters : GADInterstitial!
     
     var isAdvanceSearch:Bool = false
     var latColHeight: Double = 0
@@ -128,10 +126,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         getGPSLocation()
         
         self.navigationController?.isNavigationBarHidden = true
-        inters = GADInterstitial(adUnitID:"ca-app-pub-2596107136418753/4126592208")
-        let request = GADRequest()
-        // request.testDevices = [(kGADSimulatorID as! String),"79e5cafdc063cca47a7b4158f482669ad5a74c2b"]
-        inters.load(request)
+       
         self.hideKeyboard()
         self.googleAnalytics(controllerName: "Home Controller")
         self.sendFCMToken()
@@ -226,6 +221,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             if let placemarks = placemarks, let placemark = placemarks.first
             {
                 userDetail?.currentAddress = placemark.compactAddress ?? ""
+                userDetail?.locationName = placemark.name ?? ""
                 userDetail?.country = placemark.currentCountry ?? ""
                 defaults.set(userDetail?.currentAddress, forKey: "address")
                 defaults.set(userDetail?.country, forKey: "country")
@@ -266,7 +262,21 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+        
+        if textField.text != ""
+        {
+            let adFilterListVC = self.storyboard?.instantiateViewController(withIdentifier: "AdFilterListVC") as! AdFilterListVC
+            adFilterListVC.searchText = textField.text!
+            adFilterListVC.fromVC = "home"
+            self.navigationController?.pushViewController(adFilterListVC, animated: true)
+            textField.resignFirstResponder()
+        }
+        else
+        {
+            self.showToast(message: "Please enter any title")
+        }
+        
+        return true
     }
     
     //MARK:- go to add detail controller
@@ -295,24 +305,21 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     //MARK:- go to ad list
-    func goToAdFilterListVC() {
+    func goToAdFilterListVC(cat_id: Int, catName: String) {
         let adFilterListVC = self.storyboard?.instantiateViewController(withIdentifier: "AdFilterListVC") as! AdFilterListVC
+        adFilterListVC.categoryID = cat_id
+        adFilterListVC.catName = catName
         self.navigationController?.pushViewController(adFilterListVC, animated: true)
     }
     
     //MARK:- Go to Location detail
     func goToCLocationDetail(id: Int) {
-        let categoryVC = self.storyboard?.instantiateViewController(withIdentifier: "CategoryController") as! CategoryController
-        categoryVC.categoryID = id
-        categoryVC.isFromLocation = true
-        self.navigationController?.pushViewController(categoryVC, animated: true)
+        
     }
     
     //MARK:- Go to blog detail
     func blogPostID(ID: Int) {
-        let blogDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "BlogDetailController") as! BlogDetailController
-        blogDetailVC.post_id = ID
-        self.navigationController?.pushViewController(blogDetailVC, animated: true)
+       
     }
     
     //MARK:- Near by search Delaget method
@@ -336,14 +343,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     @objc func onClicklocationButton() {
-        let locationVC = self.storyboard?.instantiateViewController(withIdentifier: "LocationSearch") as! LocationSearch
-        locationVC.delegate = self
-        view.transform = CGAffineTransform(scaleX: 0.8, y: 1.2)
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: [], animations: {
-            self.view.transform = .identity
-        }) { (success) in
-            self.navigationController?.pushViewController(locationVC, animated: true)
-        }
+        
     }
     
     //MARK:- Search Controller
@@ -351,9 +351,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @objc func actionSearch(_ sender: Any) {
         
         if defaults.bool(forKey: "advanceSearch") == true{
-            let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-            let proVc = storyBoard.instantiateViewController(withIdentifier: "AdvancedSearchController") as! AdvancedSearchController
-            self.pushVC(proVc, completion: nil)
+            
         }
         else
         {
@@ -414,36 +412,6 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         searchBar.endEditing(true)
         self.view.endEditing(true)
     }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.endEditing(true)
-        self.searchBarNavigation.endEditing(true)
-        guard let searchText = searchBar.text else {return}
-        if searchText == "" {
-            
-        } else {
-            let categoryVC = self.storyboard?.instantiateViewController(withIdentifier: "CategoryController") as! CategoryController
-            categoryVC.searchText = searchText
-            categoryVC.isFromTextSearch = true
-            self.navigationController?.pushViewController(categoryVC, animated: true)
-        }
-    }
-    
-    //MARK:- AdMob Delegate Methods
-    
-    func swiftyAdDidOpen(_ swiftyAd: SwiftyAd) {
-        print("Open")
-    }
-    
-    func swiftyAdDidClose(_ swiftyAd: SwiftyAd) {
-        print("Close")
-    }
-    
-    func swiftyAd(_ swiftyAd: SwiftyAd, didRewardUserWithAmount rewardAmount: Int) {
-        print(rewardAmount)
-    }
-    
-    
     
     //MARK:- Table View Delegate Methods
     
@@ -507,7 +475,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let totalTopBottomOffSet = CollectionViewSettings.offset + CollectionViewSettings.offset
             let totalSpacing = CGFloat(totalRow - 1) * CollectionViewSettings.minLineSpacing
             totalHeight = ((itemHeight * CGFloat(totalRow)) + totalTopBottomOffSet + totalSpacing)
-            height =  totalHeight
+            height =  totalHeight - 30
         }
         else if section == 1
         {
@@ -516,9 +484,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let totalTopBottomOffSet = CollectionViewSettings.offset + CollectionViewSettings.offset
             let totalSpacing = CGFloat(totalRow - 1) * CollectionViewSettings.minLineSpacing
             totalHeight = ((itemHeight * CGFloat(totalRow)) + totalTopBottomOffSet + totalSpacing)
-            height =  totalHeight + 300
-            
-//            height =  1000
+            height =  totalHeight + 350
         }
             
         return height
@@ -596,6 +562,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
             else
             {
+                adDetailObj = AdDetailObject()
                 let adPostVC = self.storyboard?.instantiateViewController(withIdentifier: "AdPostVC") as! AdPostVC
                 let navController = UINavigationController(rootViewController: adPostVC)
                 navController.navigationBar.isHidden = true
@@ -681,12 +648,15 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 //For testing purpose
                 if languageCode == "ar"
                 {
-                    categoryArray[0].name = "السيارات"
-                    categoryArray[1].name = "للبيع"
-                    categoryArray[2].name = "الوظائف"
+                    categoryArray[0].name = "أرض الملكية"
+                    categoryArray[1].name = "السيارات"
+                    categoryArray[2].name = "تواصل اجتماعي"
                     categoryArray[3].name = "أجهزة كهربائية"
-                    categoryArray[4].name = "اثاث"
-                    categoryArray[5].name = "حيوانات أليفة"
+                    categoryArray[4].name = "الوظائف"
+                    categoryArray[5].name = "أثاث وحديقة"
+                    categoryArray[6].name = "مبوبة"
+                    categoryArray[7].name = "خدمات"
+                    categoryArray[8].name = "أجهزة كهربائية"
                 }
                 
                 self.dataArray = successResponse.data.sliders
@@ -741,46 +711,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     isShowAd = adShow
                 }
                 if isShowAd {
-                    SwiftyAd.shared.delegate = self
-                    var isShowBanner = false
-                    var isShowInterstital = false
                     
-                    if let banner = successResponse.settings.ads.isShowBanner {
-                        isShowBanner = banner
-                    }
-                    if let intersitial = successResponse.settings.ads.isShowInitial {
-                        isShowInterstital = intersitial
-                    }
-                    if isShowBanner {
-                        SwiftyAd.shared.setup(withBannerID: successResponse.settings.ads.bannerId, interstitialID: "", rewardedVideoID: "")
-                        
-                        print(successResponse.settings.ads.bannerId)
-                        
-                        self.tableView.translatesAutoresizingMaskIntoConstraints = false
-                        if successResponse.settings.ads.position == "top" {
-                            self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 45).isActive = true
-                            SwiftyAd.shared.showBanner(from: self, at: .top)
-                        } else {
-                            self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 30).isActive = true
-                            SwiftyAd.shared.showBanner(from: self, at: .bottom)
-                        }
-                    }
-                    //ca-app-pub-6905547279452514/6461881125
-                    if isShowInterstital {
-                        //                        SwiftyAd.shared.setup(withBannerID: "", interstitialID: successResponse.settings.ads.interstitalId, rewardedVideoID: "")
-                        //                        SwiftyAd.shared.showInterstitial(from: self, withInterval: 1)
-                        
-                        
-                        self.showAd()
-                        
-                        //self.perform(#selector(self.showAd), with: nil, afterDelay: Double(successResponse.settings.ads.timeInitial)!)
-                        //self.perform(#selector(self.showAd2), with: nil, afterDelay: Double(successResponse.settings.ads.time)!)
-                        
-                        self.perform(#selector(self.showAd), with: nil, afterDelay: Double(30))
-                        self.perform(#selector(self.showAd2), with: nil, afterDelay: Double(30))
-                        
-                        
-                    }
                 }
                 // Here I set the Google Analytics Key
                 var isShowAnalytic = false
@@ -831,12 +762,10 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @objc func showAd(){
         currentVc = self
-        admobDelegate.showAd()
     }
     
     @objc func showAd2(){
         currentVc = self
-        admobDelegate.showAd()
     }
     
     //MARK:- Send fcm token to server
@@ -861,25 +790,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     //MARK:- Near By Search
     func nearBySearch(param: NSDictionary) {
-        self.showLoader()
-        AddsHandler.nearbyAddsSearch(params: param, success: { (successResponse) in
-            self.stopAnimating()
-            if successResponse.success {
-                let categoryVC = self.storyboard?.instantiateViewController(withIdentifier: "CategoryController") as! CategoryController
-                categoryVC.latitude = self.latitude
-                categoryVC.longitude = self.longitude
-                categoryVC.nearByDistance = self.searchDistance
-                categoryVC.isFromNearBySearch = true
-                self.navigationController?.pushViewController(categoryVC, animated: true)
-            } else {
-                let alert = Constants.showBasicAlert(message: successResponse.message)
-                self.presentVC(alert)
-            }
-        }) { (error) in
-            self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
-            self.presentVC(alert)
-        }
+        
     }
     
     //MARK:- Make Add Favourites

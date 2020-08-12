@@ -30,11 +30,7 @@ class ReportController: UIViewController , NVActivityIndicatorViewable {
             containerViewImg.circularView()
         }
     }
-    @IBOutlet weak var oltCancel: UIButton!{
-        didSet{
-            oltCancel.roundCornors()
-        }
-    }
+    @IBOutlet weak var oltCancel: UIButton!
     @IBOutlet weak var txtMessage: HoshiTextField!
     @IBOutlet weak var oltPopUp: UIButton! {
         didSet {
@@ -46,22 +42,32 @@ class ReportController: UIViewController , NVActivityIndicatorViewable {
     //MARK:- Properties
     var delegate: ReportPopToHomeDelegate?
     var dropDownArray = ["Spam", "Offensive", "Duplicate", "Fake"]
-    var selectedValue = ""
+    var selectedIndex = -1
     var adID = 0
     let defaults = UserDefaults.standard
     
     let spamDropDown = DropDown()
-    lazy var dropDowns : [DropDown] = {
-        return [
-            self.spamDropDown
-        ]
-    }()
+    
     
     //MARK:- View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.googleAnalytics(controllerName: "Report Controller")
         self.hideKeyboard()
+        
+        if languageCode == "ar"
+        {
+            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            
+            oltCancel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            oltSend.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            oltPopUp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            oltPopUp.contentHorizontalAlignment = .right
+            
+            txtMessage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            txtMessage.textAlignment = .right
+            
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -76,13 +82,19 @@ class ReportController: UIViewController , NVActivityIndicatorViewable {
     
     func spamPopUp() {
     
+        if languageCode == "ar"
+        {
+            dropDownArray = ["بريد مؤذي", "هجومي", "مكرر", "مزورة"]
+        }
+        
         spamDropDown.anchorView = oltPopUp
         spamDropDown.bottomOffset = CGPoint(x: 0, y:(spamDropDown.anchorView?.plainView.bounds.height)!)
         spamDropDown.dataSource = dropDownArray
+        
         spamDropDown.selectionAction = { [unowned self]
             (index, item) in
             self.oltPopUp.setTitle(item, for: .normal)
-            self.selectedValue = item
+            self.selectedIndex = index
         }
     }
     
@@ -105,13 +117,42 @@ class ReportController: UIViewController , NVActivityIndicatorViewable {
             return
         }
         
-        if message == "" {
+        if message == ""
+        {
              self.txtMessage.shake(6, withDelta: 10, speed: 0.06)
         }
-        else if selectedValue == "" {
+        else if selectedIndex < 0
+        {
+            var msg = "Please select option"
             
+            if languageCode == "ar"
+            {
+                msg = "يرجى تحديد الخيا"
+            }
+            
+            self.showToast(message: msg)
         }
-        else {
+        else
+        {
+            var selectedValue = ""
+            
+            if selectedIndex == 0
+            {
+                selectedValue = "Spam"
+            }
+            else if selectedIndex == 1
+            {
+                selectedValue = "Offensive"
+            }
+            else if selectedIndex == 2
+            {
+                selectedValue = "Duplicate"
+            }
+            else if selectedIndex == 3
+            {
+                selectedValue = "Fake"
+            }
+            
             let param: [String: Any] = ["ad_id": adID, "option": selectedValue, "comments": message]
             print(param)
             self.reportAdd(parameter: param as NSDictionary)

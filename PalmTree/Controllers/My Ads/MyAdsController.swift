@@ -75,8 +75,6 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         lblName.text = userDetail?.displayName ?? ""
         
-        checkLogin()
-        
         if languageCode == "ar"
         {
             self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -92,7 +90,7 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        checkLogin()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -197,6 +195,7 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
                 }
                 else
                 {
+                    adDetailObj = AdDetailObject()
                     let adPostVC = self.storyboard?.instantiateViewController(withIdentifier: "AdPostVC") as! AdPostVC
                     let navController = UINavigationController(rootViewController: adPostVC)
                     navController.navigationBar.isHidden = true
@@ -354,20 +353,70 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
             cell.lblDate.text = timeAgoSinceShort(date!)
         }
         
+        cell.crossAction = { () in
+            let alert = UIAlertController(title: "Palmtree", message: "Are you sure you want to remove your ad?", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Yes", style: .default, handler: { (okAction) in
+                let parameter : [String: Any] = ["ad_id": objData.adId]
+                print(parameter)
+                self.deleteAd(param: parameter as NSDictionary)
+            })
+            let cancelAction = UIAlertAction(title: "No", style: .default, handler: nil)
+            alert.addAction(cancelAction)
+            alert.addAction(okAction)
+            self.presentVC(alert)
+        }
+        
         cell.locationAction = { () in
             let mapVC = self.storyboard?.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
-            mapVC.latitudeStr = objData.adLocation.lat ?? ""
-            mapVC.latitudeStr = objData.adLocation.longField ?? ""
+            mapVC.address = objData.adLocation.address ?? ""
+            mapVC.latitude = Double(objData.adLocation.lat ?? "0.0")
+            mapVC.longitude = Double(objData.adLocation.longField ?? "0.0")
             self.navigationController?.pushViewController(mapVC, animated: true)
+        }
+        
+        cell.editAdAction = { () in
+            adDetailObj = AdDetailObject()
+            adDetailObj.adId = objData.adId
+            adDetailObj.adTitle = objData.adTitle
+            adDetailObj.location.address = objData.adLocation.address
+            adDetailObj.location.lat = Double(objData.adLocation.lat ?? "0.0")
+            adDetailObj.location.lng = Double(objData.adLocation.longField ?? "0.0")
+            adDetailObj.adPrice = objData.adPrice.price
+            adDetailObj.priceType = objData.adPrice.priceType
+            adDetailObj.adDate = objData.adDate
+            
+            if objData.adCats.count == 2
+            {
+                adDetailObj.adSubCategory = objData.adCats[0].name
+                adDetailObj.subcatID = objData.adCats[0].id
+                adDetailObj.adCategory = objData.adCats[1].name
+                adDetailObj.catID = objData.adCats[1].id
+            }
+            else if objData.adCats.count == 1
+            {
+                adDetailObj.adCategory = objData.adCats[0].name
+                adDetailObj.catID = objData.adCats[0].id
+            }
+            adDetailObj.adImages = objData.adImages
+            
+            let adPostVC = self.storyboard?.instantiateViewController(withIdentifier: "AdPostVC") as! AdPostVC
+            adPostVC.fromVC = "myads"
+            let navController = UINavigationController(rootViewController: adPostVC)
+            navController.navigationBar.isHidden = true
+            navController.modalPresentationStyle = .fullScreen
+            self.present(navController, animated:true, completion: nil)
         }
 
         if languageCode == "ar"
         {
             cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             cell.lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            cell.lblLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cell.btnLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             cell.lblProcess.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             cell.lblPromotion.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cell.editBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cell.lblDate.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cell.lblName.textAlignment = .right
         }
         
         return cell
@@ -449,8 +498,8 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
             self.stopAnimating()
             if successResponse.success {
                 let alert = AlertView.prepare(title: "", message: successResponse.message, okAction: {
-//                    self.adForest_getAddsData()
-//                    self.collectionView.reloadData()
+                    self.getAddsData()
+                    self.tblView.reloadData()
                 })
                 self.presentVC(alert)
             } else {

@@ -236,6 +236,8 @@ class AdDetailObject: NSObject
     var adDesc = ""
     var adPrice : String!
     var priceType : String!
+    var maxPrice = ""
+    var minPrice = ""
     var images : [UIImage] = [UIImage]()
     var isFeature : Bool!
     var location : AddDetailLocationObject = AddDetailLocationObject()
@@ -251,6 +253,10 @@ class AdDetailObject: NSObject
     var propertyCatObj : PropertyCategoryObject = PropertyCategoryObject()
     var categoryObj: CategoryObject = CategoryObject()
     var objAdPostData = [AdPostField]()
+    var adImages : [MyAdsAdImage]!
+    
+    //for search filter
+    var sortType  = ""
 }
 
 class AddDetailLocationObject: NSObject

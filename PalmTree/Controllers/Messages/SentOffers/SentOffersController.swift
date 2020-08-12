@@ -165,7 +165,7 @@ class SentOffersController: UIViewController, UITableViewDelegate, UITableViewDa
                 if successResponse.data.isRedirec == true{
                     let alert  = UIAlertController(title: successResponse.message, message: nil, preferredStyle: .alert)
                     let okAction = UIAlertAction(title: "Ok", style:.default, handler: { (ok) in
-                    self.appDelegate.moveToProfile()
+//                        self.appDelegate.moveToProfile()
                         
                     })
                     alert.addAction(okAction)

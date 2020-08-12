@@ -69,7 +69,7 @@ class LocationContactVC: UIViewController
     @IBAction func locBtnAction(_ sender: Any)
     {
         let locVC = self.storyboard?.instantiateViewController(withIdentifier: "LocationViewController") as! LocationViewController
-        locVC.locContactVC = self
+//        locVC.locContactVC = self
         self.navigationController?.pushViewController(locVC, animated: true)
     }
     

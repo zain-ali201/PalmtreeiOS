@@ -10,7 +10,7 @@ import UIKit
 
 protocol CategoryDetailDelegate {
     func goToCategoryDetail()
-    func goToAdFilterListVC()
+    func goToAdFilterListVC(cat_id: Int, catName: String)
 }
 
 class CategoriesTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -66,7 +66,14 @@ class CategoriesTableCell: UITableViewCell, UICollectionViewDelegate, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return categoryArray.count + 1
+        var count = 0
+        
+        if categoryArray.count > 0
+        {
+            count = categoryArray.count + 1
+        }
+        
+        return count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -115,7 +122,7 @@ class CategoriesTableCell: UITableViewCell, UICollectionViewDelegate, UICollecti
             }
         
             cell.btnFullAction = { () in
-                self.delegate?.goToAdFilterListVC()
+                self.delegate?.goToAdFilterListVC(cat_id: objData.catId, catName: objData.name)
             }
         }
         

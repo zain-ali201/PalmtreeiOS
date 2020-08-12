@@ -62,6 +62,9 @@ class FeaturedVC: UIViewController
         lblType.text = adDetailObj.location.address
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }

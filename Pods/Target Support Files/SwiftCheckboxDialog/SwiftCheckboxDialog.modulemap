@@ -1,6 +1,0 @@
-framework module SwiftCheckboxDialog {
-  umbrella header "SwiftCheckboxDialog-umbrella.h"
-
-  export *
-  module * { export * }
-}

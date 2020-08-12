@@ -24,6 +24,7 @@ struct MyAdsAd{
     var adTitle : String!
     var adVideo : MyAdsAdVideo!
     var adViews : String!
+    var profile : MyAdsProfile!
     
     /**
      * Instantiate the instance using the passed dictionary values to set the properties values
@@ -47,6 +48,9 @@ struct MyAdsAd{
                 let value = MyAdsAdImage(fromDictionary: dic)
                 adImages.append(value)
             }
+        }
+        if let adProfileData = dictionary["profile"] as? [String:Any]{
+            profile = MyAdsProfile(fromDictionary: adProfileData)
         }
         if let adLocationData = dictionary["ad_location"] as? [String:Any]{
             adLocation = MyAdsAdLocation(fromDictionary: adLocationData)
@@ -102,6 +106,9 @@ struct MyAdsAd{
                 dictionaryElements.append(adImagesElement.toDictionary())
             }
             dictionary["ad_images"] = dictionaryElements
+        }
+        if profile != nil{
+            dictionary["profile"] = profile.toDictionary()
         }
         if adLocation != nil{
             dictionary["ad_location"] = adLocation.toDictionary()
