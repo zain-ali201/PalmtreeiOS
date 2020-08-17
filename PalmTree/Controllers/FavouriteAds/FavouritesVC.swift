@@ -111,6 +111,12 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         self.navigationController?.popViewController(animated: true)
     }
     
+    @IBAction func searchBtnAction(_ sender: Any)
+    {
+        let adFilterListVC = self.storyboard?.instantiateViewController(withIdentifier: "AdFilterListVC") as! AdFilterListVC
+        self.navigationController?.pushViewController(adFilterListVC, animated: true)
+    }
+    
     @IBAction func clickBtnAction(_ button: UIButton)
     {
         if button.tag == 1001

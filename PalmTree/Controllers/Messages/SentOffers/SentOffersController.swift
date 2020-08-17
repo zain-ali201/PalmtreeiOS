@@ -13,6 +13,10 @@ import NVActivityIndicatorView
 class SentOffersController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable {
 
     //MARK:- Outlets
+    @IBOutlet weak var norecordsView: UIView!
+    @IBOutlet weak var lblMsg: UILabel!
+    @IBOutlet weak var postBtn: UIButton!
+    
     @IBOutlet weak var tableView: UITableView!{
         didSet {
             tableView.delegate = self
@@ -50,12 +54,21 @@ class SentOffersController: UIViewController, UITableViewDelegate, UITableViewDa
         tracker?.set(kGAIScreenName, value: "Sent Offers")
         guard let builder = GAIDictionaryBuilder.createScreenView() else {return}
         tracker?.send(builder.build() as [NSObject: AnyObject])
+        
+        if languageCode == "ar"
+        {
+            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblMsg.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            postBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }
     }
    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         self.sentOffersData()
         self.showLoader()
+        
     }
     //MARK: - Custom
     func showLoader(){
@@ -65,6 +78,16 @@ class SentOffersController: UIViewController, UITableViewDelegate, UITableViewDa
     @objc func refreshTableView() {
         self.refreshControl.beginRefreshing()
         self.sentOffersData()
+    }
+    
+    @IBAction func postBtnAction(_ button: UIButton)
+    {
+        adDetailObj = AdDetailObject()
+        let adPostVC = self.storyboard?.instantiateViewController(withIdentifier: "AdPostVC") as! AdPostVC
+        let navController = UINavigationController(rootViewController: adPostVC)
+        navController.navigationBar.isHidden = true
+        navController.modalPresentationStyle = .fullScreen
+        self.present(navController, animated:true, completion: nil)
     }
     
     //MARK:- table View Delegate Methods
@@ -151,17 +174,22 @@ class SentOffersController: UIViewController, UITableViewDelegate, UITableViewDa
                 self.maximumPage = successResponse.data.pagination.maxNumPages
                 self.dataArray = successResponse.data.sentOffers.items
                 
-                if successResponse.message != nil{
-                    if self.dataArray.count == 0 {
-                        
-                        self.tableView.setEmptyMessage(successResponse.message)
-                    }else{
-                        self.tableView.setEmptyMessage("")
+                if successResponse.message != nil
+                {
+                    if self.dataArray.count == 0
+                    {
+                        self.norecordsView.alpha = 1
+                    }
+                    else
+                    {
+                        self.norecordsView.alpha = 0
                     }
                 }
         
                 self.tableView.reloadData()
-            } else {
+            }
+            else
+            {
                 if successResponse.data.isRedirec == true{
                     let alert  = UIAlertController(title: successResponse.message, message: nil, preferredStyle: .alert)
                     let okAction = UIAlertAction(title: "Ok", style:.default, handler: { (ok) in

@@ -2323,13 +2323,6 @@
 			path = Label;
 			sourceTree = "<group>";
 		};
-		18FE9C562368118A00E8756F /* MapBoxPlaces */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = MapBoxPlaces;
-			sourceTree = "<group>";
-		};
 		5DE79EEDB704060570E91B76 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -2414,7 +2407,6 @@
 				18285F4024C6EEAA000A4842 /* CheckoutViewController.swift */,
 				ABDBD3B5248E5C5A00DCFB0E /* ThankyouVC.swift */,
 				186E4B8024D964FF0021EF8E /* CollectionImageCell.swift */,
-				18FE9C562368118A00E8756F /* MapBoxPlaces */,
 			);
 			path = AdPostVCs;
 			sourceTree = "<group>";

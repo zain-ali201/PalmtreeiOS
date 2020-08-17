@@ -123,6 +123,17 @@ class CategoriesTableCell: UITableViewCell, UICollectionViewDelegate, UICollecti
         
             cell.btnFullAction = { () in
                 self.delegate?.goToAdFilterListVC(cat_id: objData.catId, catName: objData.name)
+                if var recentList = UserDefaults.standard.array(forKey: "recentList") as? [[String: Any]]
+                {
+                    recentList.append(["title": "All Ads", "catID": objData.catId, "catName": objData.name, "locationName": userDetail?.locationName ?? "UAE", "lat": userDetail?.lat ?? 0.0, "lng": userDetail?.lng ?? 0.0])
+                    UserDefaults.standard.set(recentList, forKey: "recentList")
+                }
+                else
+                {
+                    var recentList: [[String: Any]] = []
+                    recentList.append(["title": "All Ads", "catID": objData.catId ?? 0, "catName": objData.name ?? "", "locationName": userDetail?.locationName ?? "UAE", "lat": userDetail?.lat ?? 0.0, "lng": userDetail?.lng ?? 0.0])
+                    UserDefaults.standard.set(recentList, forKey: "recentList")
+                }
             }
         }
         

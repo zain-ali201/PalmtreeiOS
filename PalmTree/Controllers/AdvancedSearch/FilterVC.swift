@@ -157,19 +157,40 @@ class FilterVC: UIViewController{
             }
         }
         
+        var cID = 0
+        var cName = ""
+        
         if adDetailObj.adCategory != ""
         {
             adFilterVC.catName = adDetailObj.adCategory
             adFilterVC.categoryID = adDetailObj.catID
+            
+            cID = adFilterVC.categoryID
+            cName = adFilterVC.catName
         }
         
         if adDetailObj.adSubCategory != ""
         {
             adFilterVC.subcatName = adDetailObj.adSubCategory
             adFilterVC.subcategoryID = adDetailObj.subcatID
+            
+            cID = adFilterVC.categoryID
+            cName = adFilterVC.catName
         }
         
         adFilterVC.getFilteredData()
+        
+        if var recentList = UserDefaults.standard.array(forKey: "recentList") as? [[String: Any]]
+        {
+            recentList.append(["title": "All Ads", "catID": cID, "catName": cName, "locationName": userDetail?.locationName ?? "UAE", "lat": userDetail?.lat ?? 0.0, "lng": userDetail?.lng ?? 0.0])
+            UserDefaults.standard.set(recentList, forKey: "recentList")
+        }
+//        else
+//        {
+//            var recentList: [[String: Any]] = []
+//            recentList.append(["title": "All Ads", "catID": cID, "catName": cName, "locationName": userDetail?.locationName ?? "", "lat": "", "lng": ""])
+//            UserDefaults.standard.set(recentList, forKey: "recentList")
+//        }
         
         self.dismiss(animated: true, completion: nil)
     }

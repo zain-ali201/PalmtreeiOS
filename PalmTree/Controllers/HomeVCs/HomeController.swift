@@ -17,7 +17,7 @@ import FirebaseInstanceID
 import IQKeyboardManagerSwift
 import CoreLocation
 
-class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable, AddDetailDelegate, CategoryDetailDelegate, UISearchBarDelegate, MessagingDelegate,UNUserNotificationCenterDelegate, BlogDetailDelegate , LocationCategoryDelegate , UIGestureRecognizerDelegate, CLLocationManagerDelegate, UITextFieldDelegate {
+class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable, AddDetailDelegate, CategoryDetailDelegate, UISearchBarDelegate, MessagingDelegate,UNUserNotificationCenterDelegate, BlogDetailDelegate , LocationCategoryDelegate , UIGestureRecognizerDelegate, CLLocationManagerDelegate {
     
     //MARK:- Outlets
     @IBOutlet weak var tableView: UITableView! {
@@ -99,8 +99,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var btnWishlist: UIButton!
     @IBOutlet weak var btnMessages: UIButton!
     
-    @IBOutlet weak var lblSearch: UILabel!
-    @IBOutlet weak var txtSearch: UITextField!
+    @IBOutlet weak var btnSearch: UIButton!
     
     var locationManager = CLLocationManager()
     lazy var geocoder = CLGeocoder()
@@ -140,9 +139,8 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if languageCode == "ar"
         {
             self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblSearch.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtSearch.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtSearch.textAlignment = .right
+            btnSearch.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnSearch.titleLabel?.textAlignment = .right
             changeMenuButtons()
         }
         
@@ -181,10 +179,13 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if(CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
         CLLocationManager.authorizationStatus() == .authorizedAlways) {
             currentLoc = locationManager.location
-            userDetail?.currentLocation = currentLoc
             
-            if userDetail?.currentLocation != nil
+            if currentLoc != nil
             {
+                userDetail?.currentLocation = currentLoc
+                userDetail?.lat = currentLoc.coordinate.latitude
+                userDetail?.lng = currentLoc.coordinate.longitude
+                
                 geocoder.reverseGeocodeLocation(currentLoc) { (placemarks, error) in
                     self.processResponse(withPlacemarks: placemarks, error: error)
                 }
@@ -224,6 +225,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 userDetail?.locationName = placemark.name ?? ""
                 userDetail?.country = placemark.currentCountry ?? ""
                 defaults.set(userDetail?.currentAddress, forKey: "address")
+                defaults.set(userDetail?.locationName, forKey: "locName")
                 defaults.set(userDetail?.country, forKey: "country")
                 tableView.reloadData()
             }
@@ -257,27 +259,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.startAnimating(Constants.activitySize.size, message: Constants.loaderMessages.loadingMessage.rawValue,messageFont: UIFont.systemFont(ofSize: 14), type: NVActivityIndicatorType.ballClipRotatePulse)
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        txtSearch.resignFirstResponder()
-    }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        if textField.text != ""
-        {
-            let adFilterListVC = self.storyboard?.instantiateViewController(withIdentifier: "AdFilterListVC") as! AdFilterListVC
-            adFilterListVC.searchText = textField.text!
-            adFilterListVC.fromVC = "home"
-            self.navigationController?.pushViewController(adFilterListVC, animated: true)
-            textField.resignFirstResponder()
-        }
-        else
-        {
-            self.showToast(message: "Please enter any title")
-        }
-        
-        return true
-    }
     
     //MARK:- go to add detail controller
     func goToAddDetail(ad_id: Int) {
@@ -447,9 +429,9 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 let locationVC = self.storyboard?.instantiateViewController(withIdentifier: "LocationVC") as! LocationVC
                 self.navigationController?.pushViewController(locationVC, animated: true)
             }
-            if userDetail?.country != ""
+            if userDetail?.locationName != ""
             {
-                cell.locBtn.setTitle(userDetail?.country, for: .normal)
+                cell.locBtn.setTitle(userDetail?.locationName, for: .normal)
             }
             
             cell.dataArray = latestAdsArray

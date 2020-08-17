@@ -31,9 +31,9 @@ class LocationVC: UIViewController, CLLocationManagerDelegate
         
         locView.layer.cornerRadius = 5.0
         
-        if userDetail?.currentAddress != ""
+        if userDetail?.locationName != ""
         {
-            lblLocation.text = userDetail?.currentAddress
+            lblLocation.text = userDetail?.locationName
         }
         
         if languageCode == "ar"
@@ -87,10 +87,14 @@ class LocationVC: UIViewController, CLLocationManagerDelegate
         if(CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
         CLLocationManager.authorizationStatus() == .authorizedAlways) {
             currentLoc = locationManager.location
-            userDetail?.currentLocation = currentLoc
             
-            if userDetail?.currentLocation != nil
+            if currentLoc != nil
             {
+                userDetail?.currentLocation = currentLoc
+                userDetail?.lat = currentLoc.coordinate.latitude
+                userDetail?.lng = currentLoc.coordinate.longitude
+                
+                userDetail?.currentLocation = currentLoc
                 geocoder.reverseGeocodeLocation(currentLoc) { (placemarks, error) in
                     self.processResponse(withPlacemarks: placemarks, error: error)
                 }
@@ -103,8 +107,12 @@ class LocationVC: UIViewController, CLLocationManagerDelegate
         print("Location: \(location)")
         userDetail?.currentLocation = location
         
-        if userDetail?.currentLocation != nil
+        if location != nil
         {
+            userDetail?.currentLocation = location
+            userDetail?.lat = location.coordinate.latitude
+            userDetail?.lng = location.coordinate.longitude
+            
             geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
                 self.processResponse(withPlacemarks: placemarks, error: error)
             }
@@ -126,6 +134,7 @@ class LocationVC: UIViewController, CLLocationManagerDelegate
                 userDetail?.locationName = placemark.name ?? ""
                 userDetail?.country = placemark.currentCountry ?? ""
                 defaults.set(userDetail?.currentAddress, forKey: "address")
+                defaults.set(userDetail?.locationName, forKey: "locName")
                 defaults.set(userDetail?.country, forKey: "country")
                 self.navigationController?.popViewController(animated: true)
             }

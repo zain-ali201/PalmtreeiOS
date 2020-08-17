@@ -16,6 +16,10 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var filtersView: UIView!
     @IBOutlet weak var filterBtn: UIButton!
     
+    @IBOutlet weak var norecordView: UIView!
+    @IBOutlet weak var lblMsg: UILabel!
+    @IBOutlet weak var lblText: UILabel!
+    
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.delegate = self
@@ -56,6 +60,9 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             filterBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             txtSearch.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblMsg.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            
             txtSearch.textAlignment = .right
         }
         
@@ -83,18 +90,28 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             print(param)
             self.categoryData(param: param as NSDictionary)
         }
+        else if fromVC == "all"
+        {
+            let param: [String: Any] = ["ad_country" : categoryID]
+            print(param)
+            self.categoryData(param: param as NSDictionary)
+        }
         else
         {
             var catID = 0
             if subcatName != ""
             {
-                filtersArray.append(subcatName)
+                filtersArray = [subcatName]
                 catID = subcategoryID
+            }
+            else if catName != ""
+            {
+                filtersArray = [catName]
+                catID = categoryID
             }
             else
             {
-                filtersArray.append(catName)
-                catID = categoryID
+                filtersArray = ["All Ads"]
             }
             createFilterView()
             let param: [String: Any] = ["ad_cats1" : catID, "page_number": 1]
@@ -105,6 +122,26 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidAppear(_ animated: Bool) {
         print("zain")
+        
+        if adDetailObj.catID > 0
+        {
+            categoryID = adDetailObj.catID
+        }
+        
+        if adDetailObj.subcatID > 0
+        {
+            subcategoryID = adDetailObj.subcatID
+        }
+        
+        if adDetailObj.adCategory != ""
+        {
+            catName = adDetailObj.adCategory
+        }
+        
+        if adDetailObj.adSubCategory != ""
+        {
+            subcatName = adDetailObj.adSubCategory
+        }
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -120,15 +157,31 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBAction func saveBtnAction(_ button: UIButton)
     {
-//        let alert = UIAlertController(title: "Search Alert", message: "Save this search and get notified of new results", preferredStyle: .alert)
-//
-//        let save = UIAlertAction(title: "Save", style: .default, handler: { (okAction) in
-//        })
-//
-//        let cancel = UIAlertAction(title: "Cancel", style: .default, handler: nil)
-//        alert.addAction(save)
-//        alert.addAction(cancel)
-//        self.present(alert, animated: true, completion: nil)
+        let alert = UIAlertController(title: "Search Alert", message: "Save this search and get notified of new results", preferredStyle: .alert)
+
+        let save = UIAlertAction(title: "Save", style: .default, handler: { (okAction) in
+            
+            if var savedList = UserDefaults.standard.array(forKey: "savedList") as? [[String: Any]]
+            {
+                let cName = self.subcatName != "" ? self.subcatName : self.catName
+                
+                savedList.append(["title": "\(cName) in \(userDetail?.locationName ?? "UAE")", "catID": self.subcategoryID > 0 ? self.subcategoryID : self.categoryID, "catName": cName, "locationName": userDetail?.locationName ?? "UAE", "lat": userDetail?.lat ?? 0.0, "lng": userDetail?.lng ?? 0.0])
+                UserDefaults.standard.set(savedList, forKey: "savedList")
+            }
+            else
+            {
+                let cName = self.subcatName != "" ? self.subcatName : self.catName
+                
+                var savedList: [[String: Any]] = []
+                savedList.append(["title": "\(cName) in \(userDetail?.locationName ?? "UAE")", "catID": self.subcategoryID > 0 ? self.subcategoryID : self.categoryID, "catName": cName, "locationName": userDetail?.locationName ?? "UAE", "lat": userDetail?.lat ?? 0.0, "lng": userDetail?.lng ?? 0.0])
+                UserDefaults.standard.set(savedList, forKey: "savedList")
+            }
+        })
+
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(save)
+        alert.addAction(cancel)
+        self.present(alert, animated: true, completion: nil)
     }
     
     @IBAction func filterBtnAction(_ button: UIButton)
@@ -439,6 +492,7 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 
                 self.dataArray = successResponse.data.ads
                 adDetailObj = AdDetailObject()
+                
                 self.tableView.reloadData()
                 
             } else {
@@ -462,18 +516,26 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 AddsHandler.sharedInstance.isShowFeatureOnCategory = successResponse.extra.isShowFeatured
                 self.dataArray = successResponse.data.ads
                 
-                if adDetailObj.sortType == "Price Ascending"
+                if self.dataArray.count == 0
                 {
-                    self.dataArray.sort {
-                        $0.adPrice.price > $1.adPrice.price
+                    self.norecordView.alpha = 1
+                }
+                else
+                {
+                    if adDetailObj.sortType == "Price Ascending"
+                    {
+                        self.dataArray.sort {
+                            $0.adPrice.price > $1.adPrice.price
+                        }
+                    }
+                    else if adDetailObj.sortType == "Price Descending"
+                    {
+                        self.dataArray.sort {
+                            $0.adPrice.price < $1.adPrice.price
+                        }
                     }
                 }
-                else if adDetailObj.sortType == "Price Descending"
-                {
-                    self.dataArray.sort {
-                        $0.adPrice.price < $1.adPrice.price
-                    }
-                }
+                
                 self.tableView.reloadData()
             } else {
                 let alert = Constants.showBasicAlert(message: successResponse.message)

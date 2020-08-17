@@ -13,6 +13,10 @@ import NVActivityIndicatorView
 class OffersOnAdsController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable {
 
     //MARK:- Outlets
+    @IBOutlet weak var norecordsView: UIView!
+    @IBOutlet weak var lblMsg: UILabel!
+    @IBOutlet weak var postBtn: UIButton!
+    
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.delegate = self
@@ -46,12 +50,29 @@ class OffersOnAdsController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         self.googleAnalytics(controllerName: "Offer on Ads")
+        
+        if languageCode == "ar"
+        {
+            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblMsg.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            postBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.getOffersData()
         self.showLoader()
+    }
+    
+    @IBAction func postBtnAction(_ button: UIButton)
+    {
+        adDetailObj = AdDetailObject()
+        let adPostVC = self.storyboard?.instantiateViewController(withIdentifier: "AdPostVC") as! AdPostVC
+        let navController = UINavigationController(rootViewController: adPostVC)
+        navController.navigationBar.isHidden = true
+        navController.modalPresentationStyle = .fullScreen
+        self.present(navController, animated:true, completion: nil)
     }
     
     //MARK: - Custom
@@ -144,11 +165,14 @@ class OffersOnAdsController: UIViewController, UITableViewDelegate, UITableViewD
                 self.maximumPage = successResponse.data.pagination.maxNumPages
                 self.dataArray = successResponse.data.receivedOffers.items
                 
-                if self.dataArray.count == 0 {
-                                   self.tableView.setEmptyMessage(successResponse.message)
-                               }else{
-                                   self.tableView.setEmptyMessage("")
-                               }
+                if self.dataArray.count == 0
+                {
+                    self.norecordsView.alpha = 1
+                }
+                else
+                {
+                    self.norecordsView.alpha = 0
+                }
                 
                 self.tableView.reloadData()
             } else {

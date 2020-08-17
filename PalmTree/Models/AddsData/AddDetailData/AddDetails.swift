@@ -262,6 +262,7 @@ class AdDetailObject: NSObject
 class AddDetailLocationObject: NSObject
 {
     var address = ""
+    var locName = ""
     var lat : Double!
     var lng : Double!
     var title = ""

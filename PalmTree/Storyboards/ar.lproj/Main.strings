@@ -5,11 +5,17 @@
 /* Class = "UILabel"; text = "Watchlist"; ObjectID = "1W8-UI-pSg"; */
 "1W8-UI-pSg.text" = "القائمة المفضلة";
 
-/* Class = "UILabel"; text = "Search palmtree"; ObjectID = "hsE-N1-dMM"; */
-"hsE-N1-dMM.text" = "البحث في بالمتري";
+/* Class = "UILabel"; text = "Search palmtree"; ObjectID = "0od-pa-61J"; */
+"0od-pa-61J.normalTitle" = "البحث في بالمتري";
 
 /* Class = "UILabel"; text = "Search palmtree"; ObjectID = "EcL-UV-gqQ"; */
 "EcL-UV-gqQ.text" = "البحث في بالمتري";
+
+/* Class = "UILabel"; text = "Search palmtree"; ObjectID = "xys-Vt-uvA"; */
+"xys-Vt-uvA.text" = "البحث في بالمتري";
+
+/* Class = "UILabel"; text = "What you're looking for"; ObjectID = "wtS-fj-qox"; */
+"wtS-fj-qox.text" = "اعثر على ما تبحث عنه...";
 
 /* Class = "UILabel"; text = "or"; ObjectID = "1eH-EV-SxA"; */
 "1eH-EV-SxA.text" = "أو";
@@ -431,6 +437,18 @@
 
 /* Class = "UILabel"; text = "Phone"; ObjectID = "q5h-6E-BqM"; */
 "q5h-6E-BqM.text" = "هاتف";
+
+/* Class = "UILabel"; text = "No record"; ObjectID = "veL-aV-jWT"; */
+"veL-aV-jWT.text" = "لم يتم العثور على نتائج...";
+
+/* Class = "UILabel"; text = "text"; ObjectID = "ROy-wS-KX9"; */
+"ROy-wS-KX9.text" = "حاول تغيير كلماتك الرئيسية ...";
+
+/* Class = "UILabel"; text = "No record"; ObjectID = "hri-MD-66J"; */
+"hri-MD-66J.text" = "ليس لديك رسائل.";
+
+/* Class = "UIButton"; normalTitle = "Post Ad"; ObjectID = "Z7J-Ju-ugm"; */
+"Z7J-Ju-ugm.normalTitle" = "نشر الإعلان";
 
 /* Class = "UITextField"; placeholder = "Please enter your contact"; ObjectID = "XV9-2s-f78"; */
 "XV9-2s-f78.placeholder" = "أدخل رقم هاتفك هنا";

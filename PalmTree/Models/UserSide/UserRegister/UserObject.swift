@@ -16,9 +16,21 @@ struct UserObject
     var phone = ""
     var profileImg : String!
     var userEmail : String!
-    var currentLocation: CLLocation! = CLLocation()
+    var currentLocation: CLLocation = CLLocation()
     var currentAddress = ""
-    var locationName = ""
+    var locationName = "UAE"
     var country = ""
     var isAccountConfirm : Bool!
+    var lat = 0.0
+    var lng = 0.0
+}
+
+struct SaveAdObject
+{
+    var title = ""
+    var catID = 0
+    var catName = ""
+    var locationName = ""
+    var lat = 0.0
+    var lng = 0.0
 }
