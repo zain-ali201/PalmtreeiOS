@@ -70,21 +70,21 @@ class FilterVC: UIViewController{
             motorsView.alpha = 0
             lblMotors.alpha = 1
             resetBtn.alpha = 1
-            priceView.alpha = 1
-            top.constant = 100
+//            priceView.alpha = 1
+//            top.constant = 100
         }
         else if adDetailObj.adCategory == "Motors"
         {
             motorsView.alpha = 1
             lblMotors.alpha = 1
             resetBtn.alpha = 0
-            priceView.alpha = 1
-            top.constant = 100
+//            priceView.alpha = 1
+//            top.constant = 100
         }
         else
         {
-            top.constant = 20
-            priceView.alpha = 0
+//            top.constant = 20
+//            priceView.alpha = 0
             motorsView.alpha = 0
             lblMotors.alpha = 0
             resetBtn.alpha = 1

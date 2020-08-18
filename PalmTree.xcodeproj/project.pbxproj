@@ -92,6 +92,9 @@
 		181DDA96233393CC001FF048 /* wow.gif in Resources */ = {isa = PBXBuildFile; fileRef = 181DDA95233393CC001FF048 /* wow.gif */; };
 		181DDA9823339465001FF048 /* sad.gif in Resources */ = {isa = PBXBuildFile; fileRef = 181DDA9723339462001FF048 /* sad.gif */; };
 		181DDA9A2333AFA9001FF048 /* AddDetailReactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181DDA992333AFA9001FF048 /* AddDetailReactions.swift */; };
+		181DDD8024EAC8E0007371C5 /* SectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 181DDD7D24EAC8DE007371C5 /* SectionHeaderView.xib */; };
+		181DDD8124EAC8E0007371C5 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181DDD7E24EAC8DF007371C5 /* SectionHeaderView.swift */; };
+		181DDD8224EAC8E0007371C5 /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181DDD7F24EAC8E0007371C5 /* ReusableView.swift */; };
 		1822364F232A3692003D9364 /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1822364E232A3692003D9364 /* TableView.swift */; };
 		18244F0D2074B2F700B9BE8C /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18244F0C2074B2F700B9BE8C /* Accelerate.framework */; };
 		18244F0F2074B30500B9BE8C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18244F0E2074B30500B9BE8C /* AudioToolbox.framework */; };
@@ -560,6 +563,9 @@
 		181DDA95233393CC001FF048 /* wow.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = wow.gif; sourceTree = "<group>"; };
 		181DDA9723339462001FF048 /* sad.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = sad.gif; sourceTree = "<group>"; };
 		181DDA992333AFA9001FF048 /* AddDetailReactions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDetailReactions.swift; sourceTree = "<group>"; };
+		181DDD7D24EAC8DE007371C5 /* SectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SectionHeaderView.xib; sourceTree = "<group>"; };
+		181DDD7E24EAC8DF007371C5 /* SectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
+		181DDD7F24EAC8E0007371C5 /* ReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReusableView.swift; sourceTree = "<group>"; };
 		1822364E232A3692003D9364 /* TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 		18244F0C2074B2F700B9BE8C /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		18244F0E2074B30500B9BE8C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -1249,6 +1255,9 @@
 			children = (
 				ABA1285B248CDFD000201454 /* CategoryVC.swift */,
 				186E4B7E24D95F170021EF8E /* CategoryCell.swift */,
+				181DDD7F24EAC8E0007371C5 /* ReusableView.swift */,
+				181DDD7E24EAC8DF007371C5 /* SectionHeaderView.swift */,
+				181DDD7D24EAC8DE007371C5 /* SectionHeaderView.xib */,
 			);
 			path = CategoryVC;
 			sourceTree = "<group>";
@@ -2492,6 +2501,7 @@
 				181DDA96233393CC001FF048 /* wow.gif in Resources */,
 				181DDA942333813B001FF048 /* heart.gif in Resources */,
 				ABDBD3B9248E65FD00DCFB0E /* GoogleService-Info.plist in Resources */,
+				181DDD8024EAC8E0007371C5 /* SectionHeaderView.xib in Resources */,
 				18BBFA942051098C0067662F /* LaunchScreen.storyboard in Resources */,
 				18EF992924A09F9800EB6A8E /* Localizable.strings in Resources */,
 				181C88182052618A0067B176 /* MessagesCell.xib in Resources */,
@@ -2516,6 +2526,7 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire-SwiftyJSON/Alamofire_SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
+				"${BUILT_PRODUCTS_DIR}/CollapseTableView/CollapseTableView.framework",
 				"${BUILT_PRODUCTS_DIR}/DeviceKit/DeviceKit.framework",
 				"${BUILT_PRODUCTS_DIR}/DropDown/DropDown.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
@@ -2545,7 +2556,6 @@
 				"${BUILT_PRODUCTS_DIR}/TextFieldEffects/TextFieldEffects.framework",
 				"${BUILT_PRODUCTS_DIR}/UITextField+Shake/UITextField_Shake.framework",
 				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
-				"${BUILT_PRODUCTS_DIR}/YNExpandableCell/YNExpandableCell.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -2554,6 +2564,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire_SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CollapseTableView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DeviceKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DropDown.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
@@ -2583,7 +2594,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TextFieldEffects.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UITextField_Shake.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YNExpandableCell.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2845,6 +2855,7 @@
 				185B3C72207E1DF700EDBBB4 /* AddDetailRating.swift in Sources */,
 				1852B0E8208353D90014AF99 /* OfferOnAdDetailReceivedOffer.swift in Sources */,
 				186A9FB72081053A008E646C /* SentOffersMessageAdImage.swift in Sources */,
+				181DDD8224EAC8E0007371C5 /* ReusableView.swift in Sources */,
 				184EDAEC2078976A00A25228 /* AddDetailIsFeatured.swift in Sources */,
 				180A4F712328E23C002BC411 /* RejectedAdsSaved.swift in Sources */,
 				184EDAF62078980000A25228 /* AddDetailReplyDialogue.swift in Sources */,
@@ -3072,6 +3083,7 @@
 				18AD93BE206D197400330ABF /* BlogDetailComment.swift in Sources */,
 				18F48468205AA43000DC4D7B /* Label.swift in Sources */,
 				181888962081EDBD008736F7 /* SettingsAppShare.swift in Sources */,
+				181DDD8124EAC8E0007371C5 /* SectionHeaderView.swift in Sources */,
 				180A4F612328DA10002BC411 /* RejectedAdsRateBar.swift in Sources */,
 				184EDAFE2078987D00A25228 /* AddDetailAddStatus.swift in Sources */,
 				18683F9720A0204D00FF616C /* SubCategoryValue.swift in Sources */,
@@ -3244,6 +3256,10 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Q2ZS4CBGES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PalmTree/Controllers/CategoryVC",
+				);
 				INFOPLIST_FILE = PalmTree/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -3271,6 +3287,10 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Q2ZS4CBGES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PalmTree/Controllers/CategoryVC",
+				);
 				INFOPLIST_FILE = PalmTree/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

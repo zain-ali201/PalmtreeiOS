@@ -45,5 +45,12 @@ struct SubCategoryValue {
         }
         return dictionary
     }
-    
+}
+
+struct SubCategoryObject {
+
+    var hasSub = false
+    var id = 0
+    var name = ""
+    var subCatArray = [SubCategoryObject]()
 }

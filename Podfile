@@ -119,5 +119,5 @@ target 'PalmTree' do
      pod 'Mapbox-iOS-SDK'
      pod 'MapboxGeocoder.swift'
      
-     pod 'YNExpandableCell'
+     pod 'CollapseTableView'
 end

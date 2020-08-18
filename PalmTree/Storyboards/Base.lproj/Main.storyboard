@@ -4265,56 +4265,43 @@
                                             <constraint firstAttribute="height" constant="50" id="1LG-rj-rLc"/>
                                         </constraints>
                                     </view>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4T9-9A-0G1" customClass="YNTableView">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4T9-9A-0G1" customClass="CollapseTableView" customModule="CollapseTableView">
                                         <rect key="frame" x="10" y="135" width="355" height="532"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CategoryCell" id="n5J-Gf-37l" customClass="CategoryCell" customModule="Palmtree" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CategoryCell" id="HK9-EZ-9gk" customClass="CategoryCell" customModule="Palmtree" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="355" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
-                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="n5J-Gf-37l" id="SOY-7v-3Ix">
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HK9-EZ-9gk" id="RoR-34-QtQ">
                                                     <rect key="frame" x="0.0" y="0.0" width="355" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oz4-Ym-pa1">
-                                                            <rect key="frame" x="0.0" y="13.5" width="15" height="17"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Unl-4C-iVg">
+                                                            <rect key="frame" x="20" y="13.5" width="15" height="17"/>
                                                             <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="14"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9rV-sa-0Ru">
-                                                            <rect key="frame" x="0.0" y="43.5" width="355" height="0.5"/>
-                                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CbY-X3-Aoe">
+                                                            <rect key="frame" x="20" y="43.5" width="335" height="0.5"/>
+                                                            <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="0.5" id="yUJ-EC-Ein"/>
+                                                                <constraint firstAttribute="height" constant="0.5" id="GE0-M7-un1"/>
                                                             </constraints>
                                                         </view>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dra-sZ-iXa">
-                                                            <rect key="frame" x="287" y="7" width="38" height="30"/>
-                                                            <state key="normal" title="Show">
-                                                                <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            </state>
-                                                        </button>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="trailing" secondItem="dra-sZ-iXa" secondAttribute="trailing" constant="30" id="K6z-nF-Ftc"/>
-                                                        <constraint firstAttribute="bottom" secondItem="9rV-sa-0Ru" secondAttribute="bottom" id="KxT-X8-D73"/>
-                                                        <constraint firstAttribute="trailing" secondItem="9rV-sa-0Ru" secondAttribute="trailing" id="O4t-JQ-54h"/>
-                                                        <constraint firstItem="dra-sZ-iXa" firstAttribute="centerY" secondItem="SOY-7v-3Ix" secondAttribute="centerY" id="Yxj-ad-Psp"/>
-                                                        <constraint firstItem="Oz4-Ym-pa1" firstAttribute="leading" secondItem="SOY-7v-3Ix" secondAttribute="leading" id="a02-zr-4PH"/>
-                                                        <constraint firstItem="9rV-sa-0Ru" firstAttribute="leading" secondItem="SOY-7v-3Ix" secondAttribute="leading" id="j0u-ZA-Ref"/>
-                                                        <constraint firstItem="Oz4-Ym-pa1" firstAttribute="centerY" secondItem="SOY-7v-3Ix" secondAttribute="centerY" id="mQr-M9-MkL"/>
+                                                        <constraint firstItem="CbY-X3-Aoe" firstAttribute="leading" secondItem="RoR-34-QtQ" secondAttribute="leading" constant="20" id="HED-Mi-1z0"/>
+                                                        <constraint firstAttribute="bottom" secondItem="CbY-X3-Aoe" secondAttribute="bottom" id="TOV-tB-Ajf"/>
+                                                        <constraint firstAttribute="trailing" secondItem="CbY-X3-Aoe" secondAttribute="trailing" id="rIf-g5-l4F"/>
+                                                        <constraint firstItem="Unl-4C-iVg" firstAttribute="leading" secondItem="RoR-34-QtQ" secondAttribute="leading" constant="20" id="xnp-mx-fwD"/>
+                                                        <constraint firstItem="Unl-4C-iVg" firstAttribute="centerY" secondItem="RoR-34-QtQ" secondAttribute="centerY" id="z0p-ry-zHn"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
-                                                    <outlet property="ButtonToShowHide" destination="dra-sZ-iXa" id="9sc-QU-5L5"/>
-                                                    <outlet property="lblName" destination="Oz4-Ym-pa1" id="EYB-tP-Qlz"/>
+                                                    <outlet property="lblName" destination="Unl-4C-iVg" id="C18-3g-OIm"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
-                                        <connections>
-                                            <outlet property="dataSource" destination="OuB-51-dtc" id="7UI-ac-UfE"/>
-                                            <outlet property="delegate" destination="OuB-51-dtc" id="SXb-ZN-crQ"/>
-                                        </connections>
                                     </tableView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="my_shadow" translatesAutoresizingMaskIntoConstraints="NO" id="ygb-bA-hXu">
                                         <rect key="frame" x="0.0" y="115" width="375" height="4"/>

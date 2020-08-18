@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="sf-ui-display-regular.ttf">
+            <string>SFUIDisplay-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="SectionHeaderView" customModule="Palmtree" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ur3-jR-pmv">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oKb-LO-fJA">
+                            <rect key="frame" x="0.0" y="16.5" width="15" height="17"/>
+                            <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="14"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="drop_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="diD-fa-6dA">
+                            <rect key="frame" x="345" y="17.5" width="15" height="15"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="15" id="2BN-V4-DGF"/>
+                                <constraint firstAttribute="width" constant="15" id="CV0-rK-Tkv"/>
+                            </constraints>
+                        </imageView>
+                        <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="msi-9g-6pa">
+                            <rect key="frame" x="0.0" y="49.5" width="375" height="0.5"/>
+                            <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="0.5" id="zIC-LE-vcY"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="oKb-LO-fJA" firstAttribute="centerY" secondItem="ur3-jR-pmv" secondAttribute="centerY" id="2S8-4C-sP5"/>
+                        <constraint firstAttribute="trailing" secondItem="diD-fa-6dA" secondAttribute="trailing" constant="15" id="B9b-CG-6RP"/>
+                        <constraint firstItem="oKb-LO-fJA" firstAttribute="leading" secondItem="ur3-jR-pmv" secondAttribute="leading" id="C3S-4f-Zga"/>
+                        <constraint firstAttribute="bottom" secondItem="msi-9g-6pa" secondAttribute="bottom" id="Nqu-vI-Vym"/>
+                        <constraint firstItem="diD-fa-6dA" firstAttribute="centerY" secondItem="ur3-jR-pmv" secondAttribute="centerY" id="bhd-ax-ALd"/>
+                        <constraint firstItem="msi-9g-6pa" firstAttribute="leading" secondItem="ur3-jR-pmv" secondAttribute="leading" id="m4D-dq-vJO"/>
+                        <constraint firstAttribute="trailing" secondItem="msi-9g-6pa" secondAttribute="trailing" id="pzT-dJ-c3f"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="ur3-jR-pmv" secondAttribute="trailing" id="2u4-0M-rwC"/>
+                <constraint firstItem="ur3-jR-pmv" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Ucq-FP-CIK"/>
+                <constraint firstItem="ur3-jR-pmv" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="az1-GB-tiY"/>
+                <constraint firstAttribute="bottom" secondItem="ur3-jR-pmv" secondAttribute="bottom" id="cRe-SW-VXf"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="imageView" destination="diD-fa-6dA" id="OBL-GN-Flg"/>
+                <outlet property="lblTitle" destination="oKb-LO-fJA" id="jhV-pb-66A"/>
+            </connections>
+            <point key="canvasLocation" x="47.826086956521742" y="24.107142857142858"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="drop_arrow" width="16.5" height="9"/>
+    </resources>
+</document>

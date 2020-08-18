@@ -8,28 +8,21 @@
 
 import UIKit
 import NVActivityIndicatorView
+import CollapseTableView
 
 class CategoryVC: UIViewController, NVActivityIndicatorViewable
 {
     //MARK:- Properties
-    
     @IBOutlet weak var categoriesView: UIView!
-    @IBOutlet weak var tblView: UITableView!
+    @IBOutlet weak var tblView: CollapseTableView!
     
     @IBOutlet weak var lblTitle: UILabel!
     
     var selectedCatName = ""
     var selectedCat = 0
-    var subCatObj:SubCategoryData?
-    var subCatArray = [SubCategoryValue]()
+    var subCatArray = [SubCategoryObject]()
     
     var fromVC = ""
-    
-    let section = ["First Header", "Second Header", "Third Header"]
-    //Array for Items in sections
-    let items = [["Content", "Content1", "Content2"], ["Content3", "Content4", "Content5"], ["Content6", "Content7", "Content8"]]
-    
-    var collapaseHandlerArray = [SubCategoryValue]()
     //MARK:- Cycle
     
     override func viewDidLoad() {
@@ -45,6 +38,12 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable
         
         if categoryArray.count > 0
         {
+            setupTableView()
+            tblView.didTapSectionHeaderView = { (sectionIndex, isOpen) in
+                debugPrint("sectionIndex \(sectionIndex), isOpen \(isOpen)")
+            }
+
+            
             selectedCat = categoryArray[0].catId
             selectedCatName = categoryArray[0].name
             getSubCategories(catID: selectedCat)
@@ -53,6 +52,12 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    func setupTableView() {
+        tblView.delegate = self
+        tblView.dataSource = self
+        tblView.register(UINib(nibName: SectionHeaderView.reuseIdentifier, bundle: nil), forHeaderFooterViewReuseIdentifier: SectionHeaderView.reuseIdentifier)
     }
     
     @IBAction func backBtnACtion(_ sender: Any)
@@ -155,7 +160,30 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable
             NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
             if successResponse.success {
                 
-                self.subCatObj = successResponse.data
+                let catArray = successResponse.data.values
+                
+                if catArray!.count > 0
+                {
+                    self.subCatArray = [SubCategoryObject]()
+                    for obj in catArray!
+                    {
+                        var subCatObj = SubCategoryObject()
+                        subCatObj.id = obj.id
+                        subCatObj.name = obj.name
+                        subCatObj.hasSub = obj.hasSub
+                        
+                        if obj.hasSub
+                        {
+                            DispatchQueue.main.async {
+                                self.innerCategoriesAPI(catID: obj.id)
+                            }
+                        }
+                        
+                        DispatchQueue.main.async {
+                            self.subCatArray.append(subCatObj)
+                        }
+                    }
+                }
                 
                 DispatchQueue.main.async {
 //                    self.createCategoriesView()
@@ -166,6 +194,59 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable
             else {
                 let alert = Constants.showBasicAlert(message: successResponse.message)
                 self.presentVC(alert)
+            }
+        }) { (error) in
+            NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+            let alert = Constants.showBasicAlert(message: error.message)
+            self.presentVC(alert)
+        }
+    }
+    
+    func innerCategoriesAPI(catID: Int)
+    {
+        let param: [String: Any] = ["subcat": catID]
+        
+        self.showLoader()
+        
+        AddsHandler.adPostSubcategory(parameter: param as NSDictionary, success: { (successResponse) in
+            NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+            if successResponse.success
+            {
+                if successResponse.data.values != nil
+                {
+                    var index = 0
+                    for var obj in self.subCatArray
+                    {
+                        if obj.name == successResponse.data.title
+                        {
+                            var catArray = [SubCategoryObject]()
+                            for obj in successResponse.data.values
+                            {
+                                var subCatObj = SubCategoryObject()
+                                subCatObj.id = obj.id
+                                subCatObj.name = obj.name
+                                subCatObj.hasSub = obj.hasSub
+                                catArray.append(subCatObj)
+                            }
+                            
+                            obj.subCatArray = catArray
+                            self.subCatArray[index] = obj
+                        }
+                        index += 1
+                    }
+                }
+                
+                DispatchQueue.main.async {
+                    print(self.subCatArray)
+                    self.tblView.reloadData()
+                }
+              //UserDefaults.standard.set(successResponse.isBid, forKey: "isBid")
+            }
+            else
+            {
+                let alert = Constants.showBasicAlert(message: successResponse.message)
+                self.presentVC(alert)
+                
             }
         }) { (error) in
             NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
@@ -254,76 +335,130 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable
 //    }
 }
 
-
-extension CategoryVC : UITableViewDataSource,UITableViewDelegate {
-    
-    //setting number of Sections
-    func numberOfSections(in tableView: UITableView) -> Int
+extension CategoryVC: UITableViewDataSource, UITableViewDelegate
+{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         var count = 0
 
-        if subCatObj?.values.count ?? 0 > 0
+        if section > 0
         {
-            count = subCatObj?.values.count ?? 0
+            if self.subCatArray.count > 0
+            {
+                count = self.subCatArray[section - 1].subCatArray.count
+                print(count)
+            }
         }
 
         return count
     }
-    //Setting headerView Height
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40
-    }
-    //Setting Header Customised View
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
-        //Declare cell
-        let headerCell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell") as! CategoryCell
-        
+    
+    func numberOfSections(in tableView: UITableView) -> Int
+    {
+        var count = 0
 
-        if section == 0
+        if self.subCatArray.count > 0
         {
-            headerCell.lblName.text = "All types"
-            headerCell.ButtonToShowHide.alpha = 0
+            count = self.subCatArray.count + 1
         }
-        else
-        {
-            let values = subCatObj?.values[section - 1]
-            headerCell.lblName.text = values?.name
-            headerCell.ButtonToShowHide.tag = section
-            
-            //Adding a target to button
-            headerCell.ButtonToShowHide.addTarget(self, action: #selector(CategoryVC.HandleheaderButton(sender:)), for: .touchUpInside)
-        }
-        return headerCell.contentView
-        
+
+        return count
     }
     
-    //Setting number of rows in a section
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if section == 0
-        {
-            return 0
-        }
-        else
-        {
-            return 3
-        }
-    }
-    
-    //Setting cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CategoryCell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
-        //setting title
-        cell.lblName.text = items[indexPath.section][indexPath.row]
+
+        if languageCode == "ar"
+        {
+            cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }
+        
+        if indexPath.section > 0
+        {
+            let category = self.subCatArray[indexPath.section - 1].subCatArray
+            let subCat = category[indexPath.row]
+            cell.lblName.text = subCat.name
+        }
+        
         return cell
     }
     
-    //Header cell button Action
-    @objc func HandleheaderButton(sender: UIButton){
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
+    {
+        guard let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: SectionHeaderView.reuseIdentifier) else {
+            let view = Bundle.main.loadNibNamed(SectionHeaderView.reuseIdentifier, owner: self, options: nil)?.first as? SectionHeaderView
+            
+                if languageCode == "ar"
+                {
+                    view?.lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                }
         
-        
-        //reload section
-        self.tblView.reloadSections(IndexSet(integer: sender.tag), with: .none)
+                if section == 0
+                {
+                    view?.lblTitle.text = "All types"
+                }
+                else
+                {
+                    let values = self.subCatArray[section - 1]
+                    view?.lblTitle.text = values.name
+                }
+            
+            return view
+        }
+        return view
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+        let adFilterListVC = self.storyboard?.instantiateViewController(withIdentifier: "AdFilterListVC") as! AdFilterListVC
+        if indexPath.section == 0
+        {
+            if fromVC == "filter" || fromVC == "adPost"
+            {
+                adDetailObj.adCategory = selectedCatName
+                adDetailObj.catID = selectedCat
+                adDetailObj.adSubCategory = ""
+                adDetailObj.subcatID = 0
+                self.navigationController?.popViewController(animated: true)
+            }
+            else
+            {
+                adFilterListVC.categoryID = selectedCat
+                adFilterListVC.catName = selectedCatName
+                self.navigationController?.pushViewController(adFilterListVC, animated: true)
+            }
+        }
+        else
+        {
+            let category = self.subCatArray[indexPath.section - 1].subCatArray
+            let values = category[indexPath.row]
+
+            if fromVC == "filter" || fromVC == "adPost"
+            {
+                adDetailObj.adCategory = selectedCatName
+                adDetailObj.catID = selectedCat
+                adDetailObj.adSubCategory = values.name
+                adDetailObj.subcatID = values.id
+                self.navigationController?.popViewController(animated: true)
+            }
+            else
+            {
+
+                adFilterListVC.categoryID = selectedCat
+                adFilterListVC.catName = selectedCatName
+                adFilterListVC.subcategoryID = values.id
+                adFilterListVC.subcatName = values.name
+                self.navigationController?.pushViewController(adFilterListVC, animated: true)
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 44
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 44
+    }
+
 }

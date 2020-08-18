@@ -20,6 +20,7 @@ PODS:
     - SwiftyJSON (~> 4.0.0)
   - AlamofireImage (3.3.1):
     - Alamofire (~> 4.5)
+  - CollapseTableView (1.0.3)
   - DeviceKit (1.4.0)
   - DropDown (2.0.2)
   - FBSDKCoreKit (5.10.0):
@@ -133,12 +134,12 @@ PODS:
   - TextFieldEffects (1.4.0)
   - "UITextField+Shake (1.2.1)"
   - XLPagerTabStrip (8.1.0)
-  - YNExpandableCell (1.2.1)
 
 DEPENDENCIES:
   - AFNetworking
   - Alamofire
   - Alamofire-SwiftyJSON
+  - CollapseTableView
   - DeviceKit
   - DropDown
   - FBSDKCoreKit
@@ -169,7 +170,6 @@ DEPENDENCIES:
   - TextFieldEffects
   - "UITextField+Shake"
   - XLPagerTabStrip (~> 8.1)
-  - YNExpandableCell
 
 SPEC REPOS:
   trunk:
@@ -177,6 +177,7 @@ SPEC REPOS:
     - Alamofire
     - Alamofire-SwiftyJSON
     - AlamofireImage
+    - CollapseTableView
     - DeviceKit
     - DropDown
     - FBSDKCoreKit
@@ -215,13 +216,13 @@ SPEC REPOS:
     - TextFieldEffects
     - "UITextField+Shake"
     - XLPagerTabStrip
-    - YNExpandableCell
 
 SPEC CHECKSUMS:
   AFNetworking: d9fdf484a3c723ec3c558a41cc5754c7e845ee77
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   Alamofire-SwiftyJSON: 2b3649d57dc7bb2880fb8b86f8bb969397666916
   AlamofireImage: 3b35b586853abaf94ca1250f4e94cff3c21a4c0d
+  CollapseTableView: 7c8156ed76cb970fde8a0da034d41ae77f47be40
   DeviceKit: fa74d97499660e88081718b16688e19217595dba
   DropDown: 75562633a203f57a917021b4edb96c76f293b0ec
   FBSDKCoreKit: f9bae468a078f20c05c73450825ccd54cfafbbb7
@@ -260,8 +261,7 @@ SPEC CHECKSUMS:
   TextFieldEffects: 4ee41b5216e674d55fb6ac25107bf1af7629176f
   "UITextField+Shake": 298ac5a0f239d731bdab999b19b628c956ca0ac3
   XLPagerTabStrip: 22d4c58200d7c105e0e407ab6bfd01a5d85014be
-  YNExpandableCell: f71457eddc5f2d607de5a2aef545325b0b7622e4
 
-PODFILE CHECKSUM: aeba3cffcededc3ee6f46088432a98d38d64a03d
+PODFILE CHECKSUM: c008d65caea52f2967b0108243e368c9eb612522
 
 COCOAPODS: 1.9.3

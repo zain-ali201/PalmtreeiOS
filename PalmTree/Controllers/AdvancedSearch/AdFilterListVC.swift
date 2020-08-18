@@ -73,7 +73,7 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         else if fromVC == "nearby"
         {
-            let param: [String: Any] = ["nearby_latitude": latitude, "nearby_longitude": longitude, "nearby_distance": 1000, "page_number": 1]
+            let param: [String: Any] = ["nearby_latitude": latitude, "nearby_longitude": longitude, "nearby_distance": 100, "page_number": 1]
             print(param)
             self.categoryData(param: param as NSDictionary)
         }
@@ -265,7 +265,7 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
           
             view.addSubview(lbl)
             view.addSubview(btn)
-            if filter != "All Ads" && filter != "Date Descending" && filter != "Date Ascending" && filter != "Price Ascending" && filter != "Price Descending" && filter != "Price" && filter != "Make/ Model" && filter != "Year" && filter != "Fuel type"
+            if filter != "All Ads" && filter != "Date Descending" && filter != "Most Recent" && filter != "Nearest to me" && filter != "Cheapest" && filter != "Most expensive" && filter != "Best match" && filter != "Price" && filter != "Make/ Model" && filter != "Year" && filter != "Fuel type"
             {
                 view.addSubview(crossBtn)
             }
@@ -371,7 +371,7 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             
             if userDetail?.currentLocation.coordinate != nil
             {
-                param = ["ad_cats1" : catID, "nearby_latitude": adDetailObj.location.lat, "nearby_longitude": adDetailObj.location.lng, "nearby_distance": 1000, "page_number": 1]
+                param = ["ad_cats1" : catID, "nearby_latitude": adDetailObj.location.lat, "nearby_longitude": adDetailObj.location.lng, "nearby_distance": 500, "page_number": 1]
             }
             print(param)
             self.categoryData(param: param as NSDictionary)
@@ -454,9 +454,9 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         cell.locationAction = { () in
             let mapVC = self.storyboard?.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
-            mapVC.address = objData.adLocation.address ?? ""
-            mapVC.latitude = Double(objData.adLocation.lat ?? "0.0")
-            mapVC.longitude = Double(objData.adLocation.longField ?? "0.0")
+            mapVC.address = objData.location.address ?? ""
+            mapVC.latitude = Double(objData.location.lat ?? "0.0")
+            mapVC.longitude = Double(objData.location.longField ?? "0.0")
             self.navigationController?.pushViewController(mapVC, animated: true)
         }
         
@@ -522,17 +522,25 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
                 else
                 {
-                    if adDetailObj.sortType == "Price Ascending"
+                    if adDetailObj.sortType == "Cheapest"
                     {
-                        self.dataArray.sort {
-                            $0.adPrice.price > $1.adPrice.price
-                        }
+                        self.dataArray = self.dataArray.filter( {
+                            $0.adPrice.price < "200"
+                        })
                     }
-                    else if adDetailObj.sortType == "Price Descending"
+                    else if adDetailObj.sortType == "Most expensive"
                     {
-                        self.dataArray.sort {
-                            $0.adPrice.price < $1.adPrice.price
-                        }
+                        self.dataArray = self.dataArray.filter( {
+                            $0.adPrice.price > "1000"
+                        })
+                    }
+                        
+                    
+                    if adDetailObj.minPrice != "" && adDetailObj.maxPrice != ""
+                    {
+                        self.dataArray = self.dataArray.filter( {
+                            $0.adPrice.price > adDetailObj.minPrice && $0.adPrice.price < adDetailObj.maxPrice
+                        })
                     }
                 }
                 

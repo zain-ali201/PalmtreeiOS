@@ -1,0 +1,11 @@
+framework module CollapseTableView {
+  umbrella header "CollapseTableView.h"
+
+  export *
+  module * { export * }
+}
+
+module CollapseTableView.Swift {
+    header "CollapseTableView-Swift.h"
+    requires objc
+}

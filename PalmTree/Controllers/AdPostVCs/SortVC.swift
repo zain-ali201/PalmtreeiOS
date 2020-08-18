@@ -29,27 +29,8 @@ class SortVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
         super.viewDidLoad()
         
         lblTitle.text = fromInd
-        
-//        if fromInd == "Sort Type"
-//        {
-            dataArray = ["Date Descending", "Price Ascending", "Price Descending"]
-//        }
-//        else if fromInd == "Year"
-//        {
-//            dataArray = ["Up to 1 year", "Up to 2 year", "Up to 3 year", "Up to 4 year", "Up to 5 year", "Up to 6 year", "Up to 7 year", "Up to 8 year", "Up to 9 year", "Up to 1 year", "Up to 10 year"]
-//        }
-//        else if fromInd == "Fuel Type"
-//        {
-//            dataArray = ["" , "", "", "", ""]
-//        }
-//        else if fromInd == "Transmission"
-//        {
-//            dataArray = ["Any", "Automatic", "Manual", "Semi-Auto", "Other"]
-//        }
-//        else if fromInd == "Colour"
-//        {
-//            dataArray = ["Any", "Biege", "Black", "Blue", "Bronze", "Brown", "Cream", "Gold", "Green", "Grey", "Maroon", "Mauve", "Multi-Coloured", "Orange", "Pink", "Purple", "Red", "Silver", "White", "Yellow", "Other"]
-//        }
+
+        dataArray = ["Date Descending", "Most Recent", "Nearest to me", "Cheapest", "Most expensive", "Best match"]
         
         tblView.reloadData()
         self.googleAnalytics(controllerName: "Sort Controller")
