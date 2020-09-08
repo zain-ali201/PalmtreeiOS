@@ -41,9 +41,53 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable
             setupTableView()
             tblView.didTapSectionHeaderView = { (sectionIndex, isOpen) in
                 debugPrint("sectionIndex \(sectionIndex), isOpen \(isOpen)")
+                
+                let adFilterListVC = self.storyboard?.instantiateViewController(withIdentifier: "AdFilterListVC") as! AdFilterListVC
+                
+                if sectionIndex == 0
+                {
+                    if self.fromVC == "filter" || self.fromVC == "adPost"
+                    {
+                        adDetailObj.adCategory = self.selectedCatName
+                        adDetailObj.catID = self.selectedCat
+                        adDetailObj.adSubCategory = ""
+                        adDetailObj.subcatID = 0
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                    else
+                    {
+                        adFilterListVC.categoryID = self.selectedCat
+                        adFilterListVC.catName = self.selectedCatName
+                        self.navigationController?.pushViewController(adFilterListVC, animated: true)
+                    }
+                }
+                else
+                {
+                    let values = self.subCatArray[sectionIndex - 1]
+                    
+                    if !values.hasSub
+                    {
+                        if self.fromVC == "filter" || self.fromVC == "adPost"
+                        {
+                            adDetailObj.adCategory = self.selectedCatName
+                            adDetailObj.catID = self.selectedCat
+                            adDetailObj.adSubCategory = values.name
+                            adDetailObj.subcatID = values.id
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                        else
+                        {
+
+                            adFilterListVC.categoryID = self.selectedCat
+                            adFilterListVC.catName = self.selectedCatName
+                            adFilterListVC.subcategoryID = values.id
+                            adFilterListVC.subcatName = values.name
+                            self.navigationController?.pushViewController(adFilterListVC, animated: true)
+                        }
+                    }
+                }
             }
 
-            
             selectedCat = categoryArray[0].catId
             selectedCatName = categoryArray[0].name
             getSubCategories(catID: selectedCat)
@@ -57,6 +101,7 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable
     func setupTableView() {
         tblView.delegate = self
         tblView.dataSource = self
+        tblView.tableFooterView = UIView(frame: .zero)
         tblView.register(UINib(nibName: SectionHeaderView.reuseIdentifier, bundle: nil), forHeaderFooterViewReuseIdentifier: SectionHeaderView.reuseIdentifier)
     }
     
@@ -382,29 +427,46 @@ extension CategoryVC: UITableViewDataSource, UITableViewDelegate
         
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
     {
-        guard let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: SectionHeaderView.reuseIdentifier) else {
-            let view = Bundle.main.loadNibNamed(SectionHeaderView.reuseIdentifier, owner: self, options: nil)?.first as? SectionHeaderView
-            
-                if languageCode == "ar"
-                {
-                    view?.lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-                }
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 44))
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 44))
+        label.textColor = UIColor.black
+        label.backgroundColor = .white
+        label.font = UIFont.systemFont(ofSize: 14.0)
         
-                if section == 0
-                {
-                    view?.lblTitle.text = "All types"
-                }
-                else
-                {
-                    let values = self.subCatArray[section - 1]
-                    view?.lblTitle.text = values.name
-                }
-            
-            return view
+        let arrow = UIImageView(frame: CGRect(x: tableView.frame.size.width - 20, y: 15, width: 15, height: 15))
+        arrow.image = UIImage(named: "drop_arrow")
+        arrow.contentMode = .scaleAspectFit
+        
+        let lineview = UIView(frame: CGRect(x: 0, y: 43.5, width: tableView.frame.size.width, height: 0.5))
+        lineview.backgroundColor = .lightGray
+        lineview.alpha = 0.5
+        
+        view.addSubview(label)
+        view.addSubview(lineview)
+    
+        if languageCode == "ar"
+        {
+            label.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
+
+        if section == 0
+        {
+            label.text = "All types"
+        }
+        else
+        {
+            let values = self.subCatArray[section - 1]
+            if values.hasSub
+            {
+                view.addSubview(arrow)
+            }
+            
+            label.text = values.name
+        }
+
         return view
     }
     

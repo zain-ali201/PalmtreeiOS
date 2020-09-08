@@ -12,6 +12,7 @@ import Alamofire
 import OpalImagePicker
 
 var adDetailObj: AdDetailObject = AdDetailObject()
+var adPostVC: AdPostVC!
 
 class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate, UIImagePickerControllerDelegate, OpalImagePickerControllerDelegate
 {
@@ -61,10 +62,6 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     
     var fromVC = ""
     var priceFlag = false
-
-    var imageArray = [AdPostImageArray]()
-    var imgCtrlCount = 0
-    var imageIDArray = [Int]()
     
     var numberFlag = true
     var whatsappFlag = true
@@ -97,6 +94,8 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        adPostVC = self
         
         if fromVC == "myads"
         {
@@ -380,11 +379,14 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
 //        mapboxVC.longitude = userDetail?.currentLocation.coordinate.longitude
 //        self.navigationController?.pushViewController(mapboxVC, animated: true)
         
-        let locVC = self.storyboard?.instantiateViewController(withIdentifier: "LocationViewController") as! LocationViewController
-        locVC.latitude = userDetail?.currentLocation.coordinate.latitude
-        locVC.longitude = userDetail?.currentLocation.coordinate.longitude
-        self.navigationController?.pushViewController(locVC, animated: true)
+//        let locVC = self.storyboard?.instantiateViewController(withIdentifier: "LocationViewController") as! LocationViewController
+//        locVC.latitude = userDetail?.currentLocation.coordinate.latitude
+//        locVC.longitude = userDetail?.currentLocation.coordinate.longitude
+//        self.navigationController?.pushViewController(locVC, animated: true)
         
+        let locVC = self.storyboard?.instantiateViewController(withIdentifier: "CountryAreasVC") as! CountryAreasVC
+        locVC.fromInd = "AdPost"
+        self.navigationController?.pushViewController(locVC, animated: true)
     }
     
     @IBAction func switchAction(switchC: UISwitch)
@@ -494,15 +496,21 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             {
                 adDetailObj.phone = txtPhone.text!
                 adDetailObj.whatsapp = txtWhatsapp.text!
+                adDetailObj.adTitle = self.txtTitle.text!
+                adDetailObj.adPrice = self.txtPrice.text!
+                adDetailObj.priceType = lblFixedPrice.text!
+                adDetailObj.name = self.txtTitle.text!
+                adDetailObj.adDesc = txtDescp.text
                 
-                let param: [String: Any] = ["is_update": ""]
-                print(param)
-                self.adPost(param: param as NSDictionary)
+                let featuredVC = self.storyboard?.instantiateViewController(withIdentifier: "FeaturedVC") as! FeaturedVC
+                self.navigationController?.pushViewController(featuredVC, animated: true)
+                
+//
+//                let param: [String: Any] = ["is_update": ""]
+//                print(param)
+//                self.adPost(param: param as NSDictionary)
             }
         }
-        
-//        let featuredVC = self.storyboard?.instantiateViewController(withIdentifier: "FeaturedVC") as! FeaturedVC
-//        self.navigationController?.pushViewController(featuredVC, animated: true)
     }
     
     //MARK:- Customs
@@ -609,12 +617,13 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     func addPostLiveAPI()
     {
         var parameter: [String: Any] = [
-            "images_array": self.imageIDArray,
+//            "images_array": adDetailObj.imageIDArray,
             "ad_phone": adDetailObj.phone,
             "ad_location": adDetailObj.location.address,
             "location_lat": adDetailObj.location.lat ?? "",
             "location_long": adDetailObj.location.lng ?? "",
-            "ad_country": userDetail?.country ?? "",
+            "ad_country": adDetailObj.location.address,
+            "ad_bidding" : adDetailObj.location.address,
             "ad_featured_ad": false,
             "ad_id": AddsHandler.sharedInstance.adPostAdId,
             "ad_bump_ad": true,
@@ -626,93 +635,93 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             "ad_cats1" : adDetailObj.subcatID > 0 ? adDetailObj.subcatID : adDetailObj.catID
         ]
         
-//        var customDictionary: [String: Any] = [String: Any]()
-//
-//        if adDetailObj.motorCatObj.regNo != ""
-//        {
-//            customDictionary.merge(with: ["regNo" : adDetailObj.motorCatObj.regNo])
-//        }
-//
-//        if adDetailObj.motorCatObj.sellerType != ""
-//        {
-//            customDictionary.merge(with: ["sellerType" : adDetailObj.motorCatObj.sellerType])
-//        }
-//
-//        if adDetailObj.motorCatObj.make != ""
-//        {
-//            customDictionary.merge(with: ["make" : adDetailObj.motorCatObj.make])
-//        }
-//
-//        if adDetailObj.motorCatObj.model != ""
-//        {
-//            customDictionary.merge(with: ["model" : adDetailObj.motorCatObj.model])
-//        }
-//
-//        if adDetailObj.motorCatObj.year != ""
-//        {
-//            customDictionary.merge(with: ["year" : adDetailObj.motorCatObj.year])
-//        }
-//
-//        if adDetailObj.motorCatObj.mileage != ""
-//        {
-//            customDictionary.merge(with: ["mileage" : adDetailObj.motorCatObj.mileage])
-//        }
-//
-//        if adDetailObj.motorCatObj.bodyType != ""
-//        {
-//            customDictionary.merge(with: ["bodyType" : adDetailObj.motorCatObj.bodyType])
-//        }
-//
-//        if adDetailObj.motorCatObj.fuelType != ""
-//        {
-//            customDictionary.merge(with: ["fuelType" : adDetailObj.motorCatObj.fuelType])
-//        }
-//
-//        if adDetailObj.motorCatObj.transmission != ""
-//        {
-//            customDictionary.merge(with: ["transmission" : adDetailObj.motorCatObj.transmission])
-//        }
-//
-//        if adDetailObj.motorCatObj.colour != ""
-//        {
-//            customDictionary.merge(with: ["colour" : adDetailObj.motorCatObj.colour])
-//        }
-//
-//        if adDetailObj.motorCatObj.engineSize != ""
-//        {
-//            customDictionary.merge(with: ["engineSize" : adDetailObj.motorCatObj.engineSize])
-//        }
-//
-//        if adDetailObj.propertyCatObj.propertyType != ""
-//        {
-//            customDictionary.merge(with: ["propertyType" : adDetailObj.propertyCatObj.propertyType])
-//        }
-//
-//        if adDetailObj.propertyCatObj.bedrooms != ""
-//        {
-//            customDictionary.merge(with: ["bedrooms" : adDetailObj.propertyCatObj.bedrooms])
-//        }
-//
-//        if adDetailObj.propertyCatObj.sellerType != ""
-//        {
-//            customDictionary.merge(with: ["psellerType" : adDetailObj.propertyCatObj.sellerType])
-//        }
-//
-//        if adDetailObj.whatsapp != ""
-//        {
-//            customDictionary.merge(with: ["whatsapp" : adDetailObj.whatsapp])
-//        }
-//
-//        if customDictionary.count > 0
-//        {
-//            customDictionary.merge(with: ["ad_price" : adDetailObj.adPrice])
-//            customDictionary.merge(with: ["ad_price_type" : adDetailObj.priceType])
-//
-//            let custom = Constants.json(from: customDictionary)
-//            let param: [String: Any] = ["custom_fields": custom!]
-//            parameter.merge(with: param)
-//            parameter.merge(with: customDictionary)
-//        }
+        var customDictionary: [String: Any] = [String: Any]()
+
+        if adDetailObj.motorCatObj.regNo != ""
+        {
+            customDictionary.merge(with: ["regNo" : adDetailObj.motorCatObj.regNo])
+        }
+
+        if adDetailObj.motorCatObj.sellerType != ""
+        {
+            customDictionary.merge(with: ["sellerType" : adDetailObj.motorCatObj.sellerType])
+        }
+
+        if adDetailObj.motorCatObj.make != ""
+        {
+            customDictionary.merge(with: ["make" : adDetailObj.motorCatObj.make])
+        }
+
+        if adDetailObj.motorCatObj.model != ""
+        {
+            customDictionary.merge(with: ["model" : adDetailObj.motorCatObj.model])
+        }
+
+        if adDetailObj.motorCatObj.year != ""
+        {
+            customDictionary.merge(with: ["year" : adDetailObj.motorCatObj.year])
+        }
+
+        if adDetailObj.motorCatObj.mileage != ""
+        {
+            customDictionary.merge(with: ["mileage" : adDetailObj.motorCatObj.mileage])
+        }
+
+        if adDetailObj.motorCatObj.bodyType != ""
+        {
+            customDictionary.merge(with: ["bodyType" : adDetailObj.motorCatObj.bodyType])
+        }
+
+        if adDetailObj.motorCatObj.fuelType != ""
+        {
+            customDictionary.merge(with: ["fuelType" : adDetailObj.motorCatObj.fuelType])
+        }
+
+        if adDetailObj.motorCatObj.transmission != ""
+        {
+            customDictionary.merge(with: ["transmission" : adDetailObj.motorCatObj.transmission])
+        }
+
+        if adDetailObj.motorCatObj.colour != ""
+        {
+            customDictionary.merge(with: ["colour" : adDetailObj.motorCatObj.colour])
+        }
+
+        if adDetailObj.motorCatObj.engineSize != ""
+        {
+            customDictionary.merge(with: ["engineSize" : adDetailObj.motorCatObj.engineSize])
+        }
+
+        if adDetailObj.propertyCatObj.propertyType != ""
+        {
+            customDictionary.merge(with: ["propertyType" : adDetailObj.propertyCatObj.propertyType])
+        }
+
+        if adDetailObj.propertyCatObj.bedrooms != ""
+        {
+            customDictionary.merge(with: ["bedrooms" : adDetailObj.propertyCatObj.bedrooms])
+        }
+
+        if adDetailObj.propertyCatObj.sellerType != ""
+        {
+            customDictionary.merge(with: ["psellerType" : adDetailObj.propertyCatObj.sellerType])
+        }
+
+        if adDetailObj.whatsapp != ""
+        {
+            customDictionary.merge(with: ["whatsapp" : adDetailObj.whatsapp])
+        }
+
+        if customDictionary.count > 0
+        {
+            customDictionary.merge(with: ["ad_price" : adDetailObj.adPrice])
+            customDictionary.merge(with: ["ad_price_type" : adDetailObj.priceType])
+
+            let custom = Constants.json(from: customDictionary)
+            let param: [String: Any] = ["custom_fields": custom!]
+            parameter.merge(with: param)
+            parameter.merge(with: customDictionary)
+        }
             
         self.adPostLive(param: parameter as NSDictionary)
     }
@@ -744,7 +753,6 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
                         self.uploadImages(param: param as NSDictionary, images: adDetailObj.images)
                     }
                 }
-                
             }
             else
             {
@@ -772,7 +780,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
                 }
                 else
                 {
-                    self.imageIDArray.removeAll()
+                    adDetailObj.imageIDArray.removeAll()
                     
                     let featuredVC = self.storyboard?.instantiateViewController(withIdentifier: "FeaturedVC") as! FeaturedVC
                     self.navigationController?.pushViewController(featuredVC, animated: true)
@@ -798,11 +806,9 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             
             //self.stopAnimating()
             if successResponse.success {
-                self.imageArray = successResponse.data.adImages
-                self.imgCtrlCount = successResponse.data.adImages.count
-                //add image id to array to send to next View Controller and hit to server
-                for item in self.imageArray {
-                    self.imageIDArray.append(item.imgId)
+                
+                for item in successResponse.data.adImages {
+                    adDetailObj.imageIDArray.append(item.imgId)
                 }
             }
             else
@@ -978,8 +984,8 @@ extension AdPostVC: UICollectionViewDragDelegate
 {
     @available(iOS 11.0, *)
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        let item = self.imageArray[indexPath.row]
-        let itemProvider = NSItemProvider(object: item.thumb as NSString)
+        let item = adDetailObj.images[indexPath.row]
+        let itemProvider = NSItemProvider(object: item as UIImage)
         let dragItem = UIDragItem(itemProvider: itemProvider)
         dragItem.localObject = item
         isDrag = true

@@ -9,6 +9,7 @@
 import UIKit
 import Stripe
 import NVActivityIndicatorView
+import Alamofire
 
 class CheckoutViewController: UIViewController, NVActivityIndicatorViewable
 {
@@ -116,11 +117,10 @@ class CheckoutViewController: UIViewController, NVActivityIndicatorViewable
 //                  self.displayAlert(title: "Payment canceled", message: error?.localizedDescription ?? "")
                   break
                 case .succeeded:
-                //          self.displayAlert(title: "Payment succeeded", message: paymentIntent?.description ?? "")
-                let param: [String: Any] = ["is_update": adDetailObj.adId]
+                    let param: [String: Any] = ["is_update": ""]
                     print(param)
                     self.adPost(param: param as NSDictionary)
-                  break
+                break
                 @unknown default:
                   fatalError()
                   break
@@ -128,63 +128,232 @@ class CheckoutViewController: UIViewController, NVActivityIndicatorViewable
         }
     }
     
-    func adPost(param: NSDictionary)
-    {
-        print(param)
-        self.showLoader()
-        AddsHandler.adPost(parameter: param, success: { (successResponse) in
-            self.stopAnimating()
-            if successResponse.success {
-                self.addPostLiveAPI()
-            }
-            else
+    //MARK:- Ad Post APIs
+        func addPostLiveAPI()
+        {
+            var parameter: [String: Any] = [
+                "images_array": adDetailObj.imageIDArray,
+                "ad_phone": adDetailObj.phone,
+                "ad_location": adDetailObj.location.address,
+                "location_lat": adDetailObj.location.lat ?? "",
+                "location_long": adDetailObj.location.lng ?? "",
+                "ad_country": adDetailObj.location.address,
+                "ad_bidding" : adDetailObj.location.address,
+                "ad_featured_ad": true,
+                "ad_id": AddsHandler.sharedInstance.adPostAdId,
+                "ad_bump_ad": true,
+                "name": adDetailObj.adTitle,
+                "ad_price" : adDetailObj.adPrice,
+                "ad_price_type" : adDetailObj.priceType,
+                "ad_title": adDetailObj.adTitle,
+                "ad_description" : adDetailObj.adDesc,
+                "ad_cats1" : adDetailObj.subcatID > 0 ? adDetailObj.subcatID : adDetailObj.catID
+            ]
+            
+            var customDictionary: [String: Any] = [String: Any]()
+
+            if adDetailObj.motorCatObj.regNo != ""
             {
-                let alert = Constants.showBasicAlert(message: successResponse.message)
-                self.presentVC(alert)
+                customDictionary.merge(with: ["regNo" : adDetailObj.motorCatObj.regNo])
             }
-        }) { (error) in
-            self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
-            self.presentVC(alert)
-        }
-    }
-    
-    func addPostLiveAPI()
-    {
-        let parameter: [String: Any] = [
-            "ad_featured_ad": true
-        ]
-        
-        self.adPostLive(param: parameter as NSDictionary)
-    }
-    
-    func adPostLive(param: NSDictionary)
-    {
-        self.showLoader()
-        AddsHandler.adPostLive(parameter: param, success: { (successResponse) in
-            self.stopAnimating()
-            if successResponse.success {
+
+            if adDetailObj.motorCatObj.sellerType != ""
+            {
+                customDictionary.merge(with: ["sellerType" : adDetailObj.motorCatObj.sellerType])
+            }
+
+            if adDetailObj.motorCatObj.make != ""
+            {
+                customDictionary.merge(with: ["make" : adDetailObj.motorCatObj.make])
+            }
+
+            if adDetailObj.motorCatObj.model != ""
+            {
+                customDictionary.merge(with: ["model" : adDetailObj.motorCatObj.model])
+            }
+
+            if adDetailObj.motorCatObj.year != ""
+            {
+                customDictionary.merge(with: ["year" : adDetailObj.motorCatObj.year])
+            }
+
+            if adDetailObj.motorCatObj.mileage != ""
+            {
+                customDictionary.merge(with: ["mileage" : adDetailObj.motorCatObj.mileage])
+            }
+
+            if adDetailObj.motorCatObj.bodyType != ""
+            {
+                customDictionary.merge(with: ["bodyType" : adDetailObj.motorCatObj.bodyType])
+            }
+
+            if adDetailObj.motorCatObj.fuelType != ""
+            {
+                customDictionary.merge(with: ["fuelType" : adDetailObj.motorCatObj.fuelType])
+            }
+
+            if adDetailObj.motorCatObj.transmission != ""
+            {
+                customDictionary.merge(with: ["transmission" : adDetailObj.motorCatObj.transmission])
+            }
+
+            if adDetailObj.motorCatObj.colour != ""
+            {
+                customDictionary.merge(with: ["colour" : adDetailObj.motorCatObj.colour])
+            }
+
+            if adDetailObj.motorCatObj.engineSize != ""
+            {
+                customDictionary.merge(with: ["engineSize" : adDetailObj.motorCatObj.engineSize])
+            }
+
+            if adDetailObj.propertyCatObj.propertyType != ""
+            {
+                customDictionary.merge(with: ["propertyType" : adDetailObj.propertyCatObj.propertyType])
+            }
+
+            if adDetailObj.propertyCatObj.bedrooms != ""
+            {
+                customDictionary.merge(with: ["bedrooms" : adDetailObj.propertyCatObj.bedrooms])
+            }
+
+            if adDetailObj.propertyCatObj.sellerType != ""
+            {
+                customDictionary.merge(with: ["psellerType" : adDetailObj.propertyCatObj.sellerType])
+            }
+
+            if adDetailObj.whatsapp != ""
+            {
+                customDictionary.merge(with: ["whatsapp" : adDetailObj.whatsapp])
+            }
+
+            if customDictionary.count > 0
+            {
+                customDictionary.merge(with: ["ad_price" : adDetailObj.adPrice])
+                customDictionary.merge(with: ["ad_price_type" : adDetailObj.priceType])
+
+                let custom = Constants.json(from: customDictionary)
+                let param: [String: Any] = ["custom_fields": custom!]
+                parameter.merge(with: param)
+                parameter.merge(with: customDictionary)
+            }
                 
-                print(successResponse)
-                adDetailObj = AdDetailObject()
-                let thankyouVC = self.storyboard?.instantiateViewController(withIdentifier: "ThankyouVC") as! ThankyouVC
-                self.navigationController?.pushViewController(thankyouVC, animated: true)
-            }
-            else
-            {
-                let alert = Constants.showBasicAlert(message: successResponse.message)
+            self.adPostLive(param: parameter as NSDictionary)
+        }
+        
+        func adPost(param: NSDictionary)
+        {
+            print(param)
+            self.showLoader()
+            AddsHandler.adPost(parameter: param, success: { (successResponse) in
+    //            self.stopAnimating()
+                if successResponse.success {
+
+                    print(successResponse)
+                    AddsHandler.sharedInstance.adPostAdId = successResponse.data.adId
+                    AddsHandler.sharedInstance.objAdPost = successResponse
+                    
+                    adDetailObj.adId = AddsHandler.sharedInstance.adPostAdId
+
+//                    if self.fromVC == "myads"
+//                    {
+//                        self.addPostLiveAPI()
+//                    }
+//                    else
+//                    {
+                        let param: [String: Any] = ["ad_id": AddsHandler.sharedInstance.adPostAdId]
+                        print(param)
+                        
+                        DispatchQueue.main.async {
+                            self.uploadImages(param: param as NSDictionary, images: adDetailObj.images)
+                        }
+//                    }
+                }
+                else
+                {
+                    let alert = Constants.showBasicAlert(message: successResponse.message)
+                    self.presentVC(alert)
+                }
+            }) { (error) in
+                self.stopAnimating()
+                let alert = Constants.showBasicAlert(message: error.message)
                 self.presentVC(alert)
             }
-        }) { (error) in
-            self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
-            self.presentVC(alert)
         }
-    }
-    
-    func showLoader() {
-        self.startAnimating(Constants.activitySize.size, message: Constants.loaderMessages.loadingMessage.rawValue,messageFont: UIFont.systemFont(ofSize: 14), type: NVActivityIndicatorType.ballClipRotatePulse)
-    }
+        
+        func adPostLive(param: NSDictionary)
+        {
+            self.showLoader()
+            AddsHandler.adPostLive(parameter: param, success: { (successResponse) in
+                self.stopAnimating()
+                if successResponse.success {
+
+                    adDetailObj = AdDetailObject()
+                    let thankyouVC = self.storyboard?.instantiateViewController(withIdentifier: "ThankyouVC") as! ThankyouVC
+                    self.navigationController?.pushViewController(thankyouVC, animated: true)
+
+                }
+                else
+                {
+                    let alert = Constants.showBasicAlert(message: successResponse.message)
+                    self.presentVC(alert)
+                }
+            }) { (error) in
+                self.stopAnimating()
+                let alert = Constants.showBasicAlert(message: error.message)
+                self.presentVC(alert)
+            }
+        }
+        
+        func uploadImages(param: NSDictionary, images: [UIImage]) {
+            
+            adPostUploadImages(parameter: param, imagesArray: images, fileName: "File", uploadProgress: { (uploadProgress) in
+
+            }, success: { (successResponse) in
+                
+                //self.stopAnimating()
+                if successResponse.success
+                {
+                    for item in successResponse.data.adImages
+                    {
+                        adDetailObj.imageIDArray.append(item.imgId)
+                    }
+                }
+                else
+                {
+                    self.stopAnimating()
+                    let alert = Constants.showBasicAlert(message: successResponse.message)
+                    self.presentVC(alert)
+                }
+            }) { (error) in
+                self.stopAnimating()
+                let alert = Constants.showBasicAlert(message: error.message)
+                self.presentVC(alert)
+            }
+        }
+        
+        func adPostUploadImages(parameter: NSDictionary, imagesArray: [UIImage], fileName: String, uploadProgress: @escaping(Int)-> Void, success: @escaping(AdPostImagesRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
+            
+            let url = Constants.URL.baseUrl+Constants.URL.adPostUploadImages
+            print(url)
+            NetworkHandler.uploadImageArray(url: url, imagesArray: imagesArray, fileName: "File", params: parameter as? Parameters, uploadProgress: { (uploadProgress) in
+                print(uploadProgress)
+                
+            }, success: { (successResponse) in
+                self.addPostLiveAPI()
+                let dictionary = successResponse as! [String: Any]
+                print(dictionary)
+                let objImg = AdPostImagesRoot(fromDictionary: dictionary)
+                success(objImg)
+            }) { (error) in
+                failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+                self.stopAnimating()
+            }
+        }
+        
+        func showLoader() {
+            self.startAnimating(Constants.activitySize.size, message: Constants.loaderMessages.loadingMessage.rawValue,messageFont: UIFont.systemFont(ofSize: 14), type: NVActivityIndicatorType.ballClipRotatePulse)
+        }
 }
 
 extension CheckoutViewController: STPAuthenticationContext {

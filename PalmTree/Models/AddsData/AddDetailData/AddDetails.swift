@@ -254,6 +254,7 @@ class AdDetailObject: NSObject
     var categoryObj: CategoryObject = CategoryObject()
     var objAdPostData = [AdPostField]()
     var adImages : [MyAdsAdImage]!
+    var imageIDArray = [Int]()
     
     //for search filter
     var sortType  = ""

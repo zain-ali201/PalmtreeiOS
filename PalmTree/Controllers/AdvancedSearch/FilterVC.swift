@@ -8,6 +8,8 @@
 
 import UIKit
 
+var filterVC: FilterVC!
+
 class FilterVC: UIViewController{
 
     //MARK:- Outlets
@@ -58,12 +60,21 @@ class FilterVC: UIViewController{
         super.viewDidLoad()
         
         self.googleAnalytics(controllerName: "Refine Filter Controller")
+        
+        filterVC = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        lblLocation.text = userDetail?.locationName
+        if adDetailObj.location.address != ""
+        {
+            lblLocation.text = adDetailObj.location.address
+        }
+        else
+        {
+            lblLocation.text = userDetail?.locationName
+        }
         
         if adDetailObj.adCategory == "For Sale"
         {
@@ -219,7 +230,11 @@ class FilterVC: UIViewController{
     
     @IBAction func locationBtnAction(_ sender: Any)
     {
-        let locationVC = self.storyboard?.instantiateViewController(withIdentifier: "LocationVC") as! LocationVC
+//        let locationVC = self.storyboard?.instantiateViewController(withIdentifier: "LocationVC") as! LocationVC
+//        self.navigationController?.pushViewController(locationVC, animated: true)
+        
+        let locationVC = self.storyboard?.instantiateViewController(withIdentifier: "CountryAreasVC") as! CountryAreasVC
+        locationVC.fromInd = "Filter"
         self.navigationController?.pushViewController(locationVC, animated: true)
     }
     

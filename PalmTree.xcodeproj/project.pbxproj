@@ -441,6 +441,7 @@
 		18CEE09A24CCC0B40066090B /* SortVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CEE09924CCC0B40066090B /* SortVC.swift */; };
 		18D04FDA21380A99001329D4 /* AdPostBumpAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D04FD921380A99001329D4 /* AdPostBumpAdd.swift */; };
 		18D04FDC21382496001329D4 /* AdPostFeaturedAdText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D04FDB21382496001329D4 /* AdPostFeaturedAdText.swift */; };
+		18D6FFF524F548FE007F59F1 /* CountryAreasVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D6FFF424F548FE007F59F1 /* CountryAreasVC.swift */; };
 		18D8F566206B84E200D19830 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D8F565206B84E200D19830 /* AlertView.swift */; };
 		18D8F569206BAA7100D19830 /* AddDeleteRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D8F568206BAA7100D19830 /* AddDeleteRoot.swift */; };
 		18D8F56B206BAA8C00D19830 /* AddDeleteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D8F56A206BAA8C00D19830 /* AddDeleteData.swift */; };
@@ -919,6 +920,7 @@
 		18CEE09924CCC0B40066090B /* SortVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SortVC.swift; path = PalmTree/Controllers/AdPostVCs/SortVC.swift; sourceTree = SOURCE_ROOT; };
 		18D04FD921380A99001329D4 /* AdPostBumpAdd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdPostBumpAdd.swift; sourceTree = "<group>"; };
 		18D04FDB21382496001329D4 /* AdPostFeaturedAdText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdPostFeaturedAdText.swift; sourceTree = "<group>"; };
+		18D6FFF424F548FE007F59F1 /* CountryAreasVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryAreasVC.swift; sourceTree = "<group>"; };
 		18D8F565206B84E200D19830 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		18D8F568206BAA7100D19830 /* AddDeleteRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDeleteRoot.swift; sourceTree = "<group>"; };
 		18D8F56A206BAA8C00D19830 /* AddDeleteData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDeleteData.swift; sourceTree = "<group>"; };
@@ -2407,6 +2409,7 @@
 				ABDBD3BC248E9E3700DCFB0E /* PreviewAdVC.swift */,
 				18963ECB24B718CD0080FFD5 /* PropertyVC.swift */,
 				18963ECC24B718CE0080FFD5 /* VehicleDetailVC.swift */,
+				18D6FFF424F548FE007F59F1 /* CountryAreasVC.swift */,
 				18963ECA24B718CC0080FFD5 /* ListVC.swift */,
 				1826DC0724AE10C000468448 /* LocationContactVC.swift */,
 				186EB0D824CAE2F000F9B1F8 /* MapBoxViewController.swift */,
@@ -2797,6 +2800,7 @@
 				1818888A2081D2FB008736F7 /* OfferAdsTitle.swift in Sources */,
 				184EDB102078995300A25228 /* AddDetailAdPrice.swift in Sources */,
 				18C32C4621412F520005D568 /* SellersSocialIcon.swift in Sources */,
+				18D6FFF524F548FE007F59F1 /* CountryAreasVC.swift in Sources */,
 				1852B0E4208353A70014AF99 /* OfferOnAdDetailData.swift in Sources */,
 				18963ECD24B718CE0080FFD5 /* ListVC.swift in Sources */,
 				182652B92075F8CE007F6A21 /* PaymentSuccessData.swift in Sources */,

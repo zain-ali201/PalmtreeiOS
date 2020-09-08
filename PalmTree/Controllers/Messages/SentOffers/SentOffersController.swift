@@ -68,7 +68,6 @@ class SentOffersController: UIViewController, UITableViewDelegate, UITableViewDa
         
         self.sentOffersData()
         self.showLoader()
-        
     }
     //MARK: - Custom
     func showLoader(){
@@ -165,7 +164,8 @@ class SentOffersController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     //MARK:- API Calls
-    func sentOffersData() {
+    func sentOffersData()
+    {
         UserHandler.getSentOffersData(success: { (successResponse) in
             self.stopAnimating()
             self.refreshControl.endRefreshing()
@@ -174,16 +174,13 @@ class SentOffersController: UIViewController, UITableViewDelegate, UITableViewDa
                 self.maximumPage = successResponse.data.pagination.maxNumPages
                 self.dataArray = successResponse.data.sentOffers.items
                 
-                if successResponse.message != nil
+                if self.dataArray.count == 0
                 {
-                    if self.dataArray.count == 0
-                    {
-                        self.norecordsView.alpha = 1
-                    }
-                    else
-                    {
-                        self.norecordsView.alpha = 0
-                    }
+                    self.norecordsView.alpha = 1
+                }
+                else
+                {
+                    self.norecordsView.alpha = 0
                 }
         
                 self.tableView.reloadData()

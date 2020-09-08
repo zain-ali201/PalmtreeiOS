@@ -20,6 +20,6 @@ class SectionHeaderView: UITableViewHeaderFooterView, CollapseSectionHeader {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        imageView.image = UIImage(named: "drop_arrow")!.withRenderingMode(.alwaysTemplate)
+//        imageView.image = UIImage(named: "drop_arrow")!.withRenderingMode(.alwaysTemplate)
     }
 }

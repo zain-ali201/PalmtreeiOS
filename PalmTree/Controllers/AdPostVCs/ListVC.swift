@@ -23,7 +23,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
     var filteredArray = [String]()
     
     var fromInd = ""
-    
+    var countryID = 0
     //MARK:- View Life Cycle
     
     override func viewDidLoad() {
@@ -31,7 +31,19 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
         
         lblTitle.text = fromInd
         
-        if fromInd == "Make"
+        if fromInd == "AdPost" || fromInd == "Filter"
+        {
+            if countryID > 0
+            {
+                let areaCount: Int = Int(NSLocalizedString(String(format: "Country%d_count",countryID), comment: "")) ?? 0
+                
+                for i in 1...areaCount
+                {
+                    dataArray.append(NSLocalizedString(String(format: "Country%d_area%d", countryID, i), comment: ""))
+                }
+            }
+        }
+        else if fromInd == "Make"
         {
             dataArray = ["Abarth", "AC", "Aixam", "Alfa Romeo", "Asia", "Aston Martin", "Audi", "Austin", "Bedford", "Bentley", "BMC", "BMW", "Bristol", "Caterham", "Chevrolet", "Chrysler", "Citroen", "Coleman Milne", "Corvette", "Dacia", "Daewoo", "DAF Trucks", "Daihatsu", "Daimler", "DE Tomaso", "Dodge", "Eagle", "Ebro", "EF", "F.S.O.", "Farbio", "FBS", "Ferrari", "Fiat", "Foden", "Ford", "Great Wall", "Honda", "Hummer", "Hundai", "Infiniti", "Invicta", "Isuzu", "Isuzu Trucks", "Iveco", "Jaguar", "Jeep", "Jensen", "Kia", "KTM", "Lada", "Lamborghini", "Lancia", "Land Rover", "LDV", "Lexus", "Ligier", "Lotus", "LTI", "MAN", "Marcos", "Marlin", "Maserati", "Maybach", "Mazda", "Mclaren", "Mercedes-Benz", "MG", "MG Motor UK", "MIA", "Microcar", "Mini", "Mitsubishi", "Mitsubishi CV", "Mitsubishi Fuso", "Norgan", "Nissan", "Noble", "Opel", "Perodua", "Peugeot", "PGO", "Piaggio", "Porche", "Prindiville", "Proton", "Reliant", "Renault", "Renault Trucks", "Rolls-Royce", "Rover", "Saab", "SAN", "Scania", "Seat", "Seddon Atkinson", "Skoda", "Smart", "Ssangyong", "Subaru", "Suzuki", "Talbot", "Tata", "TD Cars", "Tesla", "Toyota", "TVR", "Vauxhall", "Volkswagen", "Volvo", "Westfield", "Yugo", "Other"]
         }
@@ -166,7 +178,17 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if fromInd == "Make"
+        if fromInd == "AdPost"
+        {
+            adDetailObj.location.address = dataArray[indexPath.row]
+            self.navigationController?.popToViewController(adPostVC, animated: true)
+        }
+        else if fromInd == "Filter"
+        {
+            adDetailObj.location.address = dataArray[indexPath.row]
+            self.navigationController?.popToViewController(filterVC, animated: true)
+        }
+        else if fromInd == "Make"
         {
             adDetailObj.motorCatObj.make = dataArray[indexPath.row]
         }

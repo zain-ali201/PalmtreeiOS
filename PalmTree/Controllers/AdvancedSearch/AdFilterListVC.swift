@@ -120,7 +120,8 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool)
+    {
         print("zain")
         
         if adDetailObj.catID > 0
@@ -323,11 +324,6 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 customDictionary.merge(with: ["transmission" : adDetailObj.motorCatObj.transmission])
             }
             
-            if adDetailObj.motorCatObj.colour != ""
-            {
-                customDictionary.merge(with: ["colour" : adDetailObj.motorCatObj.colour])
-            }
-            
             if adDetailObj.motorCatObj.engineSize != ""
             {
                 customDictionary.merge(with: ["engineSize" : adDetailObj.motorCatObj.engineSize])
@@ -369,10 +365,10 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             
             var param: [String: Any] = ["ad_cats1" : catID, "page_number": 1]
             
-            if userDetail?.currentLocation.coordinate != nil
-            {
-                param = ["ad_cats1" : catID, "nearby_latitude": adDetailObj.location.lat, "nearby_longitude": adDetailObj.location.lng, "nearby_distance": 500, "page_number": 1]
-            }
+//            if userDetail?.currentLocation.coordinate != nil
+//            {
+//                param = ["ad_cats1" : catID, "nearby_latitude": adDetailObj.location.lat, "nearby_longitude": adDetailObj.location.lng, "nearby_distance": 500, "page_number": 1]
+//            }
             print(param)
             self.categoryData(param: param as NSDictionary)
         }
@@ -382,6 +378,8 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     {
         categoryID = 0
         catName = ""
+        adDetailObj = AdDetailObject()
+        adDetailObj.sortType = "Date Descending"
         filtersArray = ["All Ads"]
         createFilterView()
         let param: [String: Any] = ["ad_cats1" : 0, "page_number": 1]
@@ -433,7 +431,7 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.btnLocation.setTitle(location, for: .normal)
         }
         if let price = objData.adPrice.price {
-            cell.lblPrice.text = price
+            cell.lblPrice.text = String(format: "AED %@", price)
         }
         
         if let date = objData.adDate {
@@ -522,6 +520,15 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
                 else
                 {
+                    
+                    var index = 0
+                    for var obj in self.dataArray
+                    {
+                        obj.adPrice.price = obj.adPrice.price.replacingOccurrences(of: "AED ", with: "")
+                        self.dataArray[index] = obj
+                        index += 1
+                    }
+                    
                     if adDetailObj.sortType == "Cheapest"
                     {
                         self.dataArray = self.dataArray.filter( {
@@ -534,13 +541,21 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                             $0.adPrice.price > "1000"
                         })
                     }
-                        
                     
-                    if adDetailObj.minPrice != "" && adDetailObj.maxPrice != ""
+                    if self.dataArray.count > 0 && adDetailObj.minPrice != "" && adDetailObj.maxPrice != ""
                     {
                         self.dataArray = self.dataArray.filter( {
                             $0.adPrice.price > adDetailObj.minPrice && $0.adPrice.price < adDetailObj.maxPrice
                         })
+                    }
+                    
+                    if self.dataArray.count > 0
+                    {
+                        self.norecordView.alpha = 0
+                    }
+                    else
+                    {
+                        self.norecordView.alpha = 1
                     }
                 }
                 
