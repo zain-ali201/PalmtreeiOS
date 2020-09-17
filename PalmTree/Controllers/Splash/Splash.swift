@@ -316,13 +316,13 @@ class Splash: UIViewController, NVActivityIndicatorViewable {
                 userDetail?.displayName = successResponse.data.displayName
                 userDetail?.id = successResponse.data.id
                 userDetail?.phone = successResponse.data.phone
-                userDetail?.profileImg = successResponse.data.profileImg
+//                userDetail?.profileImg = successResponse.data.profileImg
                 userDetail?.userEmail = successResponse.data.userEmail
                 
                 defaults.set(successResponse.data.displayName, forKey: "displayName")
                 defaults.set(successResponse.data.id, forKey: "id")
                 defaults.set(successResponse.data.phone, forKey: "phone")
-                defaults.set(successResponse.data.profileImg, forKey: "profileImg")
+//                defaults.set(successResponse.data.profileImg, forKey: "profileImg")
                 defaults.set(successResponse.data.userEmail, forKey: "userEmail")
                 
                 self.moveToHome()

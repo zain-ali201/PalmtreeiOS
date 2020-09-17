@@ -23,6 +23,7 @@ struct UserObject
     var isAccountConfirm : Bool!
     var lat = 0.0
     var lng = 0.0
+    var authToken = ""
 }
 
 struct SaveAdObject

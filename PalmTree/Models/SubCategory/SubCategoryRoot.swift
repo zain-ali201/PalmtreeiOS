@@ -8,23 +8,27 @@
 
 import Foundation
 
-struct SubCategoryRoot{
-    
-    var data : SubCategoryData!
+struct SubCategoryRoot
+{
+    var categories : [CategoryJSON]!
     var message : String!
     var success : Bool!
-    var isBid : Bool!
     
     /**
      * Instantiate the instance using the passed dictionary values to set the properties values
      */
     init(fromDictionary dictionary: [String:Any]){
-        if let dataData = dictionary["data"] as? [String:Any]{
-            data = SubCategoryData(fromDictionary: dataData)
+        categories = [CategoryJSON]()
+        if let catIconsArray = dictionary["category"] as? [[String:Any]]
+        {
+            for dic in catIconsArray
+            {
+                let value = CategoryJSON(fromDictionary: dic)
+                categories.append(value)
+            }
         }
         message = dictionary["message"] as? String
         success = dictionary["success"] as? Bool
-        isBid = dictionary["bid_check"] as? Bool
     }
     
     /**
@@ -33,15 +37,26 @@ struct SubCategoryRoot{
     func toDictionary() -> [String:Any]
     {
         var dictionary = [String:Any]()
-        if data != nil{
-            dictionary["data"] = data.toDictionary()
+        
+        if categories != nil
+        {
+            var dictionaryElements = [[String:Any]]()
+            for catIconsElement in categories {
+                dictionaryElements.append(catIconsElement.toDictionary())
+            }
+            dictionary["Category"] = dictionaryElements
         }
-        if message != nil{
+        
+        if message != nil
+        {
             dictionary["message"] = message
         }
-        if success != nil{
+        
+        if success != nil
+        {
             dictionary["success"] = success
         }
+        
         return dictionary
     }
     

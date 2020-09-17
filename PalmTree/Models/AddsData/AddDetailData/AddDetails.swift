@@ -226,28 +226,28 @@ class AdDetailObject: NSObject
 {
     var userID : Int!
     var adId : Int!
-    var adTitle : String!
+    var adTitle = ""
     var catID = 0
     var subcatID = 0
     var adCategory  = ""
     var adSubCategory = ""
-    var adCurrency : String!
-    var adDate : String!
+    var adCurrency = ""
+    var adDate = ""
     var adDesc = ""
-    var adPrice : String!
-    var priceType : String!
+    var adPrice = ""
+    var priceType  = ""
     var maxPrice = ""
     var minPrice = ""
     var images : [UIImage] = [UIImage]()
-    var isFeature : Bool!
+    var isFeature = false
     var location : AddDetailLocationObject = AddDetailLocationObject()
-    var locationTop : String!
-    var name : String!
+    var locationTop = ""
+    var name = ""
     var phone = ""
     var whatsapp = ""
     var specs = ""
-    var sellerType : String!
-    var year : String!
+    var sellerType = ""
+    var year = ""
     var detailVC = ""
     var motorCatObj : MotorCategoryObject = MotorCategoryObject()
     var propertyCatObj : PropertyCategoryObject = PropertyCategoryObject()

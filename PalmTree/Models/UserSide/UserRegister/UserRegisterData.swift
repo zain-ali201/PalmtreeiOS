@@ -13,21 +13,18 @@ struct UserRegisterData {
     var displayName : String!
     var id : Int!
     var phone : String!
-    var profileImg : String!
     var userEmail : String!
-    
     var isAccountConfirm : Bool!
     
     /**
      * Instantiate the instance using the passed dictionary values to set the properties values
      */
     init(fromDictionary dictionary: [String:Any]){
-        displayName = dictionary["display_name"] as? String
+        displayName = dictionary["name"] as? String
         id = dictionary["id"] as? Int
         phone = dictionary["phone"] as? String
-        profileImg = dictionary["profile_img"] as? String
-        userEmail = dictionary["user_email"] as? String
-        isAccountConfirm = dictionary["is_account_confirm"] as? Bool
+        userEmail = dictionary["email"] as? String
+        isAccountConfirm = dictionary["is_active"] as? Bool
 
     }
     
@@ -38,7 +35,7 @@ struct UserRegisterData {
     {
         var dictionary = [String:Any]()
         if displayName != nil{
-            dictionary["display_name"] = displayName
+            dictionary["name"] = displayName
         }
         if id != nil{
             dictionary["id"] = id
@@ -46,12 +43,11 @@ struct UserRegisterData {
         if phone != nil{
             dictionary["phone"] = phone
         }
-        if profileImg != nil{
-            dictionary["profile_img"] = profileImg
-        }
+        
         if userEmail != nil{
             dictionary["user_email"] = userEmail
         }
+        
         if isAccountConfirm != nil{
             dictionary["is_account_confirm"] = isAccountConfirm
         }

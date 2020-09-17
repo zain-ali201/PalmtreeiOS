@@ -9,7 +9,7 @@
 import UIKit
 protocol AddDetailDelegate{
     func goToAddDetail(ad_id : Int)
-    func goToAddDetailVC(detail : HomeAdd)
+    func goToAddDetailVC(detail : AdsJSON)
     func addToFavourites(ad_id : Int)
 }
 class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -39,7 +39,7 @@ class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
     
     //MARK:- Properties
     
-    var dataArray = [HomeAdd]()
+    var dataArray = [AdsJSON]()
     var delegate : AddDetailDelegate?
     
     var btnViewAll :(()->())?
@@ -49,8 +49,6 @@ class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
     var second: Int = 0
     var serverTime = ""
     var isEndTime = ""
-    var latestVertical: String = UserDefaults.standard.string(forKey: "homescreenLayout")!
-    var latestHorizontalSingleAd: String =  UserDefaults.standard.string(forKey: "homescreenLayout")!
     
     
     //MARK:- View Life Cycle
@@ -58,8 +56,6 @@ class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
     {
         super.awakeFromNib()
         selectionStyle = .none
-        self.layoutLatest()
-        self.layoutHorizontalSingleAd()
         
         if languageCode == "ar"
         {
@@ -80,48 +76,6 @@ class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
         collectionView.reloadData()
     }
     
-    //MARK:- Collection View Delegate Methods
-    func layoutHorizontalSingleAd(){
-        if latestHorizontalSingleAd == "horizental" {
-            //    let cellSize = CGSize(width:80 , height:180)
-            
-            let layout = UICollectionViewFlowLayout()
-            //       layout.scrollDirection = .vertical //.horizontal
-            //       layout.itemSize = cellSize
-            
-            //            let width = (view.frame.width-20)/2
-            //            let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-            //layout.itemSize = CGSize(width: 334, height: 500)
-            layout.sectionInset = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
-            layout.minimumLineSpacing = 0
-            layout.minimumInteritemSpacing = 0
-            collectionView.isScrollEnabled = false
-            let  height = self.collectionView.collectionViewLayout.collectionViewContentSize.height;
-            collectionView.setCollectionViewLayout(layout, animated: true)
-            collectionView.reloadData()
-        }
-    }
-    
-    func layoutLatest(){
-        if latestVertical == "vertical" {
-            //    let cellSize = CGSize(width:80 , height:180)
-            
-            let layout = UICollectionViewFlowLayout()
-            //       layout.scrollDirection = .vertical //.horizontal
-            //       layout.itemSize = cellSize
-            
-            //            let width = (view.frame.width-20)/2
-            //            let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-            //layout.itemSize = CGSize(width: 334, height: 500)
-            layout.sectionInset = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
-            layout.minimumLineSpacing = 0
-            layout.minimumInteritemSpacing = 0
-            collectionView.isScrollEnabled = false
-            //                let  height = self.collectionView.collectionViewLayout.collectionViewContentSize.height;
-            collectionView.setCollectionViewLayout(layout, animated: true)
-            collectionView.reloadData()
-        }
-    }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dataArray.count
     }
@@ -132,23 +86,21 @@ class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
 
         cell.imgPicture.image = UIImage(named: "placeholder")
         
-        for item in objData.adImages {
-            if let imgUrl = URL(string: item.thumb.encodeUrl()) {
+        for item in objData.images {
+            if let imgUrl = URL(string: String(format: "%@%@", Constants.URL.imagesUrl, item.url.encodeUrl())) {
+                print(imgUrl)
                 cell.imgPicture.sd_setShowActivityIndicatorView(true)
                 cell.imgPicture.sd_setIndicatorStyle(.gray)
                 cell.imgPicture.sd_setImage(with: imgUrl, completed: nil)
             }
         }
-//
-        if let name = objData.adTitle {
+
+        if let name = objData.title {
             cell.lblName.text = name
         }
         
-//        if let location = objData.adLocation.address {
-//            cell.lblLocation.text = location
-//        }
-        if let price = objData.adPrice.price {
-            cell.lblPrice.text = price
+        if let price = objData.price {
+            cell.lblPrice.text = String(format: "AED %@", price) 
         }
         
         cell.btnFullAction = { () in
@@ -156,10 +108,8 @@ class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
         }
         
         cell.favBtnAction = { () in
-            self.delegate?.addToFavourites(ad_id: objData.adId)
+            self.delegate?.addToFavourites(ad_id: objData.id)
         }
-//        cell.lblName.text = "Cars"
-//        cell.lblPrice.text = "AED 50"
         
         if languageCode == "ar"
         {
@@ -167,13 +117,13 @@ class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
             cell.lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
         
-//        if self.defaults.bool(forKey: "isLogin") == false {
-//            if let msg = self.defaults.string(forKey: "notLogin") {
+//        if defaults.bool(forKey: "isLogin") == false {
+//            if let msg = defaults.string(forKey: "notLogin") {
 //                self.showToast(message: msg)
 //            }
 //        }
 //        else {
-//            let parameter: [String: Any] = ["ad_id": objData.adDetail.adId]
+//            let parameter: [String: Any] = ["ad_id": objData.id]
 //            self.makeAddFavourite(param: parameter as NSDictionary)
 //        }
         

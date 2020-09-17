@@ -22,67 +22,13 @@ class NetworkHandler {
         }
         
         if Network.isAvailable {
-            var headers: HTTPHeaders
-            if UserDefaults.standard.bool(forKey: "isGuest")
-            {
-                headers = [
-                    "Accept": "application/json",
-                    //just add security
-                    "Purchase-Code" : Constants.customCodes.purchaseCode,
-                    "Custom-Security": Constants.customCodes.securityCode,
-                    "Adforest-Request-From" : "ios",
-                    "Adforest-Lang-Locale" : langCode
-                    ] as! HTTPHeaders
-            }
+            var headers: HTTPHeaders = [
+                "Accept": "application/json",
+                "Authorization" : String(format: "Bearer %@", defaults.string(forKey: "authToken") ?? ""),
+                "KEY": Constants.customCodes.appKey,
+                "Adforest-Request-From" : "ios"
+            ] as! HTTPHeaders
             
-            if UserDefaults.standard.bool(forKey: "isSocial")
-            {
-                var email = ""
-                var password = ""
-                if let userEmail = UserDefaults.standard.string(forKey: "email") {
-                    email = userEmail
-                }
-                if let userPassword = UserDefaults.standard.string(forKey: "password") {
-                    password = userPassword
-                }
-                let emailPass = "\(email):\(password)"
-                let encodedString = emailPass.data(using: String.Encoding.utf8)!
-                let base64String = encodedString.base64EncodedString(options: [])
-                headers = [
-                    "Accept": "application/json",
-                    "Authorization" : "Basic \(base64String)",
-                    "AdForest-Login-Type": "social",
-                    //just add security
-                    "Purchase-Code" : Constants.customCodes.purchaseCode,
-                    "Custom-Security": Constants.customCodes.securityCode,
-                    "Adforest-Request-From" : "ios",
-                     "Adforest-Lang-Locale" : langCode
-                    ] as! HTTPHeaders
-            }
-            else
-            {
-                var email = ""
-                var password = ""
-                if let userEmail = UserDefaults.standard.string(forKey: "email") {
-                    email = userEmail
-                }
-                if let userPassword = UserDefaults.standard.string(forKey: "password") {
-                    password = userPassword
-                }
-                
-                let emailPass = "\(email):\(password)"
-                let encodedString = emailPass.data(using: String.Encoding.utf8)!
-                let base64String = encodedString.base64EncodedString(options: [])
-                headers = [
-                    "Accept": "application/json",
-                    "Authorization" : "Basic \(base64String)",
-                    //just add security
-                    "Purchase-Code" : Constants.customCodes.purchaseCode,
-                    "Custom-Security": Constants.customCodes.securityCode,
-                    "Adforest-Request-From" : "ios",
-                     "Adforest-Lang-Locale" : langCode
-                    ] as! HTTPHeaders
-            }
             let manager = Alamofire.SessionManager.default
             manager.session.configuration.timeoutIntervalForRequest = Constants.NetworkError.timeOutInterval
             manager.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate(statusCode: 200..<600).responseJSON
@@ -154,64 +100,12 @@ class NetworkHandler {
         
         if Network.isAvailable {
             
-            var headers: HTTPHeaders
-            
-            if UserDefaults.standard.bool(forKey: "isSocial") {
-                print("Social Login")
-                var email = ""
-                var password = ""
-                if let userEmail = UserDefaults.standard.string(forKey: "email") {
-                    email = userEmail
-                }
-                if let userPassword = UserDefaults.standard.string(forKey: "password") {
-                    password = userPassword
-                }
-                let emailPass = "\(email):\(password)"
-                
-                let encodedString = emailPass.data(using: String.Encoding.utf8)!
-                let base64String = encodedString.base64EncodedString(options: [])
-                
-                print(base64String)
-                
-                headers = [
-                    "Accept": "application/json",
-                    "Authorization" : "Basic \(base64String)",
-                    "AdForest-Login-Type": "social",
-                    //just add security
-                    "Purchase-Code" : Constants.customCodes.purchaseCode,
-                    "Custom-Security": Constants.customCodes.securityCode,
-                     "Adforest-Request-From" : "ios",
-                      "Adforest-Lang-Locale" : langCode
-                    ] as! HTTPHeaders
-            }
-            
-            else {
-                var email = ""
-                var password = ""
-                if let userEmail = UserDefaults.standard.string(forKey: "email") {
-                    email = userEmail
-                }
-                if let userPassword = UserDefaults.standard.string(forKey: "password") {
-                    password = userPassword
-                }
-                print(email, password)
-                let emailPass = "\(email):\(password)"
-                
-                let encodedString = emailPass.data(using: String.Encoding.utf8)!
-                let base64String = encodedString.base64EncodedString(options: [])
-                
-                print(base64String)
-                
-                headers = [
-                    "Accept": "application/json",
-                    "Authorization" : "Basic \(base64String)",
-                    //just add security
-                    "Purchase-Code" : Constants.customCodes.purchaseCode,
-                    "Custom-Security": Constants.customCodes.securityCode,
-                     "Adforest-Request-From" : "ios",
-                      "Adforest-Lang-Locale" : langCode
-                    ] as! HTTPHeaders
-            }
+            var headers: HTTPHeaders = [
+                "Accept": "application/json",
+                "Authorization" : String(format: "Bearer %@", defaults.string(forKey: "authToken") ?? ""),
+                "KEY": Constants.customCodes.appKey,
+                "Adforest-Request-From" : "ios"
+            ] as! HTTPHeaders
             print(headers)
             
             let manager = Alamofire.SessionManager.default
@@ -227,8 +121,6 @@ class NetworkHandler {
         }
     }
     
-
-    
     class func getRequest(url: String, parameters: Parameters?, success: @escaping (Any?) -> Void, failure: @escaping (NetworkError) -> Void) {
         
         var langCode = UserDefaults.standard.string(forKey: "langCode")
@@ -236,73 +128,16 @@ class NetworkHandler {
         let manager = Alamofire.SessionManager.default
         manager.session.configuration.timeoutIntervalForRequest = Constants.NetworkError.timeOutInterval
         
-       var headers: HTTPHeaders
-
-       
         if langCode == nil {
             langCode = "en"
         }
         
-        if UserDefaults.standard.bool(forKey: "isGuest") {
-            headers = [
-                "Accept": "application/json",
-                //just add security
-                "Purchase-Code" : Constants.customCodes.purchaseCode,
-                "Custom-Security": Constants.customCodes.securityCode,
-                "Adforest-Request-From" : "ios",
-                "Adforest-Lang-Locale" : langCode
-                ] as! HTTPHeaders
-        }
-        
-        if UserDefaults.standard.bool(forKey: "isSocial") {
-            print("Social Login")
-            var email = ""
-            var password = ""
-            if let userEmail = UserDefaults.standard.string(forKey: "email") {
-                email = userEmail
-            }
-            if let userPassword = UserDefaults.standard.string(forKey: "password") {
-                password = userPassword
-            }
-            
-            let emailPass = "\(email):\(password)"
-            let encodedString = emailPass.data(using: String.Encoding.utf8)!
-            let base64String = encodedString.base64EncodedString(options: [])
-            headers = [
-                "Accept": "application/json",
-                "Authorization" : "Basic \(base64String)",
-                "AdForest-Login-Type": "social",
-                //just add security
-                "Purchase-Code" : Constants.customCodes.purchaseCode,
-                "Custom-Security": Constants.customCodes.securityCode,
-                "Adforest-Request-From" : "ios",
-                "Adforest-Lang-Locale" : langCode
-                ] as! HTTPHeaders
-        }
-        else
-        {
-            var email = ""
-            var password = ""
-            if let userEmail = UserDefaults.standard.string(forKey: "email") {
-                email = userEmail
-            }
-            if let userPassword = UserDefaults.standard.string(forKey: "password") {
-                password = userPassword
-            }
-            let emailPass = "\(email):\(password)"
-            let encodedString = emailPass.data(using: String.Encoding.utf8)!
-            let base64String = encodedString.base64EncodedString(options: [])
-            headers = [
-                "Accept": "application/json",
-                
-                "Authorization" : "Basic \(base64String)",
-                //just add security
-                "Purchase-Code" : Constants.customCodes.purchaseCode,
-                "Custom-Security": Constants.customCodes.securityCode,
-                "Adforest-Request-From" : "ios",
-                "Adforest-Lang-Locale" : langCode
-                ] as! HTTPHeaders
-        }
+        var headers: HTTPHeaders = [
+            "Accept": "application/json",
+            "Authorization" : String(format: "Bearer %@", defaults.string(forKey: "authToken") ?? ""),
+            "KEY": Constants.customCodes.appKey,
+            "Adforest-Request-From" : "ios"
+        ] as! HTTPHeaders
        
         print(headers)
         
@@ -339,73 +174,12 @@ class NetworkHandler {
         let manager = Alamofire.SessionManager.default
         manager.session.configuration.timeoutIntervalForRequest = Constants.NetworkError.timeOutInterval
         
-        var headers: HTTPHeaders
-        
-        if UserDefaults.standard.bool(forKey: "isGuest") {
-            headers = [
-                "Accept": "application/json",
-                //just add security
-                "Purchase-Code" : Constants.customCodes.purchaseCode,
-                "Custom-Security": Constants.customCodes.securityCode,
-                "Adforest-Request-From" : "ios"
-            ]
-        }
-        
-        if UserDefaults.standard.bool(forKey: "isSocial") {
-            print("Social Login")
-            var email = ""
-            var password = ""
-            if let userEmail = UserDefaults.standard.string(forKey: "email") {
-                email = userEmail
-            }
-            if let userPassword = UserDefaults.standard.string(forKey: "password") {
-                password = userPassword
-            }
-            
-            let emailPass = "\(email):\(password)"
-            
-            let encodedString = emailPass.data(using: String.Encoding.utf8)!
-            let base64String = encodedString.base64EncodedString(options: [])
-            
-            print(base64String)
-            
-            headers = [
-                "Accept": "application/json",
-                "Authorization" : "Basic \(base64String)",
-                "AdForest-Login-Type": "social",
-                //just add security
-                "Purchase-Code" : Constants.customCodes.purchaseCode,
-                "Custom-Security": Constants.customCodes.securityCode,
-                "Adforest-Request-From" : "ios"
-            ]
-        }
-        else {
-            var email = ""
-            var password = ""
-            if let userEmail = UserDefaults.standard.string(forKey: "email") {
-                email = userEmail
-            }
-            if let userPassword = UserDefaults.standard.string(forKey: "password") {
-                password = userPassword
-            }
-            print(email, password)
-            let emailPass = "\(email):\(password)"
-            let encodedString = emailPass.data(using: String.Encoding.utf8)!
-            let base64String = encodedString.base64EncodedString(options: [])
-            
-            print(base64String)
-            
-            
-            headers = [
-                "Accept": "application/json",
-                
-                "Authorization" : "Basic \(base64String)",
-                //just add security
-                "Purchase-Code" : Constants.customCodes.purchaseCode,
-                "Custom-Security": Constants.customCodes.securityCode,
-                "Adforest-Request-From" : "ios"
-            ]
-        }
+        var headers: HTTPHeaders = [
+            "Accept": "application/json",
+            "Authorization" : String(format: "Bearer %@", defaults.string(forKey: "authToken") ?? ""),
+            "KEY": Constants.customCodes.appKey,
+            "Adforest-Request-From" : "ios"
+        ] as! HTTPHeaders
         
         print(headers)
         
@@ -418,63 +192,14 @@ class NetworkHandler {
     // MARK: Upload Multipart File
     
     class func upload(url: String, fileUrl: URL, fileName: String, params: Parameters?, uploadProgress: @escaping (Int) -> Void, success: @escaping (Any?) -> Void, failure: @escaping (NetworkError) -> Void) {
-        var headers: HTTPHeaders
-        if UserDefaults.standard.bool(forKey: "isGuest") {
-            headers = [
-                "Accept": "application/json",
-                //just add security
-                "Purchase-Code" : Constants.customCodes.purchaseCode,
-                "Custom-Security": Constants.customCodes.securityCode,
-                "Adforest-Request-From" : "ios"
-            ]
-        }
-        if UserDefaults.standard.bool(forKey: "isSocial") {
-            print("Social Login")
-            var email = ""
-            var password = ""
-            if let userEmail = UserDefaults.standard.string(forKey: "email") {
-                email = userEmail
-            }
-            if let userPassword = UserDefaults.standard.string(forKey: "password") {
-                password = userPassword
-            }
-            let emailPass = "\(email):\(password)"
-            let encodedString = emailPass.data(using: String.Encoding.utf8)!
-            let base64String = encodedString.base64EncodedString(options: [])
-            print(base64String)
-            headers = [
-                "Accept": "application/json",
-                "Authorization" : "Basic \(base64String)",
-                "AdForest-Login-Type": "social",
-                //just add security
-                "Purchase-Code" : Constants.customCodes.purchaseCode,
-                "Custom-Security": Constants.customCodes.securityCode,
-                "Adforest-Request-From" : "ios"
-            ]
-        }
-        else {
-            var email = ""
-            var password = ""
-            if let userEmail = UserDefaults.standard.string(forKey: "email") {
-                email = userEmail
-            }
-            if let userPassword = UserDefaults.standard.string(forKey: "password") {
-                password = userPassword
-            }
-            print(email, password)
-            let emailPass = "\(email):\(password)"
-            let encodedString = emailPass.data(using: String.Encoding.utf8)!
-            let base64String = encodedString.base64EncodedString(options: [])
-            headers = [
-                "Accept": "application/json",
-                
-                "Authorization" : "Basic \(base64String)",
-                //just add security
-                "Purchase-Code" : Constants.customCodes.purchaseCode,
-                "Custom-Security": Constants.customCodes.securityCode,
-                "Adforest-Request-From" : "ios"
-            ]
-        }
+        
+        var headers: HTTPHeaders = [
+            "Accept": "application/json",
+            "Authorization" : String(format: "Bearer %@", defaults.string(forKey: "authToken") ?? ""),
+            "KEY": Constants.customCodes.appKey,
+            "Adforest-Request-From" : "ios"
+        ] as! HTTPHeaders
+        
         Alamofire.upload(multipartFormData:{ multipartFormData in
             multipartFormData.append(fileUrl, withName: fileName)
             if let parameters = params {
@@ -517,73 +242,35 @@ class NetworkHandler {
     
     class func uploadImageArray(url: String, imagesArray: [UIImage], fileName: String, params: Parameters?, uploadProgress: @escaping (Int) -> Void, success: @escaping (Any?) -> Void, failure: @escaping (NetworkError) -> Void) {
         
-        var headers: HTTPHeaders
-        if UserDefaults.standard.bool(forKey: "isSocial") {
-            var email = ""
-            var password = ""
-            if let userEmail = UserDefaults.standard.string(forKey: "email") {
-                email = userEmail
-            }
-            if let userPassword = UserDefaults.standard.string(forKey: "password") {
-                password = userPassword
-            }
-            let emailPass = "\(email):\(password)"
-            let encodedString = emailPass.data(using: String.Encoding.utf8)!
-            let base64String = encodedString.base64EncodedString(options: [])
-            print(base64String)
-            headers = [
-                //"Accept": "application/json",
-                "Authorization" : "Basic \(base64String)",
-                "AdForest-Login-Type": "social",
-                //just add security
-                "Purchase-Code" : Constants.customCodes.purchaseCode,
-                "Custom-Security": Constants.customCodes.securityCode,
-                "Adforest-Request-From" : "ios"
-            ]
-        }
-        else {
-            var email = ""
-            var password = ""
-            if let userEmail = UserDefaults.standard.string(forKey: "email") {
-                email = userEmail
-            }
-            if let userPassword = UserDefaults.standard.string(forKey: "password") {
-                password = userPassword
-            }
-            print(email, password)
-            let emailPass = "\(email):\(password)"
-            let encodedString = emailPass.data(using: String.Encoding.utf8)!
-            let base64String = encodedString.base64EncodedString(options: [])
-            headers = [
-              //  "Accept": "application/json",
-                
-                "Authorization" : "Basic \(base64String)",
-                //just add security
-                "Purchase-Code" : Constants.customCodes.purchaseCode,
-                "Custom-Security": Constants.customCodes.securityCode,
-                "Adforest-Request-From" : "ios"
-            ]
-        }
+        let headers: HTTPHeaders = [
+           "Accept": "application/json",
+           "Authorization" : String(format: "Bearer %@", defaults.string(forKey: "authToken") ?? ""),
+           "KEY": Constants.customCodes.appKey,
+           "Adforest-Request-From" : "ios"
+        ] as! HTTPHeaders
+        
         print(headers)
         
         Alamofire.upload(multipartFormData:{ multipartFormData in
-            var i = 0
+            var i = 1
             for image in imagesArray {
           
                 if let imageData = UIImageJPEGRepresentation(image, 1) {
                 
-                print(imageData)
-                multipartFormData.append(imageData,  withName: "nverness\(i).jpg", fileName: "Inverness\(i).jpg" , mimeType: "image/jpeg")
-                    i = i + 1
-                print(fileName)
-                print("Reduced..!\(image.description)")
+                    print(imageData)
+                    multipartFormData.append(imageData,  withName: "img\(i)", fileName: "img\(i).jpg" , mimeType: "image/jpeg")
+                        i = i + 1
+                    print(fileName)
+                    print("Reduced..!\(image.description)")
                 }
             }
             if let parameters = params {
                 for (key, value) in parameters {
-                    print("Key \(key), Value\(value)")
-                    let valuesStr = String(format: "%d", value as! Int)
+                    
+                    let valuesStr = String(format: "%@", value as! String)
+                    print("\(key), \(valuesStr)")
                     multipartFormData.append(valuesStr.data(using: String.Encoding.utf8)!, withName: key)
+
                 }
             }
         }, usingThreshold: UInt64.init(), to: url, method: .post, headers: headers, encodingCompletion: { encodingResult in

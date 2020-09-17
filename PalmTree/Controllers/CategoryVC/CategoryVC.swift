@@ -20,6 +20,7 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable
     
     var selectedCatName = ""
     var selectedCat = 0
+    var selectedIndex = -1
     var subCatArray = [SubCategoryObject]()
     
     var fromVC = ""
@@ -88,8 +89,9 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable
                 }
             }
 
-            selectedCat = categoryArray[0].catId
+            selectedCat = categoryArray[0].id
             selectedCatName = categoryArray[0].name
+            selectedIndex = 0
             getSubCategories(catID: selectedCat)
         }
     }
@@ -139,7 +141,7 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable
             imgPicture.frame = CGRect(x: 10, y: 10, width: 30, height: 30)
             imgPicture.contentMode = .scaleAspectFit
             
-            if let imgUrl = URL(string: objData.img.encodeUrl()) {
+            if let imgUrl = URL(string: objData.img_url.encodeUrl()) {
                 imgPicture.sd_setShowActivityIndicatorView(true)
                 imgPicture.sd_setIndicatorStyle(.gray)
                 imgPicture.sd_setImage(with: imgUrl, completed: nil)
@@ -180,8 +182,9 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable
     @IBAction func clickBtnACtion(button: UIButton)
     {
         let objData = categoryArray[button.tag - 1000]
-        selectedCat = objData.catId
+        selectedCat = objData.id;
         selectedCatName = objData.name
+        selectedIndex = button.tag - 1000
         getSubCategories(catID: selectedCat)
     }
     
@@ -197,16 +200,17 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable
     
     func subCategoriesAPI(catID: Int)
     {
-        let param: [String: Any] = ["subcat": catID]
+        let parameters: [String: Any] = ["id": String(format: "%d", catID)]
         
         self.showLoader()
         
-        AddsHandler.adPostSubcategory(parameter: param as NSDictionary, success: { (successResponse) in
-            NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+        AddsHandler.getSubCategories(parameter: parameters as NSDictionary, success: { (successResponse) in
+            self.stopAnimating()
+            
             if successResponse.success {
                 
-                let catArray = successResponse.data.values
-                
+                let catArray = successResponse.categories
+                print(catArray)
                 if catArray!.count > 0
                 {
                     self.subCatArray = [SubCategoryObject]()
@@ -215,15 +219,15 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable
                         var subCatObj = SubCategoryObject()
                         subCatObj.id = obj.id
                         subCatObj.name = obj.name
-                        subCatObj.hasSub = obj.hasSub
-                        
-                        if obj.hasSub
-                        {
-                            DispatchQueue.main.async {
-                                self.innerCategoriesAPI(catID: obj.id)
-                            }
-                        }
-                        
+//                        subCatObj.hasSub = obj.has_sub
+
+//                        if obj.has_sub
+//                        {
+//                            DispatchQueue.main.async {
+//                                self.innerCategoriesAPI(catID: obj.id)
+//                            }
+//                        }
+
                         DispatchQueue.main.async {
                             self.subCatArray.append(subCatObj)
                         }
@@ -234,14 +238,13 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable
 //                    self.createCategoriesView()
                     self.tblView.reloadData()
                 }
-              //UserDefaults.standard.set(successResponse.isBid, forKey: "isBid")
-            }
-            else {
+                
+            } else {
                 let alert = Constants.showBasicAlert(message: successResponse.message)
                 self.presentVC(alert)
             }
         }) { (error) in
-            NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+            self.stopAnimating()
             let alert = Constants.showBasicAlert(message: error.message)
             self.presentVC(alert)
         }
@@ -249,49 +252,42 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable
     
     func innerCategoriesAPI(catID: Int)
     {
-        let param: [String: Any] = ["subcat": catID]
-        
         self.showLoader()
+
+        let parameters: [String: Any] = ["id": String(format: "%d", catID)]
         
-        AddsHandler.adPostSubcategory(parameter: param as NSDictionary, success: { (successResponse) in
+        AddsHandler.getSubCategories(parameter: parameters as NSDictionary,success: { (successResponse) in
             NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
             if successResponse.success
             {
-                if successResponse.data.values != nil
+                let catArray = successResponse.categories
+                print(catArray)
+                
+                if catArray!.count > 0
                 {
-                    var index = 0
-                    for var obj in self.subCatArray
+                    var catArray = [SubCategoryObject]()
+                    for obj in successResponse.categories
                     {
-                        if obj.name == successResponse.data.title
-                        {
-                            var catArray = [SubCategoryObject]()
-                            for obj in successResponse.data.values
-                            {
-                                var subCatObj = SubCategoryObject()
-                                subCatObj.id = obj.id
-                                subCatObj.name = obj.name
-                                subCatObj.hasSub = obj.hasSub
-                                catArray.append(subCatObj)
-                            }
-                            
-                            obj.subCatArray = catArray
-                            self.subCatArray[index] = obj
-                        }
-                        index += 1
+                        var subCatObj = SubCategoryObject()
+                        subCatObj.id = obj.id
+                        subCatObj.name = obj.name
+                        subCatObj.hasSub = obj.has_sub
+                        catArray.append(subCatObj)
+                    }
+                    
+                    var obj: SubCategoryObject = self.subCatArray[self.selectedIndex]
+                    obj.subCatArray = catArray
+                    
+                    DispatchQueue.main.async {
+                        self.tblView.reloadData()
                     }
                 }
-                
-                DispatchQueue.main.async {
-                    print(self.subCatArray)
-                    self.tblView.reloadData()
-                }
-              //UserDefaults.standard.set(successResponse.isBid, forKey: "isBid")
             }
             else
             {
                 let alert = Constants.showBasicAlert(message: successResponse.message)
                 self.presentVC(alert)
-                
+
             }
         }) { (error) in
             NVActivityIndicatorPresenter.sharedInstance.stopAnimating()

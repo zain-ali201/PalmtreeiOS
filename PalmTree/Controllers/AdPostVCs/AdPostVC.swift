@@ -417,10 +417,10 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     
     @IBAction func previewBtnACtion(_ sender: Any)
     {
-        adDetailObj.adTitle = txtTitle.text
+        adDetailObj.adTitle = txtTitle.text ?? ""
         adDetailObj.adDesc = txtDescp.text
         adDetailObj.adCurrency = "AED"
-        adDetailObj.adPrice = txtPrice.text
+        adDetailObj.adPrice = txtPrice.text ?? ""
         
         let previewAdVC = self.storyboard?.instantiateViewController(withIdentifier: "PreviewAdVC") as! PreviewAdVC
         previewAdVC.adDetailObj = adDetailObj
@@ -488,9 +488,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
                 adDetailObj.phone = txtPhone.text!
                 adDetailObj.whatsapp = txtWhatsapp.text!
                 
-                let param: [String: Any] = ["is_update": adDetailObj.adId]
-                print(param)
-                self.adPost(param: param as NSDictionary)
+                addPostLiveAPI()
             }
             else
             {
@@ -613,26 +611,31 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         }
     }
     
+
+    
     //MARK:- Ad Post APIs
     func addPostLiveAPI()
     {
         var parameter: [String: Any] = [
-//            "images_array": adDetailObj.imageIDArray,
-            "ad_phone": adDetailObj.phone,
-            "ad_location": adDetailObj.location.address,
-            "location_lat": adDetailObj.location.lat ?? "",
-            "location_long": adDetailObj.location.lng ?? "",
-            "ad_country": adDetailObj.location.address,
-            "ad_bidding" : adDetailObj.location.address,
-            "ad_featured_ad": false,
-            "ad_id": AddsHandler.sharedInstance.adPostAdId,
-            "ad_bump_ad": true,
-            "name": self.txtTitle.text!,
-            "ad_price" : self.txtPrice.text!,
-            "ad_price_type" : lblFixedPrice.text!,
-            "ad_title": self.txtTitle.text!,
-            "ad_description" : txtDescp.text,
-            "ad_cats1" : adDetailObj.subcatID > 0 ? adDetailObj.subcatID : adDetailObj.catID
+            "id" : adDetailObj.adId,
+            "user_id": String(format: "%d", userDetail?.id ?? 0),
+            "phone": adDetailObj.phone,
+            "whatsapp": adDetailObj.whatsapp,
+            "latitude": "",
+            "longitude": "",
+            "address": "Palm Jumeirah",
+            "country": "Dubai",
+//                "address": adDetailObj.location.address,
+            "is_featured": "0",
+            "featured_date": "",
+            "name": adDetailObj.adTitle,
+            "price" : adDetailObj.adPrice,
+            "price_type" : adDetailObj.priceType,
+            "title": adDetailObj.adTitle,
+            "description" : adDetailObj.adDesc,
+            "status" : "1",
+            "cat_id" : "1"
+//                "cat_id" : String(format: "%d", adDetailObj.subcatID > 0 ? adDetailObj.subcatID : adDetailObj.catID)
         ]
         
         var customDictionary: [String: Any] = [String: Any]()
@@ -707,113 +710,30 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             customDictionary.merge(with: ["psellerType" : adDetailObj.propertyCatObj.sellerType])
         }
 
-        if adDetailObj.whatsapp != ""
-        {
-            customDictionary.merge(with: ["whatsapp" : adDetailObj.whatsapp])
-        }
-
         if customDictionary.count > 0
         {
-            customDictionary.merge(with: ["ad_price" : adDetailObj.adPrice])
-            customDictionary.merge(with: ["ad_price_type" : adDetailObj.priceType])
-
             let custom = Constants.json(from: customDictionary)
-            let param: [String: Any] = ["custom_fields": custom!]
+            let param: [String: Any] = ["custom_fields": custom]
             parameter.merge(with: param)
-            parameter.merge(with: customDictionary)
         }
             
-        self.adPostLive(param: parameter as NSDictionary)
+        self.uploadAdWithImages(param: parameter as NSDictionary, images: adDetailObj.images)
     }
     
-    func adPost(param: NSDictionary)
+    func uploadAdWithImages(param: NSDictionary, images: [UIImage])
     {
-        print(param)
-        self.showLoader()
-        AddsHandler.adPost(parameter: param, success: { (successResponse) in
-//            self.stopAnimating()
-            if successResponse.success {
-
-                print(successResponse)
-                AddsHandler.sharedInstance.adPostAdId = successResponse.data.adId
-                AddsHandler.sharedInstance.objAdPost = successResponse
-                
-                adDetailObj.adId = AddsHandler.sharedInstance.adPostAdId
-
-                if self.fromVC == "myads"
-                {
-                    self.addPostLiveAPI()
-                }
-                else
-                {
-                    let param: [String: Any] = ["ad_id": AddsHandler.sharedInstance.adPostAdId]
-                    print(param)
-                    
-                    DispatchQueue.main.async {
-                        self.uploadImages(param: param as NSDictionary, images: adDetailObj.images)
-                    }
-                }
-            }
-            else
-            {
-                let alert = Constants.showBasicAlert(message: successResponse.message)
-                self.presentVC(alert)
-            }
-        }) { (error) in
-            self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
-            self.presentVC(alert)
-        }
-    }
-    
-    func adPostLive(param: NSDictionary)
-    {
-        self.showLoader()
-        AddsHandler.adPostLive(parameter: param, success: { (successResponse) in
-            self.stopAnimating()
-            if successResponse.success {
-                
-                if self.fromVC == "myads"
-                {
-                    self.showToast(message: "Ad updated successfully.")
-                    self.dismiss(animated: true, completion: nil)
-                }
-                else
-                {
-                    adDetailObj.imageIDArray.removeAll()
-                    
-                    let featuredVC = self.storyboard?.instantiateViewController(withIdentifier: "FeaturedVC") as! FeaturedVC
-                    self.navigationController?.pushViewController(featuredVC, animated: true)
-                }
-            }
-            else
-            {
-                let alert = Constants.showBasicAlert(message: successResponse.message)
-                self.presentVC(alert)
-            }
-        }) { (error) in
-            self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
-            self.presentVC(alert)
-        }
-    }
-    
-    func uploadImages(param: NSDictionary, images: [UIImage]) {
-        
         adPostUploadImages(parameter: param, imagesArray: images, fileName: "File", uploadProgress: { (uploadProgress) in
 
         }, success: { (successResponse) in
             
-            //self.stopAnimating()
-            if successResponse.success {
-                
-                for item in successResponse.data.adImages {
-                    adDetailObj.imageIDArray.append(item.imgId)
-                }
+            self.stopAnimating()
+            if successResponse.success
+            {
+                self.showToast(message: "Ad updated successfully.")
+                self.dismiss(animated: true, completion: nil)
             }
             else
             {
-                self.stopAnimating()
                 let alert = Constants.showBasicAlert(message: successResponse.message)
                 self.presentVC(alert)
             }
@@ -826,13 +746,13 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     
     func adPostUploadImages(parameter: NSDictionary, imagesArray: [UIImage], fileName: String, uploadProgress: @escaping(Int)-> Void, success: @escaping(AdPostImagesRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
         
-        let url = Constants.URL.baseUrl+Constants.URL.adPostUploadImages
+        let url = Constants.URL.baseUrl+Constants.URL.adPostLive
         print(url)
         NetworkHandler.uploadImageArray(url: url, imagesArray: imagesArray, fileName: "File", params: parameter as? Parameters, uploadProgress: { (uploadProgress) in
             print(uploadProgress)
             
         }, success: { (successResponse) in
-            self.addPostLiveAPI()
+            
             let dictionary = successResponse as! [String: Any]
             print(dictionary)
             let objImg = AdPostImagesRoot(fromDictionary: dictionary)

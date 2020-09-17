@@ -52,9 +52,6 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboard()
-
-//        self.registerData()
-//        txtFieldsWithRtl()
         
         if languageCode == "ar"
         {
@@ -104,81 +101,8 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
         return true
     }
     
-    //MARK: - Custom
-    func txtFieldsWithRtl()
-    {
-//        let attributedString = NSMutableAttributedString(string: txtView.text!)
-        
-//        let linkedText = NSMutableAttributedString(attributedString: attributedString)
-//        let terms = linkedText.setAsLink(textToFind: "Terms of use", linkURL: "https://www.google.com/")
-//        let privacy = linkedText.setAsLink(textToFind: "Privacy Policy", linkURL: "https://www.google.com/")
-//        let offers = linkedText.setAsLink(textToFind: "third party offers", linkURL: "https://www.google.com/")
-//
-//        if terms && privacy && offers
-//        {
-//            txtView.attributedText = NSAttributedString(attributedString: linkedText)
-//        }
-        
-//        if UserDefaults.standard.bool(forKey: "isRtl")
-//        {
-//            txtEmail.textAlignment = .right
-//            txtPassword.textAlignment = .right
-//            txtName.textAlignment = .right
-//            txtConfirmPassword.textAlignment = .right
-//        }
-//        else
-//        {
-//            txtEmail.textAlignment = .left
-//            txtPassword.textAlignment = .left
-//            txtName.textAlignment = .left
-//            txtConfirmPassword.textAlignment = .left
-//        }
-    }
-    
     func showLoader(){
         self.startAnimating(Constants.activitySize.size, message: Constants.loaderMessages.loadingMessage.rawValue,messageFont: UIFont.systemFont(ofSize: 14), type: NVActivityIndicatorType.ballClipRotatePulse)
-    }
-
-    func populateData()
-    {
-        if UserHandler.sharedInstance.objregisterDetails != nil {
-            let objData = UserHandler.sharedInstance.objregisterDetails
-            
-            if let isVerification = objData?.isVerifyOn {
-                self.isVerifyOn = isVerification
-            }
-
-            if let bgColor = defaults.string(forKey: "mainColor") {
-                self.buttonRegister.layer.borderColor = Constants.hexStringToUIColor(hex: bgColor).cgColor
-                self.buttonRegister.setTitleColor(Constants.hexStringToUIColor(hex: bgColor), for: .normal)
-            }
-            
-           
-            if let nameText = objData?.namePlaceholder {
-                self.txtName.placeholder = nameText
-            }
-            if let emailText = objData?.emailPlaceholder {
-                self.txtEmail.placeholder = emailText
-            }
-            
-            if let passwordtext = objData?.passwordPlaceholder {
-                self.txtPassword.placeholder = passwordtext
-            }
-            
-            
-            if let isUserVerification = objData?.isVerifyOn {
-                self.isVerifivation = isUserVerification
-            }
-            
-            // Show hide guest button
-            guard let settings = defaults.object(forKey: "settings") else {
-                return
-            }
-            let  settingObject = NSKeyedUnarchiver.unarchiveObject(with: settings as! Data) as! [String : Any]
-            let objSettings = SettingsRoot(fromDictionary: settingObject)
-            
-            
-        }
     }
     
     func validpassword(password : String) -> Bool
@@ -250,39 +174,12 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
             let parameters : [String: Any] = [
                 "name": name,
                 "email": email,
-                "phone": "",
                 "password": password
             ]
             print(parameters)
             defaults.set(email, forKey: "email")
             defaults.set(password, forKey: "password")
             self.registerUser(param: parameters as NSDictionary)
-        }
-    }
-    
-
-    //MARK:- API Calls
-    //Get Details Data
-    func registerData() {
-        self.showLoader()
-        UserHandler.registerDetails(success: { (successResponse) in
-            self.stopAnimating()
-            if successResponse.success {
-                UserHandler.sharedInstance.objregisterDetails = successResponse.data
-                if let pageID = successResponse.data.termPageId {
-                    self.page_id = pageID
-                }
-                self.populateData()
-                
-            }
-            else {
-                let alert = Constants.showBasicAlert(message: successResponse.message)
-                self.presentVC(alert)
-            }
-        }) { (error) in
-            self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
-            self.presentVC(alert)
         }
     }
     
@@ -318,15 +215,12 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
                     
                     userDetail?.displayName = successResponse.data.displayName
                     userDetail?.id = successResponse.data.id
-                    userDetail?.phone = successResponse.data.phone
-                    userDetail?.profileImg = successResponse.data.profileImg
                     userDetail?.userEmail = successResponse.data.userEmail
                     
                     defaults.set(successResponse.data.displayName, forKey: "displayName")
-                    defaults.set(successResponse.data.id, forKey: "id")
-                    defaults.set(successResponse.data.phone, forKey: "phone")
-                    defaults.set(successResponse.data.profileImg, forKey: "profileImg")
+                    defaults.set(successResponse.data.id, forKey: "userID")
                     defaults.set(successResponse.data.userEmail, forKey: "userEmail")
+                    defaults.set(successResponse.authToken, forKey: "authToken")
                     
                     self.dismiss(animated: true, completion: nil)
                 }

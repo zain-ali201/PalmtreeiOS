@@ -13,9 +13,7 @@ import Social
 
 class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesDelegate
 {
-    
     //MARK:- Outlets
-    
     @IBOutlet weak var scrollView: UIScrollView!
     
     @IBOutlet weak var summaryBtn: UIButton!
@@ -53,8 +51,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     @IBOutlet weak var btnLocation: UIButton!
     
     //MARK:- Properties
-    var adDetailDataObj:HomeAdd?
-    var imagesArray:[AddDetailImage] = []
+    var adDetailDataObj:AdsJSON!
     var sourceImages = [ImageSource]()
     var inputImages = [InputSource]()
     
@@ -67,8 +64,6 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     var priceType = ""
     var sellerName = ""
     var sendMsgbuttonType = ""
-    
-    var fieldsData : [AddDetailFieldsData]!
     
     //MARK:- View Life Cycle
     
@@ -104,8 +99,6 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
             lblID.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblName.textAlignment = .right
         }
-        
-        getUserDetail()
         populateData()
     }
 
@@ -119,9 +112,10 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     
     func populateData()
     {
-        lblName.text = adDetailDataObj?.adTitle
+        lblName.text = adDetailDataObj.title
         
-        var price = adDetailDataObj?.adPrice.price ?? ""
+        var price = adDetailDataObj.price ?? ""
+        priceType = adDetailDataObj.price_type ?? ""
         
         if priceType != ""
         {
@@ -130,18 +124,18 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
                 priceType = NSLocalizedString(priceType, comment: "")
             }
             
-            price = String(format: "%@ (%@)", price, priceType)
+            price = String(format: "AED %@ (%@)", price, priceType)
         }
         
         lblPrice.text = price
-        lblLocation.text = adDetailDataObj?.adLocation.address
-        lblSummary.text = adDetailDataObj?.adDesc
-        lblID.text = String(format: "ID: %i", adDetailDataObj?.adId ?? 0)
+        lblLocation.text = adDetailDataObj.address
+        lblSummary.text = adDetailDataObj.description
+        lblID.text = String(format: "ID: %i", adDetailDataObj.id ?? 0)
         
         
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM dd, yyyy"
-        let date = formatter.date(from: adDetailDataObj?.adDate ?? "")
+        let date = formatter.date(from: adDetailDataObj.created_at ?? "")
         
         if date != nil
         {
@@ -181,7 +175,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
             whatsappBtn.isEnabled = true
         }
         
-        if imagesArray.count > 0
+        if adDetailDataObj.images.count > 0
         {
             fillSlideShow()
         }
@@ -200,13 +194,10 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
         slideshow.currentPageChanged = { page in
         }
         
-        for image in imagesArray
+        for image in adDetailDataObj.images
         {
-//            if image.imgId != nil
-//            {
-                let alamofireSource = AlamofireSource(urlString: image.full)!
+            let alamofireSource = AlamofireSource(urlString: image.url)!
                 inputImages.append(alamofireSource)
-//            }
         }
         
         slideshow.setImageInputs(inputImages)
@@ -392,11 +383,11 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     @IBAction func shareBtnAction(_ sender: Any)
     {
         var objectsToShare = [AnyObject]()
-        objectsToShare.append(adDetailDataObj?.adTitle as AnyObject)
+        objectsToShare.append(adDetailDataObj.title as AnyObject)
 
-        if imagesArray.count > 0
+        if adDetailDataObj.images.count > 0
         {
-            objectsToShare.append(imagesArray[0].full as AnyObject)
+            objectsToShare.append(adDetailDataObj.images[0].url as AnyObject)
         }
 
         let activityViewController = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
@@ -408,9 +399,9 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     @IBAction func locationBtnAction(_ sender: Any)
     {
         let mapVC = self.storyboard?.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
-        mapVC.address = adDetailDataObj?.adLocation.address ?? ""
-        mapVC.latitude = Double(adDetailDataObj?.adLocation.lat ?? "0.0")
-        mapVC.longitude = Double(adDetailDataObj?.adLocation.longField ?? "0.0")
+        mapVC.address = adDetailDataObj.address ?? ""
+        mapVC.latitude = Double(adDetailDataObj.latitude ?? "0.0")
+        mapVC.longitude = Double(adDetailDataObj.longitude ?? "0.0")
         self.navigationController?.pushViewController(mapVC, animated: true)
     }
     
@@ -419,10 +410,10 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
         if button.tag == 1001
         {
             if let vc = SLComposeViewController(forServiceType: SLServiceTypeFacebook) {
-                vc.setInitialText(adDetailDataObj?.adTitle)
-                if imagesArray.count > 0
+                vc.setInitialText(adDetailDataObj.title)
+                if adDetailDataObj.images.count > 0
                 {
-                    vc.add(URL(string: imagesArray[0].full))
+                    vc.add(URL(string: adDetailDataObj.images[0].url))
                 }
                 present(vc, animated: true)
             }
@@ -430,10 +421,10 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
         else
         {
             if let vc = SLComposeViewController(forServiceType: SLServiceTypeTwitter) {
-                vc.setInitialText(adDetailDataObj?.adTitle)
-                if imagesArray.count > 0
+                vc.setInitialText(adDetailDataObj.title)
+                if adDetailDataObj.images.count > 0
                 {
-                    vc.add(URL(string: imagesArray[0].full))
+                    vc.add(URL(string: adDetailDataObj.images[0].url))
                 }
                 present(vc, animated: true)
             }
@@ -442,7 +433,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     
     @IBAction func favBtnAction(_ sender: Any)
     {
-        let parameter: [String: Any] = ["ad_id": adDetailDataObj?.adId ?? 0]
+        let parameter: [String: Any] = ["ad_id": adDetailDataObj.id ?? 0]
         self.makeAddFavourite(param: parameter as NSDictionary)
     }
     
@@ -538,7 +529,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
                 sendMsgVC.modalTransitionStyle = .flipHorizontal
                 sendMsgVC.isFromMsg = true
                 sendMsgVC.objAddDetailData = AddsHandler.sharedInstance.objAddDetails
-                sendMsgVC.ad_id = adDetailDataObj?.adId ?? 0
+                sendMsgVC.ad_id = adDetailDataObj.id ?? 0
                 sendMsgVC.delegate = self
                 present(sendMsgVC, animated: true, completion: nil)
             }
@@ -566,49 +557,13 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
         let reportVC = self.storyboard?.instantiateViewController(withIdentifier: "ReportController") as! ReportController
         reportVC.modalPresentationStyle = .overCurrentContext
         reportVC.modalTransitionStyle = .crossDissolve
-        reportVC.adID = adDetailDataObj?.adId ?? 0
+        reportVC.adID = adDetailDataObj.id ?? 0
         self.presentVC(reportVC)
     }
     
     func showLoader() {
         self.startAnimating(Constants.activitySize.size, message: Constants.loaderMessages.loadingMessage.rawValue,messageFont: UIFont.systemFont(ofSize: 14), type: NVActivityIndicatorType.ballClipRotatePulse)
     }
-    
-    func getUserDetail()
-    {
-        let parameter: [String: Any] = ["ad_id": adDetailDataObj?.adId ?? 0]
-        print(parameter)
-        self.addDetail(param: parameter as NSDictionary)
-    }
-    
-    //MARK:- API Call
-   func addDetail(param: NSDictionary)
-   {
-       self.showLoader()
-       AddsHandler.addDetails(parameter: param, success: { (successResponse) in
-           self.stopAnimating()
-           if successResponse.success
-           {
-                self.imagesArray = successResponse.data.adDetail.images
-                self.phone = successResponse.data.adDetail.phone
-                self.lblSeller.text = successResponse.data.profileDetail.displayName
-                self.lblJoining.text = successResponse.data.profileDetail.userEmail
-            self.priceType = successResponse.data.adDetail.adPrice.priceType
-                self.fieldsData = successResponse.data.adDetail.fieldsData
-                self.populateData()
-           }
-           else
-           {
-               let alert = Constants.showBasicAlert(message: successResponse.message)
-               self.presentVC(alert)
-           }
-           
-       }) { (error) in
-           self.stopAnimating()
-           let alert = Constants.showBasicAlert(message: error.message)
-           self.presentVC(alert)
-       }
-   }
     
     func makeAddFavourite(param: NSDictionary) {
         self.showLoader()

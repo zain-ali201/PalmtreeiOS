@@ -23,8 +23,8 @@ var settingsVC: SettingsVC!
 let defaults = UserDefaults.standard
 let screenWidth = UIScreen.main.bounds.width
 let screenHeight = UIScreen.main.bounds.height
-var categoryArray = [CatIcon]()
-var categoriesArray = [CategoryObject]()
+var categoryArray = [CategoryJSON]()
+var categoriesArray = [AdsJSON]()
 
 var stripeAPIKey = "pk_test_ZDUz26JhS1bTxJzimCXdVR6C"
 var stripeBaseURL = "https://palmtreestore.net/create.php"
@@ -35,10 +35,11 @@ class Constants
 {
     struct  URL
     {
-        static let baseUrl = "https://palmtreestore.net/wp-json/adforest/v1/"
-//        static let baseUrl = "https://sprintsols.com/palmtree/wp-json/adforest/v1/"
+//        static let baseUrl = "https://palmtreestore.net/wp-json/adforest/v1/"
+        static let imagesUrl = "http://sprintsols.com/palmtree/public/storage/images/"
+        static let baseUrl = "https://sprintsols.com/palmtree/public/api/"
         
-        static let homeData = "home"
+        static let homeData = "homeData"
         static let category = "ad_post/category"
         static let locationDetail = "terms"
         
@@ -61,7 +62,7 @@ class Constants
         
         static let getMostViewedAd = "ad/most-visited"
         static let getExpAds = "ad/expire-sold"
-        static let getMyAds = "ad"
+        static let getMyAds = "myads"
         static let getInactiveAds = "ad/inactive"
         static let getFeaturedAds = "ad/featured"
         static let getFavouriteAds = "ad/favourite"
@@ -99,12 +100,12 @@ class Constants
         
         static let adPost = "post_ad/is_update"
         static let adPostDynamicField = "post_ad/dynamic_fields"
-        static let adPostSubCategory = "post_ad/subcats"
+        static let adPostSubCategory = "getSubCategory"
         static let adPostUploadImages = "post_ad/image"
         static let adPostDeleteImage = "post_ad/image/delete"
         static let adPostSubLocations = "post_ad/sublocations"
         
-        static let adPostLive = "post_ad"
+        static let adPostLive = "addPost"
         static let advanceSearch = "ad_post/search"
         static let subCategory = "ad_post/subcats"
         static let searchDynamic = "ad_post/dynamic_widget"
@@ -129,8 +130,9 @@ class Constants
         static let cartEmpty = "cart-empty"
     }
     
-    struct customCodes {
-       
+    struct customCodes
+    {
+        static let appKey = "amFoYW56YWliLmFzbGFtLm1laGFyQGdtYWlsLmNvbUBwYWxtdHJlZQ=="
         static let purchaseCode = "d72f2557-09c2-4d71-9e7a-92ac33d7369b"
         static let securityCode = "11223344"
         

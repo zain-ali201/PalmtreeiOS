@@ -19,12 +19,12 @@ class AddsCollectionCell: UICollectionViewCell {
     @IBOutlet weak var imgPicture: UIImageView!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblLocation: UILabel!
-    @IBOutlet weak var lblPrice: UILabel! 
+    @IBOutlet weak var lblPrice: UILabel!
+    @IBOutlet weak var favBtn: UIButton! 
     //MARK:- Properties
     var btnFullAction: (()->())?
     var favBtnAction: (()->())?
     
-    var latestHorizontalSingleAd: String = UserDefaults.standard.string(forKey: "homescreenLayout")!
     var  imageView: UIImageView!
     var  imageViewLoc: UIImageView!
     var lblTitle: UILabel!

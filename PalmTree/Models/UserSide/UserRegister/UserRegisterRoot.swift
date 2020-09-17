@@ -13,17 +13,18 @@ struct UserRegisterRoot{
     var data : UserRegisterData!
     var message : String!
     var success : Bool!
-    
+    var authToken : String!
     
     /**
      * Instantiate the instance using the passed dictionary values to set the properties values
      */
     init(fromDictionary dictionary: [String:Any]){
-        if let dataData = dictionary["data"] as? [String:Any] {
+        if let dataData = dictionary["user"] as? [String:Any] {
             data = UserRegisterData(fromDictionary: dataData)
         }
         message = dictionary["message"] as? String
         success = dictionary["success"] as? Bool
+        authToken = dictionary["token"] as? String
     }
     
     /**
@@ -33,13 +34,17 @@ struct UserRegisterRoot{
     {
         var dictionary = [String:Any]()
         if data != nil{
-            dictionary["data"] = data.toDictionary()
+            dictionary["user"] = data.toDictionary()
         }
         if message != nil{
             dictionary["message"] = message
         }
         if success != nil{
             dictionary["success"] = success
+        }
+        
+        if authToken != nil{
+            dictionary["token"] = authToken
         }
         return dictionary
     }

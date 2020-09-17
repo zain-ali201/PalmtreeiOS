@@ -281,12 +281,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
             print("\(email), \(googleID), \(name), \(token)")
             let param: [String: Any] = [
                 "email": email,
-                "type": "social"
+                "name": name,
+                "social_id": googleID
             ]
             print(param)
             defaults.set(true, forKey: "isSocial")
             defaults.set(email, forKey: "email")
-            defaults.set("1122", forKey: "password")
+            defaults.set(name, forKey: "name")
+            defaults.set(googleID, forKey: "googleID")
             
             self.loginUser(parameters: param as NSDictionary)
         }
@@ -312,19 +314,22 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                 }
                 else {
                     guard let results = result as? NSDictionary else { return }
-                    guard let facebookId = results["email"] as? String,
-                        let email = results["email"] as? String else {
-                            return
-                    }
-                    print("\(email), \(facebookId)")
+                    guard let facebookID = results["id"] as? String,
+                        let email = results["email"] as? String,
+                        let name = results["name"] as? String
+                        else { return }
+                    
+                    print("\(email), \(facebookID), \(name)")
                     let param: [String: Any] = [
                         "email": email,
-                        "type": "social"
+                        "name": name,
+                        "social_id": facebookID
                     ]
                     print(param)
                     defaults.set(true, forKey: "isSocial")
                     defaults.set(email, forKey: "email")
-                    defaults.set("1122", forKey: "password")
+                    defaults.set(name, forKey: "name")
+                    defaults.set(facebookID, forKey: "facebookID")
                     
                     self.loginUser(parameters: param as NSDictionary)
                 }
@@ -389,15 +394,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                 
                 userDetail?.displayName = successResponse.data.displayName
                 userDetail?.id = successResponse.data.id
-                userDetail?.phone = successResponse.data.phone
-                userDetail?.profileImg = successResponse.data.profileImg
+//                userDetail?.phone = successResponse.data.phone
+//                userDetail?.profileImg = successResponse.data.profileImg
                 userDetail?.userEmail = successResponse.data.userEmail
+                userDetail?.authToken = successResponse.authToken
                 
                 defaults.set(successResponse.data.displayName, forKey: "displayName")
-                defaults.set(successResponse.data.id, forKey: "id")
-                defaults.set(successResponse.data.phone, forKey: "phone")
-                defaults.set(successResponse.data.profileImg, forKey: "profileImg")
+                defaults.set(successResponse.data.id, forKey: "userID")
+//                defaults.set(successResponse.data.phone, forKey: "phone")
+//                defaults.set(successResponse.data.profileImg, forKey: "profileImg")
                 defaults.set(successResponse.data.userEmail, forKey: "userEmail")
+                defaults.set(successResponse.authToken, forKey: "authToken")
                 
                 self.dismiss(animated: true, completion: nil)
             }

@@ -135,6 +135,7 @@ struct HomeData {
         if adsPositionSorter != nil{
             dictionary["ads_position_sorter"] = adsPositionSorter
         }
+        
         if catIcons != nil{
             var dictionaryElements = [[String:Any]]()
             for catIconsElement in catIcons {
@@ -142,6 +143,7 @@ struct HomeData {
             }
             dictionary["cat_icons"] = dictionaryElements
         }
+        
         if catIconsColumn != nil{
             dictionary["cat_icons_column"] = catIconsColumn
         }
@@ -229,3 +231,5 @@ struct HomeData {
         return dictionary
     }
 }
+
+

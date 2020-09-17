@@ -22,7 +22,6 @@ class AddsHandler {
     var objReportPopUp : AddDetailReportPopup?
     var objAddDetails: AddDetailData?
     var objAdBids : BidsDataRoot?
-    var objHomeData: HomeData?
     var objLatestAds: HomeFeaturedAdd?
     var objCategory : CategoryRoot?
     var objAddDetailImage: AddDetailImage?
@@ -80,6 +79,22 @@ class AddsHandler {
         NetworkHandler.getRequest(url: url, parameters: nil, success: { (successResponse) in
             let dictionary = successResponse as! [String: Any]
             let objHome = HomeRoot(fromDictionary: dictionary)
+            success(objHome)
+            
+       
+            
+        }) { (error) in
+             failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
+    //MARK:- Get Home Data
+    class func getSubCategories(parameter: NSDictionary, success: @escaping(SubCategoryRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
+        let url = Constants.URL.baseUrl+Constants.URL.adPostSubCategory+"/"+(parameter.value(forKey: "id") as! String)
+        print(url)
+        NetworkHandler.getRequest(url: url, parameters: nil, success: { (successResponse) in
+            let dictionary = successResponse as! [String: Any]
+            let objHome = SubCategoryRoot(fromDictionary: dictionary)
             success(objHome)
             
        
