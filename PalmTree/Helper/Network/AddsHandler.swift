@@ -76,7 +76,7 @@ class AddsHandler {
     class func homeData(parameter: NSDictionary, success: @escaping(HomeRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
         let url = Constants.URL.baseUrl+Constants.URL.homeData
         print(url)
-        NetworkHandler.postRequest(url: url, parameters: nil, success: { (successResponse) in
+        NetworkHandler.postRequest(url: url, parameters: parameter as! Parameters, success: { (successResponse) in
             let dictionary = successResponse as! [String: Any]
             let objHome = HomeRoot(fromDictionary: dictionary)
             success(objHome)
@@ -116,12 +116,12 @@ class AddsHandler {
     }
 
     //MARK:- Category Data
-    class func categoryData(param: NSDictionary, success: @escaping(CategoryRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.category
+    class func searchAds(param: NSDictionary, success: @escaping(MyAdsRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
+        let url = Constants.URL.baseUrl+Constants.URL.searchAds
         print(url)
         NetworkHandler.postRequest(url: url, parameters: param as? Parameters, success: { (SuccessResponse) in
             let dictionary = SuccessResponse as! [String: Any]
-            let objCategory = CategoryRoot(fromDictionary: dictionary)
+            let objCategory = MyAdsRoot(fromDictionary: dictionary)
             success(objCategory)
         }) { (error) in
              failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
@@ -312,6 +312,19 @@ class AddsHandler {
         NetworkHandler.postRequest(url: url, parameters: param as? Parameters, success: { (successResponse) in
             let dictionary = successResponse as! [String: Any]
             let objData = AddDeleteRoot(fromDictionary: dictionary)
+            success(objData)
+        }) { (error) in
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
+    //MARK:- Feature My Ad
+    class func featureAd(param: NSDictionary, success: @escaping(ResponseRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
+        let url = Constants.URL.baseUrl+Constants.URL.deleteAdd
+        print(url)
+        NetworkHandler.postRequest(url: url, parameters: param as? Parameters, success: { (successResponse) in
+            let dictionary = successResponse as! [String: Any]
+            let objData = ResponseRoot(fromDictionary: dictionary)
             success(objData)
         }) { (error) in
             failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))

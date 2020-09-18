@@ -144,8 +144,6 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             txtWhatsapp.textAlignment = .right
             lblDescp.textAlignment = .right
         }
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -192,7 +190,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         if adDetailObj.adDesc != "" && fromVC == "myads"
         {
             lblDescp.alpha = 0
-            txtDescp.attributedText = adDetailObj.adDesc.htmlToAttributedString
+            txtDescp.text = adDetailObj.adDesc
         }
         
         if adDetailObj.adSubCategory != ""
@@ -712,6 +710,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             parameter.merge(with: param)
         }
             
+        self.showLoader()
         self.uploadAdWithImages(param: parameter as NSDictionary, images: adDetailObj.images)
     }
     

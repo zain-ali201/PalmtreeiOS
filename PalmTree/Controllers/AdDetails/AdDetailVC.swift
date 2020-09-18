@@ -133,6 +133,14 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
         lblID.text = String(format: "ID: %i", adDetailDataObj.id ?? 0)
         
         
+        if defaults.bool(forKey: "isLogin") == true
+        {
+            if adDetailDataObj.is_favorite
+            {
+                favBtn.setImage(UIImage(named: "favourite_active"), for: .normal)
+            }
+        }
+        
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let date = formatter.date(from: adDetailDataObj.created_at ?? "")
@@ -514,15 +522,16 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     
     @IBAction func chatBtnAction(_ button: UIButton)
     {
-//        let chatVC = self.storyboard?.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
-//        self.navigationController?.pushViewController(chatVC, animated: true)
-        
-        if defaults.bool(forKey: "isLogin") == false {
-            if let msg = defaults.string(forKey: "notLogin") {
+        if defaults.bool(forKey: "isLogin") == false
+        {
+            if let msg = defaults.string(forKey: "notLogin")
+            {
                 let alert = Constants.showBasicAlert(message: msg)
                 presentVC(alert)
             }
-        } else {
+        }
+        else
+        {
             if sendMsgbuttonType == "receive"
             {
                 let msgVC = self.storyboard?.instantiateViewController(withIdentifier: "MessagesController") as! MessagesController
@@ -561,11 +570,20 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     
     @IBAction func reportBtnAction(_ button: UIButton)
     {
-        let reportVC = self.storyboard?.instantiateViewController(withIdentifier: "ReportController") as! ReportController
-        reportVC.modalPresentationStyle = .overCurrentContext
-        reportVC.modalTransitionStyle = .crossDissolve
-        reportVC.adID = adDetailDataObj.id ?? 0
-        self.presentVC(reportVC)
+        if defaults.bool(forKey: "isLogin") == false
+        {
+            let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+            let navController = UINavigationController(rootViewController: loginVC)
+            self.present(navController, animated:true, completion: nil)
+        }
+        else
+        {
+            let reportVC = self.storyboard?.instantiateViewController(withIdentifier: "ReportController") as! ReportController
+            reportVC.modalPresentationStyle = .overCurrentContext
+            reportVC.modalTransitionStyle = .crossDissolve
+            reportVC.adID = adDetailDataObj.id ?? 0
+            self.presentVC(reportVC)
+        }
     }
     
     func showLoader() {
@@ -582,7 +600,6 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
                 }
                 let alert = Constants.showBasicAlert(message: successResponse.message)
                 self.presentVC(alert)
-                
             }
             else {
                 let alert = Constants.showBasicAlert(message: successResponse.message)

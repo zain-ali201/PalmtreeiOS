@@ -32,7 +32,7 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     //MARK:- Properties
    
-    var dataArray = [CategoryAd]()
+    var dataArray = [AdsJSON]()
     
     var filtersArray = [String]()
     
@@ -66,58 +66,25 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             txtSearch.textAlignment = .right
         }
         
-        if fromVC == "advance"
+        var catID = 0
+        if subcatName != ""
         {
-            self.dataArray = AddsHandler.sharedInstance.objCategoryArray
-            self.tableView.reloadData()
+            filtersArray = [subcatName]
+            catID = subcategoryID
         }
-        else if fromVC == "nearby"
+        else if catName != ""
         {
-            let param: [String: Any] = ["nearby_latitude": latitude, "nearby_longitude": longitude, "nearby_distance": 100, "page_number": 1]
-            print(param)
-            self.categoryData(param: param as NSDictionary)
-        }
-        else if fromVC == "home"
-        {
-            createFilterView()
-            let param: [String: Any] = ["ad_title": searchText ,"ad_country":0 ,"page_number": 1]
-            print(param)
-            self.categoryData(param: param as NSDictionary)
-        }
-        else if fromVC == "location"
-        {
-            let param: [String: Any] = ["ad_country" : categoryID]
-            print(param)
-            self.categoryData(param: param as NSDictionary)
-        }
-        else if fromVC == "all"
-        {
-            let param: [String: Any] = ["ad_country" : categoryID]
-            print(param)
-            self.categoryData(param: param as NSDictionary)
+            filtersArray = [catName]
+            catID = categoryID
         }
         else
         {
-            var catID = 0
-            if subcatName != ""
-            {
-                filtersArray = [subcatName]
-                catID = subcategoryID
-            }
-            else if catName != ""
-            {
-                filtersArray = [catName]
-                catID = categoryID
-            }
-            else
-            {
-                filtersArray = ["All Ads"]
-            }
-            createFilterView()
-            let param: [String: Any] = ["ad_cats1" : catID, "page_number": 1]
-            print(param)
-            self.categoryData(param: param as NSDictionary)
+            filtersArray = ["All Ads"]
         }
+        createFilterView()
+        let param: [String: Any] = ["cat_id" : catID, "title": searchText, "address" : ""]
+        print(param)
+        self.searchAds(param: param as NSDictionary)
     }
     
     override func viewDidAppear(_ animated: Bool)
@@ -341,8 +308,7 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             let custom = Constants.json(from: customDictionary)
             var param: [String: Any] = ["custom_fields": custom!]
             param.merge(with: customDictionary)
-            
-            self.postData(parameter: param as NSDictionary)
+            self.searchAds(param: param as NSDictionary)
         }
         else
         {
@@ -363,14 +329,9 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
             createFilterView()
             
-            var param: [String: Any] = ["ad_cats1" : catID, "page_number": 1]
-            
-//            if userDetail?.currentLocation.coordinate != nil
-//            {
-//                param = ["ad_cats1" : catID, "nearby_latitude": adDetailObj.location.lat, "nearby_longitude": adDetailObj.location.lng, "nearby_distance": 500, "page_number": 1]
-//            }
+            let param: [String: Any] = ["cat_id" : catID, "title": searchText, "address" : ""]
             print(param)
-            self.categoryData(param: param as NSDictionary)
+            self.searchAds(param: param as NSDictionary)
         }
     }
     
@@ -382,9 +343,9 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         adDetailObj.sortType = "Date Descending"
         filtersArray = ["All Ads"]
         createFilterView()
-        let param: [String: Any] = ["ad_cats1" : 0, "page_number": 1]
+        let param: [String: Any] = ["title": ""]
         print(param)
-        self.categoryData(param: param as NSDictionary)
+        self.searchAds(param: param as NSDictionary)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool
@@ -396,9 +357,9 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             catName = ""
             filtersArray = ["All Ads"]
             createFilterView()
-            let param: [String: Any] = ["ad_title": txtSearch.text! ,"ad_country":0, "page_number": 1]
+            let param: [String: Any] = ["title": txtSearch.text!]
             print(param)
-            self.categoryData(param: param as NSDictionary)
+            self.searchAds(param: param as NSDictionary)
         }
         
         return true
@@ -418,25 +379,25 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         let objData = dataArray[indexPath.row]
         
         for image in objData.images {
-            if let imgUrl = URL(string: image.thumb) {
+            if let imgUrl = URL(string: String(format: "%@%@", Constants.URL.imagesUrl, objData.images[0].url.encodeUrl())) {
                 cell.imgPicture.sd_setShowActivityIndicatorView(true)
                 cell.imgPicture.sd_setIndicatorStyle(.gray)
                 cell.imgPicture.sd_setImage(with: imgUrl, completed: nil)
             }
         }
-        if let title = objData.adTitle {
+        if let title = objData.title {
             cell.lblName.text = title
         }
-        if let location = objData.location.address {
+        if let location = objData.address {
             cell.btnLocation.setTitle(location, for: .normal)
         }
-        if let price = objData.adPrice.price {
+        if let price = objData.price {
             cell.lblPrice.text = String(format: "AED %@", price)
         }
         
-        if let date = objData.adDate {
+        if let date = objData.created_at {
             let formatter = DateFormatter()
-            formatter.dateFormat = "MMMM dd, yyyy"
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             let date = formatter.date(from: date)
             
             cell.lblDate.text = timeAgoSinceShort(date!)
@@ -450,17 +411,26 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.btnLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
         
-        cell.locationAction = { () in
-            let mapVC = self.storyboard?.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
-            mapVC.address = objData.location.address ?? ""
-            mapVC.latitude = Double(objData.location.lat ?? "0.0")
-            mapVC.longitude = Double(objData.location.longField ?? "0.0")
-            self.navigationController?.pushViewController(mapVC, animated: true)
-        }
+//        cell.locationAction = { () in
+//            let mapVC = self.storyboard?.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
+//            mapVC.address = objData.location.address ?? ""
+//            mapVC.latitude = Double(objData.location.lat ?? "0.0")
+//            mapVC.longitude = Double(objData.location.longField ?? "0.0")
+//            self.navigationController?.pushViewController(mapVC, animated: true)
+//        }
         
         cell.favouriteAction = { () in
-            let parameter: [String: Any] = ["ad_id": objData.adId]
-            self.makeAddFavourite(param: parameter as NSDictionary)
+            if defaults.bool(forKey: "isLogin") == false
+            {
+                let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+                let navController = UINavigationController(rootViewController: loginVC)
+                self.present(navController, animated:true, completion: nil)
+            }
+            else
+            {
+                let parameter: [String: Any] = ["ad_id": objData.id, "user_id": userDetail?.id ?? 0]
+                self.makeAddFavourite(param: parameter as NSDictionary)
+            }
         }
         
         return cell
@@ -482,37 +452,13 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     //MARK:- API Call
     
-    func postData(parameter : NSDictionary) {
+    func searchAds(param: NSDictionary) {
         self.showLoader()
-        AddsHandler.searchData(parameter: parameter, success: { (successResponse) in
-            self.stopAnimating()
-            if successResponse.success {
-                
-                self.dataArray = successResponse.data.ads
-                adDetailObj = AdDetailObject()
-                
-                self.tableView.reloadData()
-                
-            } else {
-                let alert = Constants.showBasicAlert(message: successResponse.message)
-                self.presentVC(alert)
-            }
-        }) { (error) in
-            self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
-            self.presentVC(alert)
-        }
-    }
-    
-    func categoryData(param: NSDictionary) {
-        self.showLoader()
-        AddsHandler.categoryData(param: param, success: { (successResponse) in
+        AddsHandler.searchAds(param: param, success: { (successResponse) in
             self.stopAnimating()
             if successResponse.success
             {
-                AddsHandler.sharedInstance.objCategory = successResponse
-                AddsHandler.sharedInstance.isShowFeatureOnCategory = successResponse.extra.isShowFeatured
-                self.dataArray = successResponse.data.ads
+                self.dataArray = successResponse.data
                 
                 if self.dataArray.count == 0
                 {
@@ -520,11 +466,10 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
                 else
                 {
-                    
                     var index = 0
                     for var obj in self.dataArray
                     {
-                        obj.adPrice.price = obj.adPrice.price.replacingOccurrences(of: "AED ", with: "")
+                        obj.price = obj.price.replacingOccurrences(of: "AED ", with: "")
                         self.dataArray[index] = obj
                         index += 1
                     }
@@ -532,20 +477,20 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                     if adDetailObj.sortType == "Cheapest"
                     {
                         self.dataArray = self.dataArray.filter( {
-                            $0.adPrice.price < "200"
+                            $0.price < "200"
                         })
                     }
                     else if adDetailObj.sortType == "Most expensive"
                     {
                         self.dataArray = self.dataArray.filter( {
-                            $0.adPrice.price > "1000"
+                            $0.price > "1000"
                         })
                     }
                     
                     if self.dataArray.count > 0 && adDetailObj.minPrice != "" && adDetailObj.maxPrice != ""
                     {
                         self.dataArray = self.dataArray.filter( {
-                            $0.adPrice.price > adDetailObj.minPrice && $0.adPrice.price < adDetailObj.maxPrice
+                            $0.price > adDetailObj.minPrice && $0.price < adDetailObj.maxPrice
                         })
                     }
                     

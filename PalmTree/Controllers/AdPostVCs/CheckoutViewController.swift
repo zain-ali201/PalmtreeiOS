@@ -13,7 +13,8 @@ import Alamofire
 
 class CheckoutViewController: UIViewController, NVActivityIndicatorViewable
 {
-  var paymentIntentClientSecret: String?
+    var fromVC = ""
+    var paymentIntentClientSecret: String?
 
     lazy var cardTextField: STPPaymentCardTextField = {
         let cardTextField = STPPaymentCardTextField()
@@ -117,7 +118,21 @@ class CheckoutViewController: UIViewController, NVActivityIndicatorViewable
 //                  self.displayAlert(title: "Payment canceled", message: error?.localizedDescription ?? "")
                   break
                 case .succeeded:
-                    self.addPostLiveAPI()
+                    if self.fromVC == ""
+                    {
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "dd-MM-YYYY"
+                                
+                        var parameter: [String: Any] = [
+                            "ad_id": adDetailObj.adId,
+                            "featured_date": formatter.string(from: Date())
+                        ]
+                        self.featureAd(param: parameter as NSDictionary)
+                    }
+                    else
+                    {
+                        self.addPostLiveAPI()
+                    }
                 break
                 @unknown default:
                   fatalError()
@@ -230,14 +245,14 @@ class CheckoutViewController: UIViewController, NVActivityIndicatorViewable
             let custom = Constants.json(from: customDictionary)
             let param: [String: Any] = ["custom_fields": custom!]
             parameter.merge(with: param)
-//            parameter.merge(with: customDictionary)
         }
-            
+        
+        self.showLoader()
         self.uploadAdWithImages(param: parameter as NSDictionary, images: adDetailObj.images)
     }
     
     func uploadAdWithImages(param: NSDictionary, images: [UIImage]) {
-        
+        self.showLoader()
         adPostUploadImages(parameter: param, imagesArray: images, fileName: "File", uploadProgress: { (uploadProgress) in
 
         }, success: { (successResponse) in
@@ -277,6 +292,27 @@ class CheckoutViewController: UIViewController, NVActivityIndicatorViewable
         }) { (error) in
             failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
             self.stopAnimating()
+        }
+    }
+    
+    func featureAd(param: NSDictionary)
+    {
+        self.showLoader()
+        AddsHandler.featureAd(param: param, success: { (successResponse) in
+            self.stopAnimating()
+            if successResponse.success {
+                let alert = AlertView.prepare(title: "", message: successResponse.message, okAction: {
+                    
+                })
+                self.presentVC(alert)
+            } else {
+                let alert = Constants.showBasicAlert(message: successResponse.message)
+                self.presentVC(alert)
+            }
+        }) { (error) in
+            self.stopAnimating()
+            let alert = Constants.showBasicAlert(message: error.message)
+            self.presentVC(alert)
         }
     }
     

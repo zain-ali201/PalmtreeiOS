@@ -145,6 +145,7 @@ struct AdsJSON
     var id : Int!
     var user_id : Int!
     var cat_id : Int!
+    var cat_parent_id : Int!
     var title : String!
     var description : String!
     var latitude : String!
@@ -155,12 +156,15 @@ struct AdsJSON
     var price : String!
     var price_type : String!
     var is_featured : Bool!
+    var is_favorite : Bool!
     var status : Bool!
     var created_at : String!
     var updated_at : String!
     var username : String!
     var userjoin : String!
     var email : String!
+    var cat_name : String!
+    var cat_parent : String!
     var images : [imageJSON]!
     /**
      * Instantiate the instance using the passed dictionary values to set the properties values
@@ -170,6 +174,7 @@ struct AdsJSON
         id = dictionary["id"] as? Int
         user_id = dictionary["user_id"] as? Int
         cat_id = dictionary["cat_id"] as? Int
+        cat_parent_id = dictionary["cat_parent_id"] as? Int
         title = dictionary["title"] as? String
         description = dictionary["description"] as? String
         latitude = dictionary["latitude"] as? String
@@ -180,12 +185,15 @@ struct AdsJSON
         price = dictionary["price"] as? String
         price_type = dictionary["price_type"] as? String
         is_featured = dictionary["is_featured"] as? Bool
+        is_favorite = dictionary["is_favorite"] as? Bool
         status = dictionary["status"] as? Bool
         created_at = dictionary["created_at"] as? String
         updated_at = dictionary["updated_at"] as? String
         username = dictionary["username"] as? String
         userjoin = dictionary["userjoin"] as? String
         email = dictionary["email"] as? String
+        cat_name = dictionary["cat_name"] as? String
+        cat_parent = dictionary["cat_parent"] as? String
         
         images = [imageJSON]()
         if let imagesArray = dictionary["images"] as? [[String:Any]]{
@@ -214,6 +222,10 @@ struct AdsJSON
         
         if cat_id != nil{
             dictionary["cat_id"] = cat_id
+        }
+        
+        if cat_parent_id != nil{
+            dictionary["cat_parent_id"] = cat_parent_id
         }
         
         if title != nil{
@@ -255,6 +267,10 @@ struct AdsJSON
             dictionary["is_featured"] = is_featured
         }
         
+        if is_favorite != nil{
+            dictionary["is_favorite"] = is_favorite
+        }
+        
         if status != nil{
             dictionary["status"] = status
         }
@@ -277,6 +293,14 @@ struct AdsJSON
         
         if email != nil{
             dictionary["email"] = email
+        }
+        
+        if cat_name != nil{
+            dictionary["cat_name"] = cat_name
+        }
+        
+        if cat_parent != nil{
+            dictionary["cat_parent"] = cat_parent
         }
         
         return dictionary

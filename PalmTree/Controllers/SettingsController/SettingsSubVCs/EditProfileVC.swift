@@ -243,9 +243,9 @@ class EditProfileVC: UIViewController, NVActivityIndicatorViewable {
         else
         {
             let param: [String: Any] = [
-                "old_pass": oldPassword,
+                "current_password": oldPassword,
                 "new_pass": newPassword,
-                "new_pass_con" : confirmPassword
+                "email": userDetail?.userEmail ?? ""
             ]
             print(param)
             self.passwordToSave = newPassword
@@ -291,20 +291,10 @@ class EditProfileVC: UIViewController, NVActivityIndicatorViewable {
         }
         else
         {
-            let custom: [String: Any] = [
-                "_sb_profile_facebook": "",
-                "_sb_profile_twitter" : "",
-                "_sb_profile_linkedin" : "",
-                "_sb_profile_google-plus" : ""
-            ]
-            
             let parameters: [String: Any] = [
-                "user_name": name,
-                "phone_number": phone,
-                "account_type": "individual",
-                "location": "UAE",
-                "user_introduction" : "Individual user",
-                "social_icons": custom
+                "name": name,
+                "phone": phone,
+                "user_id": userDetail?.id ?? 0
             ]
             
             print(parameters)
@@ -341,7 +331,8 @@ class EditProfileVC: UIViewController, NVActivityIndicatorViewable {
         self.showLoader()
         UserHandler.profileUpdate(parameters: params, success: { (successResponse) in
             self.stopAnimating()
-            if successResponse.success {
+            if successResponse.success
+            {
                 let alert = AlertView.prepare(title: "Palmtree", message: successResponse.message, okAction: {
                     self.contactView.alpha = 0
                     userDetail?.displayName = self.txtFirstName.text!

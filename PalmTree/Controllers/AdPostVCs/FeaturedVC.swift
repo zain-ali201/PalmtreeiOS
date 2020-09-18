@@ -18,19 +18,21 @@ class FeaturedVC: UIViewController, NVActivityIndicatorViewable
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblDescp: UILabel!
-    @IBOutlet weak var lblType: UILabel!
+    @IBOutlet weak var lblPrice: UILabel!
     @IBOutlet weak var lblFeatured: UILabel!
     @IBOutlet weak var lblFeaturedDescp: UILabel!
     @IBOutlet weak var lblUrgent: UILabel!
     @IBOutlet weak var lblUrgentText: UILabel!
     @IBOutlet weak var lblHeading: UILabel!
     
+    @IBOutlet weak var btnBack: UIButton!
     @IBOutlet weak var btnSkip: UIButton!
     
     @IBOutlet weak var packageView: UIView!
     
     var amount = ""
     var days = ""
+    var fromVC = ""
     //MARK:- Cycle
     
     override func viewDidLoad()
@@ -43,7 +45,7 @@ class FeaturedVC: UIViewController, NVActivityIndicatorViewable
             lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblDescp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblType.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblFeatured.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblFeaturedDescp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblUrgent.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -53,14 +55,28 @@ class FeaturedVC: UIViewController, NVActivityIndicatorViewable
             packageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
         
-        if adDetailObj.images.count > 0
-        {
-            imgView.image = adDetailObj.images[0]
-        }
-        
         lblName.text = adDetailObj.adTitle
         lblDescp.text = adDetailObj.adDesc
-        lblType.text = adDetailObj.location.address
+        lblPrice.text = "AED "+adDetailObj.adPrice
+        
+        if fromVC == "myads"
+        {
+            btnSkip.alpha = 0
+            if adDetailObj.adImages.count > 0
+            {
+                if let imgUrl = URL(string: String(format: "%@%@", Constants.URL.imagesUrl, adDetailObj.adImages[0].url.encodeUrl())) {
+                    imgView.setImage(from: imgUrl)
+                }
+            }
+        }
+        else
+        {
+            btnSkip.alpha = 1
+            if adDetailObj.images.count > 0
+            {
+                imgView.image = adDetailObj.images[0]
+            }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -85,14 +101,6 @@ class FeaturedVC: UIViewController, NVActivityIndicatorViewable
     
     @IBAction func skipBtnACtion(_ sender: Any)
     {
-//        adDetailObj = AdDetailObject()
-//        let thankyouVC = self.storyboard?.instantiateViewController(withIdentifier: "ThankyouVC") as! ThankyouVC
-//        self.navigationController?.pushViewController(thankyouVC, animated: true)
-        
-//        let param: [String: Any] = ["is_update": ""]
-//        print(param)
-//        self.adPost(param: param as NSDictionary)
-        
         addPostLiveAPI()
     }
     
@@ -108,6 +116,7 @@ class FeaturedVC: UIViewController, NVActivityIndicatorViewable
         else
         {
             let checkoutVC = self.storyboard?.instantiateViewController(withIdentifier: "CheckoutViewController") as! CheckoutViewController
+            checkoutVC.fromVC = fromVC
             self.navigationController?.pushViewController(checkoutVC, animated: true)
         }
     }
@@ -246,6 +255,8 @@ class FeaturedVC: UIViewController, NVActivityIndicatorViewable
             parameter.merge(with: param)
         }
         print(parameter)
+        
+        self.showLoader()
         self.uploadAdWithImages(param: parameter as NSDictionary, images: adDetailObj.images)
     }
     

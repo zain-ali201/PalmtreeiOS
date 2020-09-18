@@ -153,7 +153,7 @@ class ReportController: UIViewController , NVActivityIndicatorViewable {
                 selectedValue = "Fake"
             }
             
-            let param: [String: Any] = ["ad_id": adID, "option": selectedValue, "comments": message]
+            let param: [String: Any] = ["ad_id": adID, "type": selectedValue, "message": message, "user_id" : userDetail?.id ?? 0]
             print(param)
             self.reportAdd(parameter: param as NSDictionary)
         }

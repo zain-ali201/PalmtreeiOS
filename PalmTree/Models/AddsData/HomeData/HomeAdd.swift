@@ -36,7 +36,6 @@ struct HomeAdd{
     var timeInitial : String!
     var type : String!
     
-    
     /**
      * Instantiate the instance using the passed dictionary values to set the properties values
      */

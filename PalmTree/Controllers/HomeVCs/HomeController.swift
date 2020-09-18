@@ -236,9 +236,19 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     //MARK:- Add to favourites
-    func addToFavourites(ad_id: Int) {
-        let parameter: [String: Any] = ["ad_id": ad_id]
-        self.makeAddFavourite(param: parameter as NSDictionary)
+    func addToFavourites(ad_id: Int)
+    {
+        if defaults.bool(forKey: "isLogin") == false
+        {
+            let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+            let navController = UINavigationController(rootViewController: loginVC)
+            self.present(navController, animated:true, completion: nil)
+        }
+        else
+        {
+            let parameter: [String: Any] = ["ad_id": ad_id, "user_id": userDetail?.id ?? 0]
+            self.makeAddFavourite(param: parameter as NSDictionary)
+        }
     }
     
     //MARK:- go to category detail
@@ -466,7 +476,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         categoryArray.removeAll()
         latestAdsArray.removeAll()
         
-        let parameter: [String: Any] = ["user_id" : userDetail?.id ?? 0]
+        let parameter: [String: Any] = ["user_id" : self.defaults.integer(forKey: "userID")]
         
         AddsHandler.homeData(parameter: parameter as NSDictionary, success: { (successResponse) in
             self.stopAnimating()
@@ -546,8 +556,9 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         AddsHandler.makeAddFavourite(parameter: param, success: { (successResponse) in
             self.stopAnimating()
             if successResponse.success {
-                let alert = Constants.showBasicAlert(message: successResponse.message)
-                self.presentVC(alert)
+//                let alert = Constants.showBasicAlert(message: successResponse.message)
+//                self.presentVC(alert)
+                self.tableView.reloadData()
             }
             else {
                 let alert = Constants.showBasicAlert(message: successResponse.message)

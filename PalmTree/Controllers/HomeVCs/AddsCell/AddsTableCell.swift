@@ -103,6 +103,14 @@ class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
             cell.lblPrice.text = String(format: "AED %@", price) 
         }
         
+        if defaults.bool(forKey: "isLogin") == true
+        {
+            if objData.is_favorite
+            {
+                cell.favBtn.setImage(UIImage(named: ""), for: .normal)
+            }
+        }
+        
         cell.btnFullAction = { () in
             self.delegate?.goToAddDetailVC(detail: objData)
         }
@@ -117,15 +125,7 @@ class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
             cell.lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
         
-//        if defaults.bool(forKey: "isLogin") == false {
-//            if let msg = defaults.string(forKey: "notLogin") {
-//                self.showToast(message: msg)
-//            }
-//        }
-//        else {
-//            let parameter: [String: Any] = ["ad_id": objData.id]
-//            self.makeAddFavourite(param: parameter as NSDictionary)
-//        }
+
         
         return cell
     }

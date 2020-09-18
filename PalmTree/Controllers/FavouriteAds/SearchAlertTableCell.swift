@@ -27,11 +27,13 @@ class SearchAlertTableCell: UITableViewCell {
     @IBOutlet weak var alertIcon: UIImageView!
     @IBOutlet weak var btnLocation: UIButton!
     @IBOutlet weak var editBtn: UIButton!
+    @IBOutlet weak var promoteBtn: UIButton!
     
     var crossAction: (()->())?
     var locationAction: (()->())?
     var favouriteAction: (()->())?
     var editAdAction: (()->())?
+    var promoteAdAction: (()->())?
     
     override func awakeFromNib()
     {
@@ -56,5 +58,10 @@ class SearchAlertTableCell: UITableViewCell {
     @IBAction func editBtnAction(_ sender: Any)
     {
         editAdAction?()
+    }
+    
+    @IBAction func promoteBtnAction(_ sender: Any)
+    {
+        promoteAdAction?()
     }
 }

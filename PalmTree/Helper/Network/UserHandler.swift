@@ -205,7 +205,7 @@ class UserHandler
     
     //MARK:- Profile Post
     class func profileUpdate(parameters: NSDictionary, success: @escaping(ProfileUpdateRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.profileGet
+        let url = Constants.URL.baseUrl+Constants.URL.updateProfile
         print(url)
         NetworkHandler.postRequest(url: url, parameters: parameters as? Parameters, success: { (successResponse) in
             let dictionary = successResponse as! [String: Any]

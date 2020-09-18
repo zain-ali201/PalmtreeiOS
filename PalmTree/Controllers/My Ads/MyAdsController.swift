@@ -295,8 +295,26 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
             self.presentVC(alert)
         }
         
-        cell.locationAction = { () in
-            
+        if objData.is_featured
+        {
+            cell.lblPromotion.alpha = 1
+            cell.promoteBtn.alpha = 0
+        }
+        else
+        {
+            cell.lblPromotion.alpha = 0
+            cell.promoteBtn.alpha = 1
+            cell.promoteAdAction = { () in
+                adDetailObj = AdDetailObject()
+                adDetailObj.adId = objData.id
+                adDetailObj.adTitle = objData.title
+                adDetailObj.location.address = objData.address
+                adDetailObj.adImages = objData.images
+                
+                let featuredVC = self.storyboard?.instantiateViewController(withIdentifier: "FeaturedVC") as! FeaturedVC
+                featuredVC.fromVC = "myads"
+                self.navigationController?.pushViewController(featuredVC, animated: true)
+            }
         }
         
         cell.editAdAction = { () in
@@ -307,20 +325,23 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
             adDetailObj.adPrice = objData.price
             adDetailObj.priceType = objData.price_type
             adDetailObj.adDate = objData.created_at
+            adDetailObj.phone = objData.phone
+            adDetailObj.whatsapp = objData.whatsapp
             
-//            if objData.adCats.count == 2
-//            {
-//                adDetailObj.adSubCategory = objData.adCats[0].name
-//                adDetailObj.subcatID = objData.adCats[0].id
-//                adDetailObj.adCategory = objData.adCats[1].name
-//                adDetailObj.catID = objData.adCats[1].id
-//            }
-//            else if objData.adCats.count == 1
-//            {
-//                adDetailObj.adCategory = objData.adCats[0].name
-//                adDetailObj.catID = objData.adCats[0].id
-//            }
-//            adDetailObj.adImages = objData.images
+            if objData.cat_parent_id < 0
+            {
+                adDetailObj.adSubCategory = objData.cat_name
+                adDetailObj.subcatID = objData.cat_id
+                adDetailObj.adCategory = objData.cat_parent
+                adDetailObj.catID = objData.cat_parent_id
+            }
+            else
+            {
+                adDetailObj.adCategory = objData.cat_name
+                adDetailObj.catID = objData.cat_id
+            }
+            
+            adDetailObj.adImages = objData.images
             
             let adPostVC = self.storyboard?.instantiateViewController(withIdentifier: "AdPostVC") as! AdPostVC
             adPostVC.fromVC = "myads"

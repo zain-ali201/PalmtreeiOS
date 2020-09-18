@@ -253,7 +253,7 @@ class AdDetailObject: NSObject
     var propertyCatObj : PropertyCategoryObject = PropertyCategoryObject()
     var categoryObj: CategoryObject = CategoryObject()
     var objAdPostData = [AdPostField]()
-    var adImages : [MyAdsAdImage]!
+    var adImages : [imageJSON]!
     var imageIDArray = [Int]()
     
     //for search filter
