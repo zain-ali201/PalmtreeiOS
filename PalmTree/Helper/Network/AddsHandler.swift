@@ -73,15 +73,13 @@ class AddsHandler {
     }()
     
     //MARK:- Get Home Data
-    class func homeData(success: @escaping(HomeRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
+    class func homeData(parameter: NSDictionary, success: @escaping(HomeRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
         let url = Constants.URL.baseUrl+Constants.URL.homeData
         print(url)
-        NetworkHandler.getRequest(url: url, parameters: nil, success: { (successResponse) in
+        NetworkHandler.postRequest(url: url, parameters: nil, success: { (successResponse) in
             let dictionary = successResponse as! [String: Any]
             let objHome = HomeRoot(fromDictionary: dictionary)
             success(objHome)
-            
-       
             
         }) { (error) in
              failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
@@ -132,8 +130,8 @@ class AddsHandler {
    
     //MARK:- Get My Adds Data
     
-    class func myAds(success: @escaping(MyAdsRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.getMyAds
+    class func myAds(parameter: NSDictionary, success: @escaping(MyAdsRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
+        let url = Constants.URL.baseUrl+Constants.URL.getMyAds+"/"+(parameter.value(forKey: "id") as! String)
         print(url)
         
         NetworkHandler.getRequest(url: url, parameters: nil, success: { (successResponse) in
@@ -267,8 +265,8 @@ class AddsHandler {
     }
     
      //MARK:- Get Favourite Ads Data
-    class func favouriteAds(success: @escaping(MyAdsRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.getFavouriteAds
+    class func favouriteAds(parameter: NSDictionary, success: @escaping(MyAdsRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
+        let url = Constants.URL.baseUrl+Constants.URL.getFavouriteAds+"/"+(parameter.value(forKey: "id") as! String)
         print(url)
         NetworkHandler.getRequest(url: url, parameters: nil, success: { (successResponse) in
             let dictionary = successResponse as! [String: Any]
@@ -281,10 +279,10 @@ class AddsHandler {
     
     //MARK:- Load More Favourite Data
     
-    class func moreFavouriteData(param: NSDictionary ,success: @escaping(MyAdsRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
+    class func moreFavouriteData(parameter: NSDictionary ,success: @escaping(MyAdsRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
        let url = Constants.URL.baseUrl+Constants.URL.getFavouriteAds
         print(url)
-        NetworkHandler.postRequest(url: url, parameters: param as? Parameters, success: { (successResponse) in
+        NetworkHandler.postRequest(url: url, parameters: parameter as? Parameters, success: { (successResponse) in
             let dictionary = successResponse as! [String: Any]
             let objAds = MyAdsRoot(fromDictionary: dictionary)
             success(objAds)

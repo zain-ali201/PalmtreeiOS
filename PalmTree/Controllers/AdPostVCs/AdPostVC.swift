@@ -502,11 +502,6 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
                 
                 let featuredVC = self.storyboard?.instantiateViewController(withIdentifier: "FeaturedVC") as! FeaturedVC
                 self.navigationController?.pushViewController(featuredVC, animated: true)
-                
-//
-//                let param: [String: Any] = ["is_update": ""]
-//                print(param)
-//                self.adPost(param: param as NSDictionary)
             }
         }
     }

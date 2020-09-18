@@ -31,7 +31,7 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     //MARK:- Properties
    
-    var dataArray = [MyAdsAd]()
+    var dataArray = [AdsJSON]()
     var profileDataArray = [ProfileDetailsData]()
     
     var ad_id = 0
@@ -220,27 +220,28 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         {
             let objData = dataArray[indexPath.row]
             
-            for images in objData.adImages {
-                if let imgUrl = URL(string: images.thumb) {
+            if objData.images.count > 0
+            {
+                if let imgUrl = URL(string: String(format: "%@%@", Constants.URL.imagesUrl, objData.images[0].url.encodeUrl())) {
                     cell.imgPicture.setImage(from: imgUrl)
                 }
             }
 
-            if let userName = objData.adTitle {
+            if let userName = objData.title {
                 cell.lblName.text = userName
             }
             
-            if let price = objData.adPrice.price {
+            if let price = objData.price {
                 cell.lblPrice.text = price
             }
             
-            if let address = objData.adLocation?.address {
+            if let address = objData.address {
                 cell.btnLocation.setTitle(address, for: .normal)
             }
             
-            if let date = objData.adDate {
+            if let date = objData.created_at {
                 let formatter = DateFormatter()
-                formatter.dateFormat = "MMMM dd, yyyy"
+                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 let date = formatter.date(from: date)
                 
                 cell.lblDate.text = timeAgoSinceShort(date!)
@@ -249,7 +250,7 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             cell.crossAction = { () in
                 let alert = UIAlertController(title: "Palmtree", message: "Are you sure you want to remove from favourites?", preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "Yes", style: .default, handler: { (okAction) in
-                    let parameter : [String: Any] = ["ad_id": objData.adId]
+                    let parameter: [String: Any] = ["ad_id": objData.id ?? 0, "user_id" : userDetail?.id ?? 0]
                     print(parameter)
                     self.removeFavourite(param: parameter as NSDictionary)
                 })
@@ -260,11 +261,7 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             }
             
             cell.locationAction = { () in
-                let mapVC = self.storyboard?.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
-                mapVC.address = objData.adLocation.address ?? ""
-                mapVC.latitude = Double(objData.adLocation.lat ?? "0.0")
-                mapVC.longitude = Double(objData.adLocation.longField ?? "0.0")
-                self.navigationController?.pushViewController(mapVC, animated: true)
+                
             }
         }
         
@@ -286,8 +283,10 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let AdDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "AdDetailVC") as! AdDetailVC
-//        self.navigationController?.pushViewController(AdDetailVC, animated: true)
+        let objData = dataArray[indexPath.row]
+        let adDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "AdDetailVC") as! AdDetailVC
+        adDetailVC.adDetailDataObj = objData
+        self.navigationController?.pushViewController(adDetailVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -304,15 +303,17 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     //Get Favourite Ads Data
     func favouriteAdsData() {
         self.showLoader()
-        AddsHandler.favouriteAds(success: { (successResponse) in
+        
+        let parameters: [String: Any] = ["id": String(format: "%d", userDetail?.id ?? 0)]
+        
+        AddsHandler.favouriteAds(parameter: parameters as NSDictionary, success: { (successResponse) in
             self.stopAnimating()
             self.refreshControl.endRefreshing()
             if successResponse.success {
                 self.noAddTitle = successResponse.message
-                self.currentPage = successResponse.data.pagination.currentPage
-                self.maximumPage = successResponse.data.pagination.maxNumPages
-                AddsHandler.sharedInstance.objMyAds = successResponse.data
-                self.dataArray = successResponse.data.ads
+//                self.currentPage = successResponse.data.pagination.currentPage
+//                self.maximumPage = successResponse.data.pagination.maxNumPages
+                self.dataArray = successResponse.data
                 
                 if self.dataArray.count == 0
                 {
@@ -334,12 +335,11 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     //Load More Data
     func loadMoreData(param: NSDictionary) {
         self.showLoader()
-        AddsHandler.moreFavouriteData(param: param, success: { (successResponse) in
+        AddsHandler.moreFavouriteData(parameter: param, success: { (successResponse) in
             self.stopAnimating()
             self.refreshControl.endRefreshing()
             if successResponse.success {
-                AddsHandler.sharedInstance.objMyAds = successResponse.data
-                self.dataArray.append(contentsOf: successResponse.data.ads)
+                self.dataArray.append(contentsOf: successResponse.data)
                 self.favTblView.reloadData()
             }
             else {
@@ -359,7 +359,8 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         self.showLoader()
         AddsHandler.removeFavAdd(parameter: param, success: { (successResponse) in
             self.stopAnimating()
-            if successResponse.success {
+            if successResponse.success
+            {
                 let alert = AlertView.prepare(title: "", message: successResponse.message, okAction: {
                     self.favouriteAdsData()
                     self.favTblView.reloadData()

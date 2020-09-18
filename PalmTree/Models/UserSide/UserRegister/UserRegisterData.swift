@@ -15,7 +15,7 @@ struct UserRegisterData {
     var phone : String!
     var userEmail : String!
     var isAccountConfirm : Bool!
-    
+    var created_at : String!
     /**
      * Instantiate the instance using the passed dictionary values to set the properties values
      */
@@ -24,8 +24,8 @@ struct UserRegisterData {
         id = dictionary["id"] as? Int
         phone = dictionary["phone"] as? String
         userEmail = dictionary["email"] as? String
+        created_at = dictionary["created_at"] as? String
         isAccountConfirm = dictionary["is_active"] as? Bool
-
     }
     
     /**
@@ -46,6 +46,10 @@ struct UserRegisterData {
         
         if userEmail != nil{
             dictionary["user_email"] = userEmail
+        }
+        
+        if created_at != nil{
+            dictionary["created_at"] = created_at
         }
         
         if isAccountConfirm != nil{

@@ -231,7 +231,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     //MARK:- go to add detail controller
     func goToAddDetailVC(detail: AdsJSON) {
         let adDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "AdDetailVC") as! AdDetailVC
-//        adDetailVC.adDetailDataObj = detail
+        adDetailVC.adDetailDataObj = detail
         self.navigationController?.pushViewController(adDetailVC, animated: true)
     }
     
@@ -466,7 +466,9 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         categoryArray.removeAll()
         latestAdsArray.removeAll()
         
-        AddsHandler.homeData(success: { (successResponse) in
+        let parameter: [String: Any] = ["user_id" : userDetail?.id ?? 0]
+        
+        AddsHandler.homeData(parameter: parameter as NSDictionary, success: { (successResponse) in
             self.stopAnimating()
             
             if successResponse.success {
@@ -475,6 +477,14 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 
                 categoryArray = successResponse.categories
                 self.latestAdsArray = successResponse.adsData
+                
+                if self.defaults.bool(forKey: "isLogin") == true
+                {
+                    userDetail?.id = self.defaults.integer(forKey: "userID")
+                    userDetail?.displayName = self.defaults.string(forKey: "displayName")
+                    userDetail?.userEmail = self.defaults.string(forKey: "userEmail")
+                    userDetail?.authToken = self.defaults.string(forKey: "authToken")!
+                }
                 
                 self.tableView.reloadData()
                 

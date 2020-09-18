@@ -65,11 +65,11 @@ class Constants
         static let getMyAds = "myads"
         static let getInactiveAds = "ad/inactive"
         static let getFeaturedAds = "ad/featured"
-        static let getFavouriteAds = "ad/favourite"
+        static let getFavouriteAds = "myfavorite"
         static let rejectedAds = "ad/rejected"
         static let addDetail = "ad_post"
         static let makeAddFeature = "ad_post/featured"
-        static let makeAddFavourite = "ad_post/favourite"
+        static let makeAddFavourite = "addFavorite"
         static let reportAdd = "ad_post/report"
         static let addDetailRating = "ad_post/ad_rating"
         static let publicUserRating = "profile/ratting_get"
@@ -79,8 +79,8 @@ class Constants
         static let adNewReply = "ad_post/ad_rating/new"
         static let postBid = "ad_post/bid/post/"
         
-        static let removeFavouriteAd = "ad/favourite/remove"
-        static let deleteAdd = "ad/delete"
+        static let removeFavouriteAd = "delFavorite"
+        static let deleteAdd = "delPost"
         static let addStatusChange = "ad/update/status"
         
         static let getBlog = "posts"
@@ -213,11 +213,8 @@ class Constants
     
     static func showBasicAlert (message: String) -> UIAlertController
     {
-        let al = UserDefaults.standard.string(forKey: "aler")
-        let ok = UserDefaults.standard.string(forKey: "okbtnNew")
-        //let cancel = UserDefaults.standard.string(forKey: "cancelbtnNew")
         let alert = UIAlertController(title: "Palmtree", message: message, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: ok, style: UIAlertActionStyle.default, handler: nil))
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         return alert
     }
     

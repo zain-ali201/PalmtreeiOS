@@ -28,7 +28,7 @@ class HomeFeatureAddCell: UITableViewCell, UICollectionViewDelegate, UICollectio
     
     //MARK:- Properties
     var delegate: AddDetailDelegate?
-    var dataArray = [HomeAdd]()
+    var dataArray = [AdsJSON]()
     
     var day: Int = 0
     var hour: Int = 0
@@ -45,16 +45,12 @@ class HomeFeatureAddCell: UITableViewCell, UICollectionViewDelegate, UICollectio
     override func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .none
-        self.startTimer()
         self.layoutLatest()
         self.layoutHorizontalSingleAd()
         
     }
     
     //MARK:- Custom
-    func startTimer() {
-        Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(scrollToNextCell), userInfo: nil, repeats: true)
-    }
     
     @objc func scrollToNextCell() {
         let cellSize = CGSize(width: frame.width, height: frame.height)
@@ -111,130 +107,36 @@ class HomeFeatureAddCell: UITableViewCell, UICollectionViewDelegate, UICollectio
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell:  HomeFeatureCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeFeatureCollectionCell", for: indexPath) as! HomeFeatureCollectionCell
         let objData = dataArray[indexPath.row]
-        if latestHorizontalSingleAd == "horizental" {
-            for item in objData.adImages {
-                if let imgUrl = URL(string: item.thumb.encodeUrl()) {
+        
+            for item in objData.images {
+                if let imgUrl = URL(string: String(format: "%@%@", Constants.URL.imagesUrl, item.url.encodeUrl())) {
                     cell.imageView.sd_setShowActivityIndicatorView(true)
                     cell.imageView.sd_setIndicatorStyle(.gray)
                     cell.imageView.sd_setImage(with: imgUrl, completed: nil)
-                    
                 }
             }
             
-            if let name = objData.adTitle {
+            if let name = objData.title {
                 cell.lblTitle.text = name
-                let word = objData.adTimer.timer
-                if objData.adTimer.isShow {
-                    let first10 = String(word!.prefix(10))
-                    print(first10)
-                    cell.lblTimer.isHidden = true
-                    cell.lblBidTimer.isHidden = false
-                    
-                    if first10 != ""{
-                        let endDate = first10
-                        self.isEndTime = endDate
-                        Timer.every(1.second) {
-                            self.countDown(date: endDate)
-                            cell.lblBidTimer.text = "\(self.day) : \(self.hour) : \(self.minute) : \(self.second) "
-                            
-                        }
-                    }
-                }else{
-                    cell.lblBidTimer.isHidden = true
-                }
                 
-            }
-            if let location = objData.adLocation.address {
+            if let location = objData.address {
                 cell.lblLocs.text = location
             }
-            if let price = objData.adPrice.price {
+            if let price = objData.price {
                 cell.lblPriceHori.text = price
             }
-            if let featurText = objData.adStatus.featuredTypeText {
-                cell.lblFeature.text = featurText
-                cell.lblFeature.backgroundColor = Constants.hexStringToUIColor(hex: "#E52D27")
-            }
-            cell.btnFullAction = { () in
-                self.delegate?.goToAddDetail(ad_id: objData.adId)
-            }
-            
-        } else{
-            for images in objData.adImages {
-                if let imgUrl = URL(string: images.thumb.encodeUrl()) {
-                    cell.imgPicture.sd_setShowActivityIndicatorView(true)
-                    cell.imgPicture.sd_setIndicatorStyle(.gray)
-                    cell.imgPicture.sd_setImage(with: imgUrl, completed: nil)
-                }
-            }
-            if let name = objData.adTitle {
-                cell.lblName.text = name
-            }
-            if let location = objData.adLocation.address {
-                cell.lblLocation.text = location
-            }
-            if let price = objData.adPrice.price {
-                cell.lblPrice.text = price
-            }
-            
-            if let featurText = objData.adStatus.featuredTypeText {
-                cell.lblFeatured.text = featurText
-                cell.lblFeatured.backgroundColor = Constants.hexStringToUIColor(hex: "#E52D27")
-            }
-            cell.btnFullAction = { () in
-                self.delegate?.goToAddDetail(ad_id: objData.adId)
-            }
-            let word = objData.adTimer.timer
-            if objData.adTimer.isShow {
-                let first10 = String(word!.prefix(10))
-                print(first10)
-                cell.lblTimer.isHidden = false
                 
-                if first10 != ""{
-                    let endDate = first10
-                    self.isEndTime = endDate
-                    Timer.every(1.second) {
-                        self.countDown(date: endDate)
-                        cell.lblTimer.text = "\(self.day) : \(self.hour) : \(self.minute) : \(self.second) "
-                    }
-                }
-            }else{
-                cell.lblTimer.isHidden = true
+            cell.btnFullAction = { () in
+                self.delegate?.goToAddDetail(ad_id: objData.id)
             }
         }
         
         return cell
     }
-    func validateIFSC(code : String) -> Bool {
-        let regex = try! NSRegularExpression(pattern: "^[A-Za-z]{4}0.{6}$")
-        return regex.numberOfMatches(in: code, range: NSRange(code.startIndex..., in: code)) == 1
-    }
-    //MARK:- Counter
-    func countDown(date: String) {
-        
-        let calendar = Calendar.current
-        let requestComponents = Set<Calendar.Component>([.year, .month, .day, .hour, .minute, .second, .nanosecond])
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let timeNow = Date()
-        guard let dateis = dateFormatter.date(from: date) else {
-            return
-        }
-        let timeDifference = calendar.dateComponents(requestComponents, from: timeNow, to: dateis)
-        day = timeDifference.day!
-        hour = timeDifference.hour!
-        minute = timeDifference.minute!
-        second = timeDifference.second!
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if latestVertical == "vertical" {
-            return CGSize(width:collectionView.frame.width/2 , height:210)
-        }else if latestHorizontalSingleAd == "horizental" {
-            return CGSize(width:collectionView.frame.width , height: 122)
-        }
-        else{
-            return CGSize(width: 170, height: 210)
-        }
-        
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
+    {
+        return CGSize(width: 170, height: 210)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

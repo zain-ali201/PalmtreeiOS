@@ -24,6 +24,7 @@ struct UserObject
     var lat = 0.0
     var lng = 0.0
     var authToken = ""
+    var joining: String!
 }
 
 struct SaveAdObject

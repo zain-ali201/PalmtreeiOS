@@ -134,23 +134,30 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
         
         
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM dd, yyyy"
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let date = formatter.date(from: adDetailDataObj.created_at ?? "")
         
         if date != nil
         {
             lblTime.text = timeAgoSince(date!)
         }
-//        lblSeller.text = userDetail?.displayName
+        lblSeller.text = adDetailDataObj.username
 
-//        if languageCode == "ar"
-//        {
-//            lblJoining.text =   "2020 مسجل كعضو منذ"
-//        }
-//        else
-//        {
-//            lblJoining.text =  "Member since 2020"
-//        }
+        if let joining = adDetailDataObj.userjoin
+        {
+            let date = formatter.date(from: joining)
+            formatter.dateFormat = "yyyy"
+            let year = formatter.string(from: date!)
+            
+            if languageCode == "ar"
+            {
+                lblJoining.text =   "\(year) مسجل كعضو منذ"
+            }
+            else
+            {
+                lblJoining.text =  "Member since \(year)"
+            }
+        }
         
         height.constant = 60
         
@@ -433,7 +440,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     
     @IBAction func favBtnAction(_ sender: Any)
     {
-        let parameter: [String: Any] = ["ad_id": adDetailDataObj.id ?? 0]
+        let parameter: [String: Any] = ["ad_id": adDetailDataObj.id ?? 0, "user_id" : userDetail?.id ?? 0]
         self.makeAddFavourite(param: parameter as NSDictionary)
     }
     

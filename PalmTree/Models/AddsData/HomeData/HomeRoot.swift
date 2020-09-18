@@ -30,7 +30,7 @@ struct HomeRoot
         }
         
         adsData = [AdsJSON]()
-        if let catIconsArray = dictionary["ads"] as? [[String:Any]]{
+        if let catIconsArray = dictionary["data"] as? [[String:Any]]{
             for dic in catIconsArray{
                 let value = AdsJSON(fromDictionary: dic)
                 adsData.append(value)
@@ -61,7 +61,7 @@ struct HomeRoot
             for catIconsElement in adsData {
                 dictionaryElements.append(catIconsElement.toDictionary())
             }
-            dictionary["ads"] = dictionaryElements
+            dictionary["data"] = dictionaryElements
         }
         
         if message != nil{
@@ -158,6 +158,9 @@ struct AdsJSON
     var status : Bool!
     var created_at : String!
     var updated_at : String!
+    var username : String!
+    var userjoin : String!
+    var email : String!
     var images : [imageJSON]!
     /**
      * Instantiate the instance using the passed dictionary values to set the properties values
@@ -180,6 +183,9 @@ struct AdsJSON
         status = dictionary["status"] as? Bool
         created_at = dictionary["created_at"] as? String
         updated_at = dictionary["updated_at"] as? String
+        username = dictionary["username"] as? String
+        userjoin = dictionary["userjoin"] as? String
+        email = dictionary["email"] as? String
         
         images = [imageJSON]()
         if let imagesArray = dictionary["images"] as? [[String:Any]]{
@@ -260,6 +266,19 @@ struct AdsJSON
         if updated_at != nil{
             dictionary["updated_at"] = updated_at
         }
+        
+        if username != nil{
+            dictionary["username"] = username
+        }
+        
+        if userjoin != nil{
+            dictionary["userjoin"] = userjoin
+        }
+        
+        if email != nil{
+            dictionary["email"] = email
+        }
+        
         return dictionary
     }
 }

@@ -33,7 +33,7 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     //MARK:- Properties
    
-    var dataArray = [MyAdsAd]()
+    var dataArray = [AdsJSON]()
     var profileDataArray = [ProfileDetailsData]()
     
     var ad_id = 0
@@ -104,14 +104,7 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     func checkLogin()
     {
-        if UserDefaults.standard.bool(forKey: "isLogin") == false
-        {
-            tblView.alpha = 0
-            signinView.alpha = 1
-            infoView.alpha = 0
-            lampView.alpha = 1
-        }
-        else
+        if UserDefaults.standard.bool(forKey: "isLogin") == true
         {
             tblView.alpha = 1
             self.getAddsData()
@@ -119,15 +112,31 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
             infoView.alpha = 1
             lampView.alpha = 0
             tblView.reloadData()
-        }
-        
-        if languageCode == "ar"
-        {
-            lblJoining.text =  (defaults.string(forKey: "joining") ?? "2020") + " مسجل كعضو منذ"
+            
+            if let joining = userDetail?.joining
+            {
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                let date = formatter.date(from: joining)
+                formatter.dateFormat = "yyyy"
+                let year = formatter.string(from: date!)
+                
+                if languageCode == "ar"
+                {
+                    lblJoining.text =   "\(year) مسجل كعضو منذ"
+                }
+                else
+                {
+                    lblJoining.text =  "Member since \(year)"
+                }
+            }
         }
         else
         {
-            lblJoining.text =  "Member since " + (defaults.string(forKey: "joining") ?? "2020")
+            tblView.alpha = 0
+            signinView.alpha = 1
+            infoView.alpha = 0
+            lampView.alpha = 1
         }
     }
     
@@ -233,88 +242,7 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
             }
         }
     }
-    
-    //MARK:- Collection View Delegate Methods
-//    func numberOfSections(in collectionView: UICollectionView) -> Int {
-//       return 1
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-////        if dataArray.count == 0 {
-////            lampView.alpha = 1
-////        } else {
-////            lampView.alpha = 0
-////            collectionView.restore()
-////        }
-////        return dataArray.count
-//        return count
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell: MyAdsCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyAdsCollectionCell", for: indexPath) as! MyAdsCollectionCell
-//
-////        let objData = dataArray[indexPath.row]
-////
-////        for images in objData.adImages {
-////            if let imgUrl = URL(string: images.thumb) {
-////                cell.imgPicture.setImage(from: imgUrl)
-////            }
-////        }
-////
-////        if let userName = objData.adTitle {
-////            cell.lblName.text = userName
-////        }
-////        if let price = objData.adPrice.price {
-////            cell.lblPrice.text = price
-////        }
-////
-////        if let addStatus = objData.adStatus.statusText {
-////            cell.lblAddType.text = addStatus
-////            //set drop down button status
-////            cell.buttonAddType.setTitle(addStatus, for: .normal)
-////        }
-//
-//        return cell
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-////        let addDetailVC = self.storyboard?.instantiateViewController(withIdentifier: AddDetailController.className) as! AddDetailController
-////        addDetailVC.ad_id = dataArray[indexPath.row].adId
-////        self.navigationController?.pushViewController(addDetailVC, animated: true)
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-//        if collectionView.isDragging {
-//            cell.transform = CGAffineTransform.init(scaleX: 0.5, y: 0.5)
-//            UIView.animate(withDuration: 0.3, animations: {
-//                cell.transform = CGAffineTransform.identity
-//            })
-//        }
-////        if indexPath.row == dataArray.count - 1 && currentPage < maximumPage {
-////            currentPage = currentPage + 1
-////            let param: [String: Any] = ["page_number": currentPage]
-////            print(param)
-////            self.loadMoreData(param: param as NSDictionary)
-////        }
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//
-//        return CGSize(width: screenWidth - 12, height: 190)
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return UIEdgeInsets.zero
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-//        return 0
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        return 0
-//    }
-    
+
     //MARK:- TableView Delegates
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -328,26 +256,27 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         let objData = dataArray[indexPath.row]
 
-        for images in objData.adImages {
-            if let imgUrl = URL(string: images.thumb) {
+        if objData.images.count > 0
+        {
+            if let imgUrl = URL(string: String(format: "%@%@", Constants.URL.imagesUrl, objData.images[0].url.encodeUrl())) {
                 cell.imgPicture.setImage(from: imgUrl)
             }
         }
 
-        if let userName = objData.adTitle {
+        if let userName = objData.title {
             cell.lblName.text = userName
         }
-        if let price = objData.adPrice.price {
+        if let price = objData.price {
             cell.lblPrice.text = price
         }
         
-        if let address = objData.adLocation?.address {
+        if let address = objData.address {
             cell.btnLocation.setTitle(address, for: .normal)
         }
         
-        if let date = objData.adDate {
+        if let date = objData.created_at {
             let formatter = DateFormatter()
-            formatter.dateFormat = "MMMM dd, yyyy"
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             let date = formatter.date(from: date)
             
             cell.lblDate.text = timeAgoSinceShort(date!)
@@ -356,7 +285,7 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         cell.crossAction = { () in
             let alert = UIAlertController(title: "Palmtree", message: "Are you sure you want to remove your ad?", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "Yes", style: .default, handler: { (okAction) in
-                let parameter : [String: Any] = ["ad_id": objData.adId]
+                let parameter : [String: Any] = ["post_id": objData.id]
                 print(parameter)
                 self.deleteAd(param: parameter as NSDictionary)
             })
@@ -367,37 +296,31 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         }
         
         cell.locationAction = { () in
-            let mapVC = self.storyboard?.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
-            mapVC.address = objData.adLocation.address ?? ""
-            mapVC.latitude = Double(objData.adLocation.lat ?? "0.0")
-            mapVC.longitude = Double(objData.adLocation.longField ?? "0.0")
-            self.navigationController?.pushViewController(mapVC, animated: true)
+            
         }
         
         cell.editAdAction = { () in
             adDetailObj = AdDetailObject()
-            adDetailObj.adId = objData.adId
-            adDetailObj.adTitle = objData.adTitle
-            adDetailObj.location.address = objData.adLocation.address
-            adDetailObj.location.lat = Double(objData.adLocation.lat ?? "0.0")
-            adDetailObj.location.lng = Double(objData.adLocation.longField ?? "0.0")
-            adDetailObj.adPrice = objData.adPrice.price
-            adDetailObj.priceType = objData.adPrice.priceType
-            adDetailObj.adDate = objData.adDate
+            adDetailObj.adId = objData.id
+            adDetailObj.adTitle = objData.title
+            adDetailObj.location.address = objData.address
+            adDetailObj.adPrice = objData.price
+            adDetailObj.priceType = objData.price_type
+            adDetailObj.adDate = objData.created_at
             
-            if objData.adCats.count == 2
-            {
-                adDetailObj.adSubCategory = objData.adCats[0].name
-                adDetailObj.subcatID = objData.adCats[0].id
-                adDetailObj.adCategory = objData.adCats[1].name
-                adDetailObj.catID = objData.adCats[1].id
-            }
-            else if objData.adCats.count == 1
-            {
-                adDetailObj.adCategory = objData.adCats[0].name
-                adDetailObj.catID = objData.adCats[0].id
-            }
-            adDetailObj.adImages = objData.adImages
+//            if objData.adCats.count == 2
+//            {
+//                adDetailObj.adSubCategory = objData.adCats[0].name
+//                adDetailObj.subcatID = objData.adCats[0].id
+//                adDetailObj.adCategory = objData.adCats[1].name
+//                adDetailObj.catID = objData.adCats[1].id
+//            }
+//            else if objData.adCats.count == 1
+//            {
+//                adDetailObj.adCategory = objData.adCats[0].name
+//                adDetailObj.catID = objData.adCats[0].id
+//            }
+//            adDetailObj.adImages = objData.images
             
             let adPostVC = self.storyboard?.instantiateViewController(withIdentifier: "AdPostVC") as! AdPostVC
             adPostVC.fromVC = "myads"
@@ -423,8 +346,10 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let adDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "AdDetailVC") as! AdDetailVC
-//        self.navigationController?.pushViewController(adDetailVC, animated: true)
+        let objData = dataArray[indexPath.row]
+        let adDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "AdDetailVC") as! AdDetailVC
+        adDetailVC.adDetailDataObj = objData
+        self.navigationController?.pushViewController(adDetailVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -440,16 +365,18 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     //Ads Data
     func getAddsData() {
         self.showLoader()
-        AddsHandler.myAds(success: { (successResponse) in
+        
+        let parameters: [String: Any] = ["id": String(format: "%d", userDetail?.id ?? 0)]
+        
+        AddsHandler.myAds(parameter: parameters as NSDictionary, success: { (successResponse) in
             self.stopAnimating()
             self.refreshControl.endRefreshing()
             if successResponse.success {
-                self.noAddTitle = successResponse.message
-                self.currentPage = successResponse.data.pagination.currentPage
-                self.maximumPage = successResponse.data.pagination.maxNumPages
+//                self.noAddTitle = successResponse.message
+//                self.currentPage = successResponse.data.pagination.currentPage
+//                self.maximumPage = successResponse.data.pagination.maxNumPages
                 
-                AddsHandler.sharedInstance.objMyAds = successResponse.data
-                self.dataArray = successResponse.data.ads
+                self.dataArray = successResponse.data
                 
                 self.tblView.reloadData()
                 
@@ -475,13 +402,13 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         AddsHandler.moreMyAdsData(param: param, success: { (successResponse) in
             self.stopAnimating()
             self.refreshControl.endRefreshing()
-            if successResponse.success {
-                AddsHandler.sharedInstance.objMyAds = successResponse.data
-                self.dataArray.append(contentsOf: successResponse.data.ads)
-                
+            if successResponse.success
+            {
+                self.dataArray.append(contentsOf: successResponse.data)
                 self.tblView.reloadData()
             }
-            else {
+            else
+            {
                 let alert = Constants.showBasicAlert(message: successResponse.message)
                 self.presentVC(alert)
             }
@@ -492,7 +419,8 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         }
     }
     
-    func deleteAd(param: NSDictionary) {
+    func deleteAd(param: NSDictionary)
+    {
         self.showLoader()
         AddsHandler.deleteAdd(param: param, success: { (successResponse) in
             self.stopAnimating()

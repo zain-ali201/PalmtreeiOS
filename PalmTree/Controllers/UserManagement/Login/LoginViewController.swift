@@ -375,16 +375,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
             {
                 defaults.set(true, forKey: "isLogin")
                 
-                if myAdsVC != nil
-                {
-                    myAdsVC.checkLogin()
-                }
-                
-                if settingsVC != nil
-                {
-                    settingsVC.checkLogin()
-                }
-                
                 if defaults.string(forKey: "joining") == nil
                 {
                     let formatter = DateFormatter()
@@ -406,7 +396,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                 defaults.set(successResponse.data.userEmail, forKey: "userEmail")
                 defaults.set(successResponse.authToken, forKey: "authToken")
                 
+                if myAdsVC != nil
+                {
+                    myAdsVC.checkLogin()
+                }
+                
+                if settingsVC != nil
+                {
+                    settingsVC.checkLogin()
+                }
+                
                 self.dismiss(animated: true, completion: nil)
+                
             }
             else
             {
