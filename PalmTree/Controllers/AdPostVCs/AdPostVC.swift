@@ -9,6 +9,7 @@
 import UIKit
 import NVActivityIndicatorView
 import Alamofire
+import ImageSlideshow
 import OpalImagePicker
 
 var adDetailObj: AdDetailObject = AdDetailObject()
@@ -76,12 +77,12 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         {
             collectionView.delegate = self
             collectionView.dataSource = self
-            if #available(iOS 11.0, *) {
+            if #available(iOS 11.0, *)
+            {
                 collectionView.dragInteractionEnabled = true
                 collectionView.dragDelegate = self
                 collectionView.dropDelegate = self
                 collectionView.reorderingCadence = .immediate //default value - .immediate
-
             }
             else
             {
@@ -99,8 +100,19 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         
         if fromVC == "myads"
         {
-            let parameter: [String: Any] = ["ad_id": adDetailObj.adId]
-            self.addDetail(param: parameter as NSDictionary)
+            for image in adDetailObj.adImages
+            {
+                DispatchQueue.global().async { [weak self] in
+                    if let data = try? Data(contentsOf: URL(string: String(format: "%@%@", Constants.URL.imagesUrl, image.url))!) {
+                        if let image = UIImage(data: data) {
+                            DispatchQueue.main.async {
+                                adDetailObj.images.append(image)
+                                self!.collectionView.reloadData()
+                            }
+                        }
+                    }
+                }
+            }
         }
         else
         {
@@ -831,9 +843,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         return adDetailObj.images.count
-            
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -844,7 +854,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         cell.imgPictures.image = image
         
         cell.btnDelete = { () in
-            self.removeItem(index: indexPath.row)
+            self.removeImage(index: indexPath.row)
         }
         
         return cell
@@ -857,40 +867,45 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         
         let imageRef = imageToRotate?.cgImage
         var properlyRotatedImage: UIImage?
-        
-        //if imageOrientationWhenAddedToScreen == 0 {
-            //Don't rotate the image
+
             properlyRotatedImage = imageToRotate
-        //}
- //       else if imageOrientationWhenAddedToScreen == 3 {
-//
-//            //We need to rotate the image back to a 3
-//           if let imageRef = imageRef, let orientation = UIImage.Orientation(rawValue: 3) {                properlyRotatedImage = UIImage(cgImage: imageRef, scale: 1.0, orientation: orientation)          }
-        
-//    }
-      //     else if imageOrientationWhenAddedToScreen == 1 {
-//
-//            //We need to rotate the image back to a 1
             if let imageRef = imageRef, let orientation = UIImage.Orientation(rawValue: 1) {
                 properlyRotatedImage = UIImage(cgImage: imageRef, scale: 1.0, orientation: orientation)
             }
-       // }
         
         return properlyRotatedImage
         
     }
     
-    //Remove item at selected Index
-    func removeItem(index: Int) {
-        adDetailObj.images.remove(at: index)
+    func removeImage(index: Int)
+    {
+        self.showLoader()
+        let parameter : [String: Any] = ["img_id": adDetailObj.adImages[index].id ?? 0]
         
-        if adDetailObj.images.count == 0
-        {
-            hideShowControls(controls1Alpha: 0, controlsAlpha: 1)
-            collectionView.alpha = 0
+        AddsHandler.deleteAdd(param: parameter as NSDictionary, success: { (successResponse) in
+            self.stopAnimating()
+            if successResponse.success {
+                let alert = AlertView.prepare(title: "", message: successResponse.message, okAction: {
+                    adDetailObj.images.remove(at: index)
+                    
+                    if adDetailObj.images.count == 0
+                    {
+                        self.hideShowControls(controls1Alpha: 0, controlsAlpha: 1)
+                        self.collectionView.alpha = 0
+                    }
+                    
+                    self.collectionView.reloadData()
+                })
+                self.presentVC(alert)
+            } else {
+                let alert = Constants.showBasicAlert(message: successResponse.message)
+                self.presentVC(alert)
+            }
+        }) { (error) in
+            self.stopAnimating()
+            let alert = Constants.showBasicAlert(message: error.message)
+            self.presentVC(alert)
         }
-        
-        self.collectionView.reloadData()
     }
 }
 

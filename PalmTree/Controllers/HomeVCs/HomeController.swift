@@ -582,9 +582,9 @@ extension CLPlacemark {
 //                result += ", \(street)"
 //            }
 
-            if let city = locality {
-                result += ", \(city)"
-            }
+//            if let city = locality {
+//                result += ", \(city)"
+//            }
 
             if let country = country {
 //                userDetail?.country = country

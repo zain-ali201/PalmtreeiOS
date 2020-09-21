@@ -328,7 +328,7 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
             adDetailObj.phone = objData.phone
             adDetailObj.whatsapp = objData.whatsapp
             
-            if objData.cat_parent_id < 0
+            if objData.cat_parent != nil
             {
                 adDetailObj.adSubCategory = objData.cat_name
                 adDetailObj.subcatID = objData.cat_id
@@ -387,7 +387,7 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     func getAddsData() {
         self.showLoader()
         
-        let parameters: [String: Any] = ["id": String(format: "%d", userDetail?.id ?? 0)]
+        let parameters: [String: Any] = ["user_id": String(format: "%d", userDetail?.id ?? 0)]
         
         AddsHandler.myAds(parameter: parameters as NSDictionary, success: { (successResponse) in
             self.stopAnimating()

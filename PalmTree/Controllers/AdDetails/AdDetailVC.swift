@@ -211,8 +211,8 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
         
         for image in adDetailDataObj.images
         {
-            let alamofireSource = AlamofireSource(urlString: image.url)!
-                inputImages.append(alamofireSource)
+            let alamofireSource = AlamofireSource(urlString: String(format: "%@%@", Constants.URL.imagesUrl, image.url))!
+            inputImages.append(alamofireSource)
         }
         
         slideshow.setImageInputs(inputImages)

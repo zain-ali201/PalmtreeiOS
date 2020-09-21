@@ -131,10 +131,10 @@ class AddsHandler {
     //MARK:- Get My Adds Data
     
     class func myAds(parameter: NSDictionary, success: @escaping(MyAdsRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.getMyAds+"/"+(parameter.value(forKey: "id") as! String)
+        let url = Constants.URL.baseUrl+Constants.URL.getMyAds+"/"+(parameter.value(forKey: "user_id") as! String)
         print(url)
         
-        NetworkHandler.getRequest(url: url, parameters: nil, success: { (successResponse) in
+        NetworkHandler.getRequest(url: url, parameters: parameter as! Parameters, success: { (successResponse) in
             let dictionary = successResponse as! [String: Any]
             let objAds = MyAdsRoot(fromDictionary: dictionary)
             success(objAds)
