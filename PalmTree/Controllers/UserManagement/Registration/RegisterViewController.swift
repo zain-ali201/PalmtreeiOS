@@ -170,7 +170,8 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
         {
              self.txtConfirmPassword.shake(6, withDelta: 10, speed: 0.06)
         }
-        else {
+        else
+        {
             let parameters : [String: Any] = [
                 "name": name,
                 "email": email,

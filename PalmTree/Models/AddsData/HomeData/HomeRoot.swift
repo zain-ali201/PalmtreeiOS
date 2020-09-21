@@ -80,6 +80,7 @@ struct CategoryJSON
 {
     var id : Int!
     var name : String!
+    var arabic_name : String!
     var img_url : String!
     var has_sub : Bool!
     var has_parent : Int!
@@ -95,6 +96,7 @@ struct CategoryJSON
         id = dictionary["id"] as? Int
         has_parent = dictionary["has_parent"] as? Int
         name = dictionary["name"] as? String
+        arabic_name = dictionary["arabic_name"] as? String
         img_url = dictionary["img_url"] as? String
         has_sub = dictionary["has_sub"] as? Bool
         status = dictionary["status"] as? Bool
@@ -116,6 +118,9 @@ struct CategoryJSON
         }
         if name != nil{
             dictionary["name"] = name
+        }
+        if arabic_name != nil{
+            dictionary["arabic_name"] = arabic_name
         }
         if img_url != nil{
             dictionary["img_url"] = img_url

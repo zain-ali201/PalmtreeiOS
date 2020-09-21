@@ -49,8 +49,11 @@ struct SubCategoryValue {
 
 struct SubCategoryObject {
 
-    var hasSub = false
     var id = 0
     var name = ""
+    var arabicName = ""
+    var hasSub = false
+    var hasParent = 0
+    var status = false
     var subCatArray = [SubCategoryObject]()
 }

@@ -141,7 +141,7 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable
             imgPicture.frame = CGRect(x: 10, y: 10, width: 30, height: 30)
             imgPicture.contentMode = .scaleAspectFit
             
-            if let imgUrl = URL(string: objData.img_url.encodeUrl()) {
+            if let imgUrl = URL(string: String(format: "%@%@", Constants.URL.imagesUrl, objData.img_url.encodeUrl())) {
                 imgPicture.sd_setShowActivityIndicatorView(true)
                 imgPicture.sd_setIndicatorStyle(.gray)
                 imgPicture.sd_setImage(with: imgUrl, completed: nil)
@@ -156,7 +156,7 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable
             if languageCode == "ar"
             {
                 lbl.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-                lbl.text = objData.name
+                lbl.text = objData.arabic_name
             }
             else
             {
@@ -219,6 +219,11 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable
                         var subCatObj = SubCategoryObject()
                         subCatObj.id = obj.id
                         subCatObj.name = obj.name
+                        subCatObj.hasSub = obj.has_sub
+                        subCatObj.hasParent = obj.has_parent
+                        subCatObj.arabicName = obj.arabic_name
+                        subCatObj.status = obj.status
+                        
 //                        subCatObj.hasSub = obj.has_sub
 
 //                        if obj.has_sub

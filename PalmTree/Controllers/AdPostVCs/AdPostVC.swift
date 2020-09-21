@@ -874,7 +874,6 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             }
         
         return properlyRotatedImage
-        
     }
     
     func removeImage(index: Int)
