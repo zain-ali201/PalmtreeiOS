@@ -223,6 +223,7 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             if objData.images.count > 0
             {
                 if let imgUrl = URL(string: String(format: "%@%@", Constants.URL.imagesUrl, objData.images[0].url.encodeUrl())) {
+                    print(imgUrl)
                     cell.imgPicture.setImage(from: imgUrl)
                 }
             }
@@ -239,7 +240,7 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                 cell.btnLocation.setTitle(address, for: .normal)
             }
             
-            if let date = objData.created_at {
+            if let date = objData.createdAt {
                 let formatter = DateFormatter()
                 formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 let date = formatter.date(from: date)

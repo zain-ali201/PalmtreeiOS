@@ -28,7 +28,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblDescp: UITextField!
     @IBOutlet weak var lblCurrency: UILabel!
-    @IBOutlet weak var lblEmail: UILabel!
+    @IBOutlet weak var lblAddress: UILabel!
     @IBOutlet weak var lblText: UILabel!
     @IBOutlet weak var lblPhoto : UILabel!
     @IBOutlet weak var lblCategoryText : UILabel!
@@ -98,30 +98,6 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         
         adPostVC = self
         
-        if fromVC == "myads"
-        {
-            for image in adDetailObj.adImages
-            {
-                DispatchQueue.global().async { [weak self] in
-                    if let data = try? Data(contentsOf: URL(string: String(format: "%@%@", Constants.URL.imagesUrl, image.url))!) {
-                        if let image = UIImage(data: data) {
-                            DispatchQueue.main.async {
-                                adDetailObj.images.append(image)
-                                self!.collectionView.reloadData()
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        else
-        {
-            if homeVC != nil
-            {
-                homeVC.getGPSLocation()
-            }
-        }
-        
         if languageCode == "ar"
         {
             self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -139,7 +115,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             lblCurrency.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblFixedPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             btnCategory.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblEmail.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblAddress.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblPhoto.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblCategoryText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -182,11 +158,11 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             adDetailObj.location.address = userDetail?.currentAddress ?? ""
             adDetailObj.location.lat = userDetail?.currentLocation.coordinate.latitude
             adDetailObj.location.lng = userDetail?.currentLocation.coordinate.longitude
-            lblEmail.text = userDetail?.currentAddress
+            lblAddress.text = userDetail?.currentAddress
         }
         else
         {
-            lblEmail.text = adDetailObj.location.address
+            lblAddress.text = "\(adDetailObj.location.address), \(adDetailObj.location.country)"
         }
         
         if adDetailObj.adTitle != "" && fromVC == "myads"
@@ -280,6 +256,34 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         {
             txtPrice.text = adDetailObj.adPrice
         }
+        
+        if fromVC == "myads"
+        {
+            self.hideShowControls(controls1Alpha: 1, controlsAlpha: 0)
+            
+            for image in adDetailObj.adImages
+            {
+                DispatchQueue.main.async {
+                    print(String(format: "%@%@", Constants.URL.imagesUrl, image.url))
+                    if let data = try? Data(contentsOf: URL(string: String(format: "%@%@", Constants.URL.imagesUrl, image.url))!) {
+                        if let image = UIImage(data: data) {
+                            adDetailObj.images.append(image)
+                            DispatchQueue.main.async {
+                                self.collectionView.alpha = 1
+                                self.collectionView.reloadData()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+//        else
+//        {
+//            if homeVC != nil
+//            {
+//                homeVC.getGPSLocation()
+//            }
+//        }
     }
     
     //MARK:- IBActions
@@ -558,7 +562,16 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             for var image in images
             {
                 image = resizeImage(image: image, targetSize: CGSize(width: 300, height: 300))
-                adDetailObj.images.append(image)
+                if fromVC == "myads"
+                {
+                    DispatchQueue.main.async {
+                        self.addImage(image: image)
+                    }
+                }
+                else
+                {
+                    adDetailObj.images.append(image)
+                }
             }
             
             hideShowControls(controls1Alpha: 1, controlsAlpha: 0)
@@ -585,6 +598,13 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
                 hideShowControls(controls1Alpha: 1, controlsAlpha: 0)
                 collectionView.alpha = 1
                 collectionView.reloadData()
+                
+                if fromVC == "myads"
+                {
+                    DispatchQueue.main.async {
+                        self.addImage(image: pickedImage)
+                    }
+                }
             }
             dismiss(animated: true, completion: nil)
         }
@@ -600,11 +620,13 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     
     //MARK:- Textview Delegate
     
-    func textViewDidBeginEditing(_ textView: UITextView) {
+    func textViewDidBeginEditing(_ textView: UITextView)
+    {
         lblDescp.alpha = 0
     }
     
-    func textViewDidEndEditing(_ textView: UITextView) {
+    func textViewDidEndEditing(_ textView: UITextView)
+    {
         
         if textView.text.isEmpty
         {
@@ -616,21 +638,18 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         }
     }
     
-
-    
     //MARK:- Ad Post APIs
     func addPostLiveAPI()
     {
         var parameter: [String: Any] = [
-            "id" : adDetailObj.adId,
+            "id" : String(format: "%d", userDetail?.id ?? 0),
             "user_id": String(format: "%d", userDetail?.id ?? 0),
             "phone": adDetailObj.phone,
             "whatsapp": adDetailObj.whatsapp,
             "latitude": "",
             "longitude": "",
-            "address": "Palm Jumeirah",
-            "country": "Dubai",
-//                "address": adDetailObj.location.address,
+            "country": adDetailObj.location.country,
+            "address": adDetailObj.location.address,
             "is_featured": "0",
             "featured_date": "",
             "name": adDetailObj.adTitle,
@@ -639,80 +658,84 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             "title": adDetailObj.adTitle,
             "description" : adDetailObj.adDesc,
             "status" : "1",
-            "cat_id" : "1"
-//                "cat_id" : String(format: "%d", adDetailObj.subcatID > 0 ? adDetailObj.subcatID : adDetailObj.catID)
+            "cat_id" : String(format: "%d", adDetailObj.subcatID > 0 ? adDetailObj.subcatID : adDetailObj.catID)
         ]
         
         var customDictionary: [String: Any] = [String: Any]()
 
-        if adDetailObj.motorCatObj.regNo != ""
+        if adDetailObj.adCategory == "Motors"
         {
-            customDictionary.merge(with: ["regNo" : adDetailObj.motorCatObj.regNo])
-        }
+            if adDetailObj.motorCatObj.regNo != ""
+            {
+                customDictionary.merge(with: ["Reg No" : adDetailObj.motorCatObj.regNo])
+            }
 
-        if adDetailObj.motorCatObj.sellerType != ""
-        {
-            customDictionary.merge(with: ["sellerType" : adDetailObj.motorCatObj.sellerType])
-        }
+            if adDetailObj.motorCatObj.sellerType != ""
+            {
+                customDictionary.merge(with: ["Seller Type" : adDetailObj.motorCatObj.sellerType])
+            }
 
-        if adDetailObj.motorCatObj.make != ""
-        {
-            customDictionary.merge(with: ["make" : adDetailObj.motorCatObj.make])
-        }
+            if adDetailObj.motorCatObj.make != ""
+            {
+                customDictionary.merge(with: ["Make" : adDetailObj.motorCatObj.make])
+            }
 
-        if adDetailObj.motorCatObj.model != ""
-        {
-            customDictionary.merge(with: ["model" : adDetailObj.motorCatObj.model])
-        }
+            if adDetailObj.motorCatObj.model != ""
+            {
+                customDictionary.merge(with: ["Model" : adDetailObj.motorCatObj.model])
+            }
 
-        if adDetailObj.motorCatObj.year != ""
-        {
-            customDictionary.merge(with: ["year" : adDetailObj.motorCatObj.year])
-        }
+            if adDetailObj.motorCatObj.year != ""
+            {
+                customDictionary.merge(with: ["Year" : adDetailObj.motorCatObj.year])
+            }
 
-        if adDetailObj.motorCatObj.mileage != ""
-        {
-            customDictionary.merge(with: ["mileage" : adDetailObj.motorCatObj.mileage])
-        }
+            if adDetailObj.motorCatObj.mileage != ""
+            {
+                customDictionary.merge(with: ["Mileage" : adDetailObj.motorCatObj.mileage])
+            }
 
-        if adDetailObj.motorCatObj.bodyType != ""
-        {
-            customDictionary.merge(with: ["bodyType" : adDetailObj.motorCatObj.bodyType])
-        }
+            if adDetailObj.motorCatObj.bodyType != ""
+            {
+                customDictionary.merge(with: ["Body Type" : adDetailObj.motorCatObj.bodyType])
+            }
 
-        if adDetailObj.motorCatObj.fuelType != ""
-        {
-            customDictionary.merge(with: ["fuelType" : adDetailObj.motorCatObj.fuelType])
-        }
+            if adDetailObj.motorCatObj.fuelType != ""
+            {
+                customDictionary.merge(with: ["Fuel Type" : adDetailObj.motorCatObj.fuelType])
+            }
 
-        if adDetailObj.motorCatObj.transmission != ""
-        {
-            customDictionary.merge(with: ["transmission" : adDetailObj.motorCatObj.transmission])
-        }
+            if adDetailObj.motorCatObj.transmission != ""
+            {
+                customDictionary.merge(with: ["Transmission" : adDetailObj.motorCatObj.transmission])
+            }
 
-        if adDetailObj.motorCatObj.colour != ""
-        {
-            customDictionary.merge(with: ["colour" : adDetailObj.motorCatObj.colour])
-        }
+            if adDetailObj.motorCatObj.colour != ""
+            {
+                customDictionary.merge(with: ["Colour" : adDetailObj.motorCatObj.colour])
+            }
 
-        if adDetailObj.motorCatObj.engineSize != ""
-        {
-            customDictionary.merge(with: ["engineSize" : adDetailObj.motorCatObj.engineSize])
+            if adDetailObj.motorCatObj.engineSize != ""
+            {
+                customDictionary.merge(with: ["Engine Size" : adDetailObj.motorCatObj.engineSize])
+            }
         }
-
-        if adDetailObj.propertyCatObj.propertyType != ""
+        else if adDetailObj.adCategory == "Property"
         {
-            customDictionary.merge(with: ["propertyType" : adDetailObj.propertyCatObj.propertyType])
-        }
+            if adDetailObj.propertyCatObj.propertyType != ""
+            {
+                customDictionary.merge(with: ["Property Type" : adDetailObj.propertyCatObj.propertyType])
+            }
 
-        if adDetailObj.propertyCatObj.bedrooms != ""
-        {
-            customDictionary.merge(with: ["bedrooms" : adDetailObj.propertyCatObj.bedrooms])
-        }
+            if adDetailObj.propertyCatObj.bedrooms != ""
+            {
+                customDictionary.merge(with: ["Bedrooms" : adDetailObj.propertyCatObj.bedrooms])
+            }
 
-        if adDetailObj.propertyCatObj.sellerType != ""
-        {
-            customDictionary.merge(with: ["psellerType" : adDetailObj.propertyCatObj.sellerType])
+            if adDetailObj.propertyCatObj.sellerType != ""
+            {
+                customDictionary.merge(with: ["Seller Type" : adDetailObj.propertyCatObj.sellerType])
+            }
         }
 
         if customDictionary.count > 0
@@ -762,6 +785,25 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             let dictionary = successResponse as! [String: Any]
             print(dictionary)
             let objImg = AdPostImagesRoot(fromDictionary: dictionary)
+            success(objImg)
+        }) { (error) in
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+            self.stopAnimating()
+        }
+    }
+    
+    func adPostUploadSingleImage(parameter: NSDictionary, image: UIImage, fileName: String, uploadProgress: @escaping(Int)-> Void, success: @escaping(ImageRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
+        
+        let url = Constants.URL.baseUrl+Constants.URL.adPostImage
+        print(url)
+        NetworkHandler.uploadSingleImage(url: url, image: image, fileName: "File", params: parameter as? Parameters, uploadProgress: { (uploadProgress) in
+            print(uploadProgress)
+            
+        }, success: { (successResponse) in
+            
+            let dictionary = successResponse as! [String: Any]
+            print(dictionary)
+            let objImg = ImageRoot(fromDictionary: dictionary)
             success(objImg)
         }) { (error) in
             failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
@@ -876,27 +918,25 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         return properlyRotatedImage
     }
     
-    func removeImage(index: Int)
+    func addImage(image: UIImage)
     {
         self.showLoader()
-        let parameter : [String: Any] = ["img_id": adDetailObj.adImages[index].id ?? 0]
+        let parameters : [String: Any] = ["ad_id": String(format: "%d", adDetailObj.adId)]
         
-        AddsHandler.deleteAdd(param: parameter as NSDictionary, success: { (successResponse) in
+        adPostUploadSingleImage(parameter: parameters as NSDictionary, image: image, fileName: "File", uploadProgress: { (uploadProgress) in
+
+        }, success: { (successResponse) in
+            
             self.stopAnimating()
-            if successResponse.success {
-                let alert = AlertView.prepare(title: "", message: successResponse.message, okAction: {
-                    adDetailObj.images.remove(at: index)
-                    
-                    if adDetailObj.images.count == 0
-                    {
-                        self.hideShowControls(controls1Alpha: 0, controlsAlpha: 1)
-                        self.collectionView.alpha = 0
-                    }
-                    
-                    self.collectionView.reloadData()
-                })
-                self.presentVC(alert)
-            } else {
+            if successResponse.success
+            {
+                self.showToast(message: "Image added successfully.")
+                adDetailObj.adImages.append(successResponse.data)
+                adDetailObj.images.append(image)
+                self.collectionView.reloadData()
+            }
+            else
+            {
                 let alert = Constants.showBasicAlert(message: successResponse.message)
                 self.presentVC(alert)
             }
@@ -904,6 +944,53 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             self.stopAnimating()
             let alert = Constants.showBasicAlert(message: error.message)
             self.presentVC(alert)
+        }
+    }
+    
+    func removeImage(index: Int)
+    {
+        if fromVC == "myads"
+        {
+            self.showLoader()
+            let parameter : [String: Any] = ["img_id": adDetailObj.adImages[index].id ?? 0]
+            
+            AddsHandler.deleteImage(param: parameter as NSDictionary, success: { (successResponse) in
+                self.stopAnimating()
+                if successResponse.success {
+                    
+                    self.showToast(message: "Image deleted successfully.")
+                    
+                    adDetailObj.adImages.remove(at: index)
+                    adDetailObj.images.remove(at: index)
+                    
+                    if adDetailObj.images.count == 0
+                    {
+                        self.hideShowControls(controls1Alpha: 0, controlsAlpha: 1)
+                        self.collectionView.alpha = 0
+                    }
+                    self.collectionView.reloadData()
+                    
+                } else {
+                    let alert = Constants.showBasicAlert(message: successResponse.message)
+                    self.presentVC(alert)
+                }
+            }) { (error) in
+                self.stopAnimating()
+                let alert = Constants.showBasicAlert(message: error.message)
+                self.presentVC(alert)
+            }
+        }
+        else
+        {
+            adDetailObj.images.remove(at: index)
+            
+            if adDetailObj.images.count == 0
+            {
+                self.hideShowControls(controls1Alpha: 0, controlsAlpha: 1)
+                self.collectionView.alpha = 0
+            }
+            
+            self.collectionView.reloadData()
         }
     }
 }

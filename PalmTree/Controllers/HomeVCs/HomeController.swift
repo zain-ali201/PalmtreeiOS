@@ -236,7 +236,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     //MARK:- Add to favourites
-    func addToFavourites(ad_id: Int)
+    func addToFavourites(ad_id: Int, favFlag: Bool)
     {
         if defaults.bool(forKey: "isLogin") == false
         {
@@ -246,8 +246,15 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         else
         {
-            let parameter: [String: Any] = ["ad_id": ad_id, "user_id": userDetail?.id ?? 0]
-            self.makeAddFavourite(param: parameter as NSDictionary)
+            if !favFlag
+            {
+                let parameter: [String: Any] = ["ad_id": ad_id, "user_id": userDetail?.id ?? 0]
+                self.makeAddFavourite(param: parameter as NSDictionary)
+            }
+            else
+            {
+                self.showToast(message: "This Ad is already in your favourites.")
+            }
         }
     }
     
@@ -368,44 +375,6 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-//    private var finishedLoadingInitialTableCells = false
-//     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//
-//        var lastInitialDisplayableCell = false
-//
-//        //change flag as soon as last displayable cell is being loaded (which will mean table has initially loaded)
-////        if favorites.itemes.count > 0 && !finishedLoadingInitialTableCells {
-//            if let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows,
-//                let lastIndexPath = indexPathsForVisibleRows.last, lastIndexPath.row == indexPath.row {
-//                lastInitialDisplayableCell = true
-//            }
-////        }
-//
-//        if !finishedLoadingInitialTableCells {
-//
-//            if lastInitialDisplayableCell {
-//                finishedLoadingInitialTableCells = true
-//            }
-//
-//            //animates the cell as it is being displayed for the first time
-//            do {
-//                let startFromHeight = tableView.frame.height
-//                cell.layer.transform = CATransform3DMakeTranslation(0, startFromHeight, 0)
-//                let delay = Double(indexPath.row) * 0.2
-//
-//                UIView.animate(withDuration: 0.2, delay: delay, options: UIViewAnimationOptions.transitionFlipFromBottom, animations: {
-//                    do {
-//                        cell.layer.transform = CATransform3DIdentity
-//                    }
-//                }) { (success:Bool) in
-//
-//                }
-//            }
-//        }
-//    }
-
-    
-    
     //MARK:- IBActions
     @IBAction func searchBtnAction(_ button: UIButton)
     {
@@ -469,8 +438,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     //MARK:- API Call
-    
-    //get home data
+
     func homeData()
     {
         categoryArray.removeAll()
@@ -493,7 +461,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     userDetail?.id = self.defaults.integer(forKey: "userID")
                     userDetail?.displayName = self.defaults.string(forKey: "displayName")
                     userDetail?.userEmail = self.defaults.string(forKey: "userEmail")
-                    userDetail?.authToken = self.defaults.string(forKey: "authToken")!
+//                    userDetail?.authToken = self.defaults.string(forKey: "authToken")!
                 }
                 
                 self.tableView.reloadData()
@@ -544,11 +512,6 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    //MARK:- Near By Search
-    func nearBySearch(param: NSDictionary) {
-        
-    }
-    
     //MARK:- Make Add Favourites
     
     func makeAddFavourite(param: NSDictionary) {
@@ -556,8 +519,19 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         AddsHandler.makeAddFavourite(parameter: param, success: { (successResponse) in
             self.stopAnimating()
             if successResponse.success {
-//                let alert = Constants.showBasicAlert(message: successResponse.message)
-//                self.presentVC(alert)
+                var currentIndex = 0
+
+                for var post in self.latestAdsArray
+                {
+                    if post.id == (param.value(forKey: "ad_id") as! Int)
+                    {
+                        post.isFavorite = true
+                        self.latestAdsArray[currentIndex] = post
+                        break
+                    }
+
+                    currentIndex += 1
+                }
                 self.tableView.reloadData()
             }
             else {

@@ -58,9 +58,13 @@ class CountryAreasVC: UIViewController
     
     @IBAction func clickBtnAction(button: UIButton)
     {
-        let listVC = self.storyboard?.instantiateViewController(withIdentifier: "ListVC") as! ListVC
-        listVC.fromInd = fromInd
-        listVC.countryID = button.tag
-        self.navigationController?.pushViewController(listVC, animated: true)
+        let areasVC = self.storyboard?.instantiateViewController(withIdentifier: "AreasViewController") as! AreasViewController
+        
+        let lblCountry = view.viewWithTag(button.tag + 1000) as? UILabel
+        adDetailObj.location.country = lblCountry?.text ?? ""
+        areasVC.fromInd = self.fromInd
+        areasVC.countryID = button.tag
+        areasVC.country = adDetailObj.location.country
+        self.navigationController?.pushViewController(areasVC, animated: true)
     }
 }

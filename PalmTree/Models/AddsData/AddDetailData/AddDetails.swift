@@ -251,9 +251,8 @@ class AdDetailObject: NSObject
     var detailVC = ""
     var motorCatObj : MotorCategoryObject = MotorCategoryObject()
     var propertyCatObj : PropertyCategoryObject = PropertyCategoryObject()
-    var categoryObj: CategoryObject = CategoryObject()
     var objAdPostData = [AdPostField]()
-    var adImages : [imageJSON]!
+    var adImages : [ImageJSON]!
     var imageIDArray = [Int]()
     
     //for search filter
@@ -267,6 +266,7 @@ class AddDetailLocationObject: NSObject
     var lat : Double!
     var lng : Double!
     var title = ""
+    var country = ""
 }
 
 class PropertyCategoryObject: NSObject
@@ -289,12 +289,4 @@ class MotorCategoryObject: NSObject
     var transmission = ""
     var colour = ""
     var engineSize = ""
-}
-
-class CategoryObject: NSObject
-{
-    var catId : Int!
-    var name : String!
-    var img : String!
-    var subCatObj: SubCategoryData?
 }

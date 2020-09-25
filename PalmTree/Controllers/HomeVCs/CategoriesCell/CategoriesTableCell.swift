@@ -114,7 +114,26 @@ class CategoriesTableCell: UITableViewCell, UICollectionViewDelegate, UICollecti
                     cell.lblName.text = name
                 }
                 
-                cell.imgPicture.af_setImage(withURL: URL(string: String(format: "%@%@", Constants.URL.imagesUrl, objData.img_url))!)
+                if let imgUrl = URL(string: String(format: "%@%@", Constants.URL.imagesUrl, objData.imgUrl.encodeUrl())) {
+                    cell.imgPicture.sd_setShowActivityIndicatorView(true)
+                    cell.imgPicture.sd_setIndicatorStyle(.gray)
+                    cell.imgPicture.sd_setImage(with: imgUrl, completed: nil)
+                }
+            }
+            
+            cell.btnFullAction = { () in
+                self.delegate?.goToAdFilterListVC(cat_id: objData.id, catName: objData.name)
+                if var recentList = UserDefaults.standard.array(forKey: "recentList") as? [[String: Any]]
+                {
+                    recentList.append(["title": "All Ads", "catID": objData.id, "catName": objData.name, "locationName": userDetail?.locationName ?? "UAE", "lat": userDetail?.lat ?? 0.0, "lng": userDetail?.lng ?? 0.0])
+                    UserDefaults.standard.set(recentList, forKey: "recentList")
+                }
+                else
+                {
+                    var recentList: [[String: Any]] = []
+                    recentList.append(["title": "All Ads", "catID": objData.id ?? 0, "catName": objData.name ?? "", "locationName": userDetail?.locationName ?? "UAE", "lat": userDetail?.lat ?? 0.0, "lng": userDetail?.lng ?? 0.0])
+                    UserDefaults.standard.set(recentList, forKey: "recentList")
+                }
             }
         }
         

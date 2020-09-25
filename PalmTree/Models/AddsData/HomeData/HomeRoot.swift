@@ -80,13 +80,13 @@ struct CategoryJSON
 {
     var id : Int!
     var name : String!
-    var arabic_name : String!
-    var img_url : String!
-    var has_sub : Bool!
-    var has_parent : Int!
-    var status : Bool!
-    var created_at : String!
-    var updated_at : String!
+    var arabicName : String!
+    var imgUrl : String!
+    var hasSub : String!
+    var hasParent : String!
+    var status : String!
+    var createdAt : String!
+    var updatedAt : String!
     
     /**
      * Instantiate the instance using the passed dictionary values to set the properties values
@@ -94,14 +94,14 @@ struct CategoryJSON
     init(fromDictionary dictionary: [String:Any]){
         
         id = dictionary["id"] as? Int
-        has_parent = dictionary["has_parent"] as? Int
+        hasParent = dictionary["has_parent"] as? String
         name = dictionary["name"] as? String
-        arabic_name = dictionary["arabic_name"] as? String
-        img_url = dictionary["img_url"] as? String
-        has_sub = dictionary["has_sub"] as? Bool
-        status = dictionary["status"] as? Bool
-        created_at = dictionary["created_at"] as? String
-        updated_at = dictionary["updated_at"] as? String
+        arabicName = dictionary["arabic_name"] as? String
+        imgUrl = dictionary["img_url"] as? String
+        hasSub = dictionary["has_sub"] as? String
+        status = dictionary["status"] as? String
+        createdAt = dictionary["created_at"] as? String
+        updatedAt = dictionary["updated_at"] as? String
     }
     
     /**
@@ -113,33 +113,33 @@ struct CategoryJSON
         if id != nil{
             dictionary["id"] = id
         }
-        if has_parent != nil{
-            dictionary["has_parent"] = has_parent
+        if hasParent != nil{
+            dictionary["has_parent"] = hasParent
         }
         if name != nil{
             dictionary["name"] = name
         }
-        if arabic_name != nil{
-            dictionary["arabic_name"] = arabic_name
+        if arabicName != nil{
+            dictionary["arabic_name"] = arabicName
         }
-        if img_url != nil{
-            dictionary["img_url"] = img_url
+        if imgUrl != nil{
+            dictionary["img_url"] = imgUrl
         }
         
-        if has_sub != nil{
-            dictionary["has_sub"] = has_sub
+        if hasSub != nil{
+            dictionary["has_sub"] = hasSub
         }
         
         if status != nil{
             dictionary["status"] = status
         }
         
-        if created_at != nil{
-            dictionary["created_at"] = created_at
+        if createdAt != nil{
+            dictionary["created_at"] = createdAt
         }
         
-        if updated_at != nil{
-            dictionary["updated_at"] = updated_at
+        if updatedAt != nil{
+            dictionary["updated_at"] = updatedAt
         }
         return dictionary
     }
@@ -148,64 +148,76 @@ struct CategoryJSON
 struct AdsJSON
 {
     var id : Int!
-    var user_id : Int!
-    var cat_id : Int!
-    var cat_parent_id : Int!
+    var userID : Int!
+    var catID : Int!
+    var catParentID : Int!
     var title : String!
     var description : String!
     var latitude : String!
     var longitude : String!
     var address : String!
+    var country : String!
     var phone : String!
     var whatsapp : String!
     var price : String!
     var price_type : String!
-    var is_featured : Bool!
-    var is_favorite : Bool!
+    var isFeatured : Bool!
+    var isFavorite = false
     var status : Bool!
-    var created_at : String!
-    var updated_at : String!
+    var createdAt : String!
+    var updatedAt : String!
     var username : String!
     var userjoin : String!
     var email : String!
-    var cat_name : String!
-    var cat_parent : String!
-    var images : [imageJSON]!
+    var catName : String!
+    var catParent : String!
+    var images : [ImageJSON]!
+    var customFields : [CustomFieldsJSON]!
     /**
      * Instantiate the instance using the passed dictionary values to set the properties values
      */
     init(fromDictionary dictionary: [String:Any]){
         
         id = dictionary["id"] as? Int
-        user_id = dictionary["user_id"] as? Int
-        cat_id = dictionary["cat_id"] as? Int
-        cat_parent_id = dictionary["cat_parent_id"] as? Int
+        userID = dictionary["user_id"] as? Int
+        catID = dictionary["cat_id"] as? Int
+        catParentID = dictionary["cat_parent_id"] as? Int
         title = dictionary["title"] as? String
         description = dictionary["description"] as? String
         latitude = dictionary["latitude"] as? String
         longitude = dictionary["longitude"] as? String
         address = dictionary["address"] as? String
+        country = dictionary["country"] as? String
         phone = dictionary["phone"] as? String
         whatsapp = dictionary["whatsapp"] as? String
         price = dictionary["price"] as? String
         price_type = dictionary["price_type"] as? String
-        is_featured = dictionary["is_featured"] as? Bool
-        is_favorite = dictionary["is_favorite"] as? Bool
+        isFeatured = dictionary["is_featured"] as? Bool
+        isFavorite = dictionary["is_favorite"] as? Bool ?? false
         status = dictionary["status"] as? Bool
-        created_at = dictionary["created_at"] as? String
-        updated_at = dictionary["updated_at"] as? String
+        createdAt = dictionary["created_at"] as? String
+        updatedAt = dictionary["updated_at"] as? String
         username = dictionary["username"] as? String
         userjoin = dictionary["userjoin"] as? String
         email = dictionary["email"] as? String
-        cat_name = dictionary["cat_name"] as? String
-        cat_parent = dictionary["cat_parent"] as? String
+        catName = dictionary["cat_name"] as? String
+        catParent = dictionary["cat_parent"] as? String
         
-        images = [imageJSON]()
+        images = [ImageJSON]()
         if let imagesArray = dictionary["images"] as? [[String:Any]]{
             for dic in imagesArray
             {
-                let value = imageJSON(fromDictionary: dic)
+                let value = ImageJSON(fromDictionary: dic)
                 images.append(value)
+            }
+        }
+        
+        customFields = [CustomFieldsJSON]()
+        if let customFieldsArray = dictionary["custom_fields"] as? [[String:Any]]{
+            for dic in customFieldsArray
+            {
+                let value = CustomFieldsJSON(fromDictionary: dic)
+                customFields.append(value)
             }
         }
     }
@@ -221,16 +233,16 @@ struct AdsJSON
             dictionary["id"] = id
         }
         
-        if user_id != nil{
-            dictionary["user_id"] = user_id
+        if userID != nil{
+            dictionary["user_id"] = userID
         }
         
-        if cat_id != nil{
-            dictionary["cat_id"] = cat_id
+        if catID != nil{
+            dictionary["cat_id"] = catID
         }
         
-        if cat_parent_id != nil{
-            dictionary["cat_parent_id"] = cat_parent_id
+        if catParentID != nil{
+            dictionary["cat_parent_id"] = catParentID
         }
         
         if title != nil{
@@ -252,6 +264,10 @@ struct AdsJSON
             dictionary["address"] = address
         }
         
+        if country != nil{
+            dictionary["country"] = country
+        }
+        
         if phone != nil{
             dictionary["phone"] = phone
         }
@@ -268,24 +284,24 @@ struct AdsJSON
             dictionary["price_type"] = price_type
         }
         
-        if is_featured != nil{
-            dictionary["is_featured"] = is_featured
+        if isFeatured != nil{
+            dictionary["is_featured"] = isFeatured
         }
         
-        if is_favorite != nil{
-            dictionary["is_favorite"] = is_favorite
+        if isFavorite != nil{
+            dictionary["is_favorite"] = isFavorite
         }
         
         if status != nil{
             dictionary["status"] = status
         }
         
-        if created_at != nil{
-            dictionary["created_at"] = created_at
+        if createdAt != nil{
+            dictionary["created_at"] = createdAt
         }
         
-        if updated_at != nil{
-            dictionary["updated_at"] = updated_at
+        if updatedAt != nil{
+            dictionary["updated_at"] = updatedAt
         }
         
         if username != nil{
@@ -300,28 +316,82 @@ struct AdsJSON
             dictionary["email"] = email
         }
         
-        if cat_name != nil{
-            dictionary["cat_name"] = cat_name
+        if catName != nil{
+            dictionary["cat_name"] = catName
         }
         
-        if cat_parent != nil{
-            dictionary["cat_parent"] = cat_parent
+        if catParent != nil{
+            dictionary["cat_parent"] = catParent
+        }
+        
+        if images != nil{
+            var dictionaryElements = [[String:Any]]()
+            for imageElement in images {
+                dictionaryElements.append(imageElement.toDictionary())
+            }
+            dictionary["images"] = dictionaryElements
+        }
+        
+        if customFields != nil{
+            var dictionaryElements = [[String:Any]]()
+            for imageElement in customFields {
+                dictionaryElements.append(imageElement.toDictionary())
+            }
+            dictionary["custom_fields"] = dictionaryElements
         }
         
         return dictionary
     }
 }
 
-struct imageJSON
+struct ImageRoot
+{
+    var data : ImageJSON!
+    var message : String!
+    var success : Bool!
+    
+    /**
+     * Instantiate the instance using the passed dictionary values to set the properties values
+     */
+    init(fromDictionary dictionary: [String:Any]){
+        
+        data = ImageJSON(fromDictionary: dictionary["data"] as! [String : Any])
+        message = dictionary["message"] as? String
+        success = dictionary["success"] as? Bool
+    }
+    
+    /**
+     * Returns all the available property values in the form of [String:Any] object where the key is the approperiate json key and the value is the value of the corresponding property
+     */
+    func toDictionary() -> [String:Any]
+    {
+        var dictionary = [String:Any]()
+        
+        if data != nil{
+            dictionary["data"] = data
+        }
+        
+        if message != nil{
+            dictionary["message"] = message
+        }
+        
+        if success != nil{
+            dictionary["success"] = success
+        }
+        return dictionary
+    }
+}
+
+struct ImageJSON
 {
     var id : Int!
-    var post_id : Int!
+    var postID : Int!
     var url : String!
     
     init(fromDictionary dictionary: [String:Any]){
         
         id = dictionary["id"] as? Int
-        post_id = dictionary["post_id"] as? Int
+        postID = dictionary["post_id"] as? Int
         url = dictionary["url"] as? String
         
     }
@@ -337,12 +407,55 @@ struct imageJSON
             dictionary["id"] = id
         }
         
-        if post_id != nil{
-            dictionary["post_id"] = post_id
+        if postID != nil{
+            dictionary["post_id"] = postID
         }
         
         if url != nil{
             dictionary["url"] = url
+        }
+        
+        
+        return dictionary
+    }
+}
+
+struct CustomFieldsJSON
+{
+    var id : Int!
+    var postID : Int!
+    var value : String!
+    var name : String!
+    
+    init(fromDictionary dictionary: [String:Any]){
+        
+        id = dictionary["id"] as? Int
+        postID = dictionary["post_id"] as? Int
+        name = dictionary["name"] as? String
+        value = dictionary["value"] as? String
+    }
+    
+    /**
+     * Returns all the available property values in the form of [String:Any] object where the key is the approperiate json key and the value is the value of the corresponding property
+     */
+    func toDictionary() -> [String:Any]
+    {
+        var dictionary = [String:Any]()
+        
+        if id != nil{
+            dictionary["id"] = id
+        }
+        
+        if postID != nil{
+            dictionary["post_id"] = postID
+        }
+        
+        if name != nil{
+            dictionary["name"] = name
+        }
+        
+        if value != nil{
+            dictionary["value"] = value
         }
         
         

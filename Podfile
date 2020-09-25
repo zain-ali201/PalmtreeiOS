@@ -19,6 +19,11 @@ target 'PalmTree' do
     pod 'Firebase/Messaging'
     pod 'GoogleAnalytics'
     
+    pod 'Firebase/Storage'
+    pod 'Kingfisher'
+    pod 'Firebase/Firestore'
+    pod 'ALLoadingView'
+    
     # IQKeyboardManager
     pod 'IQKeyboardManagerSwift'
     

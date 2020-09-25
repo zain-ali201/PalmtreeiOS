@@ -44,7 +44,9 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     @IBOutlet weak var sellerView: UIView!
     @IBOutlet weak var callingView: UIView!
     @IBOutlet weak var reportView: UIView!
+    @IBOutlet weak var top: NSLayoutConstraint!
     @IBOutlet weak var height: NSLayoutConstraint!
+    @IBOutlet weak var specsHeight: NSLayoutConstraint!
     @IBOutlet weak var specsView: UIView!
     
     @IBOutlet weak var favBtn: UIButton!
@@ -58,7 +60,8 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     var readFlag = false
     var fromVC = ""
     
-    var txtHeight = 0
+    var summaryViewHeight: CGFloat = 0.0
+    var specsViewHeight: CGFloat = 0.0
     var ad_id = 0
     var phone = ""
     var priceType = ""
@@ -135,7 +138,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
         
         if defaults.bool(forKey: "isLogin") == true
         {
-            if adDetailDataObj.is_favorite
+            if adDetailDataObj.isFavorite
             {
                 favBtn.setImage(UIImage(named: "favourite_active"), for: .normal)
             }
@@ -143,7 +146,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let date = formatter.date(from: adDetailDataObj.created_at ?? "")
+        let date = formatter.date(from: adDetailDataObj.createdAt ?? "")
         
         if date != nil
         {
@@ -167,32 +170,52 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
             }
         }
         
-        height.constant = 60
-        
-        let txtHeight = lblSummary.text?.html2AttributedString?.height(withConstrainedWidth: 345) ?? 0
-        
-        if txtHeight > 60.0
-        {
-            readBtn.alpha = 1
-            height.constant = txtHeight
-        }
-        
-        createSpecsView()
-        
-        if phone == ""
+        if adDetailDataObj.phone == ""
         {
             callBtn.isEnabled = false
-            whatsappBtn.isEnabled = false
         }
         else
         {
             callBtn.isEnabled = true
+        }
+        
+        if adDetailDataObj.whatsapp == ""
+        {
+            whatsappBtn.isEnabled = false
+        }
+        else
+        {
             whatsappBtn.isEnabled = true
         }
         
         if adDetailDataObj.images.count > 0
         {
             fillSlideShow()
+        }
+        
+        if adDetailDataObj.customFields.count > 0
+        {
+            tabView.alpha = 1
+            top.constant = 55
+            createSpecsView()
+            summaryViewHeight = 100
+            height.constant = summaryViewHeight
+        }
+        else
+        {
+            top.constant = 15
+            tabView.alpha = 0
+            height.constant = 60
+            summaryViewHeight = 60
+        }
+        
+        let txtHeight = lblSummary.text?.html2AttributedString?.height(withConstrainedWidth: 345) ?? 0
+        
+        if txtHeight > 60.0
+        {
+            readBtn.alpha = 1
+            summaryViewHeight += txtHeight
+            height.constant = summaryViewHeight
         }
     }
     
@@ -232,121 +255,38 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     
     func createSpecsView()
     {
-        var specsHeight: CGFloat = 10.0
+        specsViewHeight = 0
+        var viewsHeight: CGFloat = 10.0
         
-        if adDetailObj.motorCatObj.make != ""
+        for fieldData in adDetailDataObj.customFields
         {
-            let makeView = createView(yAxis: specsHeight, text: "Make", value: adDetailObj.motorCatObj.make)
+            let makeView = createView(yAxis: viewsHeight, text: fieldData.name, value: fieldData.value)
             specsView.addSubview(makeView)
-            specsHeight += 65
+            viewsHeight += 60
         }
         
-        if adDetailObj.motorCatObj.model != ""
+        if viewsHeight > 10
         {
-            let makeView = createView(yAxis: specsHeight, text: "Model", value: adDetailObj.motorCatObj.model)
-            specsView.addSubview(makeView)
-            specsHeight += 65
-        }
-        
-        if adDetailObj.motorCatObj.year != ""
-        {
-            let view = createView(yAxis: specsHeight, text: "Year", value: adDetailObj.motorCatObj.year)
-            specsView.addSubview(view)
-            specsHeight += 65
-        }
-        
-        if adDetailObj.motorCatObj.mileage != ""
-        {
-            let view = createView(yAxis: specsHeight, text: "Mileage", value: adDetailObj.motorCatObj.mileage)
-            specsView.addSubview(view)
-            specsHeight += 65
-        }
-        
-        if adDetailObj.motorCatObj.bodyType != ""
-        {
-            let view = createView(yAxis: specsHeight, text: "Body Type", value: adDetailObj.motorCatObj.bodyType)
-            specsView.addSubview(view)
-            specsHeight += 65
-        }
-        
-        if adDetailObj.motorCatObj.fuelType != ""
-        {
-            let view = createView(yAxis: specsHeight, text: "Fuel Type", value: adDetailObj.motorCatObj.fuelType)
-            specsView.addSubview(view)
-            specsHeight += 65
-        }
-        
-        if adDetailObj.motorCatObj.transmission != ""
-        {
-            let view = createView(yAxis: specsHeight, text: "Transmission", value: adDetailObj.motorCatObj.transmission)
-            specsView.addSubview(view)
-            specsHeight += 65
-        }
-        
-        if adDetailObj.motorCatObj.colour != ""
-        {
-            let view = createView(yAxis: specsHeight, text: "Colour", value: adDetailObj.motorCatObj.colour)
-            specsView.addSubview(view)
-            specsHeight += 65
-        }
-        
-        if adDetailObj.motorCatObj.engineSize != ""
-        {
-            let view = createView(yAxis: specsHeight, text: "Engine Size", value: adDetailObj.motorCatObj.engineSize)
-            specsView.addSubview(view)
-            specsHeight += 65
-        }
-        
-        if adDetailObj.propertyCatObj.propertyType != ""
-        {
-            let view = createView(yAxis: specsHeight, text: "Property Type", value: adDetailObj.propertyCatObj.propertyType)
-            specsView.addSubview(view)
-            specsHeight += 65
-        }
-        
-        if adDetailObj.propertyCatObj.bedrooms != ""
-        {
-            let view = createView(yAxis: specsHeight, text: "No of Bedrooms", value: adDetailObj.propertyCatObj.bedrooms)
-            specsView.addSubview(view)
-            specsHeight += 65
-        }
-        
-        if adDetailObj.propertyCatObj.sellerType != ""
-        {
-            let view = createView(yAxis: specsHeight, text: "Seller Type", value: adDetailObj.propertyCatObj.sellerType)
-            specsView.addSubview(view)
-            specsHeight += 65
-        }
-        
-        if specsHeight > 10
-        {
-            height.constant = specsHeight
-            scrollView.contentSize = CGSize(width: 0, height: 720 + specsHeight)
-        }
-        else
-        {
-            if tabView != nil
-            {
-                tabView.removeFromSuperview()
-            }
+            specsViewHeight = viewsHeight
+            specsHeight.constant = specsViewHeight
         }
     }
     
     func createView(yAxis: CGFloat, text: String, value: String) -> UIView
     {
         let view = UIView()
-        view.frame = CGRect(x: 15, y: yAxis, width: screenWidth - 30, height: 50)
+        view.frame = CGRect(x: 15, y: yAxis, width: screenWidth - 30, height: 60)
         view.backgroundColor = .clear
         
         let lblText = UILabel()
-        lblText.frame = CGRect(x: 0, y: 15, width: 100, height: 20)
+        lblText.frame = CGRect(x: 0, y: 20, width: 100, height: 20)
         lblText.backgroundColor = .clear
         lblText.text = text
         lblText.font = UIFont.systemFont(ofSize: 15)
         lblText.textColor = UIColor(red: 130.0/255.0, green: 130.0/255.0, blue: 131.0/255.0, alpha: 1)
         
         let lblValue = UILabel()
-        lblValue.frame = CGRect(x: view.frame.width - 100, y: 15, width: 100, height: 20)
+        lblValue.frame = CGRect(x: view.frame.width - 200, y: 20, width: 200, height: 20)
         lblValue.backgroundColor = .clear
         lblValue.text = value
         lblValue.font = UIFont.systemFont(ofSize: 15)
@@ -354,7 +294,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
         lblValue.textColor = UIColor(red: 62.0/255.0, green: 49.0/255.0, blue: 66.0/255.0, alpha: 1)
         
         let lineView = UIView()
-        lineView.frame = CGRect(x: 0, y: 49.5, width: view.frame.width, height: 0.5)
+        lineView.frame = CGRect(x: 0, y: 59.5, width: view.frame.width, height: 0.5)
         lineView.backgroundColor = .lightGray
         lineView.alpha = 0.5
         
@@ -448,8 +388,24 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     
     @IBAction func favBtnAction(_ sender: Any)
     {
-        let parameter: [String: Any] = ["ad_id": adDetailDataObj.id ?? 0, "user_id" : userDetail?.id ?? 0]
-        self.makeAddFavourite(param: parameter as NSDictionary)
+        if defaults.bool(forKey: "isLogin") == false
+        {
+            let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+            let navController = UINavigationController(rootViewController: loginVC)
+            self.present(navController, animated:true, completion: nil)
+        }
+        else
+        {
+            if !adDetailDataObj.isFavorite
+            {
+                let parameter: [String: Any] = ["ad_id": adDetailDataObj.id ?? 0, "user_id" : userDetail?.id ?? 0]
+                self.makeAddFavourite(param: parameter as NSDictionary)
+            }
+            else
+            {
+                self.showToast(message: "This Ad is already in your favourites.")
+            }
+        }
     }
     
     @IBAction func readBtnAction(_ sender: Any)
@@ -492,18 +448,24 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
             }
             summaryBtn.setTitleColor(UIColor(red: 62.0/255.0, green: 49.0/255.0, blue: 66.0/255.0, alpha: 1), for: .normal)
             specsBtn.setTitleColor(UIColor(red: 131.0/255.0, green: 131.0/255.0, blue: 130.0/255.0, alpha: 1), for: .normal)
+            
             lblSummary.alpha = 1
+            specsView.alpha = 0
+            summaryViewHeight = 100
             let txtHeight = lblSummary.text?.html2AttributedString?.height(withConstrainedWidth: 345) ?? 0
             
             if txtHeight > 85.0
             {
                 readBtn.alpha = 1
-                height.constant = txtHeight + 55
+                summaryViewHeight = txtHeight + 55
             }
+            
+            height.constant = summaryViewHeight
+            scrollView.contentSize = CGSize(width: 0, height: 800 + summaryViewHeight)
+            
         }
         else
         {
-            readBtn.alpha = 0
             leading.constant = screenWidth/2
             UIView.animate(withDuration: 0.3) {
                 self.view.layoutIfNeeded()
@@ -511,12 +473,10 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
             specsBtn.setTitleColor(UIColor(red: 62.0/255.0, green: 49.0/255.0, blue: 66.0/255.0, alpha: 1), for: .normal)
             summaryBtn.setTitleColor(UIColor(red: 131.0/255.0, green: 131.0/255.0, blue: 130.0/255.0, alpha: 1), for: .normal)
             lblSummary.alpha = 0
-//            let txtHeight = lblSpecs.text?.html2AttributedString?.height(withConstrainedWidth: 345) ?? 0
-//
-//            if txtHeight > 85.0
-//            {
-//                height.constant = txtHeight
-//            }
+            readBtn.alpha = 0
+            specsView.alpha = 1
+            height.constant = specsViewHeight + 55
+            scrollView.contentSize = CGSize(width: 0, height: 800 + specsViewHeight)
         }
     }
     

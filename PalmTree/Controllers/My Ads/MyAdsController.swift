@@ -274,7 +274,7 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
             cell.btnLocation.setTitle(address, for: .normal)
         }
         
-        if let date = objData.created_at {
+        if let date = objData.createdAt {
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             let date = formatter.date(from: date)
@@ -295,7 +295,7 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
             self.presentVC(alert)
         }
         
-        if objData.is_featured
+        if objData.isFeatured
         {
             cell.lblPromotion.alpha = 1
             cell.promoteBtn.alpha = 0
@@ -308,8 +308,12 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
                 adDetailObj = AdDetailObject()
                 adDetailObj.adId = objData.id
                 adDetailObj.adTitle = objData.title
+                adDetailObj.adDesc = objData.description
+                adDetailObj.adPrice = objData.price
                 adDetailObj.location.address = objData.address
                 adDetailObj.adImages = objData.images
+                adDetailObj.location.address = objData.address
+                adDetailObj.location.country = objData.country
                 
                 let featuredVC = self.storyboard?.instantiateViewController(withIdentifier: "FeaturedVC") as! FeaturedVC
                 featuredVC.fromVC = "myads"
@@ -321,24 +325,26 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
             adDetailObj = AdDetailObject()
             adDetailObj.adId = objData.id
             adDetailObj.adTitle = objData.title
+            adDetailObj.adDesc = objData.description
             adDetailObj.location.address = objData.address
             adDetailObj.adPrice = objData.price
             adDetailObj.priceType = objData.price_type
-            adDetailObj.adDate = objData.created_at
+            adDetailObj.adDate = objData.createdAt
             adDetailObj.phone = objData.phone
             adDetailObj.whatsapp = objData.whatsapp
+            adDetailObj.location.country = objData.country
             
-            if objData.cat_parent != nil
+            if objData.catParent != nil
             {
-                adDetailObj.adSubCategory = objData.cat_name
-                adDetailObj.subcatID = objData.cat_id
-                adDetailObj.adCategory = objData.cat_parent
-                adDetailObj.catID = objData.cat_parent_id
+                adDetailObj.adSubCategory = objData.catName
+                adDetailObj.subcatID = objData.catID
+                adDetailObj.adCategory = objData.catParent
+                adDetailObj.catID = objData.catParentID
             }
             else
             {
-                adDetailObj.adCategory = objData.cat_name
-                adDetailObj.catID = objData.cat_id
+                adDetailObj.adCategory = objData.catName
+                adDetailObj.catID = objData.catID
             }
             
             adDetailObj.adImages = objData.images

@@ -10,7 +10,7 @@ import UIKit
 protocol AddDetailDelegate{
     func goToAddDetail(ad_id : Int)
     func goToAddDetailVC(detail : AdsJSON)
-    func addToFavourites(ad_id : Int)
+    func addToFavourites(ad_id : Int, favFlag: Bool)
 }
 class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -105,10 +105,18 @@ class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
         
         if defaults.bool(forKey: "isLogin") == true
         {
-            if objData.is_favorite
+            if objData.isFavorite
             {
-                cell.favBtn.setImage(UIImage(named: ""), for: .normal)
+                cell.favBtn.setImage(UIImage(named: "favourite_active"), for: .normal)
             }
+            else
+            {
+                cell.favBtn.setImage(UIImage(named: "favourite"), for: .normal)
+            }
+        }
+        else
+        {
+            cell.favBtn.setImage(UIImage(named: "favourite"), for: .normal)
         }
         
         cell.btnFullAction = { () in
@@ -116,7 +124,7 @@ class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
         }
         
         cell.favBtnAction = { () in
-            self.delegate?.addToFavourites(ad_id: objData.id)
+            self.delegate?.addToFavourites(ad_id: objData.id, favFlag: objData.isFavorite)
         }
         
         if languageCode == "ar"
@@ -124,8 +132,6 @@ class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
             cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             cell.lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
-        
-
         
         return cell
     }

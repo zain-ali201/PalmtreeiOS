@@ -96,7 +96,7 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
     {
         if textFiled.text != ""
         {
-            filteredArray = dataArray.filter({$0.contains(String(format: "%@",textFiled.text!))})
+            filteredArray = dataArray.filter({$0.localizedCaseInsensitiveContains(String(format: "%@",textFiled.text!))})
         }
         else
         {
@@ -104,6 +104,11 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
         }
         
         tblView.reloadData()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -190,27 +195,27 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
         }
         else if fromInd == "Make"
         {
-            adDetailObj.motorCatObj.make = dataArray[indexPath.row]
+            adDetailObj.motorCatObj.make = filteredArray[indexPath.row]
         }
         else if fromInd == "Body type"
         {
-            adDetailObj.motorCatObj.bodyType = dataArray[indexPath.row]
+            adDetailObj.motorCatObj.bodyType = filteredArray[indexPath.row]
         }
         else if fromInd == "Fuel Type"
         {
-            adDetailObj.motorCatObj.fuelType = dataArray[indexPath.row]
+            adDetailObj.motorCatObj.fuelType = filteredArray[indexPath.row]
         }
         else if fromInd == "Transmission"
         {
-            adDetailObj.motorCatObj.transmission = dataArray[indexPath.row]
+            adDetailObj.motorCatObj.transmission = filteredArray[indexPath.row]
         }
         else if fromInd == "Colour"
         {
-            adDetailObj.motorCatObj.colour = dataArray[indexPath.row]
+            adDetailObj.motorCatObj.colour = filteredArray[indexPath.row]
         }
         else if fromInd == "Property type"
         {
-            adDetailObj.propertyCatObj.propertyType = dataArray[indexPath.row]
+            adDetailObj.propertyCatObj.propertyType = filteredArray[indexPath.row]
         }
         
         self.navigationController?.popViewController(animated: true)

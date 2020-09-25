@@ -193,7 +193,7 @@ class FilterVC: UIViewController{
         
         if var recentList = UserDefaults.standard.array(forKey: "recentList") as? [[String: Any]]
         {
-            recentList.append(["title": "All Ads", "catID": cID, "catName": cName, "locationName": userDetail?.locationName ?? "UAE", "lat": userDetail?.lat ?? 0.0, "lng": userDetail?.lng ?? 0.0])
+            recentList.append(["title": "All Ads", "catID": cID, "catName": cName, "locationName": adDetailObj.location.address, "lat": userDetail?.lat ?? 0.0, "lng": userDetail?.lng ?? 0.0])
             UserDefaults.standard.set(recentList, forKey: "recentList")
         }
 //        else

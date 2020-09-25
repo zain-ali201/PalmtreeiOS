@@ -36,8 +36,6 @@ class AddsHandler {
     
     var objCategoryArray = [CategoryAd]()
     var objCategotyAdArray = [CategoryAd]()
-    
-    var objSearchCategory: SubCategoryData?
   
     var searchFieldType = ""
     var objSearchData : [SearchData]?
@@ -61,7 +59,6 @@ class AddsHandler {
     
     var isCategoeyTempelateOn = false
     var adPostAdId = 0
-    var selectedCategory:CategoryObject!
     
     var topLocationArray = [HomeAppTopLocation]()
     
@@ -134,7 +131,7 @@ class AddsHandler {
         let url = Constants.URL.baseUrl+Constants.URL.getMyAds+"/"+(parameter.value(forKey: "user_id") as! String)
         print(url)
         
-        NetworkHandler.getRequest(url: url, parameters: parameter as! Parameters, success: { (successResponse) in
+        NetworkHandler.getRequest(url: url, parameters: nil, success: { (successResponse) in
             let dictionary = successResponse as! [String: Any]
             let objAds = MyAdsRoot(fromDictionary: dictionary)
             success(objAds)
@@ -308,6 +305,18 @@ class AddsHandler {
     //MARK:- Delete My Ad
     class func deleteAdd(param: NSDictionary, success: @escaping(AddDeleteRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
         let url = Constants.URL.baseUrl+Constants.URL.deleteAdd
+        print(url)
+        NetworkHandler.postRequest(url: url, parameters: param as? Parameters, success: { (successResponse) in
+            let dictionary = successResponse as! [String: Any]
+            let objData = AddDeleteRoot(fromDictionary: dictionary)
+            success(objData)
+        }) { (error) in
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
+    class func deleteImage(param: NSDictionary, success: @escaping(AddDeleteRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
+        let url = Constants.URL.baseUrl+Constants.URL.deleteImage
         print(url)
         NetworkHandler.postRequest(url: url, parameters: param as? Parameters, success: { (successResponse) in
             let dictionary = successResponse as! [String: Any]

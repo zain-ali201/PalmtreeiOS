@@ -10,7 +10,7 @@ import Foundation
 
 struct AdPostSubCategoryValues {
     
-    var hasSub : Bool!
+    var hasSub : Int!
     var hasTemplate : Bool!
     var id : String!
     var isChecked : Bool!
@@ -21,7 +21,7 @@ struct AdPostSubCategoryValues {
      * Instantiate the instance using the passed dictionary values to set the properties values
      */
     init(fromDictionary dictionary: [String:Any]){
-        hasSub = dictionary["has_sub"] as? Bool
+        hasSub = dictionary["has_sub"] as? Int
         hasTemplate = dictionary["has_template"] as? Bool
         id = dictionary["id"] as? String
         isChecked = dictionary["is_checked"] as? Bool

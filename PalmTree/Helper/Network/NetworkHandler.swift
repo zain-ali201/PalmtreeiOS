@@ -24,7 +24,6 @@ class NetworkHandler {
         if Network.isAvailable {
             var headers: HTTPHeaders = [
                 "Accept": "application/json",
-                "Authorization" : String(format: "Bearer %@", defaults.string(forKey: "authToken") ?? ""),
                 "KEY": Constants.customCodes.appKey,
                 "Adforest-Request-From" : "ios"
             ] as! HTTPHeaders
@@ -102,7 +101,6 @@ class NetworkHandler {
             
             var headers: HTTPHeaders = [
                 "Accept": "application/json",
-                "Authorization" : String(format: "Bearer %@", defaults.string(forKey: "authToken") ?? ""),
                 "KEY": Constants.customCodes.appKey,
                 "Adforest-Request-From" : "ios"
             ] as! HTTPHeaders
@@ -134,7 +132,6 @@ class NetworkHandler {
         
         var headers: HTTPHeaders = [
             "Accept": "application/json",
-            "Authorization" : String(format: "Bearer %@", defaults.string(forKey: "authToken") ?? ""),
             "KEY": Constants.customCodes.appKey,
             "Adforest-Request-From" : "ios"
         ] as! HTTPHeaders
@@ -176,7 +173,6 @@ class NetworkHandler {
         
         var headers: HTTPHeaders = [
             "Accept": "application/json",
-            "Authorization" : String(format: "Bearer %@", defaults.string(forKey: "authToken") ?? ""),
             "KEY": Constants.customCodes.appKey,
             "Adforest-Request-From" : "ios"
         ] as! HTTPHeaders
@@ -195,7 +191,6 @@ class NetworkHandler {
         
         var headers: HTTPHeaders = [
             "Accept": "application/json",
-            "Authorization" : String(format: "Bearer %@", defaults.string(forKey: "authToken") ?? ""),
             "KEY": Constants.customCodes.appKey,
             "Adforest-Request-From" : "ios"
         ] as! HTTPHeaders
@@ -244,7 +239,6 @@ class NetworkHandler {
         
         let headers: HTTPHeaders = [
            "Accept": "application/json",
-           "Authorization" : String(format: "Bearer %@", defaults.string(forKey: "authToken") ?? ""),
            "KEY": Constants.customCodes.appKey,
            "Adforest-Request-From" : "ios"
         ] as! HTTPHeaders
@@ -264,6 +258,66 @@ class NetworkHandler {
                     print("Reduced..!\(image.description)")
                 }
             }
+            if let parameters = params {
+                for (key, value) in parameters {
+                    
+                    let valuesStr = String(format: "%@", value as! String)
+                    print("\(key), \(valuesStr)")
+                    multipartFormData.append(valuesStr.data(using: String.Encoding.utf8)!, withName: key)
+
+                }
+            }
+        }, usingThreshold: UInt64.init(), to: url, method: .post, headers: headers, encodingCompletion: { encodingResult in
+            switch encodingResult {
+            case .success(let upload, _, _):
+                upload.uploadProgress(closure: { (progress) in
+                    let progress = Int(progress.fractionCompleted * 100)
+                    uploadProgress(progress)
+                    
+                    
+                })
+                upload.responseJSON { response in
+                    let returnValue = response.result.value!
+                    if let userToken = response.response?.allHeaderFields["Authorization"] as? String {
+                        UserDefaults.standard.set(userToken, forKey: "userAuthToken")
+                        UserDefaults.standard.synchronize()
+                    }
+                    success(returnValue)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                var networkError = NetworkError()
+                
+                if error._code == NSURLErrorTimedOut {
+                    networkError.status = Constants.NetworkError.timout
+                    networkError.message = Constants.NetworkError.timoutError
+                    
+                    failure(networkError)
+                } else {
+                    networkError.status = Constants.NetworkError.generic
+                    networkError.message = Constants.NetworkError.genericError
+                    
+                    failure(networkError)
+                }
+            }
+        })
+    }
+    
+    class func uploadSingleImage(url: String, image: UIImage, fileName: String, params: Parameters?, uploadProgress: @escaping (Int) -> Void, success: @escaping (Any?) -> Void, failure: @escaping (NetworkError) -> Void) {
+        
+        let headers: HTTPHeaders = [
+           "Accept": "application/json",
+           "KEY": Constants.customCodes.appKey,
+           "Adforest-Request-From" : "ios"
+        ] as! HTTPHeaders
+        
+        print(headers)
+        
+        Alamofire.upload(multipartFormData:{ multipartFormData in
+            
+            let imageData = UIImageJPEGRepresentation(image, 1)
+            multipartFormData.append(imageData!,  withName: "img", fileName: "img.jpg" , mimeType: "image/jpeg")
+            
             if let parameters = params {
                 for (key, value) in parameters {
                     

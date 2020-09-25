@@ -39,6 +39,8 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
     @IBOutlet weak var buttonRegister: UIButton!
     @IBOutlet weak var lblPass: UILabel!
     
+    private let manager = UserManager()
+    
     //MARK:- Properties
     
     var isAgreeTerms = false
@@ -221,7 +223,21 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
                     defaults.set(successResponse.data.displayName, forKey: "displayName")
                     defaults.set(successResponse.data.id, forKey: "userID")
                     defaults.set(successResponse.data.userEmail, forKey: "userEmail")
-                    defaults.set(successResponse.authToken, forKey: "authToken")
+//                    defaults.set(successResponse.authToken, forKey: "authToken")
+                    
+                    let user = ObjectUser()
+                    user.name = userDetail?.displayName
+                    user.email = userDetail?.userEmail
+                    user.password = "Sprint1234!"
+//                    ThemeService.showLoading(true)
+                    manager.register(user: user) {[weak self] response in
+                      ThemeService.showLoading(false)
+                      switch response {
+                        case .failure: self?.showAlert()
+                        case .success: self?.dismiss(animated: true, completion: nil)
+                      }
+                    }
+                    
                     
                     self.dismiss(animated: true, completion: nil)
                 }

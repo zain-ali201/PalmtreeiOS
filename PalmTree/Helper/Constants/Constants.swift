@@ -36,7 +36,7 @@ class Constants
     struct  URL
     {
 //        static let baseUrl = "https://palmtreestore.net/wp-json/adforest/v1/"
-        static let imagesUrl = "http://sprintsols.com/palmtree/public/storage/images/"
+        static let imagesUrl = "https://sprintsols.com/palmtree/storage/app/public/images/"
         static let baseUrl = "https://sprintsols.com/palmtree/public/api/"
         
         static let homeData = "homeData"
@@ -82,6 +82,7 @@ class Constants
         
         static let removeFavouriteAd = "delFavorite"
         static let deleteAdd = "delPost"
+        static let deleteImage = "removeImage"
         static let featureAdd = "featureAd"
         static let addStatusChange = "ad/update/status"
         
@@ -108,6 +109,7 @@ class Constants
         static let adPostSubLocations = "post_ad/sublocations"
         
         static let adPostLive = "addPost"
+        static let adPostImage = "addPostImage"
         static let advanceSearch = "ad_post/search"
         static let subCategory = "ad_post/subcats"
         static let searchDynamic = "ad_post/dynamic_widget"

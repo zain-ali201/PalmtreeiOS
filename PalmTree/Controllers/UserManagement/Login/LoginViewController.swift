@@ -387,14 +387,25 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
 //                userDetail?.phone = successResponse.data.phone
 //                userDetail?.profileImg = successResponse.data.profileImg
                 userDetail?.userEmail = successResponse.data.userEmail
-                userDetail?.authToken = successResponse.authToken
+//                userDetail?.authToken = successResponse.authToken
                 
                 defaults.set(successResponse.data.displayName, forKey: "displayName")
                 defaults.set(successResponse.data.id, forKey: "userID")
 //                defaults.set(successResponse.data.phone, forKey: "phone")
 //                defaults.set(successResponse.data.profileImg, forKey: "profileImg")
                 defaults.set(successResponse.data.userEmail, forKey: "userEmail")
-                defaults.set(successResponse.authToken, forKey: "authToken")
+//                defaults.set(successResponse.authToken, forKey: "authToken")
+                
+                let user = ObjectUser()
+                user.email = userDetail?.userEmail
+                user.password = "Sprint1234!"
+                manager.login(user: user) {[weak self] response in
+                  ThemeService.showLoading(false)
+                  switch response {
+                  case .failure: self?.showAlert()
+                  case .success: self?.dismiss(animated: true, completion: nil)
+                  }
+                }
                 
                 if myAdsVC != nil
                 {

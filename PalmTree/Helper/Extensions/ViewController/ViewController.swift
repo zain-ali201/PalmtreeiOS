@@ -100,7 +100,7 @@ extension UIViewController {
         toastLabel.layer.cornerRadius = 10;
         toastLabel.clipsToBounds  =  true
         self.view.addSubview(toastLabel)
-        UIView.animate(withDuration: 6.0, delay: 0.3, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 2.0, delay: 0.3, options: .curveEaseOut, animations: {
             toastLabel.alpha = 0.0
         }, completion: {(isCompleted) in
             toastLabel.removeFromSuperview()

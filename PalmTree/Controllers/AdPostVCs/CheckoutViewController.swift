@@ -153,9 +153,8 @@ class CheckoutViewController: UIViewController, NVActivityIndicatorViewable
             "whatsapp": adDetailObj.whatsapp,
             "latitude": "",
             "longitude": "",
-            "address": "Palm Jumeirah",
-            "country": "Dubai",
-//                "address": adDetailObj.location.address,
+            "country": adDetailObj.location.country,
+            "address": adDetailObj.location.address,
             "is_featured": "1",
             "featured_date": formatter.string(from: Date()),
             "name": adDetailObj.adTitle,
@@ -164,8 +163,7 @@ class CheckoutViewController: UIViewController, NVActivityIndicatorViewable
             "title": adDetailObj.adTitle,
             "description" : adDetailObj.adDesc,
             "status" : "1",
-            "cat_id" : "1"
-//                "cat_id" : String(format: "%d", adDetailObj.subcatID > 0 ? adDetailObj.subcatID : adDetailObj.catID)
+            "cat_id" : String(format: "%d", adDetailObj.subcatID > 0 ? adDetailObj.subcatID : adDetailObj.catID)
                 ]
         
         var customDictionary: [String: Any] = [String: Any]()
