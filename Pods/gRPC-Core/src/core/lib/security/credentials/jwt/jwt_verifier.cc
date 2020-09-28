@@ -18,6 +18,8 @@
 
 #include <grpc/support/port_platform.h>
 
+#include "src/core/tsi/grpc_shadow_boringssl.h"
+
 #include "src/core/lib/security/credentials/jwt/jwt_verifier.h"
 
 #include <limits.h>
@@ -98,7 +100,9 @@ static Json parse_json_part_from_jwt(const char* str, size_t len) {
     gpr_log(GPR_ERROR, "Invalid base64.");
     return Json();  // JSON null
   }
-  absl::string_view string = grpc_core::StringViewFromSlice(slice);
+  grpc_core::StringView string(
+      reinterpret_cast<char*>(GRPC_SLICE_START_PTR(slice)),
+      GRPC_SLICE_LENGTH(slice));
   grpc_error* error = GRPC_ERROR_NONE;
   Json json = Json::Parse(string, &error);
   if (error != GRPC_ERROR_NONE) {
@@ -130,13 +134,14 @@ static gpr_timespec validate_time_field(const Json& json, const char* key) {
 
 /* --- JOSE header. see http://tools.ietf.org/html/rfc7515#section-4 --- */
 
-struct jose_header {
+typedef struct {
   const char* alg;
   const char* kid;
   const char* typ;
   /* TODO(jboeuf): Add others as needed (jku, jwk, x5u, x5c and so on...). */
   grpc_core::ManualConstructor<Json> json;
-};
+} jose_header;
+
 static void jose_header_destroy(jose_header* h) {
   h->json.Destroy();
   gpr_free(h);
@@ -346,7 +351,7 @@ typedef enum {
   HTTP_RESPONSE_COUNT /* must be last */
 } http_response_index;
 
-struct verifier_cb_ctx {
+typedef struct {
   grpc_jwt_verifier* verifier;
   grpc_polling_entity pollent;
   jose_header* header;
@@ -357,7 +362,8 @@ struct verifier_cb_ctx {
   void* user_data;
   grpc_jwt_verification_done_cb user_cb;
   grpc_http_response responses[HTTP_RESPONSE_COUNT];
-};
+} verifier_cb_ctx;
+
 /* Takes ownership of the header, claims and signature. */
 static verifier_cb_ctx* verifier_cb_ctx_create(
     grpc_jwt_verifier* verifier, grpc_pollset* pollset, jose_header* header,
@@ -402,10 +408,11 @@ gpr_timespec grpc_jwt_verifier_clock_skew = {60, 0, GPR_TIMESPAN};
 /* Max delay defaults to one minute. */
 grpc_millis grpc_jwt_verifier_max_delay = 60 * GPR_MS_PER_SEC;
 
-struct email_key_mapping {
+typedef struct {
   char* email_domain;
   char* key_url_prefix;
-};
+} email_key_mapping;
+
 struct grpc_jwt_verifier {
   email_key_mapping* mappings;
   size_t num_mappings; /* Should be very few, linear search ok. */
@@ -425,7 +432,7 @@ static Json json_from_http(const grpc_httpcli_response* response) {
   }
   grpc_error* error = GRPC_ERROR_NONE;
   Json json = Json::Parse(
-      absl::string_view(response->body, response->body_length), &error);
+      grpc_core::StringView(response->body, response->body_length), &error);
   if (error != GRPC_ERROR_NONE) {
     gpr_log(GPR_ERROR, "Invalid JSON found in response.");
     return Json();  // JSON null

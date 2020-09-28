@@ -29,28 +29,10 @@
 
 /** -- gRPC TLS key materials config API implementation. -- **/
 void grpc_tls_key_materials_config::set_key_materials(
-    const char* pem_root_certs,
-    const grpc_ssl_pem_key_cert_pair** pem_key_cert_pairs,
-    size_t num_key_cert_pairs) {
-  this->set_pem_root_certs(pem_root_certs);
-  grpc_tls_key_materials_config::PemKeyCertPairList cert_pair_list;
-  for (size_t i = 0; i < num_key_cert_pairs; i++) {
-    auto current_pair = static_cast<grpc_ssl_pem_key_cert_pair*>(
-        gpr_zalloc(sizeof(grpc_ssl_pem_key_cert_pair)));
-    current_pair->cert_chain = gpr_strdup(pem_key_cert_pairs[i]->cert_chain);
-    current_pair->private_key = gpr_strdup(pem_key_cert_pairs[i]->private_key);
-    cert_pair_list.emplace_back(grpc_core::PemKeyCertPair(current_pair));
-  }
-  pem_key_cert_pair_list_ = std::move(cert_pair_list);
-}
-
-void grpc_tls_key_materials_config::set_key_materials(
-    const char* pem_root_certs,
-    const PemKeyCertPairList& pem_key_cert_pair_list) {
-  this->set_pem_root_certs(pem_root_certs);
-  grpc_tls_key_materials_config::PemKeyCertPairList dup_list(
-      pem_key_cert_pair_list);
-  pem_key_cert_pair_list_ = std::move(dup_list);
+    grpc_core::UniquePtr<char> pem_root_certs,
+    PemKeyCertPairList pem_key_cert_pair_list) {
+  pem_key_cert_pair_list_ = std::move(pem_key_cert_pair_list);
+  pem_root_certs_ = std::move(pem_root_certs);
 }
 
 /** -- gRPC TLS credential reload config API implementation. -- **/
@@ -183,7 +165,15 @@ int grpc_tls_key_materials_config_set_key_materials(
             "grpc_tls_key_materials_config_set_key_materials()");
     return 0;
   }
-  config->set_key_materials(root_certs, key_cert_pairs, num);
+  grpc_core::UniquePtr<char> pem_root(const_cast<char*>(root_certs));
+  grpc_tls_key_materials_config::PemKeyCertPairList cert_pair_list;
+  for (size_t i = 0; i < num; i++) {
+    grpc_core::PemKeyCertPair key_cert_pair(
+        const_cast<grpc_ssl_pem_key_cert_pair*>(key_cert_pairs[i]));
+    cert_pair_list.emplace_back(std::move(key_cert_pair));
+  }
+  config->set_key_materials(std::move(pem_root), std::move(cert_pair_list));
+  gpr_free(key_cert_pairs);
   return 1;
 }
 

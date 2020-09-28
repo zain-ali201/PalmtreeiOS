@@ -24,16 +24,12 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "absl/container/inlined_vector.h"
-#include "absl/strings/str_cat.h"
-
 #include <grpc/support/alloc.h>
 #include <grpc/support/string_util.h>
 
 #include <address_sorting/address_sorting.h>
 
 #include "src/core/ext/filters/client_channel/http_connect_handshaker.h"
-#include "src/core/ext/filters/client_channel/lb_policy/grpclb/grpclb_balancer_addresses.h"
 #include "src/core/ext/filters/client_channel/lb_policy_registry.h"
 #include "src/core/ext/filters/client_channel/resolver/dns/c_ares/grpc_ares_wrapper.h"
 #include "src/core/ext/filters/client_channel/resolver/dns/dns_resolver_selection.h"
@@ -44,11 +40,11 @@
 #include "src/core/lib/channel/channel_args.h"
 #include "src/core/lib/gpr/string.h"
 #include "src/core/lib/gprpp/manual_constructor.h"
+#include "src/core/lib/iomgr/combiner.h"
 #include "src/core/lib/iomgr/gethostname.h"
 #include "src/core/lib/iomgr/iomgr_custom.h"
 #include "src/core/lib/iomgr/resolve_address.h"
 #include "src/core/lib/iomgr/timer.h"
-#include "src/core/lib/iomgr/work_serializer.h"
 #include "src/core/lib/json/json.h"
 
 #define GRPC_DNS_INITIAL_CONNECT_BACKOFF_SECONDS 1
@@ -82,8 +78,8 @@ class AresDnsResolver : public Resolver {
 
   static void OnNextResolution(void* arg, grpc_error* error);
   static void OnResolved(void* arg, grpc_error* error);
-  void OnNextResolutionLocked(grpc_error* error);
-  void OnResolvedLocked(grpc_error* error);
+  static void OnNextResolutionLocked(void* arg, grpc_error* error);
+  static void OnResolvedLocked(void* arg, grpc_error* error);
 
   /// DNS server to use (if not system default)
   char* dns_server_;
@@ -95,7 +91,7 @@ class AresDnsResolver : public Resolver {
   bool request_service_config_;
   /// pollset_set to drive the name resolution process
   grpc_pollset_set* interested_parties_;
-  /// closures used by the work_serializer
+  /// closures used by the combiner
   grpc_closure on_next_resolution_;
   grpc_closure on_resolved_;
   /// are we currently resolving?
@@ -111,10 +107,8 @@ class AresDnsResolver : public Resolver {
   grpc_millis last_resolution_timestamp_ = -1;
   /// retry backoff state
   BackOff backoff_;
-  /// currently resolving backend addresses
+  /// currently resolving addresses
   std::unique_ptr<ServerAddressList> addresses_;
-  /// currently resolving balancer addresses
-  std::unique_ptr<ServerAddressList> balancer_addresses_;
   /// currently resolving service config
   char* service_config_json_ = nullptr;
   // has shutdown been initiated
@@ -126,7 +120,7 @@ class AresDnsResolver : public Resolver {
 };
 
 AresDnsResolver::AresDnsResolver(ResolverArgs args)
-    : Resolver(std::move(args.work_serializer), std::move(args.result_handler)),
+    : Resolver(args.combiner, std::move(args.result_handler)),
       backoff_(
           BackOff::Options()
               .set_initial_backoff(GRPC_DNS_INITIAL_CONNECT_BACKOFF_SECONDS *
@@ -134,10 +128,6 @@ AresDnsResolver::AresDnsResolver(ResolverArgs args)
               .set_multiplier(GRPC_DNS_RECONNECT_BACKOFF_MULTIPLIER)
               .set_jitter(GRPC_DNS_RECONNECT_JITTER)
               .set_max_backoff(GRPC_DNS_RECONNECT_MAX_BACKOFF_SECONDS * 1000)) {
-  // Closure Initialization
-  GRPC_CLOSURE_INIT(&on_next_resolution_, OnNextResolution, this,
-                    grpc_schedule_on_exec_ctx);
-  GRPC_CLOSURE_INIT(&on_resolved_, OnResolved, this, grpc_schedule_on_exec_ctx);
   // Get name to resolve from URI path.
   const char* path = args.uri->path;
   if (path[0] == '/') ++path;
@@ -211,26 +201,26 @@ void AresDnsResolver::ShutdownLocked() {
 
 void AresDnsResolver::OnNextResolution(void* arg, grpc_error* error) {
   AresDnsResolver* r = static_cast<AresDnsResolver*>(arg);
-  GRPC_ERROR_REF(error);  // ref owned by lambda
-  r->work_serializer()->Run([r, error]() { r->OnNextResolutionLocked(error); },
-                            DEBUG_LOCATION);
+  r->combiner()->Run(GRPC_CLOSURE_INIT(&r->on_next_resolution_,
+                                       OnNextResolutionLocked, r, nullptr),
+                     GRPC_ERROR_REF(error));
 }
 
-void AresDnsResolver::OnNextResolutionLocked(grpc_error* error) {
+void AresDnsResolver::OnNextResolutionLocked(void* arg, grpc_error* error) {
+  AresDnsResolver* r = static_cast<AresDnsResolver*>(arg);
   GRPC_CARES_TRACE_LOG(
       "resolver:%p re-resolution timer fired. error: %s. shutdown_initiated_: "
       "%d",
-      this, grpc_error_string(error), shutdown_initiated_);
-  have_next_resolution_timer_ = false;
-  if (error == GRPC_ERROR_NONE && !shutdown_initiated_) {
-    if (!resolving_) {
+      r, grpc_error_string(error), r->shutdown_initiated_);
+  r->have_next_resolution_timer_ = false;
+  if (error == GRPC_ERROR_NONE && !r->shutdown_initiated_) {
+    if (!r->resolving_) {
       GRPC_CARES_TRACE_LOG(
-          "resolver:%p start resolving due to re-resolution timer", this);
-      StartResolvingLocked();
+          "resolver:%p start resolving due to re-resolution timer", r);
+      r->StartResolvingLocked();
     }
   }
-  Unref(DEBUG_LOCATION, "next_resolution_timer");
-  GRPC_ERROR_UNREF(error);
+  r->Unref(DEBUG_LOCATION, "next_resolution_timer");
 }
 
 bool ValueInJsonArray(const Json::Array& array, const char* value) {
@@ -252,7 +242,7 @@ std::string ChooseServiceConfig(char* service_config_choice_json,
     return "";
   }
   const Json* service_config = nullptr;
-  absl::InlinedVector<grpc_error*, 4> error_list;
+  InlinedVector<grpc_error*, 4> error_list;
   for (const Json& choice : json.array_value()) {
     if (choice.type() != Json::Type::OBJECT) {
       error_list.push_back(GRPC_ERROR_CREATE_FROM_STATIC_STRING(
@@ -323,81 +313,72 @@ std::string ChooseServiceConfig(char* service_config_choice_json,
 
 void AresDnsResolver::OnResolved(void* arg, grpc_error* error) {
   AresDnsResolver* r = static_cast<AresDnsResolver*>(arg);
-  GRPC_ERROR_REF(error);  // ref owned by lambda
-  r->work_serializer()->Run([r, error]() { r->OnResolvedLocked(error); },
-                            DEBUG_LOCATION);
+  r->combiner()->Run(
+      GRPC_CLOSURE_INIT(&r->on_resolved_, OnResolvedLocked, r, nullptr),
+      GRPC_ERROR_REF(error));
 }
 
-void AresDnsResolver::OnResolvedLocked(grpc_error* error) {
-  GPR_ASSERT(resolving_);
-  resolving_ = false;
-  gpr_free(pending_request_);
-  pending_request_ = nullptr;
-  if (shutdown_initiated_) {
-    Unref(DEBUG_LOCATION, "OnResolvedLocked() shutdown");
-    GRPC_ERROR_UNREF(error);
+void AresDnsResolver::OnResolvedLocked(void* arg, grpc_error* error) {
+  AresDnsResolver* r = static_cast<AresDnsResolver*>(arg);
+  GPR_ASSERT(r->resolving_);
+  r->resolving_ = false;
+  gpr_free(r->pending_request_);
+  r->pending_request_ = nullptr;
+  if (r->shutdown_initiated_) {
+    r->Unref(DEBUG_LOCATION, "OnResolvedLocked() shutdown");
     return;
   }
-  if (addresses_ != nullptr || balancer_addresses_ != nullptr) {
+  if (r->addresses_ != nullptr) {
     Result result;
-    if (addresses_ != nullptr) {
-      result.addresses = std::move(*addresses_);
-    }
-    if (service_config_json_ != nullptr) {
+    result.addresses = std::move(*r->addresses_);
+    if (r->service_config_json_ != nullptr) {
       std::string service_config_string = ChooseServiceConfig(
-          service_config_json_, &result.service_config_error);
-      gpr_free(service_config_json_);
+          r->service_config_json_, &result.service_config_error);
+      gpr_free(r->service_config_json_);
       if (result.service_config_error == GRPC_ERROR_NONE &&
           !service_config_string.empty()) {
         GRPC_CARES_TRACE_LOG("resolver:%p selected service config choice: %s",
-                             this, service_config_string.c_str());
+                             r, service_config_string.c_str());
         result.service_config = ServiceConfig::Create(
             service_config_string, &result.service_config_error);
       }
     }
-    absl::InlinedVector<grpc_arg, 1> new_args;
-    if (balancer_addresses_ != nullptr) {
-      new_args.push_back(
-          CreateGrpclbBalancerAddressesArg(balancer_addresses_.get()));
-    }
-    result.args = grpc_channel_args_copy_and_add(channel_args_, new_args.data(),
-                                                 new_args.size());
-    result_handler()->ReturnResult(std::move(result));
-    addresses_.reset();
-    balancer_addresses_.reset();
+    result.args = grpc_channel_args_copy(r->channel_args_);
+    r->result_handler()->ReturnResult(std::move(result));
+    r->addresses_.reset();
     // Reset backoff state so that we start from the beginning when the
     // next request gets triggered.
-    backoff_.Reset();
+    r->backoff_.Reset();
   } else {
-    GRPC_CARES_TRACE_LOG("resolver:%p dns resolution failed: %s", this,
+    GRPC_CARES_TRACE_LOG("resolver:%p dns resolution failed: %s", r,
                          grpc_error_string(error));
-    std::string error_message =
-        absl::StrCat("DNS resolution failed for service: ", name_to_resolve_);
-    result_handler()->ReturnError(grpc_error_set_int(
-        GRPC_ERROR_CREATE_REFERENCING_FROM_COPIED_STRING(error_message.c_str(),
-                                                         &error, 1),
+    r->result_handler()->ReturnError(grpc_error_set_int(
+        GRPC_ERROR_CREATE_REFERENCING_FROM_STATIC_STRING(
+            "DNS resolution failed", &error, 1),
         GRPC_ERROR_INT_GRPC_STATUS, GRPC_STATUS_UNAVAILABLE));
     // Set retry timer.
-    grpc_millis next_try = backoff_.NextAttemptTime();
+    grpc_millis next_try = r->backoff_.NextAttemptTime();
     grpc_millis timeout = next_try - ExecCtx::Get()->Now();
     GRPC_CARES_TRACE_LOG("resolver:%p dns resolution failed (will retry): %s",
-                         this, grpc_error_string(error));
-    GPR_ASSERT(!have_next_resolution_timer_);
-    have_next_resolution_timer_ = true;
+                         r, grpc_error_string(error));
+    GPR_ASSERT(!r->have_next_resolution_timer_);
+    r->have_next_resolution_timer_ = true;
     // TODO(roth): We currently deal with this ref manually.  Once the
     // new closure API is done, find a way to track this ref with the timer
     // callback as part of the type system.
-    Ref(DEBUG_LOCATION, "retry-timer").release();
+    r->Ref(DEBUG_LOCATION, "retry-timer").release();
     if (timeout > 0) {
       GRPC_CARES_TRACE_LOG("resolver:%p retrying in %" PRId64 " milliseconds",
-                           this, timeout);
+                           r, timeout);
     } else {
-      GRPC_CARES_TRACE_LOG("resolver:%p retrying immediately", this);
+      GRPC_CARES_TRACE_LOG("resolver:%p retrying immediately", r);
     }
-    grpc_timer_init(&next_resolution_timer_, next_try, &on_next_resolution_);
+    GRPC_CLOSURE_INIT(&r->on_next_resolution_, OnNextResolution, r,
+                      grpc_schedule_on_exec_ctx);
+    grpc_timer_init(&r->next_resolution_timer_, next_try,
+                    &r->on_next_resolution_);
   }
-  Unref(DEBUG_LOCATION, "dns-resolving");
-  GRPC_ERROR_UNREF(error);
+  r->Unref(DEBUG_LOCATION, "dns-resolving");
 }
 
 void AresDnsResolver::MaybeStartResolvingLocked() {
@@ -421,6 +402,8 @@ void AresDnsResolver::MaybeStartResolvingLocked() {
       // new closure API is done, find a way to track this ref with the timer
       // callback as part of the type system.
       Ref(DEBUG_LOCATION, "next_resolution_timer_cooldown").release();
+      GRPC_CLOSURE_INIT(&on_next_resolution_, OnNextResolution, this,
+                        grpc_schedule_on_exec_ctx);
       grpc_timer_init(&next_resolution_timer_,
                       ExecCtx::Get()->Now() + ms_until_next_resolution,
                       &on_next_resolution_);
@@ -438,12 +421,12 @@ void AresDnsResolver::StartResolvingLocked() {
   GPR_ASSERT(!resolving_);
   resolving_ = true;
   service_config_json_ = nullptr;
+  GRPC_CLOSURE_INIT(&on_resolved_, OnResolved, this, grpc_schedule_on_exec_ctx);
   pending_request_ = grpc_dns_lookup_ares_locked(
       dns_server_, name_to_resolve_, kDefaultPort, interested_parties_,
-      &on_resolved_, &addresses_,
-      enable_srv_queries_ ? &balancer_addresses_ : nullptr,
+      &on_resolved_, &addresses_, enable_srv_queries_ /* check_grpclb */,
       request_service_config_ ? &service_config_json_ : nullptr,
-      query_timeout_ms_, work_serializer());
+      query_timeout_ms_, combiner());
   last_resolution_timestamp_ = grpc_core::ExecCtx::Get()->Now();
   GRPC_CARES_TRACE_LOG("resolver:%p Started resolving. pending_request_:%p",
                        this, pending_request_);

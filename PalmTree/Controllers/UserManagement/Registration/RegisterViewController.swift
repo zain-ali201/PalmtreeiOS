@@ -223,23 +223,27 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
                     defaults.set(successResponse.data.displayName, forKey: "displayName")
                     defaults.set(successResponse.data.id, forKey: "userID")
                     defaults.set(successResponse.data.userEmail, forKey: "userEmail")
-//                    defaults.set(successResponse.authToken, forKey: "authToken")
                     
-                    let user = ObjectUser()
-                    user.name = userDetail?.displayName
-                    user.email = userDetail?.userEmail
-                    user.password = "Sprint1234!"
-//                    ThemeService.showLoading(true)
-                    manager.register(user: user) {[weak self] response in
-                      ThemeService.showLoading(false)
-                      switch response {
-                        case .failure: self?.showAlert()
-                        case .success: self?.dismiss(animated: true, completion: nil)
-                      }
+                    DispatchQueue.main.async {
+                    
+                        let user = ObjectUser()
+                        user.name = userDetail?.displayName
+                        user.email = userDetail?.userEmail
+                        user.password = "Sprint1234!"
+                        
+                        self.manager.register(user: user) {[weak self] response in
+                          ThemeService.showLoading(false)
+                          switch response {
+                            case .failure: self?.showAlert()
+                            case .success:
+                                self?.sendChatToken(chatToken: self?.manager.currentUserID() ?? "")
+                          }
+                        }
                     }
                     
-                    
-                    self.dismiss(animated: true, completion: nil)
+                    DispatchQueue.main.async {
+                        self.dismiss(animated: true, completion: nil)
+                    }
                 }
             }
             else {
@@ -249,6 +253,23 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
         }) { (error) in
             let alert = Constants.showBasicAlert(message: error.message)
             self.presentVC(alert)
+        }
+    }
+    
+    func sendChatToken(chatToken: String) {
+        
+        if chatToken != ""
+        {
+            let param: [String: Any] = ["fc_token": chatToken, "user_id": userDetail?.id ?? 0]
+            print(param)
+            AddsHandler.sendFirebaseChatToken(parameter: param as NSDictionary, success: { (successResponse) in
+                
+                print(successResponse)
+            }) { (error) in
+                self.stopAnimating()
+                let alert = Constants.showBasicAlert(message: error.message)
+                self.presentVC(alert)
+            }
         }
     }
 }

@@ -33,6 +33,13 @@ class ConversationManager {
       completion(results)
     }
   }
+    
+    func fetchConversation(_ userID: String, _ completion: @escaping CompletionObject<[ObjectConversation]>) {
+      let query = FirestoreService.DataQuery(key: "userIDs", value: userID, mode: .contains)
+      service.objectWithListener(ObjectConversation.self, parameter: query, reference: .init(location: .conversations)) { results in
+        completion(results)
+      }
+    }
   
   func create(_ conversation: ObjectConversation, _ completion: CompletionObject<FirestoreResponse>? = nil) {
     FirestoreService().update(conversation, reference: .init(location: .conversations)) { completion?($0) }

@@ -60,14 +60,6 @@ class ImagePickerService: NSObject, UIImagePickerControllerDelegate, UINavigatio
   }
   
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-    picker.dismiss(animated: true) {
-      if let image = info[.editedImage] as? UIImage {
-        self.completionBlock?(image.fixOrientation())
-        return
-      }
-      if let image = info[.originalImage] as? UIImage {
-        self.completionBlock?(image.fixOrientation())
-      }
-    }
+    
   }
 }

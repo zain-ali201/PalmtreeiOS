@@ -15,7 +15,7 @@
 #include <stdint.h>
 #include <string.h>
 
-#include <openssl_grpc/siphash.h>
+#include <openssl/siphash.h>
 
 #include "../internal.h"
 

@@ -171,6 +171,7 @@ struct AdsJSON
     var email : String!
     var catName : String!
     var catParent : String!
+    var chatToken : String!
     var images : [ImageJSON]!
     var customFields : [CustomFieldsJSON]!
     /**
@@ -201,6 +202,7 @@ struct AdsJSON
         userjoin = dictionary["userjoin"] as? String
         email = dictionary["email"] as? String
         catName = dictionary["cat_name"] as? String
+        chatToken = dictionary["fc_token"] as? String
         catParent = dictionary["cat_parent"] as? String
         
         images = [ImageJSON]()
@@ -324,6 +326,10 @@ struct AdsJSON
             dictionary["cat_parent"] = catParent
         }
         
+        if chatToken != nil{
+            dictionary["fc_token"] = chatToken
+        }
+        
         if images != nil{
             var dictionaryElements = [[String:Any]]()
             for imageElement in images {
@@ -414,7 +420,6 @@ struct ImageJSON
         if url != nil{
             dictionary["url"] = url
         }
-        
         
         return dictionary
     }

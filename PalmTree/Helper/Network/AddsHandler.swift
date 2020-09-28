@@ -111,6 +111,19 @@ class AddsHandler {
              failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
         }
     }
+    
+    //MARK:- Send Firebase Chat Token To Server
+    class func sendFirebaseChatToken(parameter: NSDictionary, success: @escaping(FirebaseTokenRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
+        let url = Constants.URL.baseUrl+Constants.URL.updateChatToken
+        print(url)
+        NetworkHandler.postRequest(url: url, parameters: parameter as? Parameters, success: { (successResponse) in
+            let dictionary = successResponse as! [String: Any]
+            let objFirebase = FirebaseTokenRoot(fromDictionary: dictionary)
+            success(objFirebase)
+        }) { (error) in
+             failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
 
     //MARK:- Category Data
     class func searchAds(param: NSDictionary, success: @escaping(MyAdsRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
@@ -139,8 +152,6 @@ class AddsHandler {
             failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
         }
     }
-    
-    
     
     //MARK:- Get More My Ads Data
     

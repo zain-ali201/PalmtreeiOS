@@ -23,9 +23,6 @@
 #include <stdbool.h>
 #include <string.h>
 
-#include "absl/strings/str_cat.h"
-#include "absl/strings/string_view.h"
-
 #include <grpc/grpc.h>
 #include <grpc/support/alloc.h>
 #include <grpc/support/log.h>
@@ -65,75 +62,64 @@ tsi_ssl_pem_key_cert_pair* ConvertToTsiPemKeyCertPair(
 
 }  // namespace
 
+/** -- Util function to fetch TLS server/channel credentials. -- */
 grpc_status_code TlsFetchKeyMaterials(
     const grpc_core::RefCountedPtr<grpc_tls_key_materials_config>&
         key_materials_config,
-    const grpc_tls_credentials_options& options, bool is_server,
-    grpc_ssl_certificate_config_reload_status* status) {
+    const grpc_tls_credentials_options& options, bool server_config,
+    grpc_ssl_certificate_config_reload_status* reload_status) {
   GPR_ASSERT(key_materials_config != nullptr);
-  GPR_ASSERT(status != nullptr);
   bool is_key_materials_empty =
       key_materials_config->pem_key_cert_pair_list().empty();
-  grpc_tls_credential_reload_config* credential_reload_config =
-      options.credential_reload_config();
-  /** If there are no key materials and no credential reload config and the
-   *  caller is a server, then return an error. We do not require that a client
-   *  always provision certificates. **/
-  if (credential_reload_config == nullptr && is_key_materials_empty &&
-      is_server) {
+  if (options.credential_reload_config() == nullptr && is_key_materials_empty &&
+      server_config) {
     gpr_log(GPR_ERROR,
             "Either credential reload config or key materials should be "
             "provisioned.");
     return GRPC_STATUS_FAILED_PRECONDITION;
   }
-  grpc_status_code reload_status = GRPC_STATUS_OK;
-  /** Use |credential_reload_config| to update |key_materials_config|. **/
-  if (credential_reload_config != nullptr) {
+  grpc_status_code status = GRPC_STATUS_OK;
+  /* Use credential reload config to fetch credentials. */
+  if (options.credential_reload_config() != nullptr) {
     grpc_tls_credential_reload_arg* arg = new grpc_tls_credential_reload_arg();
     arg->key_materials_config = key_materials_config.get();
-    arg->error_details = new grpc_tls_error_details();
-    int result = credential_reload_config->Schedule(arg);
+    int result = options.credential_reload_config()->Schedule(arg);
     if (result) {
-      /** Credential reloading is performed async. This is not yet supported.
-       * **/
+      /* Do not support async credential reload. */
       gpr_log(GPR_ERROR, "Async credential reload is unsupported now.");
-      *status = GRPC_SSL_CERTIFICATE_CONFIG_RELOAD_UNCHANGED;
-      reload_status =
+      status =
           is_key_materials_empty ? GRPC_STATUS_UNIMPLEMENTED : GRPC_STATUS_OK;
     } else {
-      /** Credential reloading is performed sync. **/
-      *status = arg->status;
+      GPR_ASSERT(reload_status != nullptr);
+      *reload_status = arg->status;
       if (arg->status == GRPC_SSL_CERTIFICATE_CONFIG_RELOAD_UNCHANGED) {
         /* Key materials is not empty. */
         gpr_log(GPR_DEBUG, "Credential does not change after reload.");
       } else if (arg->status == GRPC_SSL_CERTIFICATE_CONFIG_RELOAD_FAIL) {
         gpr_log(GPR_ERROR, "Credential reload failed with an error:");
         if (arg->error_details != nullptr) {
-          gpr_log(GPR_ERROR, "%s", arg->error_details->error_details().c_str());
+          gpr_log(GPR_ERROR, "%s", arg->error_details);
         }
-        reload_status =
-            is_key_materials_empty ? GRPC_STATUS_INTERNAL : GRPC_STATUS_OK;
+        status = is_key_materials_empty ? GRPC_STATUS_INTERNAL : GRPC_STATUS_OK;
       }
     }
-    delete arg->error_details;
-    /** If the credential reload config was constructed via a wrapped language,
-     *  then |arg->context| and |arg->destroy_context| will not be nullptr. In
-     *  this case, we must destroy |arg->context|, which stores the wrapped
-     *  language-version of the credential reload arg. **/
+    gpr_free((void*)arg->error_details);
     if (arg->destroy_context != nullptr) {
       arg->destroy_context(arg->context);
     }
     delete arg;
   }
-  return reload_status;
+  return status;
 }
 
 grpc_error* TlsCheckHostName(const char* peer_name, const tsi_peer* peer) {
   /* Check the peer name if specified. */
   if (peer_name != nullptr && !grpc_ssl_host_matches_name(peer, peer_name)) {
-    return GRPC_ERROR_CREATE_FROM_COPIED_STRING(
-        absl::StrCat("Peer name ", peer_name, " is not in peer certificate")
-            .c_str());
+    char* msg;
+    gpr_asprintf(&msg, "Peer name %s is not in peer certificate", peer_name);
+    grpc_error* error = GRPC_ERROR_CREATE_FROM_COPIED_STRING(msg);
+    gpr_free(msg);
+    return error;
   }
   return GRPC_ERROR_NONE;
 }
@@ -145,14 +131,15 @@ TlsChannelSecurityConnector::TlsChannelSecurityConnector(
     : grpc_channel_security_connector(GRPC_SSL_URL_SCHEME,
                                       std::move(channel_creds),
                                       std::move(request_metadata_creds)),
-      overridden_target_name_(
-          overridden_target_name == nullptr ? "" : overridden_target_name) {
+      overridden_target_name_(overridden_target_name == nullptr
+                                  ? nullptr
+                                  : gpr_strdup(overridden_target_name)) {
   key_materials_config_ = grpc_tls_key_materials_config_create()->Ref();
   check_arg_ = ServerAuthorizationCheckArgCreate(this);
-  absl::string_view host;
-  absl::string_view port;
+  grpc_core::StringView host;
+  grpc_core::StringView port;
   grpc_core::SplitHostPort(target_name, &host, &port);
-  target_name_ = std::string(host);
+  target_name_ = grpc_core::StringViewToCString(host);
 }
 
 TlsChannelSecurityConnector::~TlsChannelSecurityConnector() {
@@ -176,8 +163,8 @@ void TlsChannelSecurityConnector::add_handshakers(
   tsi_handshaker* tsi_hs = nullptr;
   tsi_result result = tsi_ssl_client_handshaker_factory_create_handshaker(
       client_handshaker_factory_,
-      overridden_target_name_.empty() ? target_name_.c_str()
-                                      : overridden_target_name_.c_str(),
+      overridden_target_name_ != nullptr ? overridden_target_name_.get()
+                                         : target_name_.get(),
       &tsi_hs);
   if (result != TSI_OK) {
     gpr_log(GPR_ERROR, "Handshaker creation failed with error %s.",
@@ -192,9 +179,9 @@ void TlsChannelSecurityConnector::check_peer(
     tsi_peer peer, grpc_endpoint* /*ep*/,
     grpc_core::RefCountedPtr<grpc_auth_context>* auth_context,
     grpc_closure* on_peer_checked) {
-  const char* target_name = overridden_target_name_.empty()
-                                ? target_name_.c_str()
-                                : overridden_target_name_.c_str();
+  const char* target_name = overridden_target_name_ != nullptr
+                                ? overridden_target_name_.get()
+                                : target_name_.get();
   grpc_error* error = grpc_ssl_check_alpn(&peer);
   if (error != GRPC_ERROR_NONE) {
     grpc_core::ExecCtx::Run(DEBUG_LOCATION, on_peer_checked, error);
@@ -271,16 +258,16 @@ int TlsChannelSecurityConnector::cmp(
   if (c != 0) {
     return c;
   }
-  return grpc_ssl_cmp_target_name(
-      target_name_.c_str(), other->target_name_.c_str(),
-      overridden_target_name_.c_str(), other->overridden_target_name_.c_str());
+  return grpc_ssl_cmp_target_name(target_name_.get(), other->target_name_.get(),
+                                  overridden_target_name_.get(),
+                                  other->overridden_target_name_.get());
 }
 
 bool TlsChannelSecurityConnector::check_call_host(
-    absl::string_view host, grpc_auth_context* auth_context,
-    grpc_closure* /*on_call_host_checked*/, grpc_error** error) {
-  return grpc_ssl_check_call_host(host, target_name_.c_str(),
-                                  overridden_target_name_.c_str(), auth_context,
+    grpc_core::StringView host, grpc_auth_context* auth_context,
+    grpc_closure* on_call_host_checked, grpc_error** error) {
+  return grpc_ssl_check_call_host(host, target_name_.get(),
+                                  overridden_target_name_.get(), auth_context,
                                   error);
 }
 
@@ -333,10 +320,8 @@ grpc_security_status TlsChannelSecurityConnector::ReplaceHandshakerFactory(
       key_materials_config_->pem_key_cert_pair_list());
   grpc_security_status status = grpc_ssl_tsi_client_handshaker_factory_init(
       pem_key_cert_pair, key_materials_config_->pem_root_certs(),
-      skip_server_certificate_verification,
-      grpc_get_tsi_tls_version(creds->options().min_tls_version()),
-      grpc_get_tsi_tls_version(creds->options().max_tls_version()),
-      ssl_session_cache, &client_handshaker_factory_);
+      skip_server_certificate_verification, ssl_session_cache,
+      &client_handshaker_factory_);
   /* Free memory. */
   grpc_tsi_ssl_pem_key_cert_pairs_destroy(pem_key_cert_pair, 1);
   return status;
@@ -349,18 +334,17 @@ grpc_security_status TlsChannelSecurityConnector::InitializeHandshakerFactory(
       static_cast<const TlsCredentials*>(channel_creds());
   grpc_tls_key_materials_config* key_materials_config =
       creds->options().key_materials_config();
-  // key_materials_config_->set_key_materials will handle the copying of the key
-  // materials users provided
+  /* Copy key materials config from credential options. */
   if (key_materials_config != nullptr) {
-    key_materials_config_->set_key_materials(
-        key_materials_config->pem_root_certs(),
-        key_materials_config->pem_key_cert_pair_list());
+    grpc_tls_key_materials_config::PemKeyCertPairList cert_pair_list =
+        key_materials_config->pem_key_cert_pair_list();
+    auto pem_root_certs = grpc_core::UniquePtr<char>(
+        gpr_strdup(key_materials_config->pem_root_certs()));
+    key_materials_config_->set_key_materials(std::move(pem_root_certs),
+                                             std::move(cert_pair_list));
   }
   grpc_ssl_certificate_config_reload_status reload_status =
       GRPC_SSL_CERTIFICATE_CONFIG_RELOAD_UNCHANGED;
-  /** If |creds->options()| has a credential reload config, then the call to
-   *  |TlsFetchKeyMaterials| will use it to update the root cert and
-   *  pem-key-cert-pair list stored in |key_materials_config_|. **/
   if (TlsFetchKeyMaterials(key_materials_config_, creds->options(), false,
                            &reload_status) != GRPC_STATUS_OK) {
     /* Raise an error if key materials are not populated. */
@@ -375,9 +359,6 @@ grpc_security_status TlsChannelSecurityConnector::RefreshHandshakerFactory() {
       static_cast<const TlsCredentials*>(channel_creds());
   grpc_ssl_certificate_config_reload_status reload_status =
       GRPC_SSL_CERTIFICATE_CONFIG_RELOAD_UNCHANGED;
-  /** If |creds->options()| has a credential reload config, then the call to
-   *  |TlsFetchKeyMaterials| will use it to update the root cert and
-   *  pem-key-cert-pair list stored in |key_materials_config_|. **/
   if (TlsFetchKeyMaterials(key_materials_config_, creds->options(), false,
                            &reload_status) != GRPC_STATUS_OK) {
     return GRPC_SECURITY_ERROR;
@@ -403,30 +384,31 @@ void TlsChannelSecurityConnector::ServerAuthorizationCheckDone(
 grpc_error* TlsChannelSecurityConnector::ProcessServerAuthorizationCheckResult(
     grpc_tls_server_authorization_check_arg* arg) {
   grpc_error* error = GRPC_ERROR_NONE;
+  char* msg = nullptr;
   /* Server authorization check is cancelled by caller. */
   if (arg->status == GRPC_STATUS_CANCELLED) {
-    error = GRPC_ERROR_CREATE_FROM_COPIED_STRING(
-        absl::StrCat("Server authorization check is cancelled by the caller "
-                     "with error: ",
-                     arg->error_details->error_details())
-            .c_str());
+    gpr_asprintf(&msg,
+                 "Server authorization check is cancelled by the caller with "
+                 "error: %s",
+                 arg->error_details);
+    error = GRPC_ERROR_CREATE_FROM_COPIED_STRING(msg);
   } else if (arg->status == GRPC_STATUS_OK) {
     /* Server authorization check completed successfully but returned check
      * failure. */
     if (!arg->success) {
-      error = GRPC_ERROR_CREATE_FROM_COPIED_STRING(
-          absl::StrCat("Server authorization check failed with error: ",
-                       arg->error_details->error_details())
-              .c_str());
+      gpr_asprintf(&msg, "Server authorization check failed with error: %s",
+                   arg->error_details);
+      error = GRPC_ERROR_CREATE_FROM_COPIED_STRING(msg);
     }
     /* Server authorization check did not complete correctly. */
   } else {
-    error = GRPC_ERROR_CREATE_FROM_COPIED_STRING(
-        absl::StrCat(
-            "Server authorization check did not finish correctly with error: ",
-            arg->error_details->error_details())
-            .c_str());
+    gpr_asprintf(
+        &msg,
+        "Server authorization check did not finish correctly with error: %s",
+        arg->error_details);
+    error = GRPC_ERROR_CREATE_FROM_COPIED_STRING(msg);
   }
+  gpr_free(msg);
   return error;
 }
 
@@ -435,7 +417,6 @@ TlsChannelSecurityConnector::ServerAuthorizationCheckArgCreate(
     void* user_data) {
   grpc_tls_server_authorization_check_arg* arg =
       new grpc_tls_server_authorization_check_arg();
-  arg->error_details = new grpc_tls_error_details();
   arg->cb = ServerAuthorizationCheckDone;
   arg->cb_user_data = user_data;
   arg->status = GRPC_STATUS_OK;
@@ -450,7 +431,7 @@ void TlsChannelSecurityConnector::ServerAuthorizationCheckArgDestroy(
   gpr_free((void*)arg->target_name);
   gpr_free((void*)arg->peer_cert);
   if (arg->peer_cert_full_chain) gpr_free((void*)arg->peer_cert_full_chain);
-  delete arg->error_details;
+  gpr_free((void*)arg->error_details);
   if (arg->destroy_context != nullptr) {
     arg->destroy_context(arg->context);
   }
@@ -544,10 +525,7 @@ grpc_security_status TlsServerSecurityConnector::ReplaceHandshakerFactory() {
   grpc_security_status status = grpc_ssl_tsi_server_handshaker_factory_init(
       pem_key_cert_pairs, num_key_cert_pairs,
       key_materials_config_->pem_root_certs(),
-      creds->options().cert_request_type(),
-      grpc_get_tsi_tls_version(creds->options().min_tls_version()),
-      grpc_get_tsi_tls_version(creds->options().max_tls_version()),
-      &server_handshaker_factory_);
+      creds->options().cert_request_type(), &server_handshaker_factory_);
   /* Free memory. */
   grpc_tsi_ssl_pem_key_cert_pairs_destroy(pem_key_cert_pairs,
                                           num_key_cert_pairs);
@@ -561,17 +539,15 @@ grpc_security_status TlsServerSecurityConnector::InitializeHandshakerFactory() {
   grpc_tls_key_materials_config* key_materials_config =
       creds->options().key_materials_config();
   if (key_materials_config != nullptr) {
-    key_materials_config_->set_key_materials(
-        key_materials_config->pem_root_certs(),
-        key_materials_config->pem_key_cert_pair_list());
+    grpc_tls_key_materials_config::PemKeyCertPairList cert_pair_list =
+        key_materials_config->pem_key_cert_pair_list();
+    auto pem_root_certs = grpc_core::UniquePtr<char>(
+        gpr_strdup(key_materials_config->pem_root_certs()));
+    key_materials_config_->set_key_materials(std::move(pem_root_certs),
+                                             std::move(cert_pair_list));
   }
   grpc_ssl_certificate_config_reload_status reload_status =
       GRPC_SSL_CERTIFICATE_CONFIG_RELOAD_UNCHANGED;
-  /** If |creds->options()| has a credential reload config, then the call to
-   *  |TlsFetchKeyMaterials| will use it to update the root cert and
-   *  pem-key-cert-pair list stored in |key_materials_config_|. Otherwise, it
-   *  will return |GRPC_STATUS_OK| if |key_materials_config_| already has
-   *  credentials, and an error code if not. **/
   if (TlsFetchKeyMaterials(key_materials_config_, creds->options(), true,
                            &reload_status) != GRPC_STATUS_OK) {
     /* Raise an error if key materials are not populated. */
@@ -586,11 +562,6 @@ grpc_security_status TlsServerSecurityConnector::RefreshHandshakerFactory() {
       static_cast<const TlsServerCredentials*>(server_creds());
   grpc_ssl_certificate_config_reload_status reload_status =
       GRPC_SSL_CERTIFICATE_CONFIG_RELOAD_UNCHANGED;
-  /** If |creds->options()| has a credential reload config, then the call to
-   *  |TlsFetchKeyMaterials| will use it to update the root cert and
-   *  pem-key-cert-pair list stored in |key_materials_config_|. Otherwise, it
-   *  will return |GRPC_STATUS_OK| if |key_materials_config_| already has
-   *  credentials, and an error code if not. **/
   if (TlsFetchKeyMaterials(key_materials_config_, creds->options(), true,
                            &reload_status) != GRPC_STATUS_OK) {
     return GRPC_SECURITY_ERROR;

@@ -237,7 +237,7 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
             }
             else
             {
-                let messagesVC = self.storyboard?.instantiateViewController(withIdentifier: "MessagesController") as! MessagesController
+                let messagesVC = self.storyboard?.instantiateViewController(withIdentifier: "ConversationsViewController") as! ConversationsViewController
                 self.navigationController?.pushViewController(messagesVC, animated: false)
             }
         }

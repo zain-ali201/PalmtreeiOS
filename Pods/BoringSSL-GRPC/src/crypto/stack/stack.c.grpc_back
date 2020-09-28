@@ -54,12 +54,12 @@
  * copied and put under another distribution licence
  * [including the GNU Public Licence.] */
 
-#include <openssl_grpc/stack.h>
+#include <openssl/stack.h>
 
 #include <assert.h>
 #include <string.h>
 
-#include <openssl_grpc/mem.h>
+#include <openssl/mem.h>
 
 #include "../internal.h"
 

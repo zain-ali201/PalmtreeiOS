@@ -54,14 +54,14 @@
  * copied and put under another distribution licence
  * [including the GNU Public Licence.] */
 
-#include <openssl_grpc/asn1.h>
+#include <openssl/asn1.h>
 
-#include <openssl_grpc/asn1t.h>
-#include <openssl_grpc/err.h>
-#include <openssl_grpc/mem.h>
-#include <openssl_grpc/obj.h>
+#include <openssl/asn1t.h>
+#include <openssl/err.h>
+#include <openssl/mem.h>
+#include <openssl/obj.h>
 
-int ASN1_TYPE_get(const ASN1_TYPE *a)
+int ASN1_TYPE_get(ASN1_TYPE *a)
 {
     if ((a->value.ptr != NULL) || (a->type == V_ASN1_NULL))
         return (a->type);

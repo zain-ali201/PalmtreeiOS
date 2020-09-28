@@ -642,21 +642,20 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     func addPostLiveAPI()
     {
         var parameter: [String: Any] = [
-            "id" : String(format: "%d", userDetail?.id ?? 0),
+            "id" : String(format: "%d", adDetailObj.adId ?? 0),
             "user_id": String(format: "%d", userDetail?.id ?? 0),
-            "phone": adDetailObj.phone,
-            "whatsapp": adDetailObj.whatsapp,
-            "latitude": "",
-            "longitude": "",
+            "phone": txtPhone.text ?? "",
+            "whatsapp": txtWhatsapp.text ?? "",
+            "latitude": "0",
+            "longitude": "0",
             "country": adDetailObj.location.country,
             "address": adDetailObj.location.address,
             "is_featured": "0",
-            "featured_date": "",
-            "name": adDetailObj.adTitle,
-            "price" : adDetailObj.adPrice,
-            "price_type" : adDetailObj.priceType,
-            "title": adDetailObj.adTitle,
-            "description" : adDetailObj.adDesc,
+            "name": txtTitle.text ?? "",
+            "price" : txtPrice.text ?? "",
+            "price_type" : lblFixedPrice.text ?? "",
+            "title": txtTitle.text ?? "",
+            "description" : txtDescp.text ?? "",
             "status" : "1",
             "cat_id" : String(format: "%d", adDetailObj.subcatID > 0 ? adDetailObj.subcatID : adDetailObj.catID)
         ]
@@ -746,7 +745,29 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         }
             
         self.showLoader()
-        self.uploadAdWithImages(param: parameter as NSDictionary, images: adDetailObj.images)
+        self.adPostLive(param: parameter as NSDictionary)
+    }
+    
+    func adPostLive(param: NSDictionary)
+    {
+        self.showLoader()
+        AddsHandler.adPostLive(parameter: param, success: { (successResponse) in
+            self.stopAnimating()
+            if successResponse.success
+            {
+                self.showToast(message: "Ad updated successfully.")
+                self.dismiss(animated: true, completion: nil)
+            }
+            else
+            {
+                let alert = Constants.showBasicAlert(message: successResponse.message)
+                self.presentVC(alert)
+            }
+        }) { (error) in
+            self.stopAnimating()
+            let alert = Constants.showBasicAlert(message: error.message)
+            self.presentVC(alert)
+        }
     }
     
     func uploadAdWithImages(param: NSDictionary, images: [UIImage])

@@ -40,7 +40,6 @@
 #include "src/core/lib/gprpp/sync.h"
 #include "src/core/lib/iomgr/sockaddr_utils.h"
 #include "src/core/lib/transport/connectivity_state.h"
-#include "src/core/lib/transport/error_utils.h"
 #include "src/core/lib/transport/static_metadata.h"
 
 namespace grpc_core {
@@ -161,7 +160,7 @@ class RoundRobin : public LoadBalancingPolicy {
     RoundRobin* parent_;
 
     size_t last_picked_index_;
-    absl::InlinedVector<RefCountedPtr<SubchannelInterface>, 10> subchannels_;
+    InlinedVector<RefCountedPtr<SubchannelInterface>, 10> subchannels_;
   };
 
   void ShutdownLocked() override;
@@ -323,11 +322,11 @@ void RoundRobin::RoundRobinSubchannelList::
   if (num_ready_ > 0) {
     /* 1) READY */
     p->channel_control_helper()->UpdateState(
-        GRPC_CHANNEL_READY, absl::Status(), absl::make_unique<Picker>(p, this));
+        GRPC_CHANNEL_READY, absl::make_unique<Picker>(p, this));
   } else if (num_connecting_ > 0) {
     /* 2) CONNECTING */
     p->channel_control_helper()->UpdateState(
-        GRPC_CHANNEL_CONNECTING, absl::Status(),
+        GRPC_CHANNEL_CONNECTING,
         absl::make_unique<QueuePicker>(p->Ref(DEBUG_LOCATION, "QueuePicker")));
   } else if (num_transient_failure_ == num_subchannels()) {
     /* 3) TRANSIENT_FAILURE */
@@ -336,7 +335,7 @@ void RoundRobin::RoundRobinSubchannelList::
                                "connections to all backends failing"),
                            GRPC_ERROR_INT_GRPC_STATUS, GRPC_STATUS_UNAVAILABLE);
     p->channel_control_helper()->UpdateState(
-        GRPC_CHANNEL_TRANSIENT_FAILURE, grpc_error_to_absl_status(error),
+        GRPC_CHANNEL_TRANSIENT_FAILURE,
         absl::make_unique<TransientFailurePicker>(error));
   }
 }
@@ -453,7 +452,7 @@ void RoundRobin::UpdateLocked(UpdateArgs args) {
         grpc_error_set_int(GRPC_ERROR_CREATE_FROM_STATIC_STRING("Empty update"),
                            GRPC_ERROR_INT_GRPC_STATUS, GRPC_STATUS_UNAVAILABLE);
     channel_control_helper()->UpdateState(
-        GRPC_CHANNEL_TRANSIENT_FAILURE, grpc_error_to_absl_status(error),
+        GRPC_CHANNEL_TRANSIENT_FAILURE,
         absl::make_unique<TransientFailurePicker>(error));
     subchannel_list_ = std::move(latest_pending_subchannel_list_);
   } else if (subchannel_list_ == nullptr) {

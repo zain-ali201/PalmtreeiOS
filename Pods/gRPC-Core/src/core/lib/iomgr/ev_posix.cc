@@ -81,10 +81,11 @@ static const char* g_poll_strategy_name = nullptr;
 typedef const grpc_event_engine_vtable* (*event_engine_factory_fn)(
     bool explicit_request);
 
-struct event_engine_factory {
+typedef struct {
   const char* name;
   event_engine_factory_fn factory;
-};
+} event_engine_factory;
+
 namespace {
 
 grpc_poll_function_type real_poll_function;

@@ -133,11 +133,11 @@
  * OTHER ENTITY BASED ON INFRINGEMENT OF INTELLECTUAL PROPERTY RIGHTS OR
  * OTHERWISE. */
 
-#include <openssl_grpc/ssl.h>
+#include <openssl/ssl.h>
 
-#include <openssl_grpc/buf.h>
-#include <openssl_grpc/digest.h>
-#include <openssl_grpc/err.h>
+#include <openssl/buf.h>
+#include <openssl/digest.h>
+#include <openssl/err.h>
 
 #include "internal.h"
 

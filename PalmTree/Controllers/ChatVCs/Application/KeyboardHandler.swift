@@ -29,11 +29,11 @@ protocol KeyboardHandler: UIViewController {
 
 extension KeyboardHandler {
   func addKeyboardObservers(_ completion: CompletionObject<Bool>? = nil) {
-    NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil) {[weak self] (notification) in
+    NotificationCenter.default.addObserver(forName: NSNotification.Name.UIKeyboardWillShow, object: nil, queue: nil) {[weak self] (notification) in
       self?.handleKeyboard(notification: notification)
       completion?(true)
     }
-    NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: nil) {[weak self] (notification) in
+    NotificationCenter.default.addObserver(forName: NSNotification.Name.UIKeyboardWillShow, object: nil, queue: nil) {[weak self] (notification) in
       self?.handleKeyboard(notification: notification)
       completion?(false)
     }
@@ -41,8 +41,8 @@ extension KeyboardHandler {
   
   private func handleKeyboard(notification: Notification) {
     guard let userInfo = notification.userInfo else { return }
-    guard let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
-    barBottomConstraint.constant = notification.name == UIResponder.keyboardWillHideNotification ? 0 : keyboardFrame.height - view.safeAreaInsets.bottom
+    guard let keyboardFrame = (userInfo[NSNotification.Name.UIKeyboardWillShow] as? NSValue)?.cgRectValue else { return }
+    barBottomConstraint.constant = notification.name == NSNotification.Name.UIKeyboardWillShow ? 0 : keyboardFrame.height - view.safeAreaInsets.bottom
     UIView.animate(withDuration: 0.3) {
       self.view.layoutIfNeeded()
     }

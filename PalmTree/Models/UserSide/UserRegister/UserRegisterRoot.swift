@@ -13,7 +13,6 @@ struct UserRegisterRoot{
     var data : UserRegisterData!
     var message : String!
     var success : Bool!
-    var authToken : String!
     
     /**
      * Instantiate the instance using the passed dictionary values to set the properties values
@@ -24,7 +23,6 @@ struct UserRegisterRoot{
         }
         message = dictionary["message"] as? String
         success = dictionary["success"] as? Bool
-        authToken = dictionary["token"] as? String
     }
     
     /**
@@ -42,10 +40,7 @@ struct UserRegisterRoot{
         if success != nil{
             dictionary["success"] = success
         }
-        
-        if authToken != nil{
-            dictionary["token"] = authToken
-        }
+
         return dictionary
     }
     

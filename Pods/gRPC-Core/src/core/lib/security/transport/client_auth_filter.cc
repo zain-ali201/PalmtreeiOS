@@ -22,10 +22,6 @@
 
 #include <string.h>
 
-#include <string>
-
-#include "absl/strings/str_cat.h"
-
 #include <grpc/support/alloc.h>
 #include <grpc/support/log.h>
 #include <grpc/support/string_util.h>
@@ -335,15 +331,18 @@ static void on_host_checked(void* arg, grpc_error* error) {
   if (error == GRPC_ERROR_NONE) {
     send_security_metadata(elem, batch);
   } else {
-    std::string error_msg = absl::StrCat(
-        "Invalid host ", grpc_core::StringViewFromSlice(calld->host),
-        " set in :authority metadata.");
+    char* error_msg;
+    char* host = grpc_slice_to_c_string(calld->host);
+    gpr_asprintf(&error_msg, "Invalid host %s set in :authority metadata.",
+                 host);
+    gpr_free(host);
     grpc_transport_stream_op_batch_finish_with_failure(
         batch,
-        grpc_error_set_int(
-            GRPC_ERROR_CREATE_FROM_COPIED_STRING(error_msg.c_str()),
-            GRPC_ERROR_INT_GRPC_STATUS, GRPC_STATUS_UNAUTHENTICATED),
+        grpc_error_set_int(GRPC_ERROR_CREATE_FROM_COPIED_STRING(error_msg),
+                           GRPC_ERROR_INT_GRPC_STATUS,
+                           GRPC_STATUS_UNAUTHENTICATED),
         calld->call_combiner);
+    gpr_free(error_msg);
   }
   GRPC_CALL_STACK_UNREF(calld->owning_call, "check_call_host");
 }
@@ -380,7 +379,8 @@ static void client_auth_start_transport_stream_op_batch(
       GRPC_CALL_STACK_REF(calld->owning_call, "check_call_host");
       GRPC_CLOSURE_INIT(&calld->async_result_closure, on_host_checked, batch,
                         grpc_schedule_on_exec_ctx);
-      absl::string_view call_host(grpc_core::StringViewFromSlice(calld->host));
+      grpc_core::StringView call_host(
+          grpc_core::StringViewFromSlice(calld->host));
       grpc_error* error = GRPC_ERROR_NONE;
       if (chand->security_connector->check_call_host(
               call_host, chand->auth_context.get(),

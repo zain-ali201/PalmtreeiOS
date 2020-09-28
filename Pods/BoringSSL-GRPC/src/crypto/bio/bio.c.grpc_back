@@ -54,17 +54,17 @@
  * copied and put under another distribution licence
  * [including the GNU Public Licence.] */
 
-#include <openssl_grpc/bio.h>
+#include <openssl/bio.h>
 
 #include <assert.h>
 #include <errno.h>
 #include <limits.h>
 #include <string.h>
 
-#include <openssl_grpc/asn1.h>
-#include <openssl_grpc/err.h>
-#include <openssl_grpc/mem.h>
-#include <openssl_grpc/thread.h>
+#include <openssl/asn1.h>
+#include <openssl/err.h>
+#include <openssl/mem.h>
+#include <openssl/thread.h>
 
 #include "../internal.h"
 

@@ -22,11 +22,10 @@
 
 #include <string.h>
 
-#include "absl/strings/str_cat.h"
-
 #include <grpc/grpc.h>
 #include <grpc/support/alloc.h>
 #include <grpc/support/log.h>
+#include <grpc/support/string_util.h>
 #include <grpc/support/sync.h>
 
 #include "src/core/lib/slice/slice_internal.h"
@@ -41,19 +40,6 @@ grpc_plugin_credentials::~grpc_plugin_credentials() {
   if (plugin_.state != nullptr && plugin_.destroy != nullptr) {
     plugin_.destroy(plugin_.state);
   }
-}
-
-std::string grpc_plugin_credentials::debug_string() {
-  char* debug_c_str = nullptr;
-  if (plugin_.debug_string != nullptr) {
-    debug_c_str = plugin_.debug_string(plugin_.state);
-  }
-  std::string debug_str(
-      debug_c_str != nullptr
-          ? debug_c_str
-          : "grpc_plugin_credentials did not provide a debug string");
-  gpr_free(debug_c_str);
-  return debug_str;
 }
 
 void grpc_plugin_credentials::pending_request_remove_locked(
@@ -87,10 +73,11 @@ static grpc_error* process_plugin_result(
     size_t num_md, grpc_status_code status, const char* error_details) {
   grpc_error* error = GRPC_ERROR_NONE;
   if (status != GRPC_STATUS_OK) {
-    error = GRPC_ERROR_CREATE_FROM_COPIED_STRING(
-        absl::StrCat("Getting metadata from plugin failed with error: ",
-                     error_details)
-            .c_str());
+    char* msg;
+    gpr_asprintf(&msg, "Getting metadata from plugin failed with error: %s",
+                 error_details);
+    error = GRPC_ERROR_CREATE_FROM_COPIED_STRING(msg);
+    gpr_free(msg);
   } else {
     bool seen_illegal_header = false;
     for (size_t i = 0; i < num_md; ++i) {

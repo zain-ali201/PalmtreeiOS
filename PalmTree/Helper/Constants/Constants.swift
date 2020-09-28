@@ -48,6 +48,7 @@ class Constants
         static let register = "register"
         static let forgotPassword = "forget_password"
         static let userConfirmation = "login/confirm"
+        static let updateChatToken = "updateToken"
         static let profileGet = "profile"
         static let updateProfile = "updateProfile"
         static let userProfileRating = "profile/ratting"

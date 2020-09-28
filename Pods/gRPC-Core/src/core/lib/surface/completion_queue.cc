@@ -23,11 +23,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <vector>
-
-#include "absl/strings/str_format.h"
-#include "absl/strings/str_join.h"
-
 #include <grpc/support/alloc.h>
 #include <grpc/support/atm.h>
 #include <grpc/support/log.h>
@@ -61,11 +56,12 @@ namespace {
 GPR_TLS_DECL(g_cached_event);
 GPR_TLS_DECL(g_cached_cq);
 
-struct plucker {
+typedef struct {
   grpc_pollset_worker** worker;
   void* tag;
-};
-struct cq_poller_vtable {
+} plucker;
+
+typedef struct {
   bool can_get_pollset;
   bool can_listen;
   size_t (*size)(void);
@@ -76,7 +72,8 @@ struct cq_poller_vtable {
                       grpc_millis deadline);
   void (*shutdown)(grpc_pollset* pollset, grpc_closure* closure);
   void (*destroy)(grpc_pollset* pollset);
-};
+} cq_poller_vtable;
+
 typedef struct non_polling_worker {
   gpr_cv cv;
   bool kicked;
@@ -84,12 +81,13 @@ typedef struct non_polling_worker {
   struct non_polling_worker* prev;
 } non_polling_worker;
 
-struct non_polling_poller {
+typedef struct {
   gpr_mu mu;
   bool kicked_without_poller;
   non_polling_worker* root;
   grpc_closure* shutdown;
-};
+} non_polling_poller;
+
 size_t non_polling_poller_size(void) { return sizeof(non_polling_poller); }
 
 void non_polling_poller_init(grpc_pollset* pollset, gpr_mu** mu) {
@@ -327,6 +325,10 @@ struct cq_callback_data {
       Initial count is dropped by grpc_completion_queue_shutdown. */
   grpc_core::Atomic<intptr_t> pending_events{1};
 
+  /** Counter of how many things have ever been queued on this completion queue
+      useful for avoiding locks to check the queue */
+  grpc_core::Atomic<intptr_t> things_queued_ever{0};
+
   /** 0 initially. 1 once we initiated shutdown */
   bool shutdown_called = false;
 
@@ -428,14 +430,15 @@ static const cq_vtable g_cq_vtable[] = {
 
 grpc_core::TraceFlag grpc_cq_pluck_trace(false, "queue_pluck");
 
-#define GRPC_SURFACE_TRACE_RETURNED_EVENT(cq, event)     \
-  do {                                                   \
-    if (GRPC_TRACE_FLAG_ENABLED(grpc_api_trace) &&       \
-        (GRPC_TRACE_FLAG_ENABLED(grpc_cq_pluck_trace) || \
-         (event)->type != GRPC_QUEUE_TIMEOUT)) {         \
-      gpr_log(GPR_INFO, "RETURN_EVENT[%p]: %s", cq,      \
-              grpc_event_string(event).c_str());         \
-    }                                                    \
+#define GRPC_SURFACE_TRACE_RETURNED_EVENT(cq, event)      \
+  do {                                                    \
+    if (GRPC_TRACE_FLAG_ENABLED(grpc_api_trace) &&        \
+        (GRPC_TRACE_FLAG_ENABLED(grpc_cq_pluck_trace) ||  \
+         (event)->type != GRPC_QUEUE_TIMEOUT)) {          \
+      char* _ev = grpc_event_string(event);               \
+      gpr_log(GPR_INFO, "RETURN_EVENT[%p]: %s", cq, _ev); \
+      gpr_free(_ev);                                      \
+    }                                                     \
   } while (0)
 
 static void on_pollset_shutdown_done(void* cq, grpc_error* error);
@@ -866,19 +869,13 @@ static void cq_end_op_for_callback(
 
   cq_check_tag(cq, tag, true); /* Used in debug builds only */
 
+  cqd->things_queued_ever.FetchAdd(1, grpc_core::MemoryOrder::RELAXED);
   if (cqd->pending_events.FetchSub(1, grpc_core::MemoryOrder::ACQ_REL) == 1) {
     cq_finish_shutdown_callback(cq);
   }
 
-  // If possible, schedule the callback onto an existing thread-local
-  // ApplicationCallbackExecCtx, which is a work queue. This is possible for:
-  // 1. The callback is internally-generated and there is an ACEC available
-  // 2. The callback is marked inlineable and there is an ACEC available
-  // 3. We are already running in a background poller thread (which always has
-  //    an ACEC available at the base of the stack).
   auto* functor = static_cast<grpc_experimental_completion_queue_functor*>(tag);
-  if (((internal || functor->inlineable) &&
-       grpc_core::ApplicationCallbackExecCtx::Available()) ||
+  if (internal || functor->inlineable ||
       grpc_iomgr_is_any_background_poller_thread()) {
     grpc_core::ApplicationCallbackExecCtx::Enqueue(functor,
                                                    (error == GRPC_ERROR_NONE));
@@ -899,14 +896,15 @@ void grpc_cq_end_op(grpc_completion_queue* cq, void* tag, grpc_error* error,
   cq->vtable->end_op(cq, tag, error, done, done_arg, storage, internal);
 }
 
-struct cq_is_finished_arg {
+typedef struct {
   gpr_atm last_seen_things_queued_ever;
   grpc_completion_queue* cq;
   grpc_millis deadline;
   grpc_cq_completion* stolen_completion;
   void* tag; /* for pluck */
   bool first_loop;
-};
+} cq_is_finished_arg;
+
 class ExecCtxNext : public grpc_core::ExecCtx {
  public:
   ExecCtxNext(void* arg) : ExecCtx(0), check_ready_to_finish_arg_(arg) {}
@@ -946,14 +944,21 @@ class ExecCtxNext : public grpc_core::ExecCtx {
 #ifndef NDEBUG
 static void dump_pending_tags(grpc_completion_queue* cq) {
   if (!GRPC_TRACE_FLAG_ENABLED(grpc_trace_pending_tags)) return;
-  std::vector<std::string> parts;
-  parts.push_back("PENDING TAGS:");
+
+  gpr_strvec v;
+  gpr_strvec_init(&v);
+  gpr_strvec_add(&v, gpr_strdup("PENDING TAGS:"));
   gpr_mu_lock(cq->mu);
   for (size_t i = 0; i < cq->outstanding_tag_count; i++) {
-    parts.push_back(absl::StrFormat(" %p", cq->outstanding_tags[i]));
+    char* s;
+    gpr_asprintf(&s, " %p", cq->outstanding_tags[i]);
+    gpr_strvec_add(&v, s);
   }
   gpr_mu_unlock(cq->mu);
-  gpr_log(GPR_DEBUG, "%s", absl::StrJoin(parts, "").c_str());
+  char* out = gpr_strvec_flatten(&v, nullptr);
+  gpr_strvec_destroy(&v);
+  gpr_log(GPR_DEBUG, "%s", out);
+  gpr_free(out);
 }
 #else
 static void dump_pending_tags(grpc_completion_queue* /*cq*/) {}

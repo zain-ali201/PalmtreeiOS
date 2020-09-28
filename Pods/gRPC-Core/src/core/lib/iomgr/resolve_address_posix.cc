@@ -57,24 +57,24 @@ static grpc_error* posix_blocking_resolve_address(
     return grpc_resolve_unix_domain_address(name + 5, addresses);
   }
 
-  std::string host;
-  std::string port;
+  grpc_core::UniquePtr<char> host;
+  grpc_core::UniquePtr<char> port;
   /* parse name, splitting it into host and port parts */
   grpc_core::SplitHostPort(name, &host, &port);
-  if (host.empty()) {
+  if (host == nullptr) {
     err = grpc_error_set_str(
         GRPC_ERROR_CREATE_FROM_STATIC_STRING("unparseable host:port"),
         GRPC_ERROR_STR_TARGET_ADDRESS, grpc_slice_from_copied_string(name));
     goto done;
   }
-  if (port.empty()) {
+  if (port == nullptr) {
     if (default_port == nullptr) {
       err = grpc_error_set_str(
           GRPC_ERROR_CREATE_FROM_STATIC_STRING("no port in name"),
           GRPC_ERROR_STR_TARGET_ADDRESS, grpc_slice_from_copied_string(name));
       goto done;
     }
-    port = default_port;
+    port.reset(gpr_strdup(default_port));
   }
 
   /* Call getaddrinfo */
@@ -84,16 +84,16 @@ static grpc_error* posix_blocking_resolve_address(
   hints.ai_flags = AI_PASSIVE;     /* for wildcard IP address */
 
   GRPC_SCHEDULING_START_BLOCKING_REGION;
-  s = getaddrinfo(host.c_str(), port.c_str(), &hints, &result);
+  s = getaddrinfo(host.get(), port.get(), &hints, &result);
   GRPC_SCHEDULING_END_BLOCKING_REGION;
 
   if (s != 0) {
     /* Retry if well-known service name is recognized */
     const char* svc[][2] = {{"http", "80"}, {"https", "443"}};
     for (i = 0; i < GPR_ARRAY_SIZE(svc); i++) {
-      if (port == svc[i][0]) {
+      if (strcmp(port.get(), svc[i][0]) == 0) {
         GRPC_SCHEDULING_START_BLOCKING_REGION;
-        s = getaddrinfo(host.c_str(), svc[i][1], &hints, &result);
+        s = getaddrinfo(host.get(), svc[i][1], &hints, &result);
         GRPC_SCHEDULING_END_BLOCKING_REGION;
         break;
       }
@@ -139,14 +139,15 @@ done:
   return err;
 }
 
-struct request {
+typedef struct {
   char* name;
   char* default_port;
   grpc_closure* on_done;
   grpc_resolved_addresses** addrs_out;
   grpc_closure request_closure;
   void* arg;
-};
+} request;
+
 /* Callback to be passed to grpc Executor to asynch-ify
  * grpc_blocking_resolve_address */
 static void do_request_thread(void* rp, grpc_error* /*error*/) {

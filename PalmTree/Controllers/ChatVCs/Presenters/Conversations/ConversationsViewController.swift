@@ -25,51 +25,144 @@ import UIKit
 class ConversationsViewController: UIViewController {
   
   //MARK: IBOutlets
+    @IBOutlet weak var lblTitle: UILabel!
+    
+    @IBOutlet weak var emptyView: UIView!
+    @IBOutlet weak var topView: UIView!
+    @IBOutlet weak var bottomView: UIView!
+    
+    //MenuButtons
+    @IBOutlet weak var btnHome: UIButton!
+    @IBOutlet weak var btnPalmtree: UIButton!
+    @IBOutlet weak var btnPost: UIButton!
+    @IBOutlet weak var btnWishlist: UIButton!
+    @IBOutlet weak var btnMessages: UIButton!
+    @IBOutlet weak var btnBack: UIButton!
+    
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var profileImageView: UIImageView!
-  override var preferredStatusBarStyle: UIStatusBarStyle {
-    return .default
-  }
   
   //MARK: Private properties
   private var conversations = [ObjectConversation]()
   private let manager = ConversationManager()
   private let userManager = UserManager()
   private var currentUser: ObjectUser?
+    
+    var isFromAdDetail = false
   
   //MARK: Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    if isFromAdDetail
+    {
+        btnBack.alpha = 1
+    } else
+    {
+        btnBack.alpha = 0
+    }
+    
+    if languageCode == "ar"
+    {
+        self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        changeMenuButtons()
+        lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+    }
+    
     fetchProfile()
     fetchConversations()
+    
+    self.navigationController?.navigationBar.isHidden = false
   }
   
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(true)
-    navigationController?.setNavigationBarHidden(true, animated: true)
-  }
-  
-  override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(true)
-    navigationController?.setNavigationBarHidden(false, animated: true)
-  }
-}
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    func changeMenuButtons()
+    {
+        btnHome.setImage(UIImage(named: "home_" + languageCode ), for: .normal)
+        btnPalmtree.setImage(UIImage(named: "mypalmtree_" + languageCode), for: .normal)
+        btnPost.setImage(UIImage(named: "post_" + languageCode), for: .normal)
+        btnWishlist.setImage(UIImage(named: "wishlist_active_" + languageCode), for: .normal)
+        btnMessages.setImage(UIImage(named: "messages_" + languageCode ), for: .normal)
+        
+        btnHome.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        btnPalmtree.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        btnPost.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        btnWishlist.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        btnMessages.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+    }
 
 //MARK: IBActions
-extension ConversationsViewController {
-  
-  @IBAction func profilePressed(_ sender: Any) {
-    let vc: ProfileViewController = UIStoryboard.initial(storyboard: .profile)
-    vc.delegate = self
-    vc.user = currentUser
-    present(vc, animated: false)
-  }
-  
-  @IBAction func composePressed(_ sender: Any) {
-    let vc: ContactsPreviewController = UIStoryboard.controller(storyboard: .previews)
-    vc.delegate = self
-    present(vc, animated: true, completion: nil)
-  }
+    
+    @IBAction func backBtnAction(_ button: UIButton)
+    {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func menuBtnAction(_ button: UIButton)
+    {
+        if button.tag == 1001
+        {
+            self.navigationController?.popToViewController(homeVC, animated: false)
+        }
+        else if button.tag == 1002
+        {
+            let myAdsVC = self.storyboard?.instantiateViewController(withIdentifier: "MyAdsController") as! MyAdsController
+            self.navigationController?.pushViewController(myAdsVC, animated: false)
+        }
+        else if button.tag == 1003
+        {
+            if defaults.bool(forKey: "isLogin") == false
+            {
+                let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+                let navController = UINavigationController(rootViewController: loginVC)
+                self.present(navController, animated:true, completion: nil)
+            }
+            else
+            {
+                if defaults.bool(forKey: "isLogin") == false
+                {
+                    let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+                    let navController = UINavigationController(rootViewController: loginVC)
+                    self.present(navController, animated:true, completion: nil)
+                }
+                else
+                {
+                    adDetailObj = AdDetailObject()
+                    let adPostVC = self.storyboard?.instantiateViewController(withIdentifier: "AdPostVC") as! AdPostVC
+                    let navController = UINavigationController(rootViewController: adPostVC)
+                    navController.navigationBar.isHidden = true
+                    navController.modalPresentationStyle = .fullScreen
+                    self.present(navController, animated:true, completion: nil)
+                }
+            }
+        }
+        else if button.tag == 1004
+        {
+            if defaults.bool(forKey: "isLogin") == false
+            {
+                let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+                let navController = UINavigationController(rootViewController: loginVC)
+                self.present(navController, animated:true, completion: nil)
+            }
+            else
+            {
+                let favouritesVC = self.storyboard?.instantiateViewController(withIdentifier: "FavouritesVC") as! FavouritesVC
+                self.navigationController?.pushViewController(favouritesVC, animated: false)
+            }
+        }
+    }
 }
 
 //MARK: Private methods
@@ -104,37 +197,25 @@ extension ConversationsViewController {
 extension ConversationsViewController: UITableViewDelegate, UITableViewDataSource {
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    if conversations.isEmpty {
-      return 1
+    if conversations.isEmpty
+    {
+        emptyView.alpha = 1
     }
     return conversations.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard !conversations.isEmpty else {
-      return tableView.dequeueReusableCell(withIdentifier: "EmptyCell")!
-    }
+    
     let cell = tableView.dequeueReusableCell(withIdentifier: ConversationCell.className) as! ConversationCell
     cell.set(conversations[indexPath.row])
     return cell
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    if conversations.isEmpty {
-      composePressed(self)
-      return
-    }
     let vc: MessagesViewController = UIStoryboard.initial(storyboard: .messages)
     vc.conversation = conversations[indexPath.row]
     manager.markAsRead(conversations[indexPath.row])
     show(vc, sender: self)
-  }
-  
-  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    if conversations.isEmpty {
-      return tableView.bounds.height - 50 //header view height
-    }
-    return 80
   }
 }
 

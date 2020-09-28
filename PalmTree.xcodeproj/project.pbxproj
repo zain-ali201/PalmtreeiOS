@@ -286,6 +286,7 @@
 		185BBEF320AFF914004748D5 /* NearByAddSearchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185BBEF220AFF914004748D5 /* NearByAddSearchData.swift */; };
 		185BBEF520AFF950004748D5 /* NearByAddSearchLat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185BBEF420AFF950004748D5 /* NearByAddSearchLat.swift */; };
 		185C228124C1E6D300C36332 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185C228024C1E6D200C36332 /* MapViewController.swift */; };
+		185DCC7F251F82B9007958D8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185DCC7C251F82AF007958D8 /* ProfileViewController.swift */; };
 		185EAAC92099A34F00E412DB /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185EAAC82099A34F00E412DB /* Dictionary.swift */; };
 		185EAACC2099CC3D00E412DB /* AdPostLiveRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185EAACB2099CC3D00E412DB /* AdPostLiveRoot.swift */; };
 		185EAACE2099CC4F00E412DB /* AdPostLiveData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185EAACD2099CC4F00E412DB /* AdPostLiveData.swift */; };
@@ -524,6 +525,7 @@
 		07891CAF22019609002C8D7D /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		07EF456C220425AB000570E6 /* SearchValueDict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchValueDict.swift; sourceTree = "<group>"; };
 		08D03E8A013A66348DFF0F03 /* Pods-AdForest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdForest.release.xcconfig"; path = "Pods/Target Support Files/Pods-AdForest/Pods-AdForest.release.xcconfig"; sourceTree = "<group>"; };
+		1801B33025209CE000114FAA /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		180519CD215A0B2800F74662 /* AppSettingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingSection.swift; sourceTree = "<group>"; };
 		180519CF215A0B5100F74662 /* AppSettingFaq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingFaq.swift; sourceTree = "<group>"; };
 		180519D1215A0B6C00F74662 /* AppSettingVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingVersion.swift; sourceTree = "<group>"; };
@@ -802,6 +804,7 @@
 		185BBEF220AFF914004748D5 /* NearByAddSearchData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearByAddSearchData.swift; sourceTree = "<group>"; };
 		185BBEF420AFF950004748D5 /* NearByAddSearchLat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearByAddSearchLat.swift; sourceTree = "<group>"; };
 		185C228024C1E6D200C36332 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		185DCC7C251F82AF007958D8 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		185EAAC82099A34F00E412DB /* Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
 		185EAACB2099CC3D00E412DB /* AdPostLiveRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdPostLiveRoot.swift; sourceTree = "<group>"; };
 		185EAACD2099CC4F00E412DB /* AdPostLiveData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdPostLiveData.swift; sourceTree = "<group>"; };
@@ -2483,6 +2486,8 @@
 		18E1FCCC251EA72700926E77 /* Presenters */ = {
 			isa = PBXGroup;
 			children = (
+				1801B33025209CE000114FAA /* Profile.storyboard */,
+				185DCC7C251F82AF007958D8 /* ProfileViewController.swift */,
 				18E1FCE5251EA78400926E77 /* Messages */,
 				18E1FCE6251EA79300926E77 /* Conversations */,
 				18E1FCE7251EA7AB00926E77 /* Previews */,
@@ -2749,6 +2754,7 @@
 				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/ImageSlideshow/ImageSlideshow.framework",
 				"${BUILT_PRODUCTS_DIR}/JGProgressHUD/JGProgressHUD.framework",
@@ -2762,6 +2768,7 @@
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/NotificationBannerSwift/NotificationBannerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/OpalImagePicker/OpalImagePicker.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SlideMenuControllerSwift/SlideMenuControllerSwift.framework",
@@ -2772,10 +2779,8 @@
 				"${BUILT_PRODUCTS_DIR}/UITextField+Shake/UITextField_Shake.framework",
 				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 				"${BUILT_PRODUCTS_DIR}/abseil/absl.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -2796,6 +2801,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImageSlideshow.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JGProgressHUD.framework",
@@ -2809,6 +2815,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NotificationBannerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpalImagePicker.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SlideMenuControllerSwift.framework",
@@ -2819,10 +2826,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UITextField_Shake.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/absl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -3001,6 +3006,7 @@
 				18F0C7E0206F7167003E16A5 /* SettingsPage.swift in Sources */,
 				183A70F920B6A8CE0082F7AA /* BlockedUserRoot.swift in Sources */,
 				180A4F732328E299002BC411 /* RejectedAdsStatus.swift in Sources */,
+				185DCC7F251F82B9007958D8 /* ProfileViewController.swift in Sources */,
 				18BBFABE20510A9B0067662F /* LoginViewController.swift in Sources */,
 				18E1FC98251EA65900926E77 /* AudioService.swift in Sources */,
 				18E1FCC5251EA70C00926E77 /* NSObjectExtension.swift in Sources */,

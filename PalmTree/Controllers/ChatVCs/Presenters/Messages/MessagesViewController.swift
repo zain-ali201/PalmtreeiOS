@@ -26,6 +26,7 @@ import UIKit
 class MessagesViewController: UIViewController, KeyboardHandler {
   
   //MARK: IBOutlets
+    @IBOutlet weak var lblTitle: UILabel!
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var inputTextField: UITextField!
   @IBOutlet weak var expandButton: UIButton!
@@ -55,6 +56,15 @@ class MessagesViewController: UIViewController, KeyboardHandler {
     fetchMessages()
     fetchUserName()
   }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    @IBAction func backBtnAction(_ button: UIButton)
+    {
+        self.navigationController?.popViewController(animated: true)
+    }
 }
 
 //MARK: Private methods
@@ -94,7 +104,7 @@ extension MessagesViewController {
     guard let userID = conversation.userIDs.filter({$0 != currentUserID}).first else { return }
     UserManager().userData(for: userID) {[weak self] user in
       guard let name = user?.name else { return }
-      self?.navigationItem.title = name
+        self?.lblTitle.text = name
     }
   }
   

@@ -131,7 +131,7 @@ public class ALLoadingView: NSObject {
     }
     private var loadingViewType: ALLVType
     private var operationQueue = OperationQueue()
-    private var blankIntrinsicContentSize = CGSize(width: UIView.noIntrinsicMetric, height: UIView.noIntrinsicMetric)
+    private var blankIntrinsicContentSize = CGSize(width: UIViewNoIntrinsicMetric, height: UIViewNoIntrinsicMetric)
     // Subviews
     private var loadingView: UIView?
     private var appearanceView: UIView?
@@ -425,7 +425,7 @@ public class ALLoadingView: NSObject {
             backgroundView.backgroundColor = UIColor.green
             
             stackView.addSubview(backgroundView)
-            stackView.sendSubviewToBack(backgroundView)
+            stackView.sendSubview(toBack: backgroundView)
             backgroundView.translatesAutoresizingMaskIntoConstraints = false
             backgroundView.topAnchor.constraint(equalTo: stackView.topAnchor).isActive = true
             backgroundView.leftAnchor.constraint(equalTo: stackView.leftAnchor).isActive = true
@@ -500,7 +500,7 @@ public class ALLoadingView: NSObject {
             
             stackView.addArrangedSubview(view)
 
-            if view.intrinsicContentSize.width == UIView.noIntrinsicMetric {
+            if view.intrinsicContentSize.width == UIViewNoIntrinsicMetric {
                 view.translatesAutoresizingMaskIntoConstraints = false
                 view.widthAnchor.constraint(equalToConstant: frameForView.width).isActive = true
             }
@@ -592,7 +592,7 @@ public class ALLoadingView: NSObject {
     }
     
     private func view_activityIndicator() -> UIActivityIndicatorView {
-        let activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.white)
+        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorView.Style.white)
         activityIndicator.startAnimating()
         return activityIndicator
     }

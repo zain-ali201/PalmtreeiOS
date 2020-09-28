@@ -20,12 +20,8 @@
 
 #include <string.h>
 
-#include <string>
-
-#include "absl/strings/str_cat.h"
-#include "absl/strings/str_format.h"
-
 #include <grpc/support/log.h>
+#include <grpc/support/string_util.h>
 
 #include "src/core/lib/json/json.h"
 
@@ -38,7 +34,7 @@ namespace {
 
 class JsonReader {
  public:
-  static grpc_error* Parse(absl::string_view input, Json* output);
+  static grpc_error* Parse(StringView input, Json* output);
 
  private:
   enum class Status {
@@ -84,7 +80,7 @@ class JsonReader {
    */
   static constexpr uint32_t GRPC_JSON_READ_CHAR_EOF = 0x7ffffff0;
 
-  explicit JsonReader(absl::string_view input)
+  explicit JsonReader(StringView input)
       : original_input_(reinterpret_cast<const uint8_t*>(input.data())),
         input_(original_input_),
         remaining_input_(input.size()) {}
@@ -180,10 +176,11 @@ Json* JsonReader::CreateAndLinkValue() {
         if (errors_.size() == GRPC_JSON_MAX_ERRORS) {
           truncated_errors_ = true;
         } else {
-          errors_.push_back(GRPC_ERROR_CREATE_FROM_COPIED_STRING(
-              absl::StrFormat("duplicate key \"%s\" at index %" PRIuPTR, key_,
-                              CurrentIndex())
-                  .c_str()));
+          char* msg;
+          gpr_asprintf(&msg, "duplicate key \"%s\" at index %" PRIuPTR,
+                       key_.c_str(), CurrentIndex());
+          errors_.push_back(GRPC_ERROR_CREATE_FROM_COPIED_STRING(msg));
+          gpr_free(msg);
         }
       }
       value = &(*parent->mutable_object())[std::move(key_)];
@@ -201,10 +198,11 @@ bool JsonReader::StartContainer(Json::Type type) {
     if (errors_.size() == GRPC_JSON_MAX_ERRORS) {
       truncated_errors_ = true;
     } else {
-      errors_.push_back(GRPC_ERROR_CREATE_FROM_COPIED_STRING(
-          absl::StrFormat("exceeded max stack depth (%d) at index %" PRIuPTR,
-                          GRPC_JSON_MAX_DEPTH, CurrentIndex())
-              .c_str()));
+      char* msg;
+      gpr_asprintf(&msg, "exceeded max stack depth (%d) at index %" PRIuPTR,
+                   GRPC_JSON_MAX_DEPTH, CurrentIndex());
+      errors_.push_back(GRPC_ERROR_CREATE_FROM_COPIED_STRING(msg));
+      gpr_free(msg);
     }
     return false;
   }
@@ -237,7 +235,7 @@ void JsonReader::SetString() {
 
 bool JsonReader::SetNumber() {
   Json* value = CreateAndLinkValue();
-  *value = Json(string_, /*is_number=*/true);
+  *value = Json(std::move(string_), /*is_number=*/true);
   string_.clear();
   return true;
 }
@@ -817,7 +815,7 @@ JsonReader::Status JsonReader::Run() {
   GPR_UNREACHABLE_CODE(return Status::GRPC_JSON_INTERNAL_ERROR);
 }
 
-grpc_error* JsonReader::Parse(absl::string_view input, Json* output) {
+grpc_error* JsonReader::Parse(StringView input, Json* output) {
   JsonReader reader(input);
   Status status = reader.Run();
   if (reader.truncated_errors_) {
@@ -826,14 +824,17 @@ grpc_error* JsonReader::Parse(absl::string_view input, Json* output) {
         "errors and try again to see additional errors"));
   }
   if (status == Status::GRPC_JSON_INTERNAL_ERROR) {
-    reader.errors_.push_back(GRPC_ERROR_CREATE_FROM_COPIED_STRING(
-        absl::StrCat("internal error in JSON parser at index ",
-                     reader.CurrentIndex())
-            .c_str()));
+    char* msg;
+    gpr_asprintf(&msg, "internal error in JSON parser at index %" PRIuPTR,
+                 reader.CurrentIndex());
+    reader.errors_.push_back(GRPC_ERROR_CREATE_FROM_COPIED_STRING(msg));
+    gpr_free(msg);
   } else if (status == Status::GRPC_JSON_PARSE_ERROR) {
-    reader.errors_.push_back(GRPC_ERROR_CREATE_FROM_COPIED_STRING(
-        absl::StrCat("JSON parse error at index ", reader.CurrentIndex())
-            .c_str()));
+    char* msg;
+    gpr_asprintf(&msg, "JSON parse error at index %" PRIuPTR,
+                 reader.CurrentIndex());
+    reader.errors_.push_back(GRPC_ERROR_CREATE_FROM_COPIED_STRING(msg));
+    gpr_free(msg);
   }
   if (!reader.errors_.empty()) {
     return GRPC_ERROR_CREATE_FROM_VECTOR("JSON parsing failed",
@@ -845,7 +846,7 @@ grpc_error* JsonReader::Parse(absl::string_view input, Json* output) {
 
 }  // namespace
 
-Json Json::Parse(absl::string_view json_str, grpc_error** error) {
+Json Json::Parse(StringView json_str, grpc_error** error) {
   Json value;
   *error = JsonReader::Parse(json_str, &value);
   return value;

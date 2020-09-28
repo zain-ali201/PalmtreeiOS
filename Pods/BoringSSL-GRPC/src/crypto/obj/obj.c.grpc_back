@@ -54,18 +54,18 @@
  * copied and put under another distribution licence
  * [including the GNU Public Licence.] */
 
-#include <openssl_grpc/obj.h>
+#include <openssl/obj.h>
 
 #include <inttypes.h>
 #include <limits.h>
 #include <string.h>
 
-#include <openssl_grpc/asn1.h>
-#include <openssl_grpc/bytestring.h>
-#include <openssl_grpc/err.h>
-#include <openssl_grpc/lhash.h>
-#include <openssl_grpc/mem.h>
-#include <openssl_grpc/thread.h>
+#include <openssl/asn1.h>
+#include <openssl/bytestring.h>
+#include <openssl/err.h>
+#include <openssl/lhash.h>
+#include <openssl/mem.h>
+#include <openssl/thread.h>
 
 #include "obj_dat.h"
 #include "../internal.h"

@@ -446,11 +446,12 @@ grpc_error* grpc_error_set_int(grpc_error* src, grpc_error_ints which,
   return new_err;
 }
 
-struct special_error_status_map {
+typedef struct {
   grpc_status_code code;
   const char* msg;
   size_t len;
-};
+} special_error_status_map;
+
 const special_error_status_map error_status_map[] = {
     {GRPC_STATUS_OK, "", 0},                // GRPC_ERROR_NONE
     {GRPC_STATUS_INVALID_ARGUMENT, "", 0},  // GRPC_ERROR_RESERVED_1
@@ -531,15 +532,17 @@ static const char* no_error_string = "\"No Error\"";
 static const char* oom_error_string = "\"Out of memory\"";
 static const char* cancelled_error_string = "\"Cancelled\"";
 
-struct kv_pair {
+typedef struct {
   char* key;
   char* value;
-};
-struct kv_pairs {
+} kv_pair;
+
+typedef struct {
   kv_pair* kvs;
   size_t num_kvs;
   size_t cap_kvs;
-};
+} kv_pairs;
+
 static void append_chr(char c, char** s, size_t* sz, size_t* cap) {
   if (*sz == *cap) {
     *cap = GPR_MAX(8, 3 * *cap / 2);

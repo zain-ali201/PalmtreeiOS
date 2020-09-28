@@ -18,41 +18,31 @@
 
 #include "src/core/ext/filters/client_channel/backend_metric.h"
 
-#include "absl/strings/string_view.h"
-
+#include "src/core/lib/gprpp/string_view.h"
 #if COCOAPODS==1
   #include  "src/core/ext/upb-generated/udpa/data/orca/v1/orca_load_report.upb.h"
 #else
   #include  "udpa/data/orca/v1/orca_load_report.upb.h"
 #endif
-#if COCOAPODS==1
-  #include  "third_party/upb/upb/upb.hpp"
-#else
-  #include  "upb/upb.hpp"
-#endif
-
-#include "src/core/lib/gprpp/map.h"
 
 namespace grpc_core {
 
 namespace {
 
 template <typename EntryType>
-std::map<absl::string_view, double, StringLess> ParseMap(
+std::map<StringView, double, StringLess> ParseMap(
     udpa_data_orca_v1_OrcaLoadReport* msg,
-    const EntryType* (*entry_func)(const udpa_data_orca_v1_OrcaLoadReport*,
-                                   size_t*),
+    EntryType** (*entry_func)(udpa_data_orca_v1_OrcaLoadReport*, size_t*),
     upb_strview (*key_func)(const EntryType*),
     double (*value_func)(const EntryType*), Arena* arena) {
-  std::map<absl::string_view, double, StringLess> result;
-  size_t i = UPB_MAP_BEGIN;
-  while (true) {
-    const auto* entry = entry_func(msg, &i);
-    if (entry == nullptr) break;
-    upb_strview key_view = key_func(entry);
-    char* key = static_cast<char*>(arena->Alloc(key_view.size));
+  std::map<StringView, double, StringLess> result;
+  size_t size;
+  const auto* const* entries = entry_func(msg, &size);
+  for (size_t i = 0; i < size; ++i) {
+    upb_strview key_view = key_func(entries[i]);
+    char* key = static_cast<char*>(arena->Alloc(key_view.size + 1));
     memcpy(key, key_view.data, key_view.size);
-    result[absl::string_view(key, key_view.size)] = value_func(entry);
+    result[StringView(key, key_view.size)] = value_func(entries[i]);
   }
   return result;
 }
@@ -78,12 +68,12 @@ const LoadBalancingPolicy::BackendMetricData* ParseBackendMetricData(
       udpa_data_orca_v1_OrcaLoadReport_rps(msg);
   backend_metric_data->request_cost =
       ParseMap<udpa_data_orca_v1_OrcaLoadReport_RequestCostEntry>(
-          msg, udpa_data_orca_v1_OrcaLoadReport_request_cost_next,
+          msg, udpa_data_orca_v1_OrcaLoadReport_mutable_request_cost,
           udpa_data_orca_v1_OrcaLoadReport_RequestCostEntry_key,
           udpa_data_orca_v1_OrcaLoadReport_RequestCostEntry_value, arena);
   backend_metric_data->utilization =
       ParseMap<udpa_data_orca_v1_OrcaLoadReport_UtilizationEntry>(
-          msg, udpa_data_orca_v1_OrcaLoadReport_utilization_next,
+          msg, udpa_data_orca_v1_OrcaLoadReport_mutable_utilization,
           udpa_data_orca_v1_OrcaLoadReport_UtilizationEntry_key,
           udpa_data_orca_v1_OrcaLoadReport_UtilizationEntry_value, arena);
   return backend_metric_data;

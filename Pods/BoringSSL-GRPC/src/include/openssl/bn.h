@@ -949,7 +949,6 @@ OPENSSL_EXPORT int BN_bn2binpad(const BIGNUM *in, uint8_t *out, int len);
 // Use |BN_prime_checks_for_generation| or |BN_prime_checks_for_validation|
 // instead. (This defaults to the |_for_validation| value in order to be
 // conservative.)
-#define BN_prime_checks BN_prime_checks_for_validation
 
 
 // Private functions

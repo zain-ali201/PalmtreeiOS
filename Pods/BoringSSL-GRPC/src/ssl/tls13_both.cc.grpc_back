@@ -12,19 +12,19 @@
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE. */
 
-#include <openssl_grpc/ssl.h>
+#include <openssl/ssl.h>
 
 #include <assert.h>
 #include <string.h>
 
 #include <utility>
 
-#include <openssl_grpc/bytestring.h>
-#include <openssl_grpc/err.h>
-#include <openssl_grpc/hkdf.h>
-#include <openssl_grpc/mem.h>
-#include <openssl_grpc/stack.h>
-#include <openssl_grpc/x509.h>
+#include <openssl/bytestring.h>
+#include <openssl/err.h>
+#include <openssl/hkdf.h>
+#include <openssl/mem.h>
+#include <openssl/stack.h>
+#include <openssl/x509.h>
 
 #include "../crypto/internal.h"
 #include "internal.h"
@@ -356,7 +356,7 @@ bool tls13_process_certificate_verify(SSL_HANDSHAKE *hs, const SSLMessage &msg) 
   }
 
   uint8_t alert = SSL_AD_DECODE_ERROR;
-  if (!tls12_check_peer_sigalg(hs, &alert, signature_algorithm)) {
+  if (!tls12_check_peer_sigalg(ssl, &alert, signature_algorithm)) {
     ssl_send_alert(ssl, SSL3_AL_FATAL, alert);
     return false;
   }

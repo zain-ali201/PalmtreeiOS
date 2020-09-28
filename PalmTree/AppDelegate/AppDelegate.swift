@@ -227,15 +227,15 @@ extension AppDelegate
         
         Messaging.messaging().apnsToken = deviceToken
         
-        if let refreshedToken = InstanceID.instanceID().token() {
-            print("Firebase: InstanceID token: \(refreshedToken)")
-            self.deviceFcmToken = refreshedToken
-            let defaults =  UserDefaults.standard
-            defaults.setValue(deviceToken, forKey: "fcmToken")
-            defaults.synchronize()
-        }else{
-            
-        }
+//        if let refreshedToken = InstanceID.instanceID().token() {
+//            print("Firebase: InstanceID token: \(refreshedToken)")
+//            self.deviceFcmToken = refreshedToken
+//            let defaults =  UserDefaults.standard
+//            defaults.setValue(deviceToken, forKey: "fcmToken")
+//            defaults.synchronize()
+//        }else{
+//            
+//        }
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {

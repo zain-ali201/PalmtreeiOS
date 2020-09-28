@@ -29,7 +29,7 @@ static const upb_msglayout *const google_protobuf_Struct_submsgs[1] = {
 };
 
 static const upb_msglayout_field google_protobuf_Struct__fields[1] = {
-  {1, UPB_SIZE(0, 0), 0, 0, 11, _UPB_LABEL_MAP},
+  {1, UPB_SIZE(0, 0), 0, 0, 11, 3},
 };
 
 const upb_msglayout google_protobuf_Struct_msginit = {

@@ -44,12 +44,6 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include <string>
-#include <vector>
-
-#include "absl/container/inlined_vector.h"
-#include "absl/strings/str_cat.h"
-
 #include <grpc/grpc.h>
 #include <grpc/support/alloc.h>
 #include <grpc/support/log.h>
@@ -58,6 +52,7 @@
 #include <grpc/support/time.h>
 #include "src/core/lib/channel/channel_args.h"
 #include "src/core/lib/gpr/string.h"
+#include "src/core/lib/gprpp/inlined_vector.h"
 #include "src/core/lib/gprpp/memory.h"
 #include "src/core/lib/iomgr/error.h"
 #include "src/core/lib/iomgr/ev_posix.h"
@@ -78,7 +73,7 @@ class GrpcUdpListener {
   ~GrpcUdpListener();
 
   /* Called when grpc server starts to listening on the grpc_fd. */
-  void StartListening(const std::vector<grpc_pollset*>* pollsets,
+  void StartListening(grpc_pollset** pollsets, size_t pollset_count,
                       GrpcUdpHandlerFactory* handler_factory);
 
   /* Called when data is available to read from the socket.
@@ -152,11 +147,15 @@ GrpcUdpListener::GrpcUdpListener(grpc_udp_server* server, int fd,
       server_(server),
       orphan_notified_(false),
       already_shutdown_(false) {
-  std::string addr_str = grpc_sockaddr_to_string(addr, true);
-  std::string name = absl::StrCat("udp-server-listener:", addr_str);
-  emfd_ = grpc_fd_create(fd, name.c_str(), true);
+  char* addr_str;
+  char* name;
+  grpc_sockaddr_to_string(&addr_str, addr, 1);
+  gpr_asprintf(&name, "udp-server-listener:%s", addr_str);
+  gpr_free(addr_str);
+  emfd_ = grpc_fd_create(fd, name, true);
   memcpy(&addr_, addr, sizeof(grpc_resolved_address));
   GPR_ASSERT(emfd_);
+  gpr_free(name);
   gpr_mu_init(&mutex_);
 }
 
@@ -178,7 +177,7 @@ struct grpc_udp_server {
   int shutdown;
 
   /* An array of listeners */
-  absl::InlinedVector<GrpcUdpListener, 16> listeners;
+  grpc_core::InlinedVector<GrpcUdpListener, 16> listeners;
 
   /* factory for use to create udp listeners */
   GrpcUdpHandlerFactory* handler_factory;
@@ -186,9 +185,10 @@ struct grpc_udp_server {
   /* shutdown callback */
   grpc_closure* shutdown_complete;
 
-  /* all pollsets interested in new connections. The object pointed at is not
-   * owned by this struct. */
-  const std::vector<grpc_pollset*>* pollsets;
+  /* all pollsets interested in new connections */
+  grpc_pollset** pollsets;
+  /* number of pollsets in the pollsets array */
+  size_t pollset_count;
   /* opaque object to pass to callbacks */
   void* user_data;
 
@@ -282,7 +282,7 @@ static void deactivated_all_ports(grpc_udp_server* s) {
 
   GPR_ASSERT(s->shutdown);
 
-  if (s->listeners.empty()) {
+  if (s->listeners.size() == 0) {
     gpr_mu_unlock(&s->mu);
     finish_shutdown(s);
     return;
@@ -412,8 +412,10 @@ static int prepare_socket(grpc_socket_factory* socket_factory, int fd,
   }
 
   if (bind_socket(socket_factory, fd, addr) < 0) {
-    std::string addr_str = grpc_sockaddr_to_string(addr, false);
-    gpr_log(GPR_ERROR, "bind addr=%s: %s", addr_str.c_str(), strerror(errno));
+    char* addr_str;
+    grpc_sockaddr_to_string(&addr_str, addr, 0);
+    gpr_log(GPR_ERROR, "bind addr=%s: %s", addr_str, strerror(errno));
+    gpr_free(addr_str);
     goto error;
   }
 
@@ -580,8 +582,10 @@ int grpc_udp_server_add_port(grpc_udp_server* s,
             "Try to have multiple listeners on same port, but SO_REUSEPORT is "
             "not supported. Only create 1 listener.");
   }
-  std::string addr_str = grpc_sockaddr_to_string(addr, true);
-  gpr_log(GPR_DEBUG, "add address: %s to server", addr_str.c_str());
+  char* addr_str;
+  grpc_sockaddr_to_string(&addr_str, addr, 1);
+  gpr_log(GPR_DEBUG, "add address: %s to server", addr_str);
+  gpr_free(addr_str);
 
   int allocated_port1 = -1;
   int allocated_port2 = -1;
@@ -701,29 +705,29 @@ int grpc_udp_server_get_fd(grpc_udp_server* s, unsigned port_index) {
   return s->listeners[port_index].fd();
 }
 
-void grpc_udp_server_start(grpc_udp_server* udp_server,
-                           const std::vector<grpc_pollset*>* pollsets,
-                           void* user_data) {
+void grpc_udp_server_start(grpc_udp_server* s, grpc_pollset** pollsets,
+                           size_t pollset_count, void* user_data) {
   gpr_log(GPR_DEBUG, "grpc_udp_server_start");
-  gpr_mu_lock(&udp_server->mu);
-  GPR_ASSERT(udp_server->active_ports == 0);
-  udp_server->pollsets = pollsets;
-  udp_server->user_data = user_data;
+  gpr_mu_lock(&s->mu);
+  GPR_ASSERT(s->active_ports == 0);
+  s->pollsets = pollsets;
+  s->user_data = user_data;
 
-  for (auto& listener : udp_server->listeners) {
-    listener.StartListening(pollsets, udp_server->handler_factory);
+  for (size_t i = 0; i < s->listeners.size(); ++i) {
+    s->listeners[i].StartListening(pollsets, pollset_count, s->handler_factory);
   }
 
-  gpr_mu_unlock(&udp_server->mu);
+  gpr_mu_unlock(&s->mu);
 }
 
-void GrpcUdpListener::StartListening(const std::vector<grpc_pollset*>* pollsets,
+void GrpcUdpListener::StartListening(grpc_pollset** pollsets,
+                                     size_t pollset_count,
                                      GrpcUdpHandlerFactory* handler_factory) {
   gpr_mu_lock(&mutex_);
   handler_factory_ = handler_factory;
   udp_handler_ = handler_factory->CreateUdpHandler(emfd_, server_->user_data);
-  for (grpc_pollset* pollset : *pollsets) {
-    grpc_pollset_add_fd(pollset, emfd_);
+  for (size_t i = 0; i < pollset_count; i++) {
+    grpc_pollset_add_fd(pollsets[i], emfd_);
   }
   GRPC_CLOSURE_INIT(&read_closure_, on_read, this, grpc_schedule_on_exec_ctx);
   grpc_fd_notify_on_read(emfd_, &read_closure_);

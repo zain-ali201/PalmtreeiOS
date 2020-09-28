@@ -57,6 +57,9 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     var sourceImages = [ImageSource]()
     var inputImages = [InputSource]()
     
+    private let manager = ConversationManager()
+    private let userManager = UserManager()
+    
     var readFlag = false
     var fromVC = ""
     
@@ -307,9 +310,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     
     func isMoveMessages(isMove: Bool)
     {
-        let messagesVC = self.storyboard?.instantiateViewController(withIdentifier: MessagesController.className) as! MessagesController
-        messagesVC.isFromAdDetail = true
-        self.navigationController?.pushViewController(messagesVC, animated: true)
+        
     }
     
     @available(iOS 13.0, *)
@@ -484,47 +485,86 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     {
         if defaults.bool(forKey: "isLogin") == false
         {
-            if let msg = defaults.string(forKey: "notLogin")
-            {
-                let alert = Constants.showBasicAlert(message: msg)
-                presentVC(alert)
-            }
+            let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+            let navController = UINavigationController(rootViewController: loginVC)
+            self.present(navController, animated:true, completion: nil)
         }
         else
         {
-            if sendMsgbuttonType == "receive"
-            {
-                let msgVC = self.storyboard?.instantiateViewController(withIdentifier: "MessagesController") as! MessagesController
-                msgVC.isFromAdDetail = true
-                self.navigationController?.pushViewController(msgVC, animated: true)
-            }
-            else
-            {
-                let sendMsgVC = storyboard?.instantiateViewController(withIdentifier: ReplyCommentController.className) as! ReplyCommentController
-                sendMsgVC.modalPresentationStyle = .overCurrentContext
-                sendMsgVC.modalTransitionStyle = .flipHorizontal
-                sendMsgVC.isFromMsg = true
-                sendMsgVC.objAddDetailData = AddsHandler.sharedInstance.objAddDetails
-                sendMsgVC.ad_id = adDetailDataObj.id ?? 0
-                sendMsgVC.delegate = self
-                present(sendMsgVC, animated: true, completion: nil)
-            }
+//            guard let id = userManager.currentUserID() else { return }
+//            userManager.contacts {[weak self] results in
+//                let users = results.filter({$0.id != id})
+//                for user in users
+//                {
+//                    if user.email == self?.adDetailDataObj.email
+//                    {
+//                        print(user.email)
+//                        break
+//                    }
+//                }
+//            }
+
+//            self.showLoader()
+//            userManager.userData(for: adDetailDataObj.email, {[weak self] user in
+//
+//                if user != nil
+//                {
+//                    self?.manager.fetchConversation(user!.id, {[weak self] conversations in
+//
+//                        let vc: MessagesViewController = UIStoryboard.initial(storyboard: .messages)
+//                        let conversation = conversations.filter({$0.userIDs.contains(user!.id)}).first
+//                        vc.conversation = conversation!
+//                        self?.manager.markAsRead(conversation!)
+//                        self?.navigationController?.pushViewController(vc, animated: true)
+//                    })
+//                }
+//                else
+//                {
+//                    self?.stopAnimating()
+//                }
+//            })
+            
+            guard let currentID = userManager.currentUserID() else { return }
+            let vc: MessagesViewController = UIStoryboard.initial(storyboard: .messages)
+            let conversation = ObjectConversation()
+            conversation.userIDs.append(contentsOf: [currentID, "tz24mCnhsZdZzNVnQb8UuESoUkm2"])
+//            conversation.isRead = [currentID: true, "tz24mCnhsZdZzNVnQb8UuESoUkm2": true]
+            vc.conversation = conversation
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
     
     @IBAction func callBtnAction(_ button: UIButton)
     {
-        if let phoneURL = URL(string: String(format: "tel://%@", phone))
+        if defaults.bool(forKey: "isLogin") == false
         {
-            UIApplication.shared.open(phoneURL, options: [:], completionHandler: nil)
+            let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+            let navController = UINavigationController(rootViewController: loginVC)
+            self.present(navController, animated:true, completion: nil)
+        }
+        else
+        {
+            if let phoneURL = URL(string: String(format: "tel://%@", adDetailDataObj.phone))
+            {
+                UIApplication.shared.open(phoneURL, options: [:], completionHandler: nil)
+            }
         }
     }
     
     @IBAction func whatsappBtnAction(_ button: UIButton)
     {
-        let whatsappURL = URL(string: String(format: "https://wa.me/%@", phone))
-        if UIApplication.shared.canOpenURL(whatsappURL!) {
-            UIApplication.shared.open(whatsappURL!, options: [:], completionHandler: nil)
+        if defaults.bool(forKey: "isLogin") == false
+        {
+            let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+            let navController = UINavigationController(rootViewController: loginVC)
+            self.present(navController, animated:true, completion: nil)
+        }
+        else
+        {
+            let whatsappURL = URL(string: String(format: "https://wa.me/%@", adDetailDataObj.whatsapp))
+            if UIApplication.shared.canOpenURL(whatsappURL!) {
+                UIApplication.shared.open(whatsappURL!, options: [:], completionHandler: nil)
+            }
         }
     }
     

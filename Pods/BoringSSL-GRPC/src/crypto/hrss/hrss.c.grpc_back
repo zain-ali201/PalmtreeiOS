@@ -12,17 +12,17 @@
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE. */
 
-#include <openssl_grpc/hrss.h>
+#include <openssl/hrss.h>
 
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <openssl_grpc/bn.h>
-#include <openssl_grpc/cpu.h>
-#include <openssl_grpc/hmac.h>
-#include <openssl_grpc/mem.h>
-#include <openssl_grpc/sha.h>
+#include <openssl/bn.h>
+#include <openssl/cpu.h>
+#include <openssl/hmac.h>
+#include <openssl/mem.h>
+#include <openssl/sha.h>
 
 #if defined(_MSC_VER)
 #define RESTRICT

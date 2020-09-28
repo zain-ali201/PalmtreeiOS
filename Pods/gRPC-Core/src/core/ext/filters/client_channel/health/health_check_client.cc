@@ -23,12 +23,6 @@
 
 #include "src/core/ext/filters/client_channel/health/health_check_client.h"
 
-#if COCOAPODS==1
-  #include  "third_party/upb/upb/upb.hpp"
-#else
-  #include  "upb/upb.hpp"
-#endif
-
 #include "src/core/lib/debug/trace.h"
 #include "src/core/lib/gprpp/sync.h"
 #include "src/core/lib/slice/slice_internal.h"
@@ -99,12 +93,7 @@ void HealthCheckClient::SetHealthStatusLocked(grpc_connectivity_state state,
     gpr_log(GPR_INFO, "HealthCheckClient %p: setting state=%s reason=%s", this,
             ConnectivityStateName(state), reason);
   }
-  if (watcher_ != nullptr) {
-    watcher_->Notify(state,
-                     state == GRPC_CHANNEL_TRANSIENT_FAILURE
-                         ? absl::Status(absl::StatusCode::kUnavailable, reason)
-                         : absl::Status());
-  }
+  if (watcher_ != nullptr) watcher_->Notify(state);
 }
 
 void HealthCheckClient::Orphan() {
@@ -140,7 +129,8 @@ void HealthCheckClient::StartCallLocked() {
   call_state_->StartCall();
 }
 
-void HealthCheckClient::StartRetryTimerLocked() {
+void HealthCheckClient::StartRetryTimer() {
+  MutexLock lock(&mu_);
   SetHealthStatusLocked(GRPC_CHANNEL_TRANSIENT_FAILURE,
                         "health check call failed; will retry after backoff");
   grpc_millis next_try = retry_backoff_.NextAttemptTime();
@@ -311,7 +301,14 @@ void HealthCheckClient::CallState::StartCall() {
             "checking call on subchannel (%s); will retry",
             health_check_client_.get(), this, grpc_error_string(error));
     GRPC_ERROR_UNREF(error);
-    CallEndedLocked(/*retry=*/true);
+    // Schedule instead of running directly, since we must not be
+    // holding health_check_client_->mu_ when CallEnded() is called.
+    call_->Ref(DEBUG_LOCATION, "call_end_closure").release();
+    ExecCtx::Run(
+        DEBUG_LOCATION,
+        GRPC_CLOSURE_INIT(&batch_.handler_private.closure, CallEndedRetry, this,
+                          grpc_schedule_on_exec_ctx),
+        GRPC_ERROR_NONE);
     return;
   }
   // Initialize payload and batch.
@@ -589,11 +586,18 @@ void HealthCheckClient::CallState::RecvTrailingMetadataReady(
                                                 kErrorMessage);
     retry = false;
   }
-  MutexLock lock(&self->health_check_client_->mu_);
-  self->CallEndedLocked(retry);
+  self->CallEnded(retry);
 }
 
-void HealthCheckClient::CallState::CallEndedLocked(bool retry) {
+void HealthCheckClient::CallState::CallEndedRetry(void* arg,
+                                                  grpc_error* /*error*/) {
+  HealthCheckClient::CallState* self =
+      static_cast<HealthCheckClient::CallState*>(arg);
+  self->CallEnded(true /* retry */);
+  self->call_->Unref(DEBUG_LOCATION, "call_end_closure");
+}
+
+void HealthCheckClient::CallState::CallEnded(bool retry) {
   // If this CallState is still in use, this call ended because of a failure,
   // so we need to stop using it and optionally create a new one.
   // Otherwise, we have deliberately ended this call, and no further action
@@ -606,10 +610,10 @@ void HealthCheckClient::CallState::CallEndedLocked(bool retry) {
         // If the call fails after we've gotten a successful response, reset
         // the backoff and restart the call immediately.
         health_check_client_->retry_backoff_.Reset();
-        health_check_client_->StartCallLocked();
+        health_check_client_->StartCall();
       } else {
         // If the call failed without receiving any messages, retry later.
-        health_check_client_->StartRetryTimerLocked();
+        health_check_client_->StartRetryTimer();
       }
     }
   }

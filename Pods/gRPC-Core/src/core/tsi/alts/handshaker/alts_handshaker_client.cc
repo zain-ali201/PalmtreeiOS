@@ -22,12 +22,6 @@
 
 #include "src/core/tsi/alts/handshaker/alts_handshaker_client.h"
 
-#if COCOAPODS==1
-  #include  "third_party/upb/upb/upb.hpp"
-#else
-  #include  "upb/upb.hpp"
-#endif
-
 #include <grpc/byte_buffer.h>
 #include <grpc/support/alloc.h>
 #include <grpc/support/log.h>
@@ -108,8 +102,6 @@ typedef struct alts_grpc_handshaker_client {
   bool receive_status_finished;
   /* if non-null, contains arguments to complete a TSI next callback. */
   recv_message_result* pending_recv_message_result;
-  /* Maximum frame size used by frame protector. */
-  size_t max_frame_size;
 } alts_grpc_handshaker_client;
 
 static void handshaker_client_send_buffer_destroy(
@@ -267,13 +259,7 @@ void alts_handshaker_client_handle_response(alts_handshaker_client* c,
   }
   tsi_handshaker_result* result = nullptr;
   if (is_handshake_finished_properly(resp)) {
-    tsi_result status =
-        alts_tsi_handshaker_result_create(resp, client->is_client, &result);
-    if (status != TSI_OK) {
-      gpr_log(GPR_ERROR, "alts_tsi_handshaker_result_create() failed");
-      handle_response_done(client, status, nullptr, 0, nullptr);
-      return;
-    }
+    alts_tsi_handshaker_result_create(resp, client->is_client, &result);
     alts_tsi_handshaker_result_set_unused_bytes(
         result, &client->recv_bytes,
         grpc_gcp_HandshakerResp_bytes_consumed(resp));
@@ -520,8 +506,6 @@ static grpc_byte_buffer* get_serialized_start_client(
                                           upb_strview_makez(ptr->data));
     ptr = ptr->next;
   }
-  grpc_gcp_StartClientHandshakeReq_set_max_frame_size(
-      start_client, static_cast<uint32_t>(client->max_frame_size));
   return get_serialized_handshaker_req(req, arena.ptr());
 }
 
@@ -561,12 +545,17 @@ static grpc_byte_buffer* get_serialized_start_server(
       grpc_gcp_HandshakerReq_mutable_server_start(req, arena.ptr());
   grpc_gcp_StartServerHandshakeReq_add_application_protocols(
       start_server, upb_strview_makez(ALTS_APPLICATION_PROTOCOL), arena.ptr());
+  grpc_gcp_StartServerHandshakeReq_HandshakeParametersEntry* param =
+      grpc_gcp_StartServerHandshakeReq_add_handshake_parameters(start_server,
+                                                                arena.ptr());
+  grpc_gcp_StartServerHandshakeReq_HandshakeParametersEntry_set_key(
+      param, grpc_gcp_ALTS);
   grpc_gcp_ServerHandshakeParameters* value =
       grpc_gcp_ServerHandshakeParameters_new(arena.ptr());
   grpc_gcp_ServerHandshakeParameters_add_record_protocols(
       value, upb_strview_makez(ALTS_RECORD_PROTOCOL), arena.ptr());
-  grpc_gcp_StartServerHandshakeReq_handshake_parameters_set(
-      start_server, grpc_gcp_ALTS, value, arena.ptr());
+  grpc_gcp_StartServerHandshakeReq_HandshakeParametersEntry_set_value(param,
+                                                                      value);
   grpc_gcp_StartServerHandshakeReq_set_in_bytes(
       start_server, upb_strview_make(reinterpret_cast<const char*>(
                                          GRPC_SLICE_START_PTR(*bytes_received)),
@@ -576,8 +565,6 @@ static grpc_byte_buffer* get_serialized_start_server(
                                                             arena.ptr());
   grpc_gcp_RpcProtocolVersions_assign_from_struct(
       server_version, arena.ptr(), &client->options->rpc_versions);
-  grpc_gcp_StartServerHandshakeReq_set_max_frame_size(
-      start_server, static_cast<uint32_t>(client->max_frame_size));
   return get_serialized_handshaker_req(req, arena.ptr());
 }
 
@@ -668,18 +655,11 @@ static void handshaker_client_destruct(alts_handshaker_client* c) {
     // TODO(apolcyn): we could remove this indirection and call
     // grpc_call_unref inline if there was an internal variant of
     // grpc_call_unref that didn't need to flush an ExecCtx.
-    if (grpc_core::ExecCtx::Get() == nullptr) {
-      // Unref handshaker call if there is no exec_ctx, e.g., in the case of
-      // Envoy ALTS transport socket.
-      grpc_call_unref(client->call);
-    } else {
-      // Using existing exec_ctx to unref handshaker call.
-      grpc_core::ExecCtx::Run(
-          DEBUG_LOCATION,
-          GRPC_CLOSURE_CREATE(handshaker_call_unref, client->call,
-                              grpc_schedule_on_exec_ctx),
-          GRPC_ERROR_NONE);
-    }
+    grpc_core::ExecCtx::Run(
+        DEBUG_LOCATION,
+        GRPC_CLOSURE_CREATE(handshaker_call_unref, client->call,
+                            grpc_schedule_on_exec_ctx),
+        GRPC_ERROR_NONE);
   }
 }
 
@@ -694,7 +674,7 @@ alts_handshaker_client* alts_grpc_handshaker_client_create(
     grpc_alts_credentials_options* options, const grpc_slice& target_name,
     grpc_iomgr_cb_func grpc_cb, tsi_handshaker_on_next_done_cb cb,
     void* user_data, alts_handshaker_client_vtable* vtable_for_testing,
-    bool is_client, size_t max_frame_size) {
+    bool is_client) {
   if (channel == nullptr || handshaker_service_url == nullptr) {
     gpr_log(GPR_ERROR, "Invalid arguments to alts_handshaker_client_create()");
     return nullptr;
@@ -714,7 +694,6 @@ alts_handshaker_client* alts_grpc_handshaker_client_create(
   client->recv_bytes = grpc_empty_slice();
   grpc_metadata_array_init(&client->recv_initial_metadata);
   client->is_client = is_client;
-  client->max_frame_size = max_frame_size;
   client->buffer_size = TSI_ALTS_INITIAL_BUFFER_SIZE;
   client->buffer = static_cast<unsigned char*>(gpr_zalloc(client->buffer_size));
   grpc_slice slice = grpc_slice_from_copied_string(handshaker_service_url);

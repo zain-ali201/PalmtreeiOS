@@ -54,11 +54,11 @@
  * copied and put under another distribution licence
  * [including the GNU Public Licence.] */
 
-#include <openssl_grpc/sha.h>
+#include <openssl/sha.h>
 
 #include <string.h>
 
-#include <openssl_grpc/mem.h>
+#include <openssl/mem.h>
 
 #include "internal.h"
 #include "../../internal.h"

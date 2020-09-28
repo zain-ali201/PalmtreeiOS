@@ -32,9 +32,18 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    let keyboardManager = IQKeyboardManager.sharedManager()
+    @IBOutlet weak var btnHome: UIButton!
+    @IBOutlet weak var btnPalmtree: UIButton!
+    @IBOutlet weak var btnPost: UIButton!
+    @IBOutlet weak var btnWishlist: UIButton!
+    @IBOutlet weak var btnMessages: UIButton!
+    
+    @IBOutlet weak var btnSearch: UIButton!
+    
+    
     
     //MARK:- Properties
+    let keyboardManager = IQKeyboardManager.sharedManager()
     
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -54,15 +63,9 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var latitude: Double = 0
     var longitude: Double = 0
 
-    
+    private let manager = UserManager()
     //MenuButtons
-    @IBOutlet weak var btnHome: UIButton!
-    @IBOutlet weak var btnPalmtree: UIButton!
-    @IBOutlet weak var btnPost: UIButton!
-    @IBOutlet weak var btnWishlist: UIButton!
-    @IBOutlet weak var btnMessages: UIButton!
     
-    @IBOutlet weak var btnSearch: UIButton!
     
     var locationManager = CLLocationManager()
     lazy var geocoder = CLGeocoder()
@@ -91,7 +94,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
        
         self.hideKeyboard()
         self.googleAnalytics(controllerName: "Home Controller")
-        self.sendFCMToken()
+//        self.sendFCMToken()
         self.subscribeToTopicMessage()
         self.showLoader()
         self.homeData()
@@ -431,7 +434,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
             else
             {
-                let messagesVC = self.storyboard?.instantiateViewController(withIdentifier: "MessagesController") as! MessagesController
+                let messagesVC = self.storyboard?.instantiateViewController(withIdentifier: "ConversationsViewController") as! ConversationsViewController
                 self.navigationController?.pushViewController(messagesVC, animated: false)
             }
         }
@@ -461,7 +464,17 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     userDetail?.id = self.defaults.integer(forKey: "userID")
                     userDetail?.displayName = self.defaults.string(forKey: "displayName")
                     userDetail?.userEmail = self.defaults.string(forKey: "userEmail")
-//                    userDetail?.authToken = self.defaults.string(forKey: "authToken")!
+                    
+                    let user = ObjectUser()
+                    user.email = userDetail?.userEmail
+                    user.password = "Sprint1234!"
+                    self.manager.login(user: user) {[weak self] response in
+                      print(response)
+                      switch response {
+                      case .failure: print("User not loggedin for chat")
+                      case .success: print("User loggedin for chat")
+                      }
+                    }
                 }
                 
                 self.tableView.reloadData()

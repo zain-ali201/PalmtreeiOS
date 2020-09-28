@@ -14,12 +14,12 @@
 
 // Adapted from the public domain, estream code by D. Bernstein.
 
-#include <openssl_grpc/chacha.h>
+#include <openssl/chacha.h>
 
 #include <assert.h>
 #include <string.h>
 
-#include <openssl_grpc/cpu.h>
+#include <openssl/cpu.h>
 
 #include "../internal.h"
 #include "internal.h"
