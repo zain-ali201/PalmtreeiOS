@@ -56,7 +56,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
     
     
     //MARK:- Properties
-    private let manager = UserManager()
     
     var getLoginDetails = [LoginData]()
     var isVerifyOn = false
@@ -387,15 +386,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
 //                defaults.set(successResponse.data.profileImg, forKey: "profileImg")
                 defaults.set(successResponse.data.userEmail, forKey: "userEmail")
                 
-                let user = ObjectUser()
-                user.email = userDetail?.userEmail
-                user.password = "Sprint1234!"
-                self.manager.login(user: user) {[weak self] response in
-                  ThemeService.showLoading(false)
-                  switch response {
-                      case .failure: print("User not loggedin for chat")
-                      case .success: print("User loggedin for chat")
-                  }
+                Auth.auth().signIn(withEmail: userDetail?.userEmail ?? "", password: "Sprint1234!") { (user, error) in
+                    if error == nil {
+                        print("User loggedin for char")
+                    }
+                    else
+                    {
+                        print("User not loggedin for char")
+                    }
                 }
                 
                 if myAdsVC != nil

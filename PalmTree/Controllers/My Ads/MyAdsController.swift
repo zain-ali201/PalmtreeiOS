@@ -237,7 +237,7 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
             }
             else
             {
-                let messagesVC = self.storyboard?.instantiateViewController(withIdentifier: "ConversationsViewController") as! ConversationsViewController
+                let messagesVC = self.storyboard?.instantiateViewController(withIdentifier: "MessagesController") as! MessagesController
                 self.navigationController?.pushViewController(messagesVC, animated: false)
             }
         }
@@ -399,9 +399,6 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
             self.stopAnimating()
             self.refreshControl.endRefreshing()
             if successResponse.success {
-//                self.noAddTitle = successResponse.message
-//                self.currentPage = successResponse.data.pagination.currentPage
-//                self.maximumPage = successResponse.data.pagination.maxNumPages
                 
                 self.dataArray = successResponse.data
                 

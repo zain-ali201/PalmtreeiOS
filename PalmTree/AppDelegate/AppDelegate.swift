@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-//        Thread.sleep(forTimeInterval: 2)
+        Thread.sleep(forTimeInterval: 2)
         
         keyboardManager.enable = true
         self.setUpGoogleMaps()
@@ -366,12 +366,9 @@ extension AppDelegate
                 if topic == "chat" {
                     banner.dismiss()
                     
-                    let chatVC = self.storyboard.instantiateViewController(withIdentifier: "ChatController") as! ChatController
+                    let chatVC = self.storyboard.instantiateViewController(withIdentifier: "MessagesController") as! MessagesController
                     let nav: UINavigationController = UINavigationController(rootViewController: chatVC)
-                    chatVC.ad_id = adID
-                    chatVC.sender_id = senderID
-                    chatVC.receiver_id = receiverID
-                    chatVC.messageType = type
+                    
                     self.window?.rootViewController = nav
                     UserDefaults.standard.set("1", forKey: "fromNotification")
                     self.window?.makeKeyAndVisible()

@@ -8,6 +8,9 @@
 
 import UIKit
 import NVActivityIndicatorView
+import Firebase
+import FirebaseStorage
+import FirebaseDatabase
 
 class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollViewDelegate, NVActivityIndicatorViewable {
     
@@ -39,8 +42,6 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
     @IBOutlet weak var buttonRegister: UIButton!
     @IBOutlet weak var lblPass: UILabel!
     
-    private let manager = UserManager()
-    
     //MARK:- Properties
     
     var isAgreeTerms = false
@@ -48,7 +49,7 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
     var isVerifivation = false
     var isVerifyOn = false
     
-    
+    var ref: DatabaseReference!
     //MARK:- Application Life Cycle
     
     override func viewDidLoad() {
@@ -224,20 +225,29 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
                     defaults.set(successResponse.data.id, forKey: "userID")
                     defaults.set(successResponse.data.userEmail, forKey: "userEmail")
                     
-                    DispatchQueue.main.async {
-                    
-                        let user = ObjectUser()
-                        user.name = userDetail?.displayName
-                        user.email = userDetail?.userEmail
-                        user.password = "Sprint1234!"
-                        
-                        self.manager.register(user: user) {[weak self] response in
-                          ThemeService.showLoading(false)
-                          switch response {
-                            case .failure: self?.showAlert()
-                            case .success:
-                                self?.sendChatToken(chatToken: self?.manager.currentUserID() ?? "")
-                          }
+                    Auth.auth().createUser(withEmail: userDetail?.userEmail ?? "", password: "Sprint1234!") { (user, error) in
+                        if error == nil {
+                            self.ref = Database.database().reference()
+//                            var data = NSData()
+//                            data = UIImageJPEGRepresentation(UIImage(named: ""), 0.8)! as NSData
+//                            let storageRef = Storage.storage().reference()
+//                            let filePath = "\(Auth.auth().currentUser!.uid)/\("imgUserProfile")"
+//                            let metaData = StorageMetadata()
+//                            metaData.contentType = "image/jpg"
+//                            storageRef.child(filePath).putData(data as Data, metadata: metaData){(metaData,error) in
+//                                if let error = error {
+//                                    print(error.localizedDescription)
+//                                    return
+//                                }
+//                            }
+                            print("User registered for chat")
+                            let fullname = ["Firstname": userDetail?.displayName , "Lastname": ""]
+                            self.ref.child("users").child((user?.user.uid)!).setValue(["username": fullname])
+                            
+                        }
+                        else
+                        {
+                            print("User not registered for chat")
                         }
                     }
                     

@@ -56,10 +56,6 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     var adDetailDataObj:AdsJSON!
     var sourceImages = [ImageSource]()
     var inputImages = [InputSource]()
-    
-    private let manager = ConversationManager()
-    private let userManager = UserManager()
-    
     var readFlag = false
     var fromVC = ""
     
@@ -491,45 +487,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
         }
         else
         {
-//            guard let id = userManager.currentUserID() else { return }
-//            userManager.contacts {[weak self] results in
-//                let users = results.filter({$0.id != id})
-//                for user in users
-//                {
-//                    if user.email == self?.adDetailDataObj.email
-//                    {
-//                        print(user.email)
-//                        break
-//                    }
-//                }
-//            }
-
-//            self.showLoader()
-//            userManager.userData(for: adDetailDataObj.email, {[weak self] user in
-//
-//                if user != nil
-//                {
-//                    self?.manager.fetchConversation(user!.id, {[weak self] conversations in
-//
-//                        let vc: MessagesViewController = UIStoryboard.initial(storyboard: .messages)
-//                        let conversation = conversations.filter({$0.userIDs.contains(user!.id)}).first
-//                        vc.conversation = conversation!
-//                        self?.manager.markAsRead(conversation!)
-//                        self?.navigationController?.pushViewController(vc, animated: true)
-//                    })
-//                }
-//                else
-//                {
-//                    self?.stopAnimating()
-//                }
-//            })
-            
-            guard let currentID = userManager.currentUserID() else { return }
-            let vc: MessagesViewController = UIStoryboard.initial(storyboard: .messages)
-            let conversation = ObjectConversation()
-            conversation.userIDs.append(contentsOf: [currentID, "tz24mCnhsZdZzNVnQb8UuESoUkm2"])
-//            conversation.isRead = [currentID: true, "tz24mCnhsZdZzNVnQb8UuESoUkm2": true]
-            vc.conversation = conversation
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChatController") as! ChatController
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

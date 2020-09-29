@@ -20,6 +20,7 @@ target 'PalmTree' do
     pod 'GoogleAnalytics'
     
     pod 'Firebase/Storage'
+    pod 'Firebase/Database'
     pod 'Kingfisher'
     pod 'Firebase/Firestore'
     pod 'ALLoadingView'

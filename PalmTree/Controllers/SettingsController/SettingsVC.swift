@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SettingsVC: UIViewController {
 
@@ -155,7 +156,7 @@ class SettingsVC: UIViewController {
             defaults.set(false, forKey: "isSocial")
             FacebookAuthentication.signOut()
             GoogleAuthenctication.signOut()
-            
+            try! Auth.auth().signOut()
             self.navigationController?.popToViewController(homeVC, animated: true)
         }
         

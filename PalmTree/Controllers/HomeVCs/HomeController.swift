@@ -62,8 +62,6 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     var latitude: Double = 0
     var longitude: Double = 0
-
-    private let manager = UserManager()
     //MenuButtons
     
     
@@ -434,7 +432,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
             else
             {
-                let messagesVC = self.storyboard?.instantiateViewController(withIdentifier: "ConversationsViewController") as! ConversationsViewController
+                let messagesVC = self.storyboard?.instantiateViewController(withIdentifier: "MessagesController") as! MessagesController
                 self.navigationController?.pushViewController(messagesVC, animated: false)
             }
         }
@@ -465,15 +463,14 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     userDetail?.displayName = self.defaults.string(forKey: "displayName")
                     userDetail?.userEmail = self.defaults.string(forKey: "userEmail")
                     
-                    let user = ObjectUser()
-                    user.email = userDetail?.userEmail
-                    user.password = "Sprint1234!"
-                    self.manager.login(user: user) {[weak self] response in
-                      print(response)
-                      switch response {
-                      case .failure: print("User not loggedin for chat")
-                      case .success: print("User loggedin for chat")
-                      }
+                    Auth.auth().signIn(withEmail: userDetail?.userEmail ?? "", password: "Sprint1234!") { (user, error) in
+                        if error == nil {
+                            print("User loggedin for char")
+                        }
+                        else
+                        {
+                            print("User not loggedin for char")
+                        }
                     }
                 }
                 

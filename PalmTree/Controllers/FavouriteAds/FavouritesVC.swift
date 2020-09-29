@@ -192,7 +192,7 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             }
             else
             {
-                let messagesVC = self.storyboard?.instantiateViewController(withIdentifier: "ConversationsViewController") as! ConversationsViewController
+                let messagesVC = self.storyboard?.instantiateViewController(withIdentifier: "MessagesController") as! MessagesController
                 self.navigationController?.pushViewController(messagesVC, animated: false)
             }
         }

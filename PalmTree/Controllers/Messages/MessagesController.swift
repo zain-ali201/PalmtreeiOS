@@ -7,18 +7,21 @@
 //
 
 import UIKit
-import XLPagerTabStrip
-import SlideMenuControllerSwift
 import NVActivityIndicatorView
 import IQKeyboardManagerSwift
+import Firebase
+import FirebaseDatabase
 
-class MessagesController: ButtonBarPagerTabStripViewController, NVActivityIndicatorViewable, UIGestureRecognizerDelegate {
+class MessagesController: UIViewController, NVActivityIndicatorViewable, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var lblTitle: UILabel!
     
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var emptyView: UIView!
+    
+    @IBOutlet weak var tableView: UITableView!
     
     //MenuButtons
     @IBOutlet weak var btnHome: UIButton!
@@ -31,10 +34,12 @@ class MessagesController: ButtonBarPagerTabStripViewController, NVActivityIndica
     //MARK:- Properties
     var isFromAdDetail = false
     var barButtonItems = [UIBarButtonItem]()
+    let dataArray = NSMutableArray()
+    let dictArray = NSMutableArray()
     
     //MARK:- View Life Cycle
     override func viewDidLoad() {
-        self.customizePagerTabStrip()
+        
         super.viewDidLoad()
         
         self.view.bringSubview(toFront: topView)
@@ -58,6 +63,40 @@ class MessagesController: ButtonBarPagerTabStripViewController, NVActivityIndica
         }
         
         self.navigationController?.navigationBar.isHidden = false
+        
+        self.showLoader()
+        let ref = Database.database().reference()
+        ref.child("Chats").child(Auth.auth().currentUser!.uid).observeSingleEvent(of: .value, with:  { (snapshot) in
+            self.stopAnimating()
+            if snapshot.exists()
+            {
+                if let fruitPost = snapshot.value as? Dictionary<String,AnyObject>
+                {
+                    for(key, _) in fruitPost {
+                        if(Auth.auth().currentUser!.uid != key){
+                            let dict = NSMutableDictionary()
+                            dict.setObject(key, forKey:"firebaseId" as NSCopying)
+                            self.dataArray.add(dict)
+                        }
+                    }
+                }
+                
+                if self.dataArray.count == 0
+                {
+                    self.emptyView.alpha = 1
+                }
+                else
+                {
+                    self.emptyView.alpha = 0
+                }
+                print(self.dataArray)
+                self.tableView.reloadData()
+            }
+            else
+            {
+                self.emptyView.alpha = 1
+            }
+        })
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -77,39 +116,6 @@ class MessagesController: ButtonBarPagerTabStripViewController, NVActivityIndica
     
     func showLoader() {
         self.startAnimating(Constants.activitySize.size, message: Constants.loaderMessages.loadingMessage.rawValue,messageFont: UIFont.systemFont(ofSize: 14), type: NVActivityIndicatorType.ballClipRotatePulse)
-    }
-    
-    func customizePagerTabStrip()
-    {
-        settings.style.buttonBarBackgroundColor = .white
-        settings.style.buttonBarItemBackgroundColor = .white
-        settings.style.buttonBarItemTitleColor = .white
-        settings.style.selectedBarBackgroundColor = UIColor(red: 62.0/255.0, green: 49.0/255.0, blue: 66.0/255.0, alpha: 1)
-        settings.style.buttonBarItemFont = .systemFont(ofSize: 16)
-        
-        settings.style.selectedBarHeight = 1.0
-        settings.style.buttonBarMinimumLineSpacing = 0.0
-        settings.style.buttonBarItemsShouldFillAvailiableWidth = true
-        settings.style.buttonBarLeftContentInset = 0
-        settings.style.buttonBarRightContentInset = 0
-        changeCurrentIndexProgressive = { (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, progressPercentage: CGFloat, changeCurrentIndex: Bool, animated: Bool) -> Void in
-            guard changeCurrentIndex == true else {return}
-            oldCell?.label.textColor = UIColor(red: 62.0/255.0, green: 49.0/255.0, blue: 66.0/255.0, alpha: 1)
-            newCell?.label.textColor = UIColor(red: 62.0/255.0, green: 49.0/255.0, blue: 66.0/255.0, alpha: 1)
-        }
-    }
-    
-    override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
-        let SB = UIStoryboard(name: "Main", bundle: nil)
-        let sentOffers = SB.instantiateViewController(withIdentifier: "SentOffersController") as! SentOffersController
-        sentOffers.sentOffersData()
-        sentOffers.showLoader()
-        let addsOffer = SB.instantiateViewController(withIdentifier: "OffersOnAdsController") as! OffersOnAdsController
-//        let blockedController = SB.instantiateViewController(withIdentifier: "BlockedUserChatViewController") as! BlockedUserChatViewController
-        
-        
-        let childVC = [sentOffers, addsOffer]
-        return childVC
     }
     
     func changeMenuButtons()
@@ -183,6 +189,93 @@ class MessagesController: ButtonBarPagerTabStripViewController, NVActivityIndica
                 let favouritesVC = self.storyboard?.instantiateViewController(withIdentifier: "FavouritesVC") as! FavouritesVC
                 self.navigationController?.pushViewController(favouritesVC, animated: false)
             }
+        }
+    }
+    
+    //MARK:- TableView Delegates
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return dataArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell: SearchAlertTableCell = tableView.dequeueReusableCell(withIdentifier: "SearchAlertTableCell", for: indexPath) as! SearchAlertTableCell
+        
+        let dict = dataArray.object(at: indexPath.row) as! NSDictionary
+        
+        let firebaseId = dict.object(forKey: "firebaseId")
+        
+        Database.database().reference()
+            .child("users")
+            .child(firebaseId as! String)
+            .child("username")
+            .queryOrderedByKey()
+            .observeSingleEvent(of: .value, with: { snapshot in
+                
+                if let dict1 = snapshot.value as? NSMutableDictionary
+                {
+                    dict1.setObject(firebaseId!, forKey: "firebaseId" as NSCopying)
+                    
+                    let firstName = dict1["Firstname"] as? String
+                    self.dictArray.add(dict1)
+                    
+                    cell.lblName.text = firstName!
+                }
+            })
+        
+        if languageCode == "ar"
+        {
+            cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            if tableView.tag == 1001
+            {
+                cell.lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                cell.btnLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            }
+            else
+            {
+                cell.lblAlertType.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            }
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChatController") as! ChatController
+        vc.dict = dictArray.object(at: indexPath.row) as! NSDictionary
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if tableView.isDragging {
+            cell.transform = CGAffineTransform.init(scaleX: 0.5, y: 0.5)
+            UIView.animate(withDuration: 0.3, animations: {
+                cell.transform = CGAffineTransform.identity
+            })
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            
+            let alert = UIAlertController(title: "Alert", message: "Are you sure you want to delete this chat?", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+            
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+                
+                let dict1 = self.dataArray.object(at: indexPath.row) as! NSDictionary
+                
+                let userRef = Database.database().reference().child("Chats")
+                    .child(Auth.auth().currentUser!.uid).child(dict1.object(forKey: "firebaseId") as! String)
+                userRef.removeValue()
+                self.dataArray.removeObject(at: indexPath.row)
+                
+                self.tableView.reloadData()
+                
+            }))
+            self.present(alert, animated: true, completion: nil)
         }
     }
 }
