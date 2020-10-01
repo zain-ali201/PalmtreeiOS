@@ -486,9 +486,14 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
             self.present(navController, animated:true, completion: nil)
         }
         else
-        {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChatController") as! ChatController
-            self.navigationController?.pushViewController(vc, animated: true)
+        {            
+            let sendMsgVC = storyboard?.instantiateViewController(withIdentifier: ReplyCommentController.className) as! ReplyCommentController
+            sendMsgVC.modalPresentationStyle = .overCurrentContext
+            sendMsgVC.modalTransitionStyle = .flipHorizontal
+            sendMsgVC.isFromMsg = true
+            sendMsgVC.delegate = self
+            sendMsgVC.firebaseID = adDetailDataObj.chatToken
+            present(sendMsgVC, animated: true, completion: nil)
         }
     }
     

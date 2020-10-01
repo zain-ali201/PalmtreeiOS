@@ -72,10 +72,13 @@ class MessagesController: UIViewController, NVActivityIndicatorViewable, UITable
             {
                 if let fruitPost = snapshot.value as? Dictionary<String,AnyObject>
                 {
-                    for(key, _) in fruitPost {
+                    for(key, value) in fruitPost {
                         if(Auth.auth().currentUser!.uid != key){
+                            print("value: \(value)")
+                            print("value.lastObject: \(value.lastObject)")
                             let dict = NSMutableDictionary()
                             dict.setObject(key, forKey:"firebaseId" as NSCopying)
+//                            dict.setObject(value.lastObject as String, forKey:"message" as NSCopying)
                             self.dataArray.add(dict)
                         }
                     }
@@ -216,6 +219,7 @@ class MessagesController: UIViewController, NVActivityIndicatorViewable, UITable
                 
                 if let dict1 = snapshot.value as? NSMutableDictionary
                 {
+                    print(dict1)
                     dict1.setObject(firebaseId!, forKey: "firebaseId" as NSCopying)
                     
                     let firstName = dict1["Firstname"] as? String
@@ -243,8 +247,10 @@ class MessagesController: UIViewController, NVActivityIndicatorViewable, UITable
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChatController") as! ChatController
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChatVC") as! ChatVC
         vc.dict = dictArray.object(at: indexPath.row) as! NSDictionary
+        print(vc.dict)
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

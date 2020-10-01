@@ -207,7 +207,7 @@ extension AppDelegate
             print("Open App")
         case "chat":
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let obj = storyboard.instantiateViewController(withIdentifier: "ChatController") as! ChatController
+            let obj = storyboard.instantiateViewController(withIdentifier: "MessagesController") as! MessagesController
             
             window?.rootViewController = obj
             window?.makeKeyAndVisible()
@@ -402,12 +402,9 @@ extension AppDelegate
                 if topic == "chat" {
                     banner.dismiss()
                     
-                    let chatVC = self.storyboard.instantiateViewController(withIdentifier: "ChatController") as! ChatController
+                    let chatVC = self.storyboard.instantiateViewController(withIdentifier: "MessagesController") as! MessagesController
                     let nav: UINavigationController = UINavigationController(rootViewController: chatVC)
-                    //                chatVC.ad_id = adID
-                    //                chatVC.sender_id = senderID
-                    //                chatVC.receiver_id = receiverID
-                    //                chatVC.messageType = type
+                   
                     self.window?.rootViewController = nav
                     UserDefaults.standard.set("1", forKey: "fromNotification")
                     self.window?.makeKeyAndVisible()

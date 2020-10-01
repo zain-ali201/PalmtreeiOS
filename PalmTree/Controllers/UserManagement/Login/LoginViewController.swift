@@ -406,6 +406,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                     settingsVC.checkLogin()
                 }
                 
+                if homeVC != nil
+                {
+                    homeVC.homeData()
+                }
+                
                 self.dismiss(animated: true, completion: nil)
                 
             }
@@ -415,6 +420,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
                 self.presentVC(alert)
             }
         }) { (error) in
+            self.stopAnimating()
             let alert = Constants.showBasicAlert(message: error.message)
             self.presentVC(alert)
         }

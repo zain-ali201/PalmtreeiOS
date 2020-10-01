@@ -1,56 +1,44 @@
 //
-//  ChatController.swift
-//  PalmTree
+//  ChatVC.swift
+//  messagingapp
 //
-//  Created by SprintSols on 3/9/20.
-//  Copyright © 2020 apple. All rights reserved.
+//  Created by Nishita on 13/06/18.
+//  Copyright © 2018 Nishita. All rights reserved.
 //
 
 import UIKit
-import NVActivityIndicatorView
-import IQKeyboardManagerSwift
 import Firebase
 import FirebaseDatabase
 import FirebaseStorage
 import QuartzCore
 
-class ChatController: UIViewController, NVActivityIndicatorViewable, UITextViewDelegate {
+class ChatVC: UIViewController,UITextFieldDelegate {
 
     //MARK:- Outlets
-    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblPrice: UILabel!
     @IBOutlet weak var lblAddress: UILabel!
     @IBOutlet weak var imgView: UIImageView!
+    
+    @IBOutlet var bottomConstraint: NSLayoutConstraint!
     @IBOutlet var txtMsg: UITextField!
     @IBOutlet var tblChat: UITableView!
-
-    @IBOutlet weak var txtMessage: UITextView!
     
-    //MARK:- Properties
     var dict:NSDictionary!
     let arrMsg = NSMutableArray()
-
-    //MARK:- View Life Cycle
+   
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        self.googleAnalytics(controllerName: "Chat Controller")
-       
         bottomConstraint.constant = 0
         
-        NotificationCenter.default.addObserver(self, selector: #selector(ChatController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(ChatController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ChatVC.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ChatVC.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
-//        let senderDisplayName = "\(String(describing: dict.object(forKey: "Firstname")!))"
-        let senderDisplayName = "Zain Ali"
-        title = "Chat: \(senderDisplayName)"
+        let senderDisplayName = "\(String(describing: dict.object(forKey: "Firstname")!))"
+        lblTitle.text = "\(senderDisplayName)"
         let database = Database.database().reference()
-        
-//        database.child("Chats").child(Auth.auth().currentUser!.uid).child("\(String(describing: dict.object(forKey: "firebaseId")!))").observe(.childAdded) { (snapshot) in
-        
-        database.child("Chats").child(Auth.auth().currentUser!.uid).child("JbhFyW9qxWTIDVHku1OAmuQNBRt1").observe(.childAdded) { (snapshot) in
+        database.child("Chats").child(Auth.auth().currentUser!.uid).child("\(String(describing: dict.object(forKey: "firebaseId")!))").observe(.childAdded) { (snapshot) in
             
             let components = snapshot.key.components(separatedBy: "_")
             let dictMsg = NSMutableDictionary()
@@ -73,32 +61,26 @@ class ChatController: UIViewController, NVActivityIndicatorViewable, UITextViewD
         self.navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnActionMsgSend(_ sender: Any) {
-        if (txtMsg.text == "" || txtMsg.text == " ")
-        {
-            let alert = UIAlertController(title: "Alert", message: "Please type a Message", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+    @IBAction func btnActionMsgSend(_ sender: Any)
+    {
+        if (txtMsg.text == "" || txtMsg.text == " ") {
+//            let alert = UIAlertController(title: "Alert", message: "Please type a Message", preferredStyle: UIAlertControllerStyle.alert)
+//            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+//            self.present(alert, animated: true, completion: nil)
         }
         else
         {
             let database = Database.database().reference()
-//            let str =  "\(String(describing: self.getCurrentTimeStamp().replacingOccurrences(of: ".", with: "")))" + "_" + "\(String(describing: Auth.auth().currentUser!.uid))" + "_" + "\(String(describing: dict.object(forKey: "firebaseId")!))"
-//
-//            database.child("Chats").child("\(String(describing: dict.object(forKey: "firebaseId")!))").child(Auth.auth().currentUser!.uid).updateChildValues([str : txtMsg.text!])
-//
-//            database.child("Chats").child(Auth.auth().currentUser!.uid).child("\(String(describing: dict.object(forKey: "firebaseId")!))").updateChildValues([str : txtMsg.text!])
+            let str =  "\(String(describing: self.getCurrentTimeStamp().replacingOccurrences(of: ".", with: "")))" + "_" + "\(String(describing: Auth.auth().currentUser!.uid))" + "_" + "\(String(describing: dict.object(forKey: "firebaseId")!))"
             
-            let str =  "\(String(describing: self.getCurrentTimeStamp().replacingOccurrences(of: ".", with: "")))" + "_" + "\(String(describing: Auth.auth().currentUser!.uid))" + "_" + "\(String(describing: "JbhFyW9qxWTIDVHku1OAmuQNBRt1"))"
+            database.child("Chats").child("\(String(describing: dict.object(forKey: "firebaseId")!))").child(Auth.auth().currentUser!.uid).updateChildValues([str : txtMsg.text!])
             
-            database.child("Chats").child("\(String(describing: "JbhFyW9qxWTIDVHku1OAmuQNBRt1"))").child(Auth.auth().currentUser!.uid).updateChildValues([str : txtMsg.text!])
-            
-            database.child("Chats").child(Auth.auth().currentUser!.uid).child("\(String(describing: "JbhFyW9qxWTIDVHku1OAmuQNBRt1"))").updateChildValues([str : txtMsg.text!])
+            database.child("Chats").child(Auth.auth().currentUser!.uid).child("\(String(describing: dict.object(forKey: "firebaseId")!))").updateChildValues([str : txtMsg.text!])
             self.tblChat.reloadData()
             txtMsg.text = " "
         }
     }
-    
+   
     func getCurrentTimeStamp() -> String {
             return "\(Double(NSDate().timeIntervalSince1970 * 1000))"
     }
@@ -110,14 +92,14 @@ class ChatController: UIViewController, NVActivityIndicatorViewable, UITextViewD
     }
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            bottomConstraint.constant = (keyboardSize.height) * -1.0
-            self.view.layoutIfNeeded()
+            bottomConstraint.constant = (keyboardSize.height)
+//            self.view.layoutIfNeeded()
         }
     }
     @objc func keyboardWillHide(notification: NSNotification) {
         if ((notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue) != nil {
             bottomConstraint.constant = 0.0
-            self.view.layoutIfNeeded()
+//            self.view.layoutIfNeeded()
         }
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -125,8 +107,7 @@ class ChatController: UIViewController, NVActivityIndicatorViewable, UITextViewD
         return true
     }
 }
-
-extension ChatController: UITableViewDataSource, UITableViewDelegate{
+extension ChatVC: UITableViewDataSource, UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arrMsg.count
     }
