@@ -219,6 +219,11 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             lbl.backgroundColor = .clear
             lbl.text = filter
             
+            if languageCode == "ar"
+            {
+                lbl.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            }
+            
             let crossBtn = UIButton()
             crossBtn.frame = CGRect(x: view.frame.width - 18, y: 13, width: 10, height: 10)
             crossBtn.setImage(UIImage(named: "cross_grey"), for: .normal)
@@ -434,15 +439,8 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.lblProcess.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             cell.lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             cell.btnLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cell.lblDate.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
-        
-//        cell.locationAction = { () in
-//            let mapVC = self.storyboard?.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
-//            mapVC.address = objData.location.address ?? ""
-//            mapVC.latitude = Double(objData.location.lat ?? "0.0")
-//            mapVC.longitude = Double(objData.location.longField ?? "0.0")
-//            self.navigationController?.pushViewController(mapVC, animated: true)
-//        }
         
         cell.favouriteAction = { () in
             if defaults.bool(forKey: "isLogin") == false
@@ -468,9 +466,12 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let AdDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "AdDetailVC") as! AdDetailVC
-//        self.navigationController?.pushViewController(AdDetailVC, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        let objData = dataArray[indexPath.row]
+        let adDetailVC = self.storyboard?.instantiateViewController(withIdentifier: "AdDetailVC") as! AdDetailVC
+        adDetailVC.adDetailDataObj = objData
+        self.navigationController?.pushViewController(adDetailVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

@@ -366,6 +366,7 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
             cell.lblPromotion.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             cell.editBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             cell.lblDate.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cell.promoteBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             cell.lblName.textAlignment = .right
         }
         

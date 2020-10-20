@@ -53,6 +53,8 @@ class PreviewAdVC: UIViewController
         {
             self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             
+            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblDescp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             lblListing.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)

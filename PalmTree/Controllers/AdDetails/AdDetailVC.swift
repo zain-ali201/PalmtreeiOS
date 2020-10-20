@@ -51,6 +51,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     
     @IBOutlet weak var favBtn: UIButton!
     @IBOutlet weak var btnLocation: UIButton!
+    @IBOutlet weak var reportBtn: UIButton!
     
     //MARK:- Properties
     var adDetailDataObj:AdsJSON!
@@ -222,12 +223,12 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
             if adDetailDataObj.userID == userDetail?.id
             {
                 callingView.alpha = 0
-                reportView.alpha = 0
+                reportBtn.alpha = 0
             }
             else
             {
                 callingView.alpha = 1
-                reportView.alpha = 1
+                reportBtn.alpha = 1
             }
         }
     }

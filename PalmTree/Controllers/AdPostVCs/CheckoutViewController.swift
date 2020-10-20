@@ -97,8 +97,8 @@ class CheckoutViewController: UIViewController, NVActivityIndicatorViewable
 
     @objc func pay()
     {
-//        if self.fromVC == "myads"
-//        {
+        if self.fromVC == "myads"
+        {
             print(adDetailObj.adId)
             let formatter = DateFormatter()
             formatter.dateFormat = "dd-MM-YYYY"
@@ -108,11 +108,11 @@ class CheckoutViewController: UIViewController, NVActivityIndicatorViewable
                 "featured_date": formatter.string(from: Date())
             ]
             self.featureAd(param: parameter as NSDictionary)
-//        }
-//        else
-//        {
-//            self.addPostLiveAPI()
-//        }
+        }
+        else
+        {
+            self.addPostLiveAPI()
+        }
         
 //        guard let paymentIntentClientSecret = paymentIntentClientSecret else {
 //            return;
@@ -183,7 +183,7 @@ class CheckoutViewController: UIViewController, NVActivityIndicatorViewable
             "status" : "1",
             "cat_id" : String(format: "%d", adDetailObj.subcatID > 0 ? adDetailObj.subcatID : adDetailObj.catID),
             "parent_cat_id" : String(format: "%d", adDetailObj.catID)
-                ]
+        ]
         
         var customDictionary: [String: Any] = [String: Any]()
 
@@ -318,10 +318,11 @@ class CheckoutViewController: UIViewController, NVActivityIndicatorViewable
         AddsHandler.featureAd(param: param, success: { (successResponse) in
             self.stopAnimating()
             if successResponse.success {
-                let alert = AlertView.prepare(title: "", message: successResponse.message, okAction: {
-                    
-                })
-                self.presentVC(alert)
+//                let alert = AlertView.prepare(title: "", message: successResponse.message, okAction: {
+//
+//                })
+//                self.presentVC(alert)
+                self.navigationController?.popToViewController(myAdsVC, animated: true)
             } else {
                 let alert = Constants.showBasicAlert(message: successResponse.message)
                 self.presentVC(alert)

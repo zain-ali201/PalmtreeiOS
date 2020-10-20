@@ -76,30 +76,30 @@ class FilterVC: UIViewController{
             lblLocation.text = userDetail?.locationName
         }
         
-        if adDetailObj.adCategory == "For Sale"
-        {
-            motorsView.alpha = 0
-            lblMotors.alpha = 1
-            resetBtn.alpha = 1
-//            priceView.alpha = 1
-//            top.constant = 100
-        }
-        else if adDetailObj.adCategory == "Motors"
-        {
-            motorsView.alpha = 1
-            lblMotors.alpha = 1
-            resetBtn.alpha = 0
-//            priceView.alpha = 1
-//            top.constant = 100
-        }
-        else
-        {
-//            top.constant = 20
-//            priceView.alpha = 0
-            motorsView.alpha = 0
-            lblMotors.alpha = 0
-            resetBtn.alpha = 1
-        }
+//        if adDetailObj.adCategory == "Property"
+//        {
+//            motorsView.alpha = 0
+//            lblMotors.alpha = 1
+//            resetBtn.alpha = 1
+////            priceView.alpha = 1
+////            top.constant = 100
+//        }
+//        else if adDetailObj.adCategory == "Motors"
+//        {
+//            motorsView.alpha = 1
+//            lblMotors.alpha = 1
+//            resetBtn.alpha = 0
+////            priceView.alpha = 1
+////            top.constant = 100
+//        }
+//        else
+//        {
+////            top.constant = 20
+////            priceView.alpha = 0
+//            motorsView.alpha = 0
+//            lblMotors.alpha = 0
+//            resetBtn.alpha = 1
+//        }
         
         if adDetailObj.sortType != ""
         {
@@ -285,13 +285,13 @@ class FilterVC: UIViewController{
             txtMaxPrice.text = ""
         }
         
-        lblSortType.text = ""
-        lblCategory.text = ""
-        lblMake.text = ""
-        lblBodyType.text = ""
-        lblFuelType.text = ""
-        lblTransmission.text = ""
-        lblColour.text = ""
+        lblSortType.text = "Date Descending"
+        lblCategory.text = "All Categories"
+//        lblMake.text = ""
+//        lblBodyType.text = ""
+//        lblFuelType.text = ""
+//        lblTransmission.text = ""
+//        lblColour.text = ""
         
     }
 }

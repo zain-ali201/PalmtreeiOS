@@ -5,7 +5,7 @@
 /* Class = "UILabel"; text = "Watchlist"; ObjectID = "1W8-UI-pSg"; */
 "1W8-UI-pSg.text" = "القائمة المفضلة";
 
-/* Class = "UILabel"; text = "Search palmtree"; ObjectID = "0od-pa-61J"; */
+/* Class = "UIButton"; text = "Search palmtree"; ObjectID = "0od-pa-61J"; */
 "0od-pa-61J.normalTitle" = "البحث في بالمتري";
 
 /* Class = "UILabel"; text = "Search palmtree"; ObjectID = "EcL-UV-gqQ"; */
@@ -13,6 +13,69 @@
 
 /* Class = "UILabel"; text = "Search palmtree"; ObjectID = "xys-Vt-uvA"; */
 "xys-Vt-uvA.text" = "البحث في بالمتري";
+
+/* Class = "UILabel"; text = "Fixed Price"; ObjectID = "jtu-4a-kGq"; */
+"jtu-4a-kGq.text" = "سعر ثابت";
+
+/* Class = "UIButton"; text = "Fixed"; ObjectID = "hJ2-pn-Fmb"; */
+"hJ2-pn-Fmb.normalTitle" = "سعر ثابت";
+
+/* Class = "UIButton"; text = "Negotiable"; ObjectID = "QPp-Wb-r9G"; */
+"QPp-Wb-r9G.normalTitle" = "قابل للتفاوض";
+
+/* Class = "UILabel"; text = ""; ObjectID = "poy-jm-o3q"; */
+"poy-jm-o3q.text" = "الإمارات العربية المتحدة";
+
+/* Class = "UILabel"; text = ""; ObjectID = "t4r-Nf-q5J"; */
+"t4r-Nf-q5J.text" = "دبي";
+
+/* Class = "UILabel"; text = ""; ObjectID = "qu4-ux-p5A"; */
+"qu4-ux-p5A.text" = "أبو ظبي";
+
+/* Class = "UILabel"; text = ""; ObjectID = "fMv-Rj-0ek"; */
+"fMv-Rj-0ek.text" = "الشارقة";
+
+/* Class = "UILabel"; text = ""; ObjectID = "N59-dM-uws"; */
+"N59-dM-uws.text" = "العين";
+
+/* Class = "UILabel"; text = ""; ObjectID = "ob0-AS-Enw"; */
+"ob0-AS-Enw.text" = "عجمان";
+
+/* Class = "UILabel"; text = ""; ObjectID = "DvL-F1-6FO"; */
+"DvL-F1-6FO.text" = "الفجيرة";
+
+/* Class = "UILabel"; text = ""; ObjectID = "ksa-HX-YF4"; */
+"ksa-HX-YF4.text" = "رأس الخيمة";
+
+/* Class = "UILabel"; text = ""; ObjectID = "3uT-dB-0Oo"; */
+"3uT-dB-0Oo.text" = "أم القيوين";
+
+/* Class = "UILabel"; text = ""; ObjectID = "GTG-Pi-Vjp"; */
+"GTG-Pi-Vjp.text" = "قائمة الرغبات الخاصة بك فارغة";
+
+/* Class = "UILabel"; text = ""; ObjectID = "0fH-Ys-JjC"; */
+"0fH-Ys-JjC.text" = "حفظ القائمة في قائمة مراقبتك من خلال النقر على أيقونة القلب";
+
+/* Class = "UILabel"; text = ""; ObjectID = "p0i-ES-6KD"; */
+"p0i-ES-6KD.normalTitle" = "البحث عن القائمة";
+
+/* Class = "UILabel"; text = ""; ObjectID = "fV3-aM-IC5"; */
+"fV3-aM-IC5.text" = "ليس لديك رسائل";
+
+/* Class = "UILabel"; text = ""; ObjectID = "l8r-xA-zvy"; */
+"l8r-xA-zvy.text" = "تريد أن تجعل بعض المال؟";
+
+/* Class = "UILabel"; text = ""; ObjectID = "XnW-jg-Ati"; */
+"XnW-jg-Ati.normalTitle" = "انشر إعلانا";
+
+/* Class = "UILabel"; text = ""; ObjectID = ""; */
+".text" = "";
+
+/* Class = "UILabel"; text = "Featured"; ObjectID = "mPa-EJ-PoC"; */
+"mPa-EJ-PoC.text" = "متميز";
+
+/* Class = "UIButton"; normalTitle = "Promote Ad"; ObjectID = "7TO-Dq-pFc"; */
+"7TO-Dq-pFc.normalTitle" = "الترويج للإعلان";
 
 /* Class = "UILabel"; text = "What you're looking for"; ObjectID = "wtS-fj-qox"; */
 "wtS-fj-qox.text" = "اعثر على ما تبحث عنه...";

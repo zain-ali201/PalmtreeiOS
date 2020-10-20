@@ -160,12 +160,14 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
             if languageCode == "ar"
             {
                 lbl.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-                lbl.text = objData.arabicName
+//                lbl.text = objData.arabicName
             }
             else
             {
-               lbl.text = objData.name
+//               lbl.text = objData.name
             }
+            
+            lbl.text = objData.name
             
             let btn = UIButton()
             btn.frame = CGRect(x: 0, y: 0, width: Int(width), height: 50)

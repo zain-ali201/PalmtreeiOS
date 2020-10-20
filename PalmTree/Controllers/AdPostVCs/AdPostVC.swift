@@ -46,6 +46,8 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     @IBOutlet weak var btnCategory: UIButton!
     @IBOutlet weak var btnPhoto: UIButton!
     @IBOutlet weak var btnPhoto1: UIButton!
+    @IBOutlet weak var btnFixed: UIButton!
+    @IBOutlet weak var btnNegotiable: UIButton!
     
     @IBOutlet weak var detailView: UIView!
     @IBOutlet weak var top: NSLayoutConstraint!
@@ -124,6 +126,9 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             btnPreview.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             btnPost.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             btnCategory.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            fixedTick.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnFixed.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            btnNegotiable.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             
             txtTitle.textAlignment = .right
             txtDescp.textAlignment = .right
@@ -242,7 +247,14 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         }
         else
         {
-            lblFixedPrice.text = "Fixed"
+            if languageCode == "ar"
+            {
+                lblFixedPrice.text = "سعر ثابت"
+            }
+            else
+            {
+                lblFixedPrice.text = "Fixed"
+            }
             adDetailObj.priceType = "Fixed"
         }
         
@@ -345,14 +357,14 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     {
         if button.tag == 1001
         {
-            lblFixedPrice.text = "Fixed Price"
+            lblFixedPrice.text = "سعر ثابت"
             fixedTick.alpha = 1
             negotiateTick.alpha = 0
             adDetailObj.priceType = "Fixed"
         }
         else
         {
-            lblFixedPrice.text = "Negotiable"
+            lblFixedPrice.text = "قابل للتفاوض"
             fixedTick.alpha = 0
             negotiateTick.alpha = 1
             adDetailObj.priceType = "Negotiable"

@@ -121,7 +121,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             fromVC = ""
             self.homeData()
         }
-        
+        adDetailObj = AdDetailObject()
         tableView.reloadData()
     }
     
@@ -456,6 +456,19 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 
                 categoryArray = successResponse.categories
                 self.latestAdsArray = successResponse.adsData
+                
+                if languageCode == "ar" && categoryArray.count > 0
+                {
+                    categoryArray[0].name = "ملكية"
+                    categoryArray[1].name = "المحركات"
+                    categoryArray[2].name = "تواصل اجتماعي"
+                    categoryArray[3].name = "أجهزة كهربائية"
+                    categoryArray[4].name = "الوظائف"
+                    categoryArray[5].name = "الإعلانات المبوبة"
+                    categoryArray[6].name = "خدمات"
+                    categoryArray[7].name = "الرياضة واللياقة البدنية"
+                    categoryArray[8].name = "أثاث وحدائق"
+                }
                 
                 if self.defaults.bool(forKey: "isLogin") == true
                 {

@@ -1820,7 +1820,10 @@
                         <outlet property="btnPost" destination="6hn-qU-Lwg" id="haJ-4e-M50"/>
                         <outlet property="btnWishlist" destination="9xc-Ir-GZW" id="Qpg-qf-Rez"/>
                         <outlet property="emptyView" destination="4mc-cy-oYw" id="LEu-E4-y8A"/>
+                        <outlet property="lblText1" destination="fV3-aM-IC5" id="QWZ-K8-A51"/>
+                        <outlet property="lblText2" destination="l8r-xA-zvy" id="nM4-7J-TqO"/>
                         <outlet property="lblTitle" destination="prL-NR-mGH" id="HwO-7z-4cw"/>
+                        <outlet property="postBtn" destination="XnW-jg-Ati" id="2oc-xa-3ta"/>
                         <outlet property="tableView" destination="iIl-oo-fd5" id="pWP-uN-TlC"/>
                         <outlet property="topView" destination="9NF-Xa-YWv" id="GGl-4S-0hp"/>
                     </connections>
@@ -2802,10 +2805,10 @@
                                                                     </connections>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7TO-Dq-pFc">
-                                                                    <rect key="frame" x="300" y="132" width="48" height="28"/>
+                                                                    <rect key="frame" x="282" y="132" width="66" height="28"/>
                                                                     <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="13"/>
-                                                                    <state key="normal" title="Promote">
-                                                                        <color key="titleColor" red="0.28627450980392155" green="0.81176470588235294" blue="0.019607843137254902" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <state key="normal" title="Promote Ad">
+                                                                        <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     </state>
                                                                     <connections>
                                                                         <action selector="promoteBtnAction:" destination="Mdj-sz-cfs" eventType="touchUpInside" id="qNw-aE-CKK"/>
@@ -2814,7 +2817,7 @@
                                                                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Featured" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mPa-EJ-PoC">
                                                                     <rect key="frame" x="298" y="138" width="50" height="16"/>
                                                                     <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="13"/>
-                                                                    <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <color key="textColor" red="0.28627450980392155" green="0.81176470588235294" blue="0.019607843137254902" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
@@ -3490,8 +3493,11 @@
                         <outlet property="btnWishlist" destination="bHA-vX-DMn" id="ESr-Pf-3yh"/>
                         <outlet property="favBtn" destination="Wtv-r3-a6k" id="iX7-VR-TF2"/>
                         <outlet property="favTblView" destination="ar0-tJ-9LG" id="JBK-RA-1uV"/>
+                        <outlet property="lblText1" destination="GTG-Pi-Vjp" id="csN-Jl-x91"/>
+                        <outlet property="lblText2" destination="0fH-Ys-JjC" id="SVz-Zz-whF"/>
                         <outlet property="lblTitle" destination="1W8-UI-pSg" id="C5K-F2-r0u"/>
                         <outlet property="leading" destination="axE-UM-iqa" id="d5I-uL-CW1"/>
+                        <outlet property="listingBtn" destination="p0i-ES-6KD" id="XY2-cx-QJT"/>
                         <outlet property="norecordsView" destination="nGk-7d-nJF" id="9Xc-Ez-EJO"/>
                         <outlet property="searchBtn" destination="7ky-uV-u3b" id="GS6-C5-llV"/>
                     </connections>
@@ -3639,7 +3645,7 @@
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type message here..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pJV-lL-FuG">
                                                 <rect key="frame" x="50" y="10" width="285" height="35"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textField>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X2D-gu-sjV">
                                                 <rect key="frame" x="335" y="0.0" width="40" height="55"/>
@@ -6976,6 +6982,8 @@
                     <connections>
                         <outlet property="btnCancel" destination="Gfr-cK-Pcu" id="ULw-ro-QOe"/>
                         <outlet property="btnCategory" destination="ilB-PX-5qc" id="bYb-80-Ziu"/>
+                        <outlet property="btnFixed" destination="hJ2-pn-Fmb" id="ppa-cx-sAQ"/>
+                        <outlet property="btnNegotiable" destination="QPp-Wb-r9G" id="ho7-6O-qaa"/>
                         <outlet property="btnPhoto" destination="zPq-Hk-GhJ" id="3tT-MT-u3R"/>
                         <outlet property="btnPhoto1" destination="pGf-M4-AZv" id="2gl-DR-HTF"/>
                         <outlet property="btnPost" destination="iXB-ZW-2ub" id="Xvc-BL-gQt"/>
@@ -7118,7 +7126,7 @@
                                                             <constraint firstItem="iIU-JC-eSE" firstAttribute="leading" secondItem="70M-eB-RRM" secondAttribute="trailing" constant="5" id="vUj-ZC-JGz"/>
                                                         </constraints>
                                                     </view>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow" translatesAutoresizingMaskIntoConstraints="NO" id="l7p-U7-0Xs">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow" translatesAutoresizingMaskIntoConstraints="NO" id="l7p-U7-0Xs">
                                                         <rect key="frame" x="0.0" y="445.5" width="375" height="4"/>
                                                     </imageView>
                                                     <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b9y-l8-bgX">
@@ -7157,7 +7165,7 @@
                                                             <constraint firstAttribute="trailing" secondItem="GZ3-lw-zxC" secondAttribute="trailing" constant="15" id="vfx-cC-pbu"/>
                                                         </constraints>
                                                     </view>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow" translatesAutoresizingMaskIntoConstraints="NO" id="MLX-vT-EbG">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow" translatesAutoresizingMaskIntoConstraints="NO" id="MLX-vT-EbG">
                                                         <rect key="frame" x="0.0" y="503.5" width="375" height="4"/>
                                                     </imageView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BKG-VU-Nat">
@@ -7205,7 +7213,7 @@
                                                             <constraint firstAttribute="trailing" secondItem="Fbn-fc-Fmf" secondAttribute="trailing" id="zn1-h3-mRT"/>
                                                         </constraints>
                                                     </view>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow" translatesAutoresizingMaskIntoConstraints="NO" id="4lD-eh-0n9">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow" translatesAutoresizingMaskIntoConstraints="NO" id="4lD-eh-0n9">
                                                         <rect key="frame" x="0.0" y="561.5" width="375" height="4"/>
                                                     </imageView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m2q-qF-6fE">
@@ -7215,7 +7223,7 @@
                                                             <constraint firstAttribute="height" constant="65" id="Fup-Dy-SZK"/>
                                                         </constraints>
                                                     </view>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow" translatesAutoresizingMaskIntoConstraints="NO" id="qlq-Pq-Tsn">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow" translatesAutoresizingMaskIntoConstraints="NO" id="qlq-Pq-Tsn">
                                                         <rect key="frame" x="0.0" y="634.5" width="375" height="4"/>
                                                     </imageView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ANU-Lz-r6V">
@@ -7259,7 +7267,7 @@
                                                             <constraint firstAttribute="trailing" secondItem="drL-i5-bsa" secondAttribute="trailing" id="vgs-l5-jlP"/>
                                                         </constraints>
                                                     </view>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow" translatesAutoresizingMaskIntoConstraints="NO" id="tUN-DF-2ON">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadow" translatesAutoresizingMaskIntoConstraints="NO" id="tUN-DF-2ON">
                                                         <rect key="frame" x="0.0" y="687.5" width="375" height="4"/>
                                                     </imageView>
                                                 </subviews>
@@ -9449,6 +9457,7 @@
                         <outlet property="lblTime" destination="GZ3-PU-LZV" id="bGo-OI-iiW"/>
                         <outlet property="leading" destination="8LF-qq-0HD" id="BnS-lY-Xwj"/>
                         <outlet property="readBtn" destination="Fsm-b1-KWO" id="aD8-Mg-rqi"/>
+                        <outlet property="reportBtn" destination="75d-cE-pSU" id="dCJ-EV-Pn2"/>
                         <outlet property="reportView" destination="Z5f-Xj-RwM" id="LQx-qO-aY0"/>
                         <outlet property="scrollView" destination="1g3-q8-YNn" id="mjU-2e-3jP"/>
                         <outlet property="sellerView" destination="KUL-ax-mte" id="iCi-BG-USp"/>
@@ -9541,11 +9550,11 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p2K-YD-lhu">
                                                 <rect key="frame" x="8" y="37.5" width="335" height="45"/>
                                                 <subviews>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type your message" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Zhj-V4-Szz" customClass="HoshiTextField" customModule="TextFieldEffects">
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Hi, is this still available?" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Zhj-V4-Szz" customClass="HoshiTextField" customModule="TextFieldEffects">
                                                         <rect key="frame" x="8" y="0.0" width="319" height="45"/>
                                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="17"/>
-                                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                        <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="15"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="color" keyPath="borderInactiveColor">
                                                                 <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

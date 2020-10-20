@@ -140,6 +140,7 @@ class FeaturedVC: UIViewController, NVActivityIndicatorViewable
         }
         
         let checkoutVC = self.storyboard?.instantiateViewController(withIdentifier: "CheckoutViewController") as! CheckoutViewController
+        checkoutVC.fromVC = self.fromVC
         self.navigationController?.pushViewController(checkoutVC, animated: true)
     }
     
