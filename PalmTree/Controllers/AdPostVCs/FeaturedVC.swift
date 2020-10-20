@@ -169,7 +169,8 @@ class FeaturedVC: UIViewController, NVActivityIndicatorViewable
             "title": adDetailObj.adTitle,
             "description" : adDetailObj.adDesc,
             "status" : "1",
-            "cat_id" : String(format: "%d", adDetailObj.subcatID > 0 ? adDetailObj.subcatID : adDetailObj.catID)
+            "cat_id" : String(format: "%d", adDetailObj.subcatID > 0 ? adDetailObj.subcatID : adDetailObj.catID),
+            "parent_cat_id" : String(format: "%d", adDetailObj.catID)
         ]
         
         var customDictionary: [String: Any] = [String: Any]()

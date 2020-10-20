@@ -262,6 +262,8 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
                 self.presentVC(alert)
             }
         }) { (error) in
+            
+            self.stopAnimating()
             let alert = Constants.showBasicAlert(message: error.message)
             self.presentVC(alert)
         }

@@ -85,7 +85,8 @@ class CheckoutViewController: UIViewController, NVActivityIndicatorViewable
             let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],
             let clientSecret = json!["clientSecret"] as? String else {
                 let message = error?.localizedDescription ?? "Failed to decode response from server."
-                self?.displayAlert(title: "Error loading page", message: message)
+                print(message)
+//                self?.displayAlert(title: "Error loading page", message: message)
                 return
           }
           print("Created PaymentIntent")
@@ -96,49 +97,66 @@ class CheckoutViewController: UIViewController, NVActivityIndicatorViewable
 
     @objc func pay()
     {
-        guard let paymentIntentClientSecret = paymentIntentClientSecret else {
-            return;
-        }
-        // Collect card details
-        let cardParams = cardTextField.cardParams
-        let paymentMethodParams = STPPaymentMethodParams(card: cardParams, billingDetails: nil, metadata: nil)
+//        if self.fromVC == "myads"
+//        {
+            print(adDetailObj.adId)
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd-MM-YYYY"
+                    
+            let parameter: [String: Any] = [
+                "ad_id": adDetailObj.adId,
+                "featured_date": formatter.string(from: Date())
+            ]
+            self.featureAd(param: parameter as NSDictionary)
+//        }
+//        else
+//        {
+//            self.addPostLiveAPI()
+//        }
         
-        let paymentIntentParams = STPPaymentIntentParams(clientSecret: paymentIntentClientSecret)
-        paymentIntentParams.paymentMethodParams = paymentMethodParams
-
-        // Submit the payment
-        let paymentHandler = STPPaymentHandler.shared()
-        paymentHandler.confirmPayment(withParams: paymentIntentParams, authenticationContext: self) { (status, paymentIntent, error) in
-            switch (status)
-            {
-                case .failed:
-//                  self.displayAlert(title: "Payment failed", message: error?.localizedDescription ?? "")
-                  break
-                case .canceled:
-//                  self.displayAlert(title: "Payment canceled", message: error?.localizedDescription ?? "")
-                  break
-                case .succeeded:
-                    if self.fromVC == ""
-                    {
-                        let formatter = DateFormatter()
-                        formatter.dateFormat = "dd-MM-YYYY"
-                                
-                        var parameter: [String: Any] = [
-                            "ad_id": adDetailObj.adId,
-                            "featured_date": formatter.string(from: Date())
-                        ]
-                        self.featureAd(param: parameter as NSDictionary)
-                    }
-                    else
-                    {
-                        self.addPostLiveAPI()
-                    }
-                break
-                @unknown default:
-                  fatalError()
-                  break
-            }
-        }
+//        guard let paymentIntentClientSecret = paymentIntentClientSecret else {
+//            return;
+//        }
+//        // Collect card details
+//        let cardParams = cardTextField.cardParams
+//        let paymentMethodParams = STPPaymentMethodParams(card: cardParams, billingDetails: nil, metadata: nil)
+//
+//        let paymentIntentParams = STPPaymentIntentParams(clientSecret: paymentIntentClientSecret)
+//        paymentIntentParams.paymentMethodParams = paymentMethodParams
+//
+//        // Submit the payment
+//        let paymentHandler = STPPaymentHandler.shared()
+//        paymentHandler.confirmPayment(withParams: paymentIntentParams, authenticationContext: self) { (status, paymentIntent, error) in
+//            switch (status)
+//            {
+//                case .failed:
+////                  self.displayAlert(title: "Payment failed", message: error?.localizedDescription ?? "")
+//                  break
+//                case .canceled:
+////                  self.displayAlert(title: "Payment canceled", message: error?.localizedDescription ?? "")
+//                  break
+//                case .succeeded:
+//                    if self.fromVC == ""
+//                    {
+//                        let formatter = DateFormatter()
+//                        formatter.dateFormat = "dd-MM-YYYY"
+//
+//                        var parameter: [String: Any] = [
+//                            "ad_id": adDetailObj.adId,
+//                            "featured_date": formatter.string(from: Date())
+//                        ]
+//                        self.featureAd(param: parameter as NSDictionary)
+//                    }
+//                    else
+//                    {
+//                        self.addPostLiveAPI()
+//                    }
+//                break
+//                @unknown default:
+//                  fatalError()
+//                  break
+//            }
+//        }
     }
     
     //MARK:- Ad Post APIs
@@ -163,7 +181,8 @@ class CheckoutViewController: UIViewController, NVActivityIndicatorViewable
             "title": adDetailObj.adTitle,
             "description" : adDetailObj.adDesc,
             "status" : "1",
-            "cat_id" : String(format: "%d", adDetailObj.subcatID > 0 ? adDetailObj.subcatID : adDetailObj.catID)
+            "cat_id" : String(format: "%d", adDetailObj.subcatID > 0 ? adDetailObj.subcatID : adDetailObj.catID),
+            "parent_cat_id" : String(format: "%d", adDetailObj.catID)
                 ]
         
         var customDictionary: [String: Any] = [String: Any]()

@@ -27,15 +27,14 @@ var categoryArray = [CategoryJSON]()
 var categoriesArray = [AdsJSON]()
 
 var stripeAPIKey = "pk_test_ZDUz26JhS1bTxJzimCXdVR6C"
-var stripeBaseURL = "https://palmtreestore.net/create.php"
-//var stripeBaseURL = "https://sprintsols.com/palmtree/create.php"
+//var stripeBaseURL = "https://palmtreestore.net/create.php"
+var stripeBaseURL = "https://sprintsols.com/palmtree/create.php"
 var mapboxToken = "pk.eyJ1IjoicGFsbXRyZWUiLCJhIjoiY2tjeW56ZXR4MDRhcTJybXNiZjhjbjI5NCJ9.luXGYrraO0lqWAxR22x2Hg"
 
 class Constants
 {
     struct  URL
     {
-//        static let baseUrl = "https://palmtreestore.net/wp-json/adforest/v1/"
         static let imagesUrl = "https://sprintsols.com/palmtree/storage/app/public/images/"
         static let baseUrl = "https://sprintsols.com/palmtree/public/api/"
         

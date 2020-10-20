@@ -66,23 +66,23 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             txtSearch.textAlignment = .right
         }
         
-        var catID = 0
+//        var catID = 0
         if subcatName != ""
         {
             filtersArray = [subcatName]
-            catID = subcategoryID
+//            catID = subcategoryID
         }
         else if catName != ""
         {
             filtersArray = [catName]
-            catID = categoryID
+//            catID = categoryID
         }
         else
         {
             filtersArray = ["All Ads"]
         }
         createFilterView()
-        let param: [String: Any] = ["cat_id" : catID, "title": searchText, "address" : adDetailObj.location.address, "user_id" : defaults.integer(forKey: "userID")]
+        let param: [String: Any] = ["cat_id" : subcategoryID, "parent_cat_id" : categoryID, "title": searchText, "address" : adDetailObj.location.address, "user_id" : defaults.integer(forKey: "userID")]
         print(param)
         self.searchAds(param: param as NSDictionary)
     }

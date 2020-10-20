@@ -249,7 +249,10 @@ class PreviewAdVC: UIViewController
         }
         else
         {
-            specsView.removeFromSuperview()
+            if specsView != nil
+            {
+                specsView.removeFromSuperview()
+            }
         }
     }
     

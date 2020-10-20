@@ -152,7 +152,7 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
             }
             
             let lbl = UILabel()
-            lbl.frame = CGRect(x: 44, y: 16, width: lblWidth+20, height: 17)
+            lbl.frame = CGRect(x: 44, y: 16, width: lblWidth+40, height: 17)
             lbl.textAlignment = .center
             lbl.font = UIFont.systemFont(ofSize: 14.0)
             lbl.backgroundColor = .clear
@@ -172,15 +172,30 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
             btn.tag = i + 1000
             btn.addTarget(self, action: #selector(clickBtnACtion(button:)), for: .touchUpInside)
             
+            let lineView = UIView()
+            lineView.frame = CGRect(x: 10, y: Int(view.frame.height - 3.0), width: Int(view.frame.width) - 10, height: 3)
+            lineView.backgroundColor = UIColor(red: 58.0/255.0, green: 171.0/255.0, blue: 51.0/255.0, alpha: 1)
+            lineView.tag = i + 2000
+            
+            if i == 0
+            {
+                lineView.alpha = 1
+            }
+            else
+            {
+                lineView.alpha = 0
+            }
+            
             view.addSubview(imgPicture)
             view.addSubview(lbl)
+            view.addSubview(lineView)
             view.addSubview(btn)
             scrollView.addSubview(view)
             
             xAxis += (Int(width))
         }
         
-        scrollView.contentSize = CGSize(width: xAxis, height: 0)
+        scrollView.contentSize = CGSize(width: xAxis + 10, height: 0)
     }
     
     @IBAction func clickBtnACtion(button: UIButton)
@@ -192,7 +207,23 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
         selectedCat = objData.id;
         selectedCatName = objData.name
         selectedIndex = button.tag - 1000
+        
+        hideLines()
+        let view = self.view.viewWithTag(button.tag + 1000)
+        view?.alpha = 1
+        
+        filteredArray = [SubCategoryObject]()
+        tblView.reloadData()
         getSubCategories(catID: selectedCat)
+    }
+    
+    func hideLines()
+    {
+        for i in 0..<categoryArray.count
+        {
+            let view = self.view.viewWithTag(i + 2000)
+            view?.alpha = 0
+        }
     }
     
     func showLoader()
@@ -397,7 +428,7 @@ extension CategoryVC: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
     {
         let view = UIView(frame: CGRect(x: 10, y: 0, width: tableView.frame.size.width, height: 44))
-        let label = UILabel(frame: CGRect(x: 10, y: 0, width: 200, height: 44))
+        let label = UILabel(frame: CGRect(x: 10, y: 0, width: 300, height: 44))
         label.textColor = UIColor.black
         label.backgroundColor = .white
         label.font = UIFont.systemFont(ofSize: 14.0)

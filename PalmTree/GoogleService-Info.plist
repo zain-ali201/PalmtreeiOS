@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>815594864442-cuah88e976jn9rvaqt736l96d07rpdmr.apps.googleusercontent.com</string>
+	<string>450218454167-q253n9l9569ivbnr1l8m301o7v06nmpg.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.815594864442-cuah88e976jn9rvaqt736l96d07rpdmr</string>
+	<string>com.googleusercontent.apps.450218454167-q253n9l9569ivbnr1l8m301o7v06nmpg</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>450218454167-s6giqfhn13nombgn4krkic7nrp4iuina.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCjMgDWuLvYz6cP5sNS33PO5lJrYAyIEeQ</string>
+	<string>AIzaSyCvmbAJ4JXaI8mFH5T2Wxr0CkvJBMj7K7g</string>
 	<key>GCM_SENDER_ID</key>
-	<string>815594864442</string>
+	<string>450218454167</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.sprintsols.Palmtree</string>
 	<key>PROJECT_ID</key>
-	<string>palmtree-280107</string>
+	<string>palmtree-e8200</string>
 	<key>STORAGE_BUCKET</key>
-	<string>palmtree-280107.appspot.com</string>
+	<string>palmtree-e8200.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:815594864442:ios:c6ecf19c9c6f33c3841a03</string>
+	<string>1:450218454167:ios:8c4652b6d275e29dbd4dd2</string>
 	<key>DATABASE_URL</key>
-	<string>https://palmtree-280107.firebaseio.com</string>
+	<string>https://palmtree-e8200.firebaseio.com</string>
 </dict>
 </plist>

@@ -86,14 +86,23 @@ class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
 
         cell.imgPicture.image = UIImage(named: "placeholder")
         
-        for item in objData.images {
-            if let imgUrl = URL(string: String(format: "%@%@", Constants.URL.imagesUrl, item.url.encodeUrl())) {
-                print(imgUrl)
+        if objData.images.count > 0
+        {
+            if let imgUrl = URL(string: String(format: "%@%@", Constants.URL.imagesUrl, objData.images[0].url.encodeUrl())) {
                 cell.imgPicture.sd_setShowActivityIndicatorView(true)
                 cell.imgPicture.sd_setIndicatorStyle(.gray)
-                cell.imgPicture.sd_setImage(with: imgUrl, completed: nil)
+                cell.imgPicture.setImage(from: imgUrl)
             }
         }
+        
+//        for item in objData.images {
+//            if let imgUrl = URL(string: String(format: "%@%@", Constants.URL.imagesUrl, item.url.encodeUrl())) {
+//                print(imgUrl)
+//                cell.imgPicture.sd_setShowActivityIndicatorView(true)
+//                cell.imgPicture.sd_setIndicatorStyle(.gray)
+//                cell.imgPicture.sd_setImage(with: imgUrl, completed: nil)
+//            }
+//        }
 
         if let name = objData.title {
             cell.lblName.text = name

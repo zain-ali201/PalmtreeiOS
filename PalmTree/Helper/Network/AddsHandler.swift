@@ -340,7 +340,7 @@ class AddsHandler {
     
     //MARK:- Feature My Ad
     class func featureAd(param: NSDictionary, success: @escaping(ResponseRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.deleteAdd
+        let url = Constants.URL.baseUrl+Constants.URL.featureAdd
         print(url)
         NetworkHandler.postRequest(url: url, parameters: param as? Parameters, success: { (successResponse) in
             let dictionary = successResponse as! [String: Any]

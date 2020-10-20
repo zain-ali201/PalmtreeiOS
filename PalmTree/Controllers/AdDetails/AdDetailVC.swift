@@ -216,6 +216,20 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
             summaryViewHeight += txtHeight
             height.constant = summaryViewHeight
         }
+        
+        if defaults.bool(forKey: "isLogin") == true
+        {
+            if adDetailDataObj.userID == userDetail?.id
+            {
+                callingView.alpha = 0
+                reportView.alpha = 0
+            }
+            else
+            {
+                callingView.alpha = 1
+                reportView.alpha = 1
+            }
+        }
     }
     
     func fillSlideShow()

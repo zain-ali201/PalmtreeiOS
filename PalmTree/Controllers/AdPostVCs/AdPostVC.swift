@@ -214,32 +214,26 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         if adDetailObj.phone != ""
         {
             txtPhone.text = adDetailObj.phone
-            txtWhatsapp.text = adDetailObj.phone
-            
             numberFlag = true
+            phoneSwitch.setOn(true, animated: false)
+        }
+        else
+        {
+            numberFlag = false
+            phoneSwitch.setOn(false, animated: false)
+        }
+        
+        if adDetailObj.whatsapp != ""
+        {
+            txtWhatsapp.text = adDetailObj.phone
             whatsappFlag = true
             
-            phoneSwitch.setOn(true, animated: false)
             whatsappSwitch.setOn(true, animated: false)
         }
         else
         {
-            if fromVC == "myads"
-            {
-                numberFlag = false
-                whatsappFlag = false
-                
-                phoneSwitch.setOn(false, animated: false)
-                whatsappSwitch.setOn(false, animated: false)
-            }
-            else
-            {
-                numberFlag = true
-                whatsappFlag = true
-                
-                txtPhone.text = userDetail?.phone
-                txtWhatsapp.text = userDetail?.phone
-            }
+            whatsappFlag = false
+            whatsappSwitch.setOn(false, animated: false)
         }
         
         if adDetailObj.priceType != "" && fromVC == "myads"
@@ -259,6 +253,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         
         if fromVC == "myads"
         {
+            adDetailObj.images = []
             self.hideShowControls(controls1Alpha: 1, controlsAlpha: 0)
             
             for image in adDetailObj.adImages
@@ -277,13 +272,6 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
                 }
             }
         }
-//        else
-//        {
-//            if homeVC != nil
-//            {
-//                homeVC.getGPSLocation()
-//            }
-//        }
     }
     
     //MARK:- IBActions
@@ -435,6 +423,8 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         adDetailObj.adDesc = txtDescp.text
         adDetailObj.adCurrency = "AED"
         adDetailObj.adPrice = txtPrice.text ?? ""
+        adDetailObj.phone = txtPhone.text ?? ""
+        adDetailObj.whatsapp = txtWhatsapp.text ?? ""
         
         let previewAdVC = self.storyboard?.instantiateViewController(withIdentifier: "PreviewAdVC") as! PreviewAdVC
         previewAdVC.adDetailObj = adDetailObj
@@ -657,7 +647,8 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             "title": txtTitle.text ?? "",
             "description" : txtDescp.text ?? "",
             "status" : "1",
-            "cat_id" : String(format: "%d", adDetailObj.subcatID > 0 ? adDetailObj.subcatID : adDetailObj.catID)
+            "cat_id" : String(format: "%d", adDetailObj.subcatID > 0 ? adDetailObj.subcatID : adDetailObj.catID),
+            "parent_cat_id" : String(format: "%d", adDetailObj.catID)
         ]
         
         var customDictionary: [String: Any] = [String: Any]()
