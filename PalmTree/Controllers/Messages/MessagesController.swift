@@ -20,6 +20,9 @@ class MessagesController: UIViewController, NVActivityIndicatorViewable, UITable
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var emptyView: UIView!
+    @IBOutlet weak var lblText1: UILabel!
+    @IBOutlet weak var lblText2: UILabel!
+    @IBOutlet weak var postBtn: UIButton!
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -60,6 +63,9 @@ class MessagesController: UIViewController, NVActivityIndicatorViewable, UITable
             self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             changeMenuButtons()
             lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblText1.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblText2.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            postBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
         
         self.navigationController?.navigationBar.isHidden = false
@@ -232,15 +238,8 @@ class MessagesController: UIViewController, NVActivityIndicatorViewable, UITable
         if languageCode == "ar"
         {
             cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            if tableView.tag == 1001
-            {
-                cell.lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-                cell.btnLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            }
-            else
-            {
-                cell.lblAlertType.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            }
+//            cell.lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            cell.btnLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
         
         return cell

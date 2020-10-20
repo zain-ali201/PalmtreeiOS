@@ -28,6 +28,9 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     @IBOutlet weak var btnMessages: UIButton!
     
     @IBOutlet weak var norecordsView: UIView!
+    @IBOutlet weak var lblText1: UILabel!
+    @IBOutlet weak var lblText2: UILabel!
+    @IBOutlet weak var listingBtn: UIButton!
     
     //MARK:- Properties
    
@@ -63,6 +66,9 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             changeMenuButtons()
             lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblText1.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblText2.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            listingBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             searchBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             favBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
