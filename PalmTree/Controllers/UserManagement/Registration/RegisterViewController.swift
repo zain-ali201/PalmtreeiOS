@@ -242,9 +242,7 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
 //                            }
                             self.sendChatToken(chatToken: user?.user.uid ?? "")
                             print("User registered for chat")
-                            let fullname = ["Firstname": userDetail?.displayName , "Lastname": ""]
-                            self.ref.child("users").child((user?.user.uid)!).setValue(["username": fullname])
-                            
+                            self.ref.child("users").child((user?.user.uid)!).setValue(["email": userDetail?.userEmail, "name": userDetail?.displayName])
                         }
                         else
                         {

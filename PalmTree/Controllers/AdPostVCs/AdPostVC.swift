@@ -161,6 +161,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         if adDetailObj.location.address == ""
         {
             adDetailObj.location.address = userDetail?.currentAddress ?? ""
+            adDetailObj.location.country = userDetail?.country ?? ""
             adDetailObj.location.lat = userDetail?.currentLocation.coordinate.latitude
             adDetailObj.location.lng = userDetail?.currentLocation.coordinate.longitude
             lblAddress.text = userDetail?.currentAddress
