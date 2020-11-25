@@ -388,50 +388,21 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
 //                defaults.set(successResponse.data.profileImg, forKey: "profileImg")
                 defaults.set(successResponse.data.userEmail, forKey: "userEmail")
                 
-                if userDetail?.userEmail != nil
-                {
-                    let databaseRef = Database.database().reference()
-
-                    databaseRef.child("users").queryOrdered(byChild: "email").queryEqual(toValue: userDetail?.userEmail!).observeSingleEvent(of: .childAdded, with: { snapshot in
-                       print("zain")
-                        if snapshot.exists()
-                        {
-                            print("zain1")
-                            print(snapshot.key)
-                            Auth.auth().signIn(withEmail: userDetail?.userEmail ?? "", password: "Sprint1234!") { (user, error) in
-                                if error == nil {
-                                    print("User loggedin for char")
-                                }
-                                else
-                                {
-                                    print("zain2")
-                                    print("User not loggedin for char")
-                                }
-                            }
-                        }
-                        else
-                        {
-                            print("zain3")
-                            self.createFirebaseUser(email: (userDetail?.userEmail)!)
-                        }
-                    })
-                }
-                
                 if myAdsVC != nil
                 {
                     myAdsVC.checkLogin()
                 }
-                
+
                 if settingsVC != nil
                 {
                     settingsVC.checkLogin()
                 }
-                
+
                 if homeVC != nil
                 {
                     homeVC.homeData()
                 }
-                
+
                 self.dismiss(animated: true, completion: nil)
                 
             }
@@ -444,51 +415,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
             self.stopAnimating()
             let alert = Constants.showBasicAlert(message: error.message)
             self.presentVC(alert)
-        }
-    }
-    
-    func createFirebaseUser(email: String)
-    {
-        Auth.auth().createUser(withEmail: email, password: "Sprint1234!") { (user, error) in
-            if error == nil {
-                let databaseRef = Database.database().reference()
-//                var data = NSData()
-//                data = UIImageJPEGRepresentation(UIImage(named: ""), 0.8)! as NSData
-//                let storageRef = Storage.storage().reference()
-//                let filePath = "\(Auth.auth().currentUser!.uid)/\("imgUserProfile")"
-//                let metaData = StorageMetadata()
-//                metaData.contentType = "image/jpg"
-//                storageRef.child(filePath).putData(data as Data, metadata: metaData){(metaData,error) in
-//                    if let error = error {
-//                        print(error.localizedDescription)
-//                        return
-//                    }
-//                }
-                self.sendChatToken(chatToken: user?.user.uid ?? "")
-                print("User registered for chat")
-                databaseRef.child("users").child((user?.user.uid)!).setValue(["email": userDetail?.userEmail, "name": userDetail?.displayName])
-            }
-            else
-            {
-                print("User not registered for chat")
-            }
-        }
-    }
-    
-    func sendChatToken(chatToken: String) {
-        
-        if chatToken != ""
-        {
-            let param: [String: Any] = ["fc_token": chatToken, "user_id": userDetail?.id ?? 0]
-            print(param)
-            AddsHandler.sendFirebaseChatToken(parameter: param as NSDictionary, success: { (successResponse) in
-                
-                print(successResponse)
-            }) { (error) in
-                self.stopAnimating()
-                let alert = Constants.showBasicAlert(message: error.message)
-                self.presentVC(alert)
-            }
         }
     }
 }

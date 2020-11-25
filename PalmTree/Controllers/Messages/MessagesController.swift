@@ -71,6 +71,43 @@ class MessagesController: UIViewController, NVActivityIndicatorViewable, UITable
         self.navigationController?.navigationBar.isHidden = false
         
         self.showLoader()
+        if Auth.auth().currentUser != nil
+        {
+            getChatData()
+        }
+        else
+        {
+            Auth.auth().signIn(withEmail: userDetail?.userEmail ?? "", password: "Sprint1234!") { (user, error) in
+                if error == nil {
+                    print("User loggedin for chat......")
+                    self.getChatData() 
+                }
+                else
+                {
+                    print("zain2")
+                    print("User not loggedin for chat.....")
+                }
+            }
+        }
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.view.bringSubview(toFront: topView)
+        self.view.bringSubview(toFront: bottomView)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    //MARK: - Custom
+    
+    func getChatData()
+    {
         let ref = Database.database().reference()
         ref.child("Chats").child(Auth.auth().currentUser!.uid).observeSingleEvent(of: .value, with:  { (snapshot) in
             self.stopAnimating()
@@ -107,21 +144,6 @@ class MessagesController: UIViewController, NVActivityIndicatorViewable, UITable
             }
         })
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        self.view.bringSubview(toFront: topView)
-        self.view.bringSubview(toFront: bottomView)
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
-    //MARK: - Custom
     
     func showLoader() {
         self.startAnimating(Constants.activitySize.size, message: Constants.loaderMessages.loadingMessage.rawValue,messageFont: UIFont.systemFont(ofSize: 14), type: NVActivityIndicatorType.ballClipRotatePulse)

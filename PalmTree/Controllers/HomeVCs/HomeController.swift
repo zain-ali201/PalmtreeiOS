@@ -476,14 +476,9 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     userDetail?.displayName = self.defaults.string(forKey: "displayName")
                     userDetail?.userEmail = self.defaults.string(forKey: "userEmail")
                     
-                    Auth.auth().signIn(withEmail: userDetail?.userEmail ?? "", password: "Sprint1234!") { (user, error) in
-                        if error == nil {
-                            print("User loggedin for char")
-                        }
-                        else
-                        {
-                            print("User not loggedin for char")
-                        }
+                    if userDetail?.userEmail != nil
+                    {
+                        self.createFirebaseUser(email: (userDetail?.userEmail)!)
                     }
                 }
                 
@@ -497,6 +492,60 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.stopAnimating()
             let alert = Constants.showBasicAlert(message: error.message)
             self.presentVC(alert)
+        }
+    }
+    
+    func createFirebaseUser(email: String)
+    {
+        Auth.auth().createUser(withEmail: email, password: "Sprint1234!") { (user, error) in
+            if error == nil {
+                let databaseRef = Database.database().reference()
+//                var data = NSData()
+//                data = UIImageJPEGRepresentation(UIImage(named: ""), 0.8)! as NSData
+//                let storageRef = Storage.storage().reference()
+//                let filePath = "\(Auth.auth().currentUser!.uid)/\("imgUserProfile")"
+//                let metaData = StorageMetadata()
+//                metaData.contentType = "image/jpg"
+//                storageRef.child(filePath).putData(data as Data, metadata: metaData){(metaData,error) in
+//                    if let error = error {
+//                        print(error.localizedDescription)
+//                        return
+//                    }
+//                }
+                self.sendChatToken(chatToken: user?.user.uid ?? "")
+                print("User registered for chat")
+                databaseRef.child("users").child((user?.user.uid)!).setValue(["username": ["Firstname": userDetail?.displayName, "Lastname": ""]])
+            }
+            else
+            {
+                Auth.auth().signIn(withEmail: userDetail?.userEmail ?? "", password: "Sprint1234!") { (user, error) in
+                    if error == nil {
+                        print("User loggedin for chat......")
+                    }
+                    else
+                    {
+                        print("zain2")
+                        print("User not loggedin for chat.....")
+                    }
+                }
+            }
+        }
+    }
+    
+    func sendChatToken(chatToken: String) {
+        
+        if chatToken != ""
+        {
+            let param: [String: Any] = ["fc_token": chatToken, "user_id": userDetail?.id ?? 0]
+            print(param)
+            AddsHandler.sendFirebaseChatToken(parameter: param as NSDictionary, success: { (successResponse) in
+                
+                print(successResponse)
+            }) { (error) in
+                self.stopAnimating()
+                let alert = Constants.showBasicAlert(message: error.message)
+                self.presentVC(alert)
+            }
         }
     }
     
