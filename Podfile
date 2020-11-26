@@ -31,14 +31,11 @@ target 'PalmTree' do
     #Activity Indicator View
     pod 'NVActivityIndicatorView'
     
-    #For Side Menu
-    pod 'SlideMenuControllerSwift'
-    
     #Network
     pod 'Alamofire'
     
     #Bar Button View
-    pod 'XLPagerTabStrip', '~> 8.1'
+#    pod 'XLPagerTabStrip', '~> 8.1'
     
     # Star control
 #    pod 'Cosmos'
@@ -53,9 +50,9 @@ target 'PalmTree' do
     pod 'DeviceKit'
     
     #For Search Places
-    pod 'GooglePlaces'
-    pod 'GooglePlacePicker' 
-    pod 'GoogleMaps'    
+#    pod 'GooglePlaces'
+#    pod 'GooglePlacePicker'
+#    pod 'GoogleMaps'
     
     #Image Cache
     pod 'SDWebImage'
@@ -106,10 +103,7 @@ target 'PalmTree' do
     #Play Gif 
 #    pod 'SwiftyGif'
 #    pod 'Popover'
-    
-    
-    pod 'MapboxGeocoder.swift', '~> 0.11'
-    pod 'Mapbox-iOS-SDK', '~> 5.4'
+
     pod 'Alamofire-SwiftyJSON'
      
     #Intro App
@@ -122,8 +116,6 @@ target 'PalmTree' do
 
      pod 'Stripe'
      pod 'AFNetworking'
-     pod 'Mapbox-iOS-SDK'
-     pod 'MapboxGeocoder.swift'
      
      pod 'CollapseTableView'
 end

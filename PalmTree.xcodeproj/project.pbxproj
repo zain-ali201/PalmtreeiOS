@@ -321,7 +321,6 @@
 		186D0C7B20A1CB0A00833697 /* AdPostSubCategoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186D0C7A20A1CB0A00833697 /* AdPostSubCategoryData.swift */; };
 		186E4B7F24D95F180021EF8E /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186E4B7E24D95F170021EF8E /* CategoryCell.swift */; };
 		186E4B8124D964FF0021EF8E /* CollectionImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186E4B8024D964FF0021EF8E /* CollectionImageCell.swift */; };
-		186EB0D924CAE2F100F9B1F8 /* MapBoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186EB0D824CAE2F000F9B1F8 /* MapBoxViewController.swift */; };
 		186EE0452078FD29002463AF /* ReportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186EE0442078FD29002463AF /* ReportController.swift */; };
 		18711CE72089DA3F00474737 /* BlogPostRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18711CE62089DA3F00474737 /* BlogPostRoot.swift */; };
 		18711CE92089DA5600474737 /* BlogPostExtra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18711CE82089DA5600474737 /* BlogPostExtra.swift */; };
@@ -452,7 +451,6 @@
 		18F2AA0821393BEF007B1AD0 /* AddDetailAdTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F2AA0721393BEF007B1AD0 /* AddDetailAdTimer.swift */; };
 		18F48468205AA43000DC4D7B /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F48467205AA43000DC4D7B /* Label.swift */; };
 		18FBBBBA24BB9A9000BD086F /* AdDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FBBBB924BB9A9000BD086F /* AdDetailVC.swift */; };
-		18FE9C58236811A500E8756F /* MapBoxPlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FE9C57236811A500E8756F /* MapBoxPlacesViewController.swift */; };
 		79741927AF356C3BC1176C38 /* Pods_PalmTree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9451C4FB304F8F5B0F1C861B /* Pods_PalmTree.framework */; };
 		9627990823D6B67D007726EA /* logout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9627990723D6B67D007726EA /* logout.swift */; };
 		9674945B23E0879D0035E58E /* EmptyCartRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9674945A23E0879D0035E58E /* EmptyCartRoot.swift */; };
@@ -791,7 +789,6 @@
 		186D0C7A20A1CB0A00833697 /* AdPostSubCategoryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdPostSubCategoryData.swift; sourceTree = "<group>"; };
 		186E4B7E24D95F170021EF8E /* CategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		186E4B8024D964FF0021EF8E /* CollectionImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionImageCell.swift; sourceTree = "<group>"; };
-		186EB0D824CAE2F000F9B1F8 /* MapBoxViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapBoxViewController.swift; sourceTree = "<group>"; };
 		186EE0442078FD29002463AF /* ReportController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportController.swift; sourceTree = "<group>"; };
 		18711CE62089DA3F00474737 /* BlogPostRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogPostRoot.swift; sourceTree = "<group>"; };
 		18711CE82089DA5600474737 /* BlogPostExtra.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogPostExtra.swift; sourceTree = "<group>"; };
@@ -927,7 +924,6 @@
 		18F2AA0721393BEF007B1AD0 /* AddDetailAdTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDetailAdTimer.swift; sourceTree = "<group>"; };
 		18F48467205AA43000DC4D7B /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		18FBBBB924BB9A9000BD086F /* AdDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdDetailVC.swift; sourceTree = "<group>"; };
-		18FE9C57236811A500E8756F /* MapBoxPlacesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapBoxPlacesViewController.swift; sourceTree = "<group>"; };
 		2C2A49835B1E8A0B4FBE203B /* Pods_AdForestUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdForestUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		40669BC4F56DF9BA67C9F467 /* Pods-AdForest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdForest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AdForest/Pods-AdForest.debug.xcconfig"; sourceTree = "<group>"; };
 		477C609BF1141A4347E0509F /* Pods-PalmTree.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PalmTree.release.xcconfig"; path = "Pods/Target Support Files/Pods-PalmTree/Pods-PalmTree.release.xcconfig"; sourceTree = "<group>"; };
@@ -2360,8 +2356,6 @@
 				18244420251C889A00D67C83 /* AreasViewController.swift */,
 				18963ECA24B718CC0080FFD5 /* ListVC.swift */,
 				1826DC0724AE10C000468448 /* LocationContactVC.swift */,
-				186EB0D824CAE2F000F9B1F8 /* MapBoxViewController.swift */,
-				18FE9C57236811A500E8756F /* MapBoxPlacesViewController.swift */,
 				180959C624BC5CC000E2185F /* LocationViewController.swift */,
 				ABDBD3B4248E5C5A00DCFB0E /* FeaturedVC.swift */,
 				18285F4024C6EEAA000A4842 /* CheckoutViewController.swift */,
@@ -2492,11 +2486,6 @@
 				"${BUILT_PRODUCTS_DIR}/ImageSlideshow/ImageSlideshow.framework",
 				"${BUILT_PRODUCTS_DIR}/JGProgressHUD/JGProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
-				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework.dSYM",
-				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/F6FDF133-0198-394E-9C8F-5043F94B4790.bcsymbolmap",
-				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/B4615DAE-86F8-35AB-B4D1-B1F1420E374A.bcsymbolmap",
-				"${BUILT_PRODUCTS_DIR}/MapboxGeocoder.swift/MapboxGeocoder.framework",
 				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/NotificationBannerSwift/NotificationBannerSwift.framework",
@@ -2504,13 +2493,11 @@
 				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/SlideMenuControllerSwift/SlideMenuControllerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Stripe/Stripe.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TextFieldEffects/TextFieldEffects.framework",
 				"${BUILT_PRODUCTS_DIR}/UITextField+Shake/UITextField_Shake.framework",
-				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
 				"${BUILT_PRODUCTS_DIR}/abseil/absl.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
@@ -2539,11 +2526,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImageSlideshow.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JGProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
-				"${DWARF_DSYM_FOLDER_PATH}/Mapbox.framework.dSYM",
-				"${BUILT_PRODUCTS_DIR}/F6FDF133-0198-394E-9C8F-5043F94B4790.bcsymbolmap",
-				"${BUILT_PRODUCTS_DIR}/B4615DAE-86F8-35AB-B4D1-B1F1420E374A.bcsymbolmap",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxGeocoder.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NotificationBannerSwift.framework",
@@ -2551,13 +2533,11 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SlideMenuControllerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Stripe.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TextFieldEffects.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UITextField_Shake.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/absl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
@@ -2576,16 +2556,10 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PalmTree/Pods-PalmTree-resources.sh",
-				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
-				"${PODS_ROOT}/GooglePlacePicker/Frameworks/GooglePlacePicker.framework/Resources/GooglePlacePicker.bundle",
-				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlacePicker.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2692,7 +2666,6 @@
 				18247CB020944F97000B9303 /* AdPostImageDeleteRoot.swift in Sources */,
 				186A9F852080D8FF008E646C /* PublicProfileRoot.swift in Sources */,
 				182C7FEC2068D4C30080A391 /* ProfileDetailsRateBar.swift in Sources */,
-				18FE9C58236811A500E8756F /* MapBoxPlacesViewController.swift in Sources */,
 				185BBEF520AFF950004748D5 /* NearByAddSearchLat.swift in Sources */,
 				181A5F2120A9A7C20015833D /* AdPostSubCategoryValues.swift in Sources */,
 				186A9F892080D928008E646C /* PublicProfileText.swift in Sources */,
@@ -2792,7 +2765,6 @@
 				182B4B4D2090697A00324D4E /* AdPostProfile.swift in Sources */,
 				18191A4E207352DF00FF67C8 /* ProfileUpdateData.swift in Sources */,
 				ABDBD3BB248E663E00DCFB0E /* SearchVC.swift in Sources */,
-				186EB0D924CAE2F100F9B1F8 /* MapBoxViewController.swift in Sources */,
 				185C228124C1E6D300C36332 /* MapViewController.swift in Sources */,
 				18AD93B8206D191D00330ABF /* BlogDetailExtra.swift in Sources */,
 				182690C820872A1700E2C966 /* AddPrice.swift in Sources */,
@@ -3234,7 +3206,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sprintsols.Palmtree;
 				PRODUCT_NAME = Palmtree;
 				PROVISIONING_PROFILE = "6ba7ba8c-bf20-47cd-b2f1-137f2ade4e4a";
-				PROVISIONING_PROFILE_SPECIFIER = "Palmtree-Dev v1";
+				PROVISIONING_PROFILE_SPECIFIER = "Palmtree-Dev v2";
 				SWIFT_OBJC_BRIDGING_HEADER = "PalmTree/PalmTree-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
@@ -3266,7 +3238,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sprintsols.Palmtree;
 				PRODUCT_NAME = Palmtree;
 				PROVISIONING_PROFILE = "6ba7ba8c-bf20-47cd-b2f1-137f2ade4e4a";
-				PROVISIONING_PROFILE_SPECIFIER = "Palmtree-Dist v1";
+				PROVISIONING_PROFILE_SPECIFIER = "Palmtree-Dist v2";
 				SWIFT_OBJC_BRIDGING_HEADER = "PalmTree/PalmTree-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;

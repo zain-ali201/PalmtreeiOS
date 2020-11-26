@@ -7,11 +7,11 @@
 //
 
 import UIKit
-import GoogleMaps
+//import GoogleMaps
 
-class MapViewController:  UIViewController, GMSMapViewDelegate
+class MapViewController:  UIViewController/*, GMSMapViewDelegate*/
 {
-    @IBOutlet weak var mapView: GMSMapView!
+//    @IBOutlet weak var mapView: GMSMapView!
     @IBOutlet weak var lblAddress: UILabel!
 
     var latitude : Double!
@@ -27,15 +27,15 @@ class MapViewController:  UIViewController, GMSMapViewDelegate
         
         if latitude != nil && longitude != nil && latitude != 0
         {
-            let camera = GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: 15.0)
-            mapView.camera = camera
-            
-            mapView.isMyLocationEnabled = true
-            mapView.settings.myLocationButton = true
-            
-            let marker = GMSMarker()
-            marker.position = CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
-            marker.map = mapView
+//            let camera = GMSCameraPosition.camera(withLatitude: latitude, longitude: longitude, zoom: 15.0)
+//            mapView.camera = camera
+//            
+//            mapView.isMyLocationEnabled = true
+//            mapView.settings.myLocationButton = true
+//            
+//            let marker = GMSMarker()
+//            marker.position = CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
+//            marker.map = mapView
         }
     }
 

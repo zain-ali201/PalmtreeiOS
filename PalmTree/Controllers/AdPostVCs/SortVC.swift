@@ -30,7 +30,7 @@ class SortVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
         
         lblTitle.text = fromInd
 
-        dataArray = ["Date Descending", "Most Recent", "Nearest to me", "Cheapest", "Most expensive", "Best match"]
+        dataArray = ["Date Descending", "Most Recent"/*, "Nearest to me"*/, "Cheapest", "Most expensive"/*, "Best match"*/]
         
         tblView.reloadData()
         self.googleAnalytics(controllerName: "Sort Controller")

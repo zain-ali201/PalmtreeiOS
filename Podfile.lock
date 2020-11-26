@@ -356,16 +356,6 @@ PODS:
   - GoogleDataTransportCCTSupport (3.2.0):
     - GoogleDataTransport (~> 6.1)
     - nanopb (~> 1.30905.0)
-  - GoogleMaps (3.1.0):
-    - GoogleMaps/Maps (= 3.1.0)
-  - GoogleMaps/Base (3.1.0)
-  - GoogleMaps/Maps (3.1.0):
-    - GoogleMaps/Base
-  - GooglePlacePicker (3.1.0):
-    - GoogleMaps (= 3.1.0)
-    - GooglePlaces (= 3.1.0)
-  - GooglePlaces (3.1.0):
-    - GoogleMaps/Base (= 3.1.0)
   - GoogleSignIn (4.1.1):
     - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
     - "GoogleToolboxForMac/NSString+URLArguments (~> 2.1)"
@@ -441,8 +431,6 @@ PODS:
     - Kingfisher/Core (= 5.15.3)
   - Kingfisher/Core (5.15.3)
   - leveldb-library (1.22)
-  - Mapbox-iOS-SDK (5.4.0)
-  - MapboxGeocoder.swift (0.11.0)
   - MarqueeLabel/Swift (3.2.0)
   - nanopb (1.30905.0):
     - nanopb/decode (= 1.30905.0)
@@ -461,13 +449,11 @@ PODS:
   - SDWebImage (4.2.3):
     - SDWebImage/Core (= 4.2.3)
   - SDWebImage/Core (4.2.3)
-  - SlideMenuControllerSwift (4.0.0)
   - SnapKit (4.0.1)
   - Stripe (19.3.0)
   - SwiftyJSON (4.0.0)
   - TextFieldEffects (1.4.0)
   - "UITextField+Shake (1.2.1)"
-  - XLPagerTabStrip (8.1.0)
 
 DEPENDENCIES:
   - AFNetworking
@@ -487,28 +473,19 @@ DEPENDENCIES:
   - Firebase/Messaging
   - Firebase/Storage
   - GoogleAnalytics
-  - GoogleMaps
-  - GooglePlacePicker
-  - GooglePlaces
   - GoogleSignIn
   - ImageSlideshow
   - ImageSlideshow/Alamofire
   - IQKeyboardManagerSwift
   - JGProgressHUD
   - Kingfisher
-  - Mapbox-iOS-SDK
-  - Mapbox-iOS-SDK (~> 5.4)
-  - MapboxGeocoder.swift
-  - MapboxGeocoder.swift (~> 0.11)
   - NotificationBannerSwift
   - NVActivityIndicatorView
   - OpalImagePicker
   - SDWebImage
-  - SlideMenuControllerSwift
   - Stripe
   - TextFieldEffects
   - "UITextField+Shake"
-  - XLPagerTabStrip (~> 8.1)
 
 SPEC REPOS:
   trunk:
@@ -543,9 +520,6 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
-    - GoogleMaps
-    - GooglePlacePicker
-    - GooglePlaces
     - GoogleSignIn
     - GoogleToolboxForMac
     - GoogleUtilities
@@ -558,8 +532,6 @@ SPEC REPOS:
     - JGProgressHUD
     - Kingfisher
     - leveldb-library
-    - Mapbox-iOS-SDK
-    - MapboxGeocoder.swift
     - MarqueeLabel
     - nanopb
     - NotificationBannerSwift
@@ -568,13 +540,11 @@ SPEC REPOS:
     - PromisesObjC
     - Protobuf
     - SDWebImage
-    - SlideMenuControllerSwift
     - SnapKit
     - Stripe
     - SwiftyJSON
     - TextFieldEffects
     - "UITextField+Shake"
-    - XLPagerTabStrip
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -608,9 +578,6 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 67458367830514fb20fd9e233496f1eef9d90185
   GoogleDataTransport: 9a8a16f79feffc7f42096743de2a7c4815e84020
   GoogleDataTransportCCTSupport: 489c1265d2c85b68187a83a911913d190012158d
-  GoogleMaps: 5c13302e6fe6bb6e686b267196586b91cd594225
-  GooglePlacePicker: fa975116ac202ac29822c0a79758ea1c4db5a95f
-  GooglePlaces: e874db179f2675c4f3eeda0b686b540273a578b0
   GoogleSignIn: 3fdaa34a2ba04dbd7a25d7db39aecb0da98d5bdc
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   GoogleUtilities: 39530bc0ad980530298e9c4af8549e991fd033b1
@@ -623,8 +590,6 @@ SPEC CHECKSUMS:
   JGProgressHUD: 12b20a8f4ffe05258f8635c1ab92816e451f904d
   Kingfisher: 2fef2f4d9e809285aff7f6195b5290520904f3fa
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
-  Mapbox-iOS-SDK: 2b58f752d94e57e95b8e54f3b52569199f6efdba
-  MapboxGeocoder.swift: b78a3d2f42bef7d51edbb2444768634e5de722db
   MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
   NotificationBannerSwift: 5d0191ae57c4b38e484dab4912e32d1ed99fce61
@@ -633,14 +598,12 @@ SPEC CHECKSUMS:
   PromisesObjC: b48e0338dbbac2207e611750777895f7a5811b75
   Protobuf: 2793fcd0622a00b546c60e7cbbcc493e043e9bb9
   SDWebImage: 791bb72962b3492327ddcac4b1880bd1b5458431
-  SlideMenuControllerSwift: 021d6318201c53d4d4d3710517d43d6c556c7dd0
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   Stripe: dd5bfdd5f1daed4f9ddbfb47e9449ec302f9f708
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
   TextFieldEffects: 4ee41b5216e674d55fb6ac25107bf1af7629176f
   "UITextField+Shake": 298ac5a0f239d731bdab999b19b628c956ca0ac3
-  XLPagerTabStrip: 22d4c58200d7c105e0e407ab6bfd01a5d85014be
 
-PODFILE CHECKSUM: 9bfe4563153ab791904954ff7ed3f9d8cc72a4e4
+PODFILE CHECKSUM: 9ac93959149df43d2d351de6c0a5826764f22610
 
 COCOAPODS: 1.9.3

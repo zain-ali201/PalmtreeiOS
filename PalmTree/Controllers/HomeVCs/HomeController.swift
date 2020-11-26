@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SlideMenuControllerSwift
 import NVActivityIndicatorView
 import Firebase
 import FirebaseMessaging

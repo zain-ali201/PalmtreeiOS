@@ -13,10 +13,9 @@ import Firebase
 import FirebaseMessaging
 import UserNotifications
 import FBSDKCoreKit
-import SlideMenuControllerSwift
 import IQKeyboardManagerSwift
-import GoogleMaps
-import GooglePlacePicker
+//import GoogleMaps
+//import GooglePlacePicker
 import NotificationBannerSwift
 
 @UIApplicationMain
@@ -143,9 +142,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 extension AppDelegate {
     //MARK:- For Google Places Search
     func setUpGoogleMaps() {
-        let googleMapsApiKey = Constants.googlePlacesAPIKey.placesKey
-        GMSServices.provideAPIKey(googleMapsApiKey)
-        GMSPlacesClient.provideAPIKey(googleMapsApiKey)
+//        let googleMapsApiKey = Constants.googlePlacesAPIKey.placesKey
+//        GMSServices.provideAPIKey(googleMapsApiKey)
+//        GMSPlacesClient.provideAPIKey(googleMapsApiKey)
     }
 }
 

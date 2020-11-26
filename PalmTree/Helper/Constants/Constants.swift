@@ -53,6 +53,7 @@ class Constants
         static let verifyPhone = "profile/phone_number"
         static let verifyCode = "profile/phone_number/verify"
         static let changePassword = "reset_password"
+        static let clientSecret = "clientSecret"
         static let imageUpdate = "profile/image"
         static let userPublicProfile = "profile/public"
         static let blockedUsersList = "user/block"

@@ -27,7 +27,7 @@ class CheckoutViewController: UIViewController, NVActivityIndicatorViewable
         button.backgroundColor = .systemBlue
         button.titleLabel?.font = UIFont.systemFont(ofSize: 22)
         button.setTitle("Pay now", for: .normal)
-        button.addTarget(self, action: #selector(pay), for: .touchUpInside)
+        button.addTarget(self, action: #selector(getClientSecret), for: .touchUpInside)
         return button
     }()
     
@@ -48,7 +48,6 @@ class CheckoutViewController: UIViewController, NVActivityIndicatorViewable
             view.rightAnchor.constraintEqualToSystemSpacingAfter(stackView.rightAnchor, multiplier: 2),
             stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 90)
         ])
-        startCheckout()
     }
     
     @IBAction func backBtnAction(_ sender: Any)
@@ -65,98 +64,91 @@ class CheckoutViewController: UIViewController, NVActivityIndicatorViewable
         }
     }
 
-    func startCheckout()
+    //MARK:- API Call
+    @objc func getClientSecret()
     {
-    // Create a PaymentIntent as soon as the view loads
-        let url = URL(string: stripeBaseURL)!
-        let json: [String: Any] = [
-          "items": [
-              ["id": "xl-shirt"]
-          ]
-        ]
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try? JSONSerialization.data(withJSONObject: json)
-        let task = URLSession.shared.dataTask(with: request, completionHandler: { [weak self] (data, response, error) in
-          guard let response = response as? HTTPURLResponse,
-            response.statusCode == 200,
-            let data = data,
-            let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],
-            let clientSecret = json!["clientSecret"] as? String else {
-                let message = error?.localizedDescription ?? "Failed to decode response from server."
-                print(message)
-//                self?.displayAlert(title: "Error loading page", message: message)
-                return
-          }
-          print("Created PaymentIntent")
-          self?.paymentIntentClientSecret = clientSecret
-        })
-        task.resume()
+        let param: [String: Any] = ["payment": adDetailObj.adPrice]
+        
+        self.showLoader()
+        UserHandler.changePassword(parameter: param as NSDictionary , success: { (successResponse) in
+            NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+            if successResponse.success {
+                self.paymentIntentClientSecret = successResponse.data
+                self.pay()
+            }
+            else {
+                self.stopAnimating()
+                let alert = Constants.showBasicAlert(message: "Something went wrong. Please try again")
+                self.presentVC(alert)
+            }
+        }) { (error) in
+            self.stopAnimating()
+            let alert = Constants.showBasicAlert(message: error.message)
+            self.presentVC(alert)
+        }
     }
 
-    @objc func pay()
+    func pay()
     {
-        if self.fromVC == "myads"
-        {
-            print(adDetailObj.adId)
-            let formatter = DateFormatter()
-            formatter.dateFormat = "dd-MM-YYYY"
-                    
-            let parameter: [String: Any] = [
-                "ad_id": adDetailObj.adId,
-                "featured_date": formatter.string(from: Date())
-            ]
-            self.featureAd(param: parameter as NSDictionary)
-        }
-        else
-        {
-            self.addPostLiveAPI()
-        }
+//        if self.fromVC == "myads"
+//        {
+//            print(adDetailObj.adId)
+//            let formatter = DateFormatter()
+//            formatter.dateFormat = "dd-MM-YYYY"
+//
+//            let parameter: [String: Any] = [
+//                "ad_id": adDetailObj.adId,
+//                "featured_date": formatter.string(from: Date())
+//            ]
+//            self.featureAd(param: parameter as NSDictionary)
+//        }
+//        else
+//        {
+//            self.addPostLiveAPI()
+//        }
         
-//        guard let paymentIntentClientSecret = paymentIntentClientSecret else {
-//            return;
-//        }
-//        // Collect card details
-//        let cardParams = cardTextField.cardParams
-//        let paymentMethodParams = STPPaymentMethodParams(card: cardParams, billingDetails: nil, metadata: nil)
-//
-//        let paymentIntentParams = STPPaymentIntentParams(clientSecret: paymentIntentClientSecret)
-//        paymentIntentParams.paymentMethodParams = paymentMethodParams
-//
-//        // Submit the payment
-//        let paymentHandler = STPPaymentHandler.shared()
-//        paymentHandler.confirmPayment(withParams: paymentIntentParams, authenticationContext: self) { (status, paymentIntent, error) in
-//            switch (status)
-//            {
-//                case .failed:
-////                  self.displayAlert(title: "Payment failed", message: error?.localizedDescription ?? "")
-//                  break
-//                case .canceled:
-////                  self.displayAlert(title: "Payment canceled", message: error?.localizedDescription ?? "")
-//                  break
-//                case .succeeded:
-//                    if self.fromVC == ""
-//                    {
-//                        let formatter = DateFormatter()
-//                        formatter.dateFormat = "dd-MM-YYYY"
-//
-//                        var parameter: [String: Any] = [
-//                            "ad_id": adDetailObj.adId,
-//                            "featured_date": formatter.string(from: Date())
-//                        ]
-//                        self.featureAd(param: parameter as NSDictionary)
-//                    }
-//                    else
-//                    {
-//                        self.addPostLiveAPI()
-//                    }
-//                break
-//                @unknown default:
-//                  fatalError()
-//                  break
-//            }
-//        }
+        // Collect card details
+        let cardParams = cardTextField.cardParams
+        let paymentMethodParams = STPPaymentMethodParams(card: cardParams, billingDetails: nil, metadata: nil)
+
+        let paymentIntentParams = STPPaymentIntentParams(clientSecret: paymentIntentClientSecret!)
+        paymentIntentParams.paymentMethodParams = paymentMethodParams
+
+        // Submit the payment
+        let paymentHandler = STPPaymentHandler.shared()
+        paymentHandler.confirmPayment(withParams: paymentIntentParams, authenticationContext: self) { (status, paymentIntent, error) in
+            switch (status)
+            {
+                case .failed:
+                    self.stopAnimating()
+                    self.displayAlert(title: "Payment failed", message: error?.localizedDescription ?? "")
+                    break
+                case .canceled:
+                    self.stopAnimating()
+//                  self.displayAlert(title: "Payment canceled", message: error?.localizedDescription ?? "")
+                    break
+                case .succeeded:
+                    if self.fromVC == "myads"
+                    {
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "dd-MM-YYYY"
+
+                        let parameter: [String: Any] = [
+                            "ad_id": adDetailObj.adId,
+                            "featured_date": formatter.string(from: Date())
+                        ]
+                        self.featureAd(param: parameter as NSDictionary)
+                    }
+                    else
+                    {
+                        self.addPostLiveAPI()
+                    }
+                    break
+                @unknown default:
+                  fatalError()
+                  break
+            }
+        }
     }
     
     //MARK:- Ad Post APIs
@@ -264,7 +256,6 @@ class CheckoutViewController: UIViewController, NVActivityIndicatorViewable
             parameter.merge(with: param)
         }
         
-        self.showLoader()
         self.uploadAdWithImages(param: parameter as NSDictionary, images: adDetailObj.images)
     }
     

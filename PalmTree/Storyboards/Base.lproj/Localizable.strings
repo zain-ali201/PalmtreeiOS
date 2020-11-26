@@ -42,7 +42,7 @@
 "Negotiable" = "قابل للتفاوض";
   
 //Dubai Areas
-"Country1_count" = "214";
+"Country1_count" = "293";
 "Country1_area1" = "Abu Hail";
 "Country1_area2" = "Ad-Daghayah";
 "Country1_area3" = "Al-Barahah";
@@ -257,6 +257,85 @@
 "Country1_area212" = "Umm Nahad 2";
 "Country1_area213" = "Umm Nahad 3";
 "Country1_area214" = "Umm Nahad 4";
+"Country1_area215" = "Burj Al Arab";
+"Country1_area216" = "Dubai Silicon Oasis";
+"Country1_area217" = "Dubai Academic City";
+"Country1_area218" = "International City";
+"Country1_area219" = "Al Warqa";
+"Country1_area220" = "Rashidiya";
+"Country1_area221" = "Mirdif";
+"Country1_area222" = "Deira";
+"Country1_area223" = "Al Garhood";
+"Country1_area224" = "Dubai Festival City";
+"Country1_area225" = "Al Garhood";
+"Country1_area226" = "Al Ghusais";
+"Country1_area227" = "Al Qusais";
+"Country1_area228" = "Dubai Airport";
+"Country1_area229" = "Dubai Airport Free Zone";
+"Country1_area230" = "Corniche Rd";
+"Country1_area231" = "Al Mamzar";
+"Country1_area232" = "Al Waheda";
+"Country1_area233" = "Abu Hail";
+"Country1_area234" = "Al Baraha";
+"Country1_area235" = "Al Murar";
+"Country1_area236" = "Hyatt";
+"Country1_area237" = "Deira Fish Market";
+"Country1_area238" = "Al Sabkha";
+"Country1_area239" = "Al Ras";
+"Country1_area240" = "Hor Al Anz";
+"Country1_area241" = "Bur Dubai";
+"Country1_area242" = "Al Mankhool";
+"Country1_area243" = "Karama";
+"Country1_area244" = "Zabeel";
+"Country1_area245" = "Al Jafiliya";
+"Country1_area246" = "Dubai Healthcare City";
+"Country1_area247" = "Oud Metha";
+"Country1_area248" = "Al Quoz";
+"Country1_area249" = "Dubai International Financial Cente";
+"Country1_area250" = "Downtown Dubai";
+"Country1_area251" = "Old Town Dubai";
+"Country1_area252" = "Business Bay";
+"Country1_area253" = "Nad Al Shiba";
+"Country1_area254" = "Dubai Design District";
+"Country1_area255" = "Jumeirah";
+"Country1_area256" = "Jumeirah 1";
+"Country1_area257" = "Jumeirah 2";
+"Country1_area258" = "Jumeirah 3";
+"Country1_area259" = "Al Wasl";
+"Country1_area260" = "Al Safa";
+"Country1_area261" = "Umm Al Sheif";
+"Country1_area262" = "Umm Suqiem";
+"Country1_area263" = "Madinat Jumeirah";
+"Country1_area264" = "Al Sufouh";
+"Country1_area265" = "Knowledge Village";
+"Country1_area266" = "Dubai Media City";
+"Country1_area267" = "Dubai Internet City";
+"Country1_area268" = "Al Sufouh";
+"Country1_area269" = "Al Barsha";
+"Country1_area270" = "Emaar Emirates Hills";
+"Country1_area271" = "The Greens";
+"Country1_area272" = "The Meadows";
+"Country1_area273" = "The Springs";
+"Country1_area274" = "Emirates Hills";
+"Country1_area275" = "Jumeirah Islands";
+"Country1_area276" = "New Dubai";
+"Country1_area277" = "Dubai Marina";
+"Country1_area278" = "Jumeirah Beach Residence";
+"Country1_area279" = "Jumeirah Lake Towers";
+"Country1_area280" = "Discovery Gardens";
+"Country1_area281" = "Dubai Investments Park";
+"Country1_area282" = "Green Community";
+"Country1_area283" = "Jebel Ali Gardens";
+"Country1_area284" = "Jebel Ali";
+"Country1_area285" = "Jebel Ali Port";
+"Country1_area286" = "Jebel Ali Industrial Area";
+"Country1_area287" = "Jebel Ali Free Zone";
+"Country1_area288" = "Jebel Ali Village";
+"Country1_area289" = "Palm Deira";
+"Country1_area290" = "Palm Jumeirah";
+"Country1_area291" = "Palm Jebel Ali";
+"Country1_area292" = "The World";
+"Country1_area293" = "Hatta";
 
 //Abu Dhabi
 "Country2_count" = "43";
@@ -448,7 +527,7 @@
 "Country3_area140" = "Qidfi";
 
 //Al Ain
-"Country4_count" = "24";
+"Country4_count" = "32";
 "Country4_area1" = "Al Khabisi";
 "Country4_area2" = "Al Khrair";
 "Country4_area3" = "Al Maqam";
@@ -466,13 +545,20 @@
 "Country4_area15" = "Falaj Hazza";
 "Country4_area16" = "Hili";
 "Country4_area17" = "Magar Al Dhabi";
-"Country4_area18" = "Munaseer, Muniseer, Munasir";
+"Country4_area18" = "Munaseer";
 "Country4_area19" = "Saniya Tawam";
 "Country4_area20" = "Zakhir";
 "Country4_area21" = "Al Foah";
 "Country4_area22" = "Al Jimi";
 "Country4_area23" = "Tawam";
 "Country4_area24" = "Magar Al Dhabi";
+"Country4_area26" = "Al Bateen";
+"Country4_area27" = "Al Buraimi";
+"Country4_area28" = "Al Hili";
+"Country4_area29" = "Al Koua";
+"Country4_area30" = "Jafeer Al Jadeed";
+"Country4_area31" = "Oud Al Touba";
+"Country4_area32" = "Umm Ghafa";
 
 //Ajman
 "Country5_count77" = "29";

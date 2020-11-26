@@ -358,14 +358,30 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     {
         if button.tag == 1001
         {
-            lblFixedPrice.text = "سعر ثابت"
+            if languageCode == "ar"
+            {
+                lblFixedPrice.text = "سعر ثابت"
+            }
+            else
+            {
+                lblFixedPrice.text = "Fixed"
+            }
+            
             fixedTick.alpha = 1
             negotiateTick.alpha = 0
             adDetailObj.priceType = "Fixed"
         }
         else
         {
-            lblFixedPrice.text = "قابل للتفاوض"
+            if languageCode == "ar"
+            {
+                lblFixedPrice.text = "قابل للتفاوض"
+            }
+            else
+            {
+                lblFixedPrice.text = "Negotiable"
+            }
+            
             fixedTick.alpha = 0
             negotiateTick.alpha = 1
             adDetailObj.priceType = "Negotiable"
@@ -487,7 +503,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             
             self.showToast(message: msg)
         }
-        else if whatsappFlag && txtPhone.text!.isEmpty
+        else if whatsappFlag && txtWhatsapp.text!.isEmpty
         {
             var msg = "Please add your whatsApp number."
             

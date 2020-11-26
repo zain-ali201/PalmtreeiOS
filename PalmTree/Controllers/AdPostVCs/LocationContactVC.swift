@@ -68,9 +68,9 @@ class LocationContactVC: UIViewController
     
     @IBAction func locBtnAction(_ sender: Any)
     {
-        let locVC = self.storyboard?.instantiateViewController(withIdentifier: "LocationViewController") as! LocationViewController
+//        let locVC = self.storyboard?.instantiateViewController(withIdentifier: "LocationViewController") as! LocationViewController
 //        locVC.locContactVC = self
-        self.navigationController?.pushViewController(locVC, animated: true)
+//        self.navigationController?.pushViewController(locVC, animated: true)
     }
     
     @IBAction func saveBtnAction(_ sender: Any)

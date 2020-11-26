@@ -509,21 +509,25 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                     
                     if adDetailObj.sortType == "Cheapest"
                     {
-                        self.dataArray = self.dataArray.filter( {
-                            $0.price < "200"
-                        })
+                        self.dataArray = self.dataArray.sorted(by: { Int($0.price)! < Int($1.price)! })
                     }
                     else if adDetailObj.sortType == "Most expensive"
                     {
-                        self.dataArray = self.dataArray.filter( {
-                            $0.price > "1000"
+                        self.dataArray = self.dataArray.sorted(by: { Int($0.price)! > Int($1.price)! })
+                    }
+                    else if adDetailObj.sortType == "Most Recent" || adDetailObj.sortType == "Date Descending"
+                    {
+                        self.dataArray = self.dataArray.sorted(by: {
+                            let formatter = DateFormatter()
+                            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                            return formatter.date(from: $0.createdAt)! > formatter.date(from: $1.createdAt)!
                         })
                     }
                     
                     if self.dataArray.count > 0 && adDetailObj.minPrice != "" && adDetailObj.maxPrice != ""
                     {
                         self.dataArray = self.dataArray.filter( {
-                            $0.price > adDetailObj.minPrice && $0.price < adDetailObj.maxPrice
+                            Int($0.price)! >= Int(adDetailObj.minPrice)! && Int($0.price)! <= Int(adDetailObj.maxPrice)!
                         })
                     }
                     

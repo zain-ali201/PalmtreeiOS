@@ -164,21 +164,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>GoogleMaps.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>GooglePlacePicker.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>GooglePlaces.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>GoogleSignIn.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -215,16 +200,6 @@
 			<false/>
 		</dict>
 		<key>Kingfisher.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Mapbox-iOS-SDK.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>MapboxGeocoder.swift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -274,11 +249,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SlideMenuControllerSwift.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>SnapKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -305,16 +275,6 @@
 			<false/>
 		</dict>
 		<key>UITextField+Shake.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>XLPagerTabStrip-XLPagerTabStrip.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>XLPagerTabStrip.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

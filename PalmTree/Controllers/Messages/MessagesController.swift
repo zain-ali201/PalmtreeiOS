@@ -169,6 +169,25 @@ class MessagesController: UIViewController, NVActivityIndicatorViewable, UITable
         self.navigationController?.popViewController(animated: true)
     }
     
+    @IBAction func postBtnAction(_ button: UIButton)
+    {
+        if defaults.bool(forKey: "isLogin") == false
+        {
+            let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+            let navController = UINavigationController(rootViewController: loginVC)
+            self.present(navController, animated:true, completion: nil)
+        }
+        else
+        {
+            adDetailObj = AdDetailObject()
+            let adPostVC = self.storyboard?.instantiateViewController(withIdentifier: "AdPostVC") as! AdPostVC
+            let navController = UINavigationController(rootViewController: adPostVC)
+            navController.navigationBar.isHidden = true
+            navController.modalPresentationStyle = .fullScreen
+            self.present(navController, animated:true, completion: nil)
+        }
+    }
+    
     @IBAction func menuBtnAction(_ button: UIButton)
     {
         if button.tag == 1001

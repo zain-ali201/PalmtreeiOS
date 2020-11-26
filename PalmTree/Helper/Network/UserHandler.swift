@@ -260,6 +260,19 @@ class UserHandler
         }
     }
     
+    //MARK:- Change Password
+    class func getClientSecret(parameter: NSDictionary, success: @escaping(AdRemovedRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
+        let url = Constants.URL.baseUrl+Constants.URL.clientSecret
+        print(url)
+        NetworkHandler.postRequest(url: url, parameters: parameter as? Parameters, success: { (successResponse) in
+            let dictionary = successResponse as! [String: Any]
+            let objPass = AdRemovedRoot(fromDictionary: dictionary)
+            success(objPass)
+        }) { (error) in
+             failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
     //MARK:- Verify Phone
     class func verifyPhone(success: @escaping(NumberVerifyRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
         let url = Constants.URL.baseUrl+Constants.URL.verifyPhone

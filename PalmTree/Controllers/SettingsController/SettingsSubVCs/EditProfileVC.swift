@@ -303,7 +303,6 @@ class EditProfileVC: UIViewController, NVActivityIndicatorViewable {
     }
 
     //MARK:- API Call
-
     func changePassword(param: NSDictionary)
     {
         self.showLoader()

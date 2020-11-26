@@ -35,6 +35,8 @@ class AreasViewController: UIViewController, UITableViewDelegate, UITableViewDat
             {
                 dataArray.append(NSLocalizedString(String(format: "Country%d_area%d", countryID, i), comment: ""))
             }
+            filteredArray = dataArray
+            tblView.reloadData()
         }
     }
     

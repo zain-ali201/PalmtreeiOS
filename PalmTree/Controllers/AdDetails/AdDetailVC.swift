@@ -170,7 +170,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
             }
         }
         
-        if adDetailDataObj.phone == ""
+        if adDetailDataObj.phone == nil || adDetailDataObj.phone == ""
         {
             callBtn.isEnabled = false
         }
@@ -179,7 +179,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
             callBtn.isEnabled = true
         }
         
-        if adDetailDataObj.whatsapp == ""
+        if adDetailDataObj.whatsapp == nil || adDetailDataObj.whatsapp == ""
         {
             whatsappBtn.isEnabled = false
         }
