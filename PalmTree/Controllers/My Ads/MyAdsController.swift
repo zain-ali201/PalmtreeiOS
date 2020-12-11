@@ -8,6 +8,7 @@
 
 import UIKit
 import NVActivityIndicatorView
+import Alamofire
 
 class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, NVActivityIndicatorViewable{
 
@@ -34,7 +35,6 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     //MARK:- Properties
    
     var dataArray = [AdsJSON]()
-    var profileDataArray = [ProfileDetailsData]()
     
     var ad_id = 0
     var noAddTitle = ""
@@ -73,18 +73,10 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         imgPicture.layer.cornerRadius = 34
         imgPicture.layer.masksToBounds = true
         
-        lblName.text = userDetail?.displayName ?? ""
-        
         if languageCode == "ar"
         {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lampView.image = UIImage(named: "lamp_ar")
             changeMenuButtons()
-            
-            lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblJoining.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblEmailverified.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            signinBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
     }
 
@@ -95,7 +87,6 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -106,6 +97,22 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
     {
         if UserDefaults.standard.bool(forKey: "isLogin") == true
         {
+            if userDetail?.avatar != nil
+            {
+                imgPicture.image = userDetail?.avatar
+            }
+            else
+            {
+                if userDetail?.profileImg != nil && userDetail?.profileImg != ""
+                {
+                    if let imgUrl = URL(string: String(format: "%@%@", Constants.URL.imagesUrl, userDetail?.profileImg ?? "")) {
+                        imgPicture.setImage(from: imgUrl)
+                    }
+                }
+            }
+            
+            
+            lblName.text = userDetail?.displayName ?? ""
             tblView.alpha = 1
             self.getAddsData()
             signinView.alpha = 0
@@ -116,14 +123,14 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
             if let joining = userDetail?.joining
             {
                 let formatter = DateFormatter()
-                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
                 let date = formatter.date(from: joining)
                 formatter.dateFormat = "yyyy"
                 let year = formatter.string(from: date!)
                 
                 if languageCode == "ar"
                 {
-                    lblJoining.text =   "\(year) مسجل كعضو منذ"
+                    lblJoining.text =   "\(year) عضو منذ ماي"
                 }
                 else
                 {
@@ -147,12 +154,6 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         btnPost.setImage(UIImage(named: "post_" + languageCode), for: .normal)
         btnWishlist.setImage(UIImage(named: "wishlist_" + languageCode), for: .normal)
         btnMessages.setImage(UIImage(named: "messages_" + languageCode ), for: .normal)
-        
-        btnHome.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        btnPalmtree.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        btnPost.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        btnWishlist.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        btnMessages.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
     }
     
     //MARK: - Custom
@@ -283,13 +284,13 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
         }
         
         cell.crossAction = { () in
-            let alert = UIAlertController(title: "Palmtree", message: "Are you sure you want to remove your ad?", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "Yes", style: .default, handler: { (okAction) in
+            let alert = UIAlertController(title: "Palmtree", message: NSLocalizedString(String(format: "ad_delete_%@",languageCode), comment: ""), preferredStyle: .alert)
+            let okAction = UIAlertAction(title: NSLocalizedString(String(format: "yes_%@",languageCode), comment: ""), style: .default, handler: { (okAction) in
                 let parameter : [String: Any] = ["post_id": objData.id]
                 print(parameter)
                 self.deleteAd(param: parameter as NSDictionary)
             })
-            let cancelAction = UIAlertAction(title: "No", style: .default, handler: nil)
+            let cancelAction = UIAlertAction(title: NSLocalizedString(String(format: "no_%@",languageCode), comment: ""), style: .default, handler: nil)
             alert.addAction(cancelAction)
             alert.addAction(okAction)
             self.presentVC(alert)
@@ -330,7 +331,7 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
             adDetailObj.adPrice = objData.price
             adDetailObj.priceType = objData.price_type
             adDetailObj.adDate = objData.createdAt
-            adDetailObj.phone = objData.phone
+            adDetailObj.phone = objData.phone ?? ""
             adDetailObj.whatsapp = objData.whatsapp
             adDetailObj.location.country = objData.country
             
@@ -357,19 +358,6 @@ class MyAdsController: UIViewController, UITableViewDelegate, UITableViewDataSou
             self.present(navController, animated:true, completion: nil)
         }
 
-        if languageCode == "ar"
-        {
-            cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            cell.lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            cell.btnLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            cell.lblProcess.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            cell.lblPromotion.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            cell.editBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            cell.lblDate.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            cell.promoteBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            cell.lblName.textAlignment = .right
-        }
-        
         return cell
     }
     

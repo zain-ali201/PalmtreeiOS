@@ -34,13 +34,6 @@ class SortVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
         
         tblView.reloadData()
         self.googleAnalytics(controllerName: "Sort Controller")
-        
-        if languageCode == "ar"
-        {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblSelect.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -70,7 +63,19 @@ class SortVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
         let cell: CategoryCell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
         
         let title = dataArray[indexPath.row]
-        cell.lblName.text = title
+        
+        if languageCode == "ar"
+        {
+            if title == "Date Descending"
+            {
+                cell.lblName.text = "التاريخ تنازليا"
+            }
+        }
+        else
+        {
+            cell.lblName.text = title
+        }
+        
         cell.tick.alpha = 0
         
         if adDetailObj.sortType == dataArray[indexPath.row]

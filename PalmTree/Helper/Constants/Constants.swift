@@ -110,6 +110,7 @@ class Constants
         
         static let adPostLive = "addPost"
         static let adPostImage = "addPostImage"
+        static let userImageUpdate = "userImageUpdate"
         static let advanceSearch = "ad_post/search"
         static let subCategory = "ad_post/subcats"
         static let searchDynamic = "ad_post/dynamic_widget"

@@ -32,19 +32,7 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate, NVAct
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboard()
-        
-        txtFieldsWithRtl()
-        
-        if languageCode == "ar"
-        {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnSend.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblHeading.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            emailField.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            emailField.textAlignment = .right
-            lblText.textAlignment = .right
-        }
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,14 +55,6 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate, NVAct
     }
     
     //MARK: - Custom
-    
-    func txtFieldsWithRtl(){
-        if UserDefaults.standard.bool(forKey: "isRtl") {
-            emailField.textAlignment = .right
-        } else {
-            emailField.textAlignment = .left
-        }
-    }
     
     func showLoader(){
         self.startAnimating(Constants.activitySize.size, message: Constants.loaderMessages.loadingMessage.rawValue,messageFont: UIFont.systemFont(ofSize: 14), type: NVActivityIndicatorType.ballClipRotatePulse)

@@ -32,24 +32,6 @@ class PropertyVC: UIViewController, UITextFieldDelegate
         super.viewDidLoad()
         
         self.googleAnalytics(controllerName: "Property Controller")
-        
-        if languageCode == "ar"
-        {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            flatBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            houseBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            otherBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            agencyBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            privateBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            
-            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblRequired.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblProperty.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblSeller.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            
-            txtBedrooms.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtBedrooms.textAlignment = .right
-        }
     }
 
     override func viewDidAppear(_ animated: Bool) {

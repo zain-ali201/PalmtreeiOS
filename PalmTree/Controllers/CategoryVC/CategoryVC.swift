@@ -35,12 +35,6 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
         
         createCategoriesView()
         
-        if languageCode == "ar"
-        {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        }
-        
         if categoryArray.count > 0
         {
             setupTableView()
@@ -76,8 +70,15 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
                         {
                             adDetailObj.adCategory = self.selectedCatName
                             adDetailObj.catID = self.selectedCat
-                            adDetailObj.adSubCategory = values.name
                             adDetailObj.subcatID = values.id
+                            if languageCode == "ar"
+                            {
+                                adDetailObj.adSubCategory = values.arabicName
+                            }
+                            else
+                            {
+                                adDetailObj.adSubCategory = values.name
+                            }
                             self.navigationController?.popViewController(animated: true)
                         }
                         else
@@ -86,7 +87,15 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
                             adFilterListVC.categoryID = self.selectedCat
                             adFilterListVC.catName = self.selectedCatName
                             adFilterListVC.subcategoryID = values.id
-                            adFilterListVC.subcatName = values.name
+                            
+                            if languageCode == "ar"
+                            {
+                                adFilterListVC.subcatName = values.arabicName
+                            }
+                            else
+                            {
+                                adFilterListVC.subcatName = values.name
+                            }
                             self.navigationController?.pushViewController(adFilterListVC, animated: true)
                         }
                     }
@@ -94,7 +103,15 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
             }
 
             selectedCat = categoryArray[0].id
-            selectedCatName = categoryArray[0].name
+            if languageCode == "ar"
+            {
+                selectedCatName = categoryArray[0].arabicName
+            }
+            else
+            {
+                selectedCatName = categoryArray[0].name
+            }
+            
             selectedIndex = 0
             getSubCategories(catID: selectedCat)
         }
@@ -159,15 +176,12 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
             
             if languageCode == "ar"
             {
-                lbl.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-//                lbl.text = objData.arabicName
+                lbl.text = objData.arabicName
             }
             else
             {
-//               lbl.text = objData.name
+               lbl.text = objData.name
             }
-            
-            lbl.text = objData.name
             
             let btn = UIButton()
             btn.frame = CGRect(x: 0, y: 0, width: Int(width), height: 50)
@@ -247,14 +261,13 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
         AddsHandler.getSubCategories(parameter: parameters as NSDictionary, success: { (successResponse) in
             self.stopAnimating()
             
-            if successResponse.success {
-                
+            if successResponse.success
+            {
                 let catArray = successResponse.categories
                 print(catArray)
                 self.subCatArray = [SubCategoryObject]()
                 if catArray!.count > 0
                 {
-                    var index = 0
                     for obj in catArray!
                     {
                         var subCatObj = SubCategoryObject()
@@ -262,9 +275,14 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
                         subCatObj.name = obj.name
                         subCatObj.hasSub = obj.hasSub
                         subCatObj.hasParent = obj.hasParent
-//                        subCatObj.arabicName = obj.arabicName
-//                        subCatObj.status = obj.status
-
+                        if obj.arabicName != nil
+                        {
+                            subCatObj.arabicName = obj.arabicName
+                        }
+                        else
+                        {
+                            subCatObj.arabicName = obj.name
+                        }
                         
                         DispatchQueue.main.async {
                             self.subCatArray.append(subCatObj)
@@ -318,9 +336,14 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
                         subCatObj.id = obj.id
                         subCatObj.name = obj.name
                         subCatObj.hasSub = obj.hasSub
-//                        subCatObj.hasParent = obj.hasParent
-//                        subCatObj.arabicName = obj.arabicName
-//                        subCatObj.status = obj.status
+                        if obj.arabicName != nil
+                        {
+                            subCatObj.arabicName = obj.arabicName
+                        }
+                        else
+                        {
+                            subCatObj.arabicName = obj.name
+                        }
                         catArray.append(subCatObj)
                     }
                     
@@ -412,11 +435,6 @@ extension CategoryVC: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CategoryCell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
 
-        if languageCode == "ar"
-        {
-            cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        }
-        
         if indexPath.section > 0
         {
             let category = self.filteredArray[indexPath.section - 1].subCatArray
@@ -439,21 +457,24 @@ extension CategoryVC: UITableViewDataSource, UITableViewDelegate
         arrow.image = UIImage(named: "drop_arrow")
         arrow.contentMode = .scaleAspectFit
         
+        
         let lineview = UIView(frame: CGRect(x: 10, y: 43.5, width: tableView.frame.size.width - 10, height: 0.5))
         lineview.backgroundColor = .lightGray
         lineview.alpha = 0.5
         
         view.addSubview(label)
         view.addSubview(lineview)
-    
-        if languageCode == "ar"
-        {
-            label.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        }
 
         if section == 0
         {
-            label.text = "All types"
+            if languageCode == "ar"
+            {
+                label.text = "جميع الأصناف"
+            }
+            else
+            {
+                label.text = "All types"
+            }
         }
         else
         {
@@ -463,7 +484,14 @@ extension CategoryVC: UITableViewDataSource, UITableViewDelegate
                 view.addSubview(arrow)
             }
             
-            label.text = values.name
+            if languageCode == "ar"
+            {
+                label.text = values.arabicName
+            }
+            else
+            {
+                label.text = values.name
+            }
         }
 
         return view
@@ -500,8 +528,15 @@ extension CategoryVC: UITableViewDataSource, UITableViewDelegate
             {
                 adDetailObj.adCategory = selectedCatName
                 adDetailObj.catID = selectedCat
-                adDetailObj.adSubCategory = values.name
                 adDetailObj.subcatID = values.id
+                if languageCode == "ar"
+                {
+                    adFilterListVC.subcatName = values.arabicName
+                }
+                else
+                {
+                    adFilterListVC.subcatName = values.name
+                }
                 self.navigationController?.popViewController(animated: true)
             }
             else
@@ -510,7 +545,14 @@ extension CategoryVC: UITableViewDataSource, UITableViewDelegate
                 adFilterListVC.categoryID = selectedCat
                 adFilterListVC.catName = selectedCatName
                 adFilterListVC.subcategoryID = values.id
-                adFilterListVC.subcatName = values.name
+                if languageCode == "ar"
+                {
+                    adFilterListVC.subcatName = values.arabicName
+                }
+                else
+                {
+                    adFilterListVC.subcatName = values.name
+                }
                 self.navigationController?.pushViewController(adFilterListVC, animated: true)
             }
         }

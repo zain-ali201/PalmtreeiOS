@@ -49,19 +49,6 @@ class PreviewAdVC: UIViewController
         
 //        self.googleAnalytics(controllerName: "Watchlist Controller")
         
-        if languageCode == "ar"
-        {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            
-            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblDescp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblListing.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblSellerTypeText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblSellerType.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        }
-        
         lblTitle.text = adDetailObj.adTitle
         lblPrice.text = "AED" + adDetailObj.adPrice
         lblLocation.text = adDetailObj.location.address

@@ -100,43 +100,43 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         
         adPostVC = self
         
-        if languageCode == "ar"
-        {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            
-            txtTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtDescp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtPhone.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtWhatsapp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblDescp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblContactText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblPhone.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblWhatsapp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblCurrency.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblFixedPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnCategory.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblAddress.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblPhoto.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblCategoryText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblCategory.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnCancel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnPreview.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnPost.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnCategory.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            fixedTick.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnFixed.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnNegotiable.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            
-            txtTitle.textAlignment = .right
-            txtDescp.textAlignment = .right
-            txtPrice.textAlignment = .right
-            txtPhone.textAlignment = .right
-            txtWhatsapp.textAlignment = .right
-            lblDescp.textAlignment = .right
-        }
+//        if languageCode == "ar" && Locale.current.languageCode != "ar"
+//        {
+//            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            
+//            txtTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            txtDescp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            txtPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            txtPhone.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            txtWhatsapp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            lblDescp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            lblContactText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            lblPhone.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            lblWhatsapp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            lblCurrency.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            lblFixedPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            btnCategory.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            lblAddress.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            lblText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            lblPhoto.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            lblCategoryText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            lblCategory.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            btnCancel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            btnPreview.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            btnPost.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            btnCategory.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            fixedTick.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            btnFixed.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            btnNegotiable.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            
+//            txtTitle.textAlignment = .right
+//            txtDescp.textAlignment = .right
+//            txtPrice.textAlignment = .right
+//            txtPhone.textAlignment = .right
+//            txtWhatsapp.textAlignment = .right
+//            lblDescp.textAlignment = .right
+//        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -158,17 +158,18 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     
     func populateData()
     {
-        if adDetailObj.location.address == ""
+        if adDetailObj.location.address != ""
         {
-            adDetailObj.location.address = userDetail?.currentAddress ?? ""
-            adDetailObj.location.country = userDetail?.country ?? ""
-            adDetailObj.location.lat = userDetail?.currentLocation.coordinate.latitude
-            adDetailObj.location.lng = userDetail?.currentLocation.coordinate.longitude
-            lblAddress.text = userDetail?.currentAddress
+            lblAddress.text = "\(adDetailObj.location.address), \(adDetailObj.location.country)"
+            
         }
         else
         {
-            lblAddress.text = "\(adDetailObj.location.address), \(adDetailObj.location.country)"
+//            adDetailObj.location.address = userDetail?.currentAddress ?? ""
+//            adDetailObj.location.country = userDetail?.country ?? ""
+//            adDetailObj.location.lat = userDetail?.currentLocation.coordinate.latitude
+//            adDetailObj.location.lng = userDetail?.currentLocation.coordinate.longitude
+//            lblAddress.text = userDetail?.currentAddress
         }
         
         if adDetailObj.adTitle != "" && fromVC == "myads"
@@ -219,7 +220,16 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         
         if adDetailObj.phone != ""
         {
-            txtPhone.text = adDetailObj.phone
+            print(adDetailObj.phone)
+            if languageCode == "ar"
+            {
+                txtPhone.text = toArabicNumber(number: adDetailObj.phone)
+            }
+            else
+            {
+                txtPhone.text = adDetailObj.phone
+            }
+            
             numberFlag = true
             phoneSwitch.setOn(true, animated: false)
         }
@@ -231,9 +241,17 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         
         if adDetailObj.whatsapp != ""
         {
-            txtWhatsapp.text = adDetailObj.phone
-            whatsappFlag = true
+            print(adDetailObj.whatsapp)
+            if languageCode == "ar"
+            {
+                txtWhatsapp.text = toArabicNumber(number: adDetailObj.whatsapp)
+            }
+            else
+            {
+                txtWhatsapp.text = adDetailObj.whatsapp
+            }
             
+            whatsappFlag = true
             whatsappSwitch.setOn(true, animated: false)
         }
         else
@@ -273,7 +291,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             {
                 DispatchQueue.main.async {
                     print(String(format: "%@%@", Constants.URL.imagesUrl, image.url))
-                    if let data = try? Data(contentsOf: URL(string: String(format: "%@%@", Constants.URL.imagesUrl, image.url))!) {
+                    if let data = try? Data(contentsOf: URL(string: String(format: "%@%@", Constants.URL.imagesUrl, image.url.encodeUrl()))!) {
                         if let image = UIImage(data: data) {
                             adDetailObj.images.append(image)
                             DispatchQueue.main.async {
@@ -291,9 +309,11 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     
     @IBAction func photoBtnAction()
     {
-        let actionSheet = UIAlertController(title: "Select", message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+        let select = languageCode == "ar" ? "إختر" : "Select"
         
-        let camera = languageCode == "ar" ? "الة تصوير" : "Camera"
+        let actionSheet = UIAlertController(title: select, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+        
+        let camera = languageCode == "ar" ? "الكاميرا" : "Camera"
         actionSheet.addAction(UIAlertAction(title: camera, style: .default, handler: { (action) -> Void in
             
             let imagePickerConroller = UIImagePickerController()
@@ -313,7 +333,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             self.present(imagePickerConroller,animated:true, completion:nil)
         }))
         
-        let gallery = languageCode == "ar" ? "إلبوم الصور" : "Photo Gallery"
+        let gallery = languageCode == "ar" ? "الإستديو" : "Photo Gallery"
         actionSheet.addAction(UIAlertAction(title: gallery, style: .default, handler: { (action) -> Void in
 
             let imagePicker = OpalImagePickerController()
@@ -431,6 +451,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             else
             {
                 numberFlag = false
+                txtPhone.text = ""
             }
         }
         else if switchC.tag == 1002
@@ -442,6 +463,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             else
             {
                 whatsappFlag = false
+                txtWhatsapp.text = ""
             }
         }
     }
@@ -509,24 +531,40 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             
             if languageCode == "ar"
             {
-                msg = "يرجى إدخال رقم WhatsApp الخاص بك"
+                msg = "يرجى إدخال رقم الوتساب الخاص بك"
             }
             
             self.showToast(message: msg)
         }
         else
         {
+//            if languageCode == "ar"
+//            {
+//                if numberFlag && txtPhone.text != ""
+//                {
+//                    adDetailObj.phone = toEnglishNumber(number: txtPhone.text!)
+//                }
+//
+//                if whatsappFlag && txtWhatsapp.text != ""
+//                {
+//                    adDetailObj.whatsapp = toEnglishNumber(number: txtWhatsapp.text!)
+//                }
+//            }
+//            else
+//            {
+//                adDetailObj.phone = numberFlag ? txtPhone.text! : ""
+//                adDetailObj.whatsapp = whatsappFlag ? txtWhatsapp.text! : ""
+//            }
+            
+            adDetailObj.phone = numberFlag ? txtPhone.text!.english : ""
+            adDetailObj.whatsapp = whatsappFlag ? txtWhatsapp.text!.english : ""
+            
             if fromVC == "myads"
             {
-                adDetailObj.phone = txtPhone.text!
-                adDetailObj.whatsapp = txtWhatsapp.text!
-                
                 addPostLiveAPI()
             }
             else
             {
-                adDetailObj.phone = txtPhone.text!
-                adDetailObj.whatsapp = txtWhatsapp.text!
                 adDetailObj.adTitle = self.txtTitle.text!
                 adDetailObj.adPrice = self.txtPrice.text!
                 adDetailObj.priceType = lblFixedPrice.text!
@@ -646,7 +684,6 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
     
     func textViewDidEndEditing(_ textView: UITextView)
     {
-        
         if textView.text.isEmpty
         {
             lblDescp.alpha = 1
@@ -663,13 +700,13 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         var parameter: [String: Any] = [
             "id" : String(format: "%d", adDetailObj.adId ?? 0),
             "user_id": String(format: "%d", userDetail?.id ?? 0),
-            "phone": txtPhone.text ?? "",
-            "whatsapp": txtWhatsapp.text ?? "",
+            "phone": adDetailObj.phone,
+            "whatsapp": adDetailObj.whatsapp,
             "latitude": "0",
             "longitude": "0",
+            "is_featured": "0",
             "country": adDetailObj.location.country,
             "address": adDetailObj.location.address,
-            "is_featured": "0",
             "name": txtTitle.text ?? "",
             "price" : txtPrice.text ?? "",
             "price_type" : lblFixedPrice.text ?? "",
@@ -1122,5 +1159,26 @@ extension String {
     }
     var htmlToString: String {
         return htmlToAttributedString?.string ?? ""
+    }
+}
+
+func toArabicNumber(number: String) -> String {
+
+    var result = number
+    
+    let numberFormatter = NumberFormatter()
+    numberFormatter.locale = Locale(identifier: "ar")
+    for i in 0...9
+    {
+        let num:NSNumber = NSNumber(value: i)
+        result = result.replacingOccurrences(of: num.stringValue, with: numberFormatter.string(from: num)!)
+    }
+    return result
+}
+
+extension String {
+
+    var english: String {
+        return self.applyingTransform(StringTransform.toLatin, reverse: false) ?? self
     }
 }

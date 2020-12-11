@@ -57,12 +57,12 @@ class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
         super.awakeFromNib()
         selectionStyle = .none
         
-        if languageCode == "ar"
-        {
-            lblSectionTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblJust.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            locBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        }
+//        if languageCode == "ar" && Locale.current.languageCode != "ar"
+//        {
+//            lblSectionTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            lblJust.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            locBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//        }
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -136,11 +136,11 @@ class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
             self.delegate?.addToFavourites(ad_id: objData.id, favFlag: objData.isFavorite)
         }
         
-        if languageCode == "ar"
-        {
-            cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            cell.lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        }
+//        if languageCode == "ar" && Locale.current.languageCode != "ar"
+//        {
+//            cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//            cell.lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//        }
         
         return cell
     }

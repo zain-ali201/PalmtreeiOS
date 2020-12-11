@@ -27,20 +27,6 @@ class CountryAreasVC: UIViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if languageCode == "ar"
-        {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblUAE.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblDubai.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblAbuDhbhi.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblSharjah.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblAin.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblAjmaan.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblFujairah.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblKhaimah.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblQuwain.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

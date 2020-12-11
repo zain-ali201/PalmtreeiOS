@@ -83,7 +83,6 @@ class MyAdsCollectionCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.settingsData()
     }
     
     
@@ -105,26 +104,6 @@ class MyAdsCollectionCell: UICollectionViewCell {
             alert.addAction(cancelAction)
             alert.addAction(okAction)
             self.appDelegate.presentController(ShowVC: alert)
-        }
-    }
-    
-    //MARK:- Custom
-    func settingsData() {
-        if let settingsInfo = defaults.object(forKey: "settings") {
-            settingObject = NSKeyedUnarchiver.unarchiveObject(with: settingsInfo as! Data) as! [String : Any]
-            let model = SettingsRoot(fromDictionary: settingObject)
-            if let dialogMSg = model.data.dialog.confirmation.title {
-                self.popUpMsg = dialogMSg
-            }
-            if let dialogText = model.data.dialog.confirmation.text {
-                self.popUpText = dialogText
-            }
-            if let cancelText = model.data.dialog.confirmation.btnNo {
-                self.popUpCancelButton = cancelText
-            }
-            if let confirmText = model.data.dialog.confirmation.btnOk {
-                self.popUpOkButton = confirmText
-            }
         }
     }
     

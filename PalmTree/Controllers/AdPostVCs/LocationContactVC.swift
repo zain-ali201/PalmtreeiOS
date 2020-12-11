@@ -33,20 +33,6 @@ class LocationContactVC: UIViewController
         txtPhone.text = userDetail?.phone
         txtWhatsapp.text = userDetail?.phone
         lblLocation.text = userDetail?.currentAddress
-        
-        if languageCode == "ar"
-        {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblLocText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblPhone.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtPhone.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnSave.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            
-            txtPhone.textAlignment = .right
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -563,7 +563,7 @@
 //Ajman
 "Country5_count77" = "29";
 "Country5_area1" = "Al-Aliyah";
-"Country5_area2" = "Al-Aliyah";
+"Country5_area2" = "Al-Aliyah 2";
 "Country5_area3" = "Al-Hamaidiyah";
 "Country5_area4" = "Al-Hamaidiyah 2";
 "Country5_area5" = "Al-Jurf 1";
@@ -909,3 +909,71 @@
 "Country8_area55" = "Mintaqat al Humrah D";
 "Country8_area56" = "Mintaqat al Humrah J";
 "Country8_area57" = "Zarqa";
+
+
+//Translation
+"signout_en" = "Are you sure you want to signout?";
+"signout_ar" = "هل أنت متأكد أنك تريد الخروج؟";
+
+"fav_remove_en" = "Are you sure you want to remove from favourites?";
+"fav_remove_ar" = "هل أنت متأكد أنك تريد إزالة من المفضلة؟";
+
+"yes_en" = "Yes";
+"yes_ar" = "نعم";
+
+"no_en" = "No";
+"no_ar" = "لا";
+
+"ad_delete_en" = "Are you sure you want to delete this ad?";
+"ad_delete_ar" = "هل أنت متأكد أنك تريد حذف هذا الإعلان؟";
+
+"fav_already_en" = "This Ad is already in your favourites.";
+"fav_already_ar" = "هذا الإعلان موجود بالفعل في المفضلة لديك.";
+
+"listing_en" = "Share this listing";
+"listing_ar" = "شارك هذه القائمة";
+
+"s_alert_en" = "Search Alert";
+"s_alert_ar" = "تنبيه البحث";
+
+"save_notif_en" = "Save search and get notified of new results.";
+"save_notif_ar" = "حفظ البحث والحصول على إشعار بالنتائج الجديدة.";
+
+"Save_en" = "Save";
+"Save_ar" = "حفظ";
+
+"Cancel_en" = "Cancel";
+"Cancel_ar" = "إلغاء";
+
+"Delete_en" = "Delete";
+"Delete_ar" = "حذف";
+
+"message_en" = "Hi, is this still available?";
+"message_ar" = "مرحبا، هل هذه مازالت متوفرة؟";
+
+"years_ago_en" = "years ago";
+"years_ago_ar" = "سنوات مضت";
+
+"last_year_en" = "Last year";
+"last_year_ar" = "العام الماضي";
+
+"last_month_en" = "Last month";
+"last_month_ar" = "الشهر الماضي";
+
+"weeks_ago_en" = "weeks ago";
+"weeks_ago_ar" = "منذ أسابيع";
+
+"last_week_en" = "Last week";
+"last_week_ar" = "الاسبوع الماضي";
+
+"days_ago_en" = "days ago";
+"days_ago_ar" = "منذ أيام";
+
+"Yesterday_en" = "Yesterday";
+"Yesterday_ar" = "أمس";
+
+"Today_en" = "Today";
+"Today_ar" = "اليوم";
+
+"" = "";
+"" = "";

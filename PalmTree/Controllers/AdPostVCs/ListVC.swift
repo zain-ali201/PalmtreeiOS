@@ -72,13 +72,6 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
         
         tblView.reloadData()
         self.googleAnalytics(controllerName: "List Controller")
-        
-        if languageCode == "ar"
-        {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblSelect.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -171,11 +164,6 @@ class ListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
             {
                 cell.tick.alpha = 1
             }
-        }
-        
-        if languageCode == "ar"
-        {
-            cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
         
         return cell

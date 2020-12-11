@@ -47,35 +47,6 @@ class VehicleDetailVC: UIViewController, UITextFieldDelegate
         super.viewDidLoad()
         
         self.googleAnalytics(controllerName: "Vehicle Detail Controller")
-        
-        if languageCode == "ar"
-        {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtRegNo.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtModel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtYear.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtMileage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtEngineSize.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            
-            tradeBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            privateBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            makeBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            bodyBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            fuelBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            transmissionBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            colourBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            
-            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblRequired.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblOptional.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblSeller.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            
-            txtRegNo.textAlignment = .right
-            txtModel.textAlignment = .right
-            txtYear.textAlignment = .right
-            txtMileage.textAlignment = .right
-            txtEngineSize.textAlignment = .right
-        }
     }
 
     override func viewDidAppear(_ animated: Bool) {

@@ -35,7 +35,6 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     //MARK:- Properties
    
     var dataArray = [AdsJSON]()
-    var profileDataArray = [ProfileDetailsData]()
     
     var ad_id = 0
     var noAddTitle = ""
@@ -63,14 +62,7 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
         if languageCode == "ar"
         {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             changeMenuButtons()
-            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblText1.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblText2.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            listingBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            searchBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            favBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
         
         self.favouriteAdsData()
@@ -102,12 +94,6 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         btnPost.setImage(UIImage(named: "post_" + languageCode), for: .normal)
         btnWishlist.setImage(UIImage(named: "wishlist_active_" + languageCode), for: .normal)
         btnMessages.setImage(UIImage(named: "messages_" + languageCode ), for: .normal)
-        
-        btnHome.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        btnPalmtree.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        btnPost.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        btnWishlist.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        btnMessages.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
     }
     
     //MARK:- IBActions
@@ -255,13 +241,15 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             }
             
             cell.crossAction = { () in
-                let alert = UIAlertController(title: "Palmtree", message: "Are you sure you want to remove from favourites?", preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "Yes", style: .default, handler: { (okAction) in
+                
+                
+                let alert = UIAlertController(title: "Palmtree", message:NSLocalizedString(String(format: "fav_remove_%@",languageCode), comment: ""), preferredStyle: .alert)
+                let okAction = UIAlertAction(title: NSLocalizedString(String(format: "yes_%@",languageCode), comment: ""), style: .default, handler: { (okAction) in
                     let parameter: [String: Any] = ["ad_id": objData.id ?? 0, "user_id" : userDetail?.id ?? 0]
                     print(parameter)
                     self.removeFavourite(param: parameter as NSDictionary)
                 })
-                let cancelAction = UIAlertAction(title: "No", style: .default, handler: nil)
+                let cancelAction = UIAlertAction(title: NSLocalizedString(String(format: "no_%@",languageCode), comment: ""), style: .default, handler: nil)
                 alert.addAction(cancelAction)
                 alert.addAction(okAction)
                 self.presentVC(alert)
@@ -269,20 +257,6 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             
             cell.locationAction = { () in
                 
-            }
-        }
-        
-        if languageCode == "ar"
-        {
-            cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            if tableView.tag == 1001
-            {
-                cell.lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-                cell.btnLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            }
-            else
-            {
-                cell.lblAlertType.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             }
         }
         
@@ -338,28 +312,6 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             self.presentVC(alert)
         }
     }
-    
-    //Load More Data
-    func loadMoreData(param: NSDictionary) {
-        self.showLoader()
-        AddsHandler.moreFavouriteData(parameter: param, success: { (successResponse) in
-            self.stopAnimating()
-            self.refreshControl.endRefreshing()
-            if successResponse.success {
-                self.dataArray.append(contentsOf: successResponse.data)
-                self.favTblView.reloadData()
-            }
-            else {
-                let alert = Constants.showBasicAlert(message: successResponse.message)
-                self.presentVC(alert)
-            }
-        }) { (error) in
-            self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
-            self.presentVC(alert)
-        }
-    }
-    
     
     //remove favourite
     func removeFavourite(param: NSDictionary) {

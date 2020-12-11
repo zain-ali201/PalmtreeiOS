@@ -82,6 +82,8 @@
 		<string>sf-ui-display-medium.ttf</string>
 		<string>HarmoniaSansProCyr-SemiBold.ttf</string>
 		<string>sf-ui-display-ultralight.ttf</string>
+		<string>core-sans-medium.ttf</string>
+		<string>noah-bold.otf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

@@ -58,21 +58,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
         defaults.removeObject(forKey: "isGuest")
         defaults.synchronize()
-
         
         UITextField.appearance().tintColor = .black
         UITextView.appearance().tintColor = .black
         
-        languageCode = UserDefaults.standard.string(forKey: "languageCode") ?? ""
+        languageCode = Locale.current.languageCode!
         
-        if languageCode == "ar" || (Locale.current.languageCode == "ar" && languageCode != "en")
-        {
-            languageCode = "ar"
-            Bundle.setLanguage("ar")
-            let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-            UIApplication.shared.keyWindow?.rootViewController = storyboard.instantiateInitialViewController()
-        }
-        else
+        if languageCode != "ar"
         {
             languageCode = "en"
         }

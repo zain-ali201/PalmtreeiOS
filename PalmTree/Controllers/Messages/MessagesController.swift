@@ -57,15 +57,10 @@ class MessagesController: UIViewController, NVActivityIndicatorViewable, UITable
         {
             btnBack.alpha = 0
         }
-        
+
         if languageCode == "ar"
         {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             changeMenuButtons()
-            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblText1.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblText2.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            postBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
         
         self.navigationController?.navigationBar.isHidden = false
@@ -154,14 +149,8 @@ class MessagesController: UIViewController, NVActivityIndicatorViewable, UITable
         btnHome.setImage(UIImage(named: "home_" + languageCode ), for: .normal)
         btnPalmtree.setImage(UIImage(named: "mypalmtree_" + languageCode), for: .normal)
         btnPost.setImage(UIImage(named: "post_" + languageCode), for: .normal)
-        btnWishlist.setImage(UIImage(named: "wishlist_active_" + languageCode), for: .normal)
-        btnMessages.setImage(UIImage(named: "messages_" + languageCode ), for: .normal)
-        
-        btnHome.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        btnPalmtree.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        btnPost.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        btnWishlist.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        btnMessages.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        btnWishlist.setImage(UIImage(named: "wishlist_" + languageCode), for: .normal)
+        btnMessages.setImage(UIImage(named: "messages_active_" + languageCode ), for: .normal)
     }
     
     @IBAction func backBtnAction(_ button: UIButton)
@@ -275,14 +264,7 @@ class MessagesController: UIViewController, NVActivityIndicatorViewable, UITable
                     cell.lblName.text = firstName!
                 }
             })
-        
-        if languageCode == "ar"
-        {
-            cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-//            cell.lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-//            cell.btnLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        }
-        
+
         return cell
     }
     

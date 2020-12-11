@@ -44,15 +44,6 @@ class LanguageVC: UIViewController{
         {
             engImg.alpha = 0
             arabicImg.alpha = 1
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            
-            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnCancel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnDone.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnEnglish.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnArabic.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            engImg.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            arabicImg.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
     }
 

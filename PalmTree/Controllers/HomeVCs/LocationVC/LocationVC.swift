@@ -36,16 +36,6 @@ class LocationVC: UIViewController, CLLocationManagerDelegate
             lblLocation.text = userDetail?.locationName
         }
         
-        if languageCode == "ar"
-        {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblHeading.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblDistance.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblType.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        }
-        
         locationManager.requestWhenInUseAuthorization()
         
     }

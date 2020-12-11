@@ -54,20 +54,7 @@ class ReportController: UIViewController , NVActivityIndicatorViewable {
         super.viewDidLoad()
         self.googleAnalytics(controllerName: "Report Controller")
         self.hideKeyboard()
-        
-        if languageCode == "ar"
-        {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            
-            oltCancel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            oltSend.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            oltPopUp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            oltPopUp.contentHorizontalAlignment = .right
-            
-            txtMessage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtMessage.textAlignment = .right
-            
-        }
+
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -74,34 +74,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
         super.viewDidLoad()
         
 //        self.googleAnalytics(controllerName: "Watchlist Controller")
-        
-        if languageCode == "ar"
-        {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            
-            summaryBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            specsBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnReport.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            callBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            chatBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            whatsappBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            readBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnLocation.contentHorizontalAlignment = .right
-            
-            lblSummary.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblSeller.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblJoining.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblListing.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblSellerTypeText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblSellerType.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblTime.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblID.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblName.textAlignment = .right
-        }
+
         populateData()
     }
 
@@ -170,7 +143,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
             }
         }
         
-        if adDetailDataObj.phone == nil || adDetailDataObj.phone == ""
+        if adDetailDataObj.phone == ""
         {
             callBtn.isEnabled = false
         }
@@ -179,7 +152,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
             callBtn.isEnabled = true
         }
         
-        if adDetailDataObj.whatsapp == nil || adDetailDataObj.whatsapp == ""
+        if adDetailDataObj.whatsapp == ""
         {
             whatsappBtn.isEnabled = false
         }
@@ -248,7 +221,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
         
         for image in adDetailDataObj.images
         {
-            let alamofireSource = AlamofireSource(urlString: String(format: "%@%@", Constants.URL.imagesUrl, image.url))!
+            let alamofireSource = AlamofireSource(urlString: String(format: "%@%@", Constants.URL.imagesUrl, image.url.encodeUrl()))!
             inputImages.append(alamofireSource)
         }
         
@@ -354,7 +327,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
 
         if adDetailDataObj.images.count > 0
         {
-            objectsToShare.append(adDetailDataObj.images[0].url as AnyObject)
+            objectsToShare.append(String(format: "%@%@", Constants.URL.imagesUrl, adDetailDataObj.images[0].url.encodeUrl()) as AnyObject)
         }
 
         let activityViewController = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
@@ -380,7 +353,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
                 vc.setInitialText(adDetailDataObj.title)
                 if adDetailDataObj.images.count > 0
                 {
-                    vc.add(URL(string: adDetailDataObj.images[0].url))
+                    vc.add(URL(string: String(format: "%@%@", Constants.URL.imagesUrl, adDetailDataObj.images[0].url.encodeUrl())))
                 }
                 present(vc, animated: true)
             }
@@ -391,7 +364,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
                 vc.setInitialText(adDetailDataObj.title)
                 if adDetailDataObj.images.count > 0
                 {
-                    vc.add(URL(string: adDetailDataObj.images[0].url))
+                    vc.add(URL(string: String(format: "%@%@", Constants.URL.imagesUrl, adDetailDataObj.images[0].url.encodeUrl())))
                 }
                 present(vc, animated: true)
             }
@@ -415,7 +388,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
             }
             else
             {
-                self.showToast(message: "This Ad is already in your favourites.")
+                self.showToast(message: NSLocalizedString(String(format: "fav_already_%@",languageCode), comment: ""))
             }
         }
     }
@@ -599,59 +572,58 @@ public func timeAgoSince(_ date: Date) -> String {
     let components = (calendar as NSCalendar).components(unitFlags, from: date, to: now, options: [])
     
     if let year = components.year, year >= 2 {
-        return "\(year) years ago"
+        return "\(year) \(NSLocalizedString(String(format: "years_ago_%@",languageCode), comment: ""))"
     }
     
     if let year = components.year, year >= 1 {
-        return "Last year"
+        return (NSLocalizedString(String(format: "last_year_%@",languageCode), comment: ""))
     }
     
     if let month = components.month, month >= 2 {
-        return "\(month) months ago"
+        return "months ago"
     }
     
     if let month = components.month, month >= 1 {
-        return "Last month"
+        return (NSLocalizedString(String(format: "last_month_%@",languageCode), comment: ""))
     }
     
     if let week = components.weekOfYear, week >= 2 {
-        return "\(week) weeks ago"
+        return "\(week) \(NSLocalizedString(String(format: "weeks_ago_%@",languageCode), comment: ""))"
     }
     
     if let week = components.weekOfYear, week >= 1 {
-        return "Last week"
+        return (NSLocalizedString(String(format: "last_week_%@",languageCode), comment: ""))
     }
     
     if let day = components.day, day >= 2 {
-        return "\(day) days ago"
+        return "\(day) \(NSLocalizedString(String(format: "days_ago_%@",languageCode), comment: ""))"
     }
     
     if let day = components.day, day >= 1 {
-        return "Yesterday"
+        return (NSLocalizedString(String(format: "Yesterday_%@",languageCode), comment: ""))
     }
     
     if let hour = components.hour, hour >= 2 {
-        return "Today"
+        return (NSLocalizedString(String(format: "Today_%@",languageCode), comment: ""))
     }
     
     if let hour = components.hour, hour >= 1 {
-        return "Today"
+        return (NSLocalizedString(String(format: "Today_%@",languageCode), comment: ""))
     }
     
     if let minute = components.minute, minute >= 2 {
-        return "Today"
+        return (NSLocalizedString(String(format: "Today_%@",languageCode), comment: ""))
     }
     
     if let minute = components.minute, minute >= 1 {
-        return "Today"
+        return (NSLocalizedString(String(format: "Today_%@",languageCode), comment: ""))
     }
     
     if let second = components.second, second >= 3 {
-        return "Today"
+        return (NSLocalizedString(String(format: "Today_%@",languageCode), comment: ""))
     }
     
-    return "Today"
-    
+    return (NSLocalizedString(String(format: "Today_%@",languageCode), comment: ""))
 }
 
 public func timeAgoSinceShort(_ date: Date) -> String {

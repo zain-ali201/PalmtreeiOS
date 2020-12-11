@@ -55,17 +55,6 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         adDetailObj.sortType = "Date Descending"
         
-        if languageCode == "ar"
-        {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            filterBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtSearch.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblMsg.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            
-            txtSearch.textAlignment = .right
-        }
-        
 //        var catID = 0
         if subcatName != ""
         {
@@ -123,9 +112,9 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBAction func saveBtnAction(_ button: UIButton)
     {
-        let alert = UIAlertController(title: "Search Alert", message: "Save this search and get notified of new results", preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString(String(format: "s_alert_%@",languageCode), comment: ""), message: NSLocalizedString(String(format: "save_notif_%@",languageCode), comment: ""), preferredStyle: .alert)
 
-        let save = UIAlertAction(title: "Save", style: .default, handler: { (okAction) in
+        let save = UIAlertAction(title: NSLocalizedString(String(format: "Save_%@",languageCode), comment: ""), style: .default, handler: { (okAction) in
             
             if var savedList = UserDefaults.standard.array(forKey: "savedList") as? [[String: Any]]
             {
@@ -144,7 +133,7 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         })
 
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancel = UIAlertAction(title: NSLocalizedString(String(format: "Cancel_%@",languageCode), comment: ""), style: .cancel, handler: nil)
         alert.addAction(save)
         alert.addAction(cancel)
         self.present(alert, animated: true, completion: nil)
@@ -156,10 +145,10 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         let filterVC = self.storyboard?.instantiateViewController(withIdentifier: "FilterVC") as! FilterVC
         filterVC.adFilterVC = self
         adDetailObj.sortType = "Date Descending"
-        adDetailObj.adCategory = catName
-        adDetailObj.catID = categoryID
-        adDetailObj.adSubCategory = subcatName
-        adDetailObj.subcatID = subcategoryID
+//        adDetailObj.adCategory = catName
+//        adDetailObj.catID = categoryID
+//        adDetailObj.adSubCategory = subcatName
+//        adDetailObj.subcatID = subcategoryID
         let navController = UINavigationController(rootViewController: filterVC)
         navController.navigationBar.isHidden = true
         self.present(navController, animated:true, completion: nil)
@@ -218,10 +207,17 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             lbl.font = UIFont.systemFont(ofSize: 14.0)
             lbl.backgroundColor = .clear
             lbl.text = filter
-            
+
             if languageCode == "ar"
             {
-                lbl.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                if filter == "Date Descending"
+                {
+                    lbl.text = "التاريخ تنازليا"
+                }
+                else if filter == "All Ads"
+                {
+                    lbl.text = "جميع الإعلانات"
+                }
             }
             
             let crossBtn = UIButton()
@@ -392,7 +388,7 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         if objData.images.count > 0
         {
-            if let imgUrl = URL(string: String(format: "%@%@", Constants.URL.imagesUrl, objData.images[0].url.encodeUrl())) {
+        if let imgUrl = URL(string: String(format: "%@%@", Constants.URL.imagesUrl, objData.images[0].url.encodeUrl())) {
                 cell.imgPicture.sd_setShowActivityIndicatorView(true)
                 cell.imgPicture.sd_setIndicatorStyle(.gray)
                 cell.imgPicture.sd_setImage(with: imgUrl, completed: nil)
@@ -433,15 +429,6 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.promoteBtn.setImage(UIImage(named: "favourite"), for: .normal)
         }
         
-        if languageCode == "ar"
-        {
-            cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            cell.lblProcess.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            cell.lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            cell.btnLocation.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            cell.lblDate.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        }
-        
         cell.favouriteAction = { () in
             if defaults.bool(forKey: "isLogin") == false
             {
@@ -458,7 +445,7 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
                 else
                 {
-                    self.showToast(message: "This Ad is already in your favourites.")
+                    self.showToast(message: NSLocalizedString(String(format: "fav_already_%@",languageCode), comment: ""))
                 }
             }
         }

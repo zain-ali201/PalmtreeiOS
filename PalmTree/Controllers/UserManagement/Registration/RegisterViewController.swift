@@ -55,24 +55,7 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboard()
-        
-        if languageCode == "ar"
-        {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            buttonRegister.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtPassword.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtConfirmPassword.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtEmail.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblPass.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            
-            txtEmail.textAlignment = .right
-            txtPassword.textAlignment = .right
-            txtName.textAlignment = .right
-            txtConfirmPassword.textAlignment = .right
-            lblText.textAlignment = .right
-        }
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -178,7 +161,8 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
             let parameters : [String: Any] = [
                 "name": name,
                 "email": email,
-                "password": password
+                "password": password,
+                "language": languageCode
             ]
             print(parameters)
             defaults.set(email, forKey: "email")
@@ -220,8 +204,10 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
                     userDetail?.displayName = successResponse.data.displayName
                     userDetail?.id = successResponse.data.id
                     userDetail?.userEmail = successResponse.data.userEmail
+                    userDetail?.joining = successResponse.data.joining
                     
                     defaults.set(successResponse.data.displayName, forKey: "displayName")
+                    defaults.set(successResponse.data.joining, forKey: "joining")
                     defaults.set(successResponse.data.id, forKey: "userID")
                     defaults.set(successResponse.data.userEmail, forKey: "userEmail")
                     

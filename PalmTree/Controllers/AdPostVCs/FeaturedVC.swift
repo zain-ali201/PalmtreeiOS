@@ -39,22 +39,6 @@ class FeaturedVC: UIViewController, NVActivityIndicatorViewable
     {
         super.viewDidLoad()
         
-        if languageCode == "ar"
-        {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblDescp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblPrice.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblFeatured.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblFeaturedDescp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblUrgent.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblUrgentText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblHeading.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnSkip.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            packageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        }
-        
         lblName.text = adDetailObj.adTitle
         lblDescp.text = adDetailObj.adDesc
         lblPrice.text = "AED "+adDetailObj.adPrice
@@ -117,6 +101,7 @@ class FeaturedVC: UIViewController, NVActivityIndicatorViewable
         {
             let checkoutVC = self.storyboard?.instantiateViewController(withIdentifier: "CheckoutViewController") as! CheckoutViewController
             checkoutVC.fromVC = fromVC
+            checkoutVC.amount = "10.5"
             self.navigationController?.pushViewController(checkoutVC, animated: true)
         }
     }
@@ -141,6 +126,7 @@ class FeaturedVC: UIViewController, NVActivityIndicatorViewable
         
         let checkoutVC = self.storyboard?.instantiateViewController(withIdentifier: "CheckoutViewController") as! CheckoutViewController
         checkoutVC.fromVC = self.fromVC
+        checkoutVC.amount = self.amount
         self.navigationController?.pushViewController(checkoutVC, animated: true)
     }
     

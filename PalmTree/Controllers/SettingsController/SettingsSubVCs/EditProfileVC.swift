@@ -8,8 +8,9 @@
 
 import UIKit
 import NVActivityIndicatorView
+import Alamofire
 
-class EditProfileVC: UIViewController, NVActivityIndicatorViewable {
+class EditProfileVC: UIViewController, NVActivityIndicatorViewable, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     //MARK:- Outlets
     @IBOutlet weak var lblTitle: UILabel!
@@ -45,14 +46,20 @@ class EditProfileVC: UIViewController, NVActivityIndicatorViewable {
     @IBOutlet weak var lblReq1: UILabel!
     @IBOutlet weak var btnSave: UIButton!
     
+    @IBOutlet weak var profileBtn: UIButton!
     @IBOutlet weak var editBtn1: UIButton!
     @IBOutlet weak var editBtn2: UIButton!
     
     var passwordToSave = ""
     
+    var profileImage:UIImage = UIImage(named: "avatar")!
+    
     //MARK:- View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        profileBtn.layer.cornerRadius = 50
+        profileBtn.layer.masksToBounds = true
         
         lblName.text = userDetail?.displayName ?? ""
         lblDisplayName.text = userDetail?.displayName ?? ""
@@ -72,52 +79,24 @@ class EditProfileVC: UIViewController, NVActivityIndicatorViewable {
             lblNumber.alpha = 1
             btnAddPhone.alpha = 0
         }
-        
-        if languageCode == "ar"
+
+        if userDetail?.avatar != nil
         {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            
-            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblEmail.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblEmail1.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblNumber.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblEmailText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblPwdText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblContactDetails.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblNumberText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblEmail1Text.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblNameText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblDisplayName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            
-            txtNumber.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtNewPass.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtFirstName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtConfirmPass.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtCurrentPass.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblContactDetails1.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblReq1.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblReq.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblChangePassText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblPassText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            
-            editBtn1.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            editBtn2.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnChangePass.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnSave.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnAddPhone.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-           
-            lblName.textAlignment = .right
-            lblNumber.textAlignment = .right
-            lblEmail.textAlignment = .right
-            lblEmail1.textAlignment = .right
-            
-            txtNumber.textAlignment = .right
-            txtNewPass.textAlignment = .right
-            txtFirstName.textAlignment = .right
-            txtConfirmPass.textAlignment = .right
-            txtCurrentPass.textAlignment = .right
+            profileBtn.setImage(userDetail?.avatar, for: .normal)
+        }
+        else
+        {
+            if userDetail?.profileImg != nil && userDetail?.profileImg != ""
+            {
+                Alamofire.request(String(format: "%@%@", Constants.URL.imagesUrl, userDetail?.profileImg ?? "")).responseImage { response in
+                    debugPrint(response)
+
+                    if case .success(let image) = response.result {
+                        userDetail?.avatar = image
+                        self.profileBtn.setBackgroundImage(image, for: .normal)
+                    }
+                }
+            }
         }
     }
 
@@ -174,6 +153,50 @@ class EditProfileVC: UIViewController, NVActivityIndicatorViewable {
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
+    }
+    
+    @IBAction func profileBtnAction(_ sender: Any)
+    {
+        let select = languageCode == "ar" ? "إختر" : "Select"
+        
+        let actionSheet = UIAlertController(title: select, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+        
+        let camera = languageCode == "ar" ? "الكاميرا" : "Camera"
+        actionSheet.addAction(UIAlertAction(title: camera, style: .default, handler: { (action) -> Void in
+            
+            let imagePickerConroller = UIImagePickerController()
+            imagePickerConroller.delegate = self
+            if UIImagePickerController.isSourceTypeAvailable(.camera){
+                imagePickerConroller.sourceType = .camera
+            }
+            else
+            {
+                let al = UserDefaults.standard.string(forKey: "aler")
+                 let ok = UserDefaults.standard.string(forKey: "okbtnNew")
+                let alert = UIAlertController(title: al, message: "cameraNotAvailable", preferredStyle: UIAlertControllerStyle.alert)
+                let OkAction = UIAlertAction(title: ok, style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(OkAction)
+                self.present(alert, animated: true, completion: nil)
+            }
+            self.present(imagePickerConroller,animated:true, completion:nil)
+        }))
+        
+        let gallery = languageCode == "ar" ? "الإستديو" : "Photo Gallery"
+        actionSheet.addAction(UIAlertAction(title: gallery, style: .default, handler: { (action) -> Void in
+
+            let imagePickerConroller = UIImagePickerController()
+            imagePickerConroller.delegate = self
+            if UIImagePickerController.isSourceTypeAvailable(.camera){
+                imagePickerConroller.sourceType = .photoLibrary
+            }
+            self.present(imagePickerConroller,animated:true, completion:nil)
+
+        }))
+        let cancel = languageCode == "ar" ? "إلغاء" : "Cancel"
+            actionSheet.addAction(UIAlertAction(title: cancel, style: .destructive, handler: { (action) -> Void in
+        }))
+        
+        self.present(actionSheet, animated: true, completion: nil)
     }
     
     @IBAction func passBtnAction(_ sender: Any)
@@ -356,6 +379,84 @@ class EditProfileVC: UIViewController, NVActivityIndicatorViewable {
             self.stopAnimating()
             let alert = Constants.showBasicAlert(message: error.message)
             self.presentVC(alert)
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
+    {
+        if (info[UIImagePickerControllerOriginalImage] as? UIImage) != nil
+        {
+            if var pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage
+            {
+                pickedImage = resizeImage(image: pickedImage, targetSize: CGSize(width: 300, height: 300))
+                profileImage = pickedImage
+                profileBtn.setBackgroundImage(pickedImage, for: .normal)
+            }
+            
+            dismiss(animated: true, completion: {
+                let message = languageCode == "ar" ? "هل تريد تحديث ملفك الشخصي؟" : "Do you want to update your profile picture?"
+                
+                let alert = UIAlertController(title: nil, message: message, preferredStyle: UIAlertControllerStyle.alert)
+                
+                let camera = languageCode == "ar" ? "نعم" : "YES"
+                alert.addAction(UIAlertAction(title: camera, style: .default, handler: { [self] (action) -> Void in
+                    self.updateProfilePic()
+                }))
+                
+                let cancel = languageCode == "ar" ? "لا" : "NO"
+                alert.addAction(UIAlertAction(title: cancel, style: .cancel, handler: { (action) -> Void in
+                }))
+                
+                self.present(alert, animated: true, completion: nil)
+            })
+        }
+    }
+    
+    func updateProfilePic()
+    {
+        self.showLoader()
+        let parameters : [String: Any] = ["id": String(format: "%d", userDetail?.id ?? 0)]
+        
+        adPostUploadSingleImage(parameter: parameters as NSDictionary, image: profileImage, fileName: "image", uploadProgress: { (uploadProgress) in
+
+        }, success: { (successResponse) in
+            
+            self.stopAnimating()
+            if successResponse.success
+            {
+                userDetail?.avatar = self.profileImage
+                userDetail?.profileImg = successResponse.data.url.encodeUrl()
+                defaults.set(userDetail?.profileImg, forKey: "url")
+                self.showToast(message: "Profile picture updated successfully.")
+            }
+            else
+            {
+                let alert = Constants.showBasicAlert(message: successResponse.message)
+                self.presentVC(alert)
+            }
+        }) { (error) in
+            self.stopAnimating()
+            let alert = Constants.showBasicAlert(message: error.message)
+            self.presentVC(alert)
+        }
+    }
+    
+    func adPostUploadSingleImage(parameter: NSDictionary, image: UIImage, fileName: String, uploadProgress: @escaping(Int)-> Void, success: @escaping(ImageRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
+        
+        let url = Constants.URL.baseUrl+Constants.URL.userImageUpdate
+        print(url)
+        NetworkHandler.uploadSingleImage(url: url, image: image, fileName: "image", params: parameter as? Parameters, uploadProgress: { (uploadProgress) in
+            print(uploadProgress)
+            
+        }, success: { (successResponse) in
+            
+            let dictionary = successResponse as! [String: Any]
+            print(dictionary)
+            let objImg = ImageRoot(fromDictionary: dictionary)
+            success(objImg)
+        }) { (error) in
+            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+            self.stopAnimating()
         }
     }
 }

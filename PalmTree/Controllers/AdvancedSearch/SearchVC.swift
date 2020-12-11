@@ -38,19 +38,6 @@ class SearchVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         
         self.googleAnalytics(controllerName: "Search Controller")
         
-        if languageCode == "ar"
-        {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            recentBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            savedBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblTry.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblRecent.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblRecentText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtSearch.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtSearch.textAlignment = .right
-        }
-        
         getData()
     }
 
@@ -175,13 +162,7 @@ class SearchVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
             cell.lblName.text = savedObj.title
             cell.lblAlertType.text = "\(savedObj.catName) - \(savedObj.locationName)"
         }
-        
-        if languageCode == "ar"
-        {
-            cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            cell.lblAlertType.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        }
-        
+
         return cell
     }
     

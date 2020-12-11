@@ -92,34 +92,6 @@ class AddsHandler {
             let objHome = SubCategoryRoot(fromDictionary: dictionary)
             success(objHome)
             
-       
-            
-        }) { (error) in
-             failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
-        }
-    }
-    
-    //MARK:- Send Firebase Token To Server
-    class func sendFirebaseToken(parameter: NSDictionary, success: @escaping(FirebaseTokenRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.homeData
-        print(url)
-        NetworkHandler.postRequest(url: url, parameters: parameter as? Parameters, success: { (successResponse) in
-            let dictionary = successResponse as! [String: Any]
-            let objFirebase = FirebaseTokenRoot(fromDictionary: dictionary)
-            success(objFirebase)
-        }) { (error) in
-             failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
-        }
-    }
-    
-    //MARK:- Send Firebase Chat Token To Server
-    class func sendFirebaseChatToken(parameter: NSDictionary, success: @escaping(FirebaseTokenRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.updateChatToken
-        print(url)
-        NetworkHandler.postRequest(url: url, parameters: parameter as? Parameters, success: { (successResponse) in
-            let dictionary = successResponse as! [String: Any]
-            let objFirebase = FirebaseTokenRoot(fromDictionary: dictionary)
-            success(objFirebase)
         }) { (error) in
              failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
         }
@@ -154,7 +126,6 @@ class AddsHandler {
     }
     
     //MARK:- Get More My Ads Data
-    
     class func moreMyAdsData(param: NSDictionary ,success: @escaping(MyAdsRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
         let url = Constants.URL.baseUrl+Constants.URL.getMyAds
         print(url)
@@ -162,84 +133,6 @@ class AddsHandler {
             let dictionary = successResponse as! [String: Any]
             let objAds = MyAdsRoot(fromDictionary: dictionary)
             success(objAds)
-        }) { (error) in
-             failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
-        }
-    }
-    
-    //MARK:- Get Inactive Ads Data
-    
-    class func inactiveAds(success: @escaping(InactiveAdsRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.getInactiveAds
-        print(url)
-        NetworkHandler.getRequest(url: url, parameters: nil, success: { (successResponse) in
-            let dictionary = successResponse as! [String: Any]
-            let objInactiveAds = InactiveAdsRoot(fromDictionary: dictionary)
-            success(objInactiveAds)
-        }) { (error) in
-             failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
-        }
-    }
-    
-    class func getmyExpiredAds(success: @escaping(MyAdsRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.getExpAds
-        print(url)
-        
-        NetworkHandler.getRequest(url: url, parameters: nil, success: { (successResponse) in
-            let dictionary = successResponse as! [String: Any]
-            let objAds = MyAdsRoot(fromDictionary: dictionary)
-            success(objAds)
-        }) { (error) in
-            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
-        }
-    }
-    
-    class func getmyMoreExpiredAds(param: NSDictionary ,success: @escaping(MyAdsRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-           let url = Constants.URL.baseUrl+Constants.URL.getExpAds
-           print(url)
-           NetworkHandler.postRequest(url: url, parameters: param as? Parameters, success: { (successResponse) in
-               let dictionary = successResponse as! [String: Any]
-               let objAds = MyAdsRoot(fromDictionary: dictionary)
-               success(objAds)
-           }) { (error) in
-                failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
-           }
-       }
-    
-    
-    //MARK:- Get MostViewedAds data
-    class func getmyMostViewedAds(success: @escaping(MyAdsRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-           let url = Constants.URL.baseUrl+Constants.URL.getMostViewedAd
-           print(url)
-           
-           NetworkHandler.getRequest(url: url, parameters: nil, success: { (successResponse) in
-               let dictionary = successResponse as! [String: Any]
-               let objAds = MyAdsRoot(fromDictionary: dictionary)
-               success(objAds)
-           }) { (error) in
-               failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
-           }
-       }
-       
-       class func getmyMoreMostViewedAds(param: NSDictionary ,success: @escaping(MyAdsRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-              let url = Constants.URL.baseUrl+Constants.URL.getMostViewedAd
-              print(url)
-              NetworkHandler.postRequest(url: url, parameters: param as? Parameters, success: { (successResponse) in
-                  let dictionary = successResponse as! [String: Any]
-                  let objAds = MyAdsRoot(fromDictionary: dictionary)
-                  success(objAds)
-              }) { (error) in
-                   failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
-              }
-          }
-    //MARK:- More Inactive Ads data
-    class func moreInactiveAdsdata(param: NSDictionary ,success: @escaping(InactiveAdsRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.getInactiveAds
-        print(url)
-        NetworkHandler.postRequest(url: url, parameters: param as? Parameters, success: { (successResponse) in
-            let dictionary = successResponse as! [String: Any]
-            let objInactiveAds = InactiveAdsRoot(fromDictionary: dictionary)
-            success(objInactiveAds)
         }) { (error) in
              failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
         }
@@ -282,20 +175,6 @@ class AddsHandler {
             success(objAds)
         }) { (error) in
             failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
-        }
-    }
-    
-    //MARK:- Load More Favourite Data
-    
-    class func moreFavouriteData(parameter: NSDictionary ,success: @escaping(MyAdsRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-       let url = Constants.URL.baseUrl+Constants.URL.getFavouriteAds
-        print(url)
-        NetworkHandler.postRequest(url: url, parameters: parameter as? Parameters, success: { (successResponse) in
-            let dictionary = successResponse as! [String: Any]
-            let objAds = MyAdsRoot(fromDictionary: dictionary)
-            success(objAds)
-        }) { (error) in
-             failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
         }
     }
     
@@ -350,46 +229,6 @@ class AddsHandler {
             failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
         }
     }
-    
-    //MARK:- Change Add Status
-    class func changeAddStatus(parameter: NSDictionary, success: @escaping(AdRemovedRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.addStatusChange
-        print(url)
-        NetworkHandler.postRequest(url: url, parameters: parameter as? Parameters, success: { (successResponse) in
-            let dictionary = successResponse as! [String: Any]
-            let objAdd = AdRemovedRoot(fromDictionary: dictionary)
-            success(objAdd)
-        }) { (error) in
-            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
-        }
-    }
-    
-    //MARK:- Rejected Ads
-    class func rejectedAds(success: @escaping(RejectedAdsRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.rejectedAds
-        print(url)
-        NetworkHandler.getRequest(url: url, parameters: nil, success: { (successResponse) in
-            let dictionary = successResponse as! [String: Any]
-            let objAdd = RejectedAdsRoot(fromDictionary: dictionary)
-            success(objAdd)
-        }) { (error) in
-            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
-        }
-    }
-    
-    //MARK:- More Rejected Ads Data
-    class func moreRejectedAds(params: [String:Any], success: @escaping(RejectedAdsRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.rejectedAds
-        print(url)
-        NetworkHandler.postRequest(url: url, parameters: params, success: { (successResponse) in
-            let dictionary = successResponse as! [String: Any]
-            let objAdd = RejectedAdsRoot(fromDictionary: dictionary)
-            success(objAdd)
-        }) { (error) in
-            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
-        }
-    }
-    
     //MARK:- Add Detail
     class func addDetails(parameter: NSDictionary ,success: @escaping(AddDetailRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
         let url = Constants.URL.baseUrl+Constants.URL.addDetail
@@ -418,7 +257,6 @@ class AddsHandler {
     }
     
     //MARK:- Make Add Favourite
-    
     class func makeAddFavourite(parameter: NSDictionary, success : @escaping(AdRemovedRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
         let url = Constants.URL.baseUrl+Constants.URL.makeAddFavourite
         print(url)
@@ -444,73 +282,6 @@ class AddsHandler {
         }
     }
     
-    //MARK:- Rating To Add on Add Detail
-    class func ratingToAdd(parameter: NSDictionary, success : @escaping(AdRemovedRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.adNewReply
-        print(url)
-        NetworkHandler.postRequest(url: url, parameters: parameter as? Parameters, success: { (successResponse) in
-            let dictionary = successResponse as! [String: Any]
-            let objRating = AdRemovedRoot(fromDictionary: dictionary)
-            success(objRating)
-        }) { (error) in
-            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
-        }
-    }
-    
-    
-    //MARK:- Bids Data
-    class func bidsData(param: NSDictionary, success: @escaping(BidsDataRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.getBidsData
-        print(url)
-        NetworkHandler.postRequest(url: url, parameters: param as? Parameters, success: { (successResponse) in
-            let dictionary = successResponse as! [String: Any]
-            let objBid = BidsDataRoot(fromDictionary: dictionary)
-            success(objBid)
-        }) { (error) in
-             failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
-        }
-    }
-    
-    //MARK:- Post Bid
-    class func postBid(param: NSDictionary, success: @escaping(AdRemovedRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.postBid
-        print(url)
-        NetworkHandler.postRequest(url: url, parameters: param as? Parameters, success: { (successResponse) in
-            let dictionary = successResponse as! [String: Any]
-            let objData = AdRemovedRoot(fromDictionary: dictionary)
-            success(objData)
-        }) { (error) in
-             failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
-        }
-    }
-    
-    //MARK:- Reply Comment
-    class func replyComment(parameters: NSDictionary, success: @escaping(ReplyCommentRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.adNewReply
-        print(url)
-        NetworkHandler.postRequest(url: url, parameters: parameters as? Parameters, success: { (successResponse) in
-            let dictionary = successResponse as! [String: Any]
-            let objReply = ReplyCommentRoot(fromDictionary: dictionary)
-            success(objReply)
-        }) { (error) in
-             failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
-        }
-    }
-    
-    //MARK:- Add Detail Popup Message Reply
-    class func popMsgReply(param: NSDictionary, success: @escaping(AdRemovedRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.adDetailPopUpMsg
-        print(url)
-        NetworkHandler.postRequest(url: url, parameters: param as? Parameters, success: { (successResponse) in
-            let dictionary = successResponse as! [String: Any]
-            let objResp = AdRemovedRoot(fromDictionary: dictionary)
-            success(objResp)
-        }) { (error) in
-            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
-        }
-    }
-    
-    
     //MARK:- Ad Post
     class func adPost(parameter: NSDictionary, success: @escaping(AdPostRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
         let url = Constants.URL.baseUrl+Constants.URL.adPost
@@ -519,20 +290,6 @@ class AddsHandler {
             let dictionary = successResponse as! [String: Any]
             let objPost = AdPostRoot(fromDictionary: dictionary)
             success(objPost)
-        }) { (error) in
-            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
-        }
-    }
-    
-    //MARK:- Ad Post Dynamic Fields
-    class func adPostDynamicFields(parameter: NSDictionary, success: @escaping(AdPostRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.adPostDynamicField
-        print(url)
-        NetworkHandler.postRequest(url: url, parameters: parameter as? Parameters, success: { (successResponse) in
-            
-            let dictionary = successResponse as! [String: Any]
-            let objSubCat = AdPostRoot(fromDictionary: dictionary)
-            success(objSubCat)
         }) { (error) in
             failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
         }
@@ -548,19 +305,6 @@ class AddsHandler {
             success(objCategory)
         }) { (error) in
              failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
-        }
-    }
-    
-    //MARK:- Ad Post Sub Locations
-    class func adPostSubLocations(param: NSDictionary, success: @escaping(SubCategoryRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.adPostSubLocations
-        print(url)
-        NetworkHandler.postRequest(url: url, parameters: param as? Parameters, success: { (successResponse) in
-            let dictionary = successResponse as! [String: Any]
-            let objSub = SubCategoryRoot(fromDictionary: dictionary)
-            success(objSub)
-        }) { (error) in
-            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
         }
     }
     
@@ -595,7 +339,6 @@ class AddsHandler {
     }
     
     //MARK:- Ad Post Live
-    
     class func adPostLive(parameter: NSDictionary, success: @escaping(AdPostLiveRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
         let url = Constants.URL.baseUrl+Constants.URL.adPostLive
         print(url)
@@ -647,121 +390,29 @@ class AddsHandler {
         }
     }
     
-    //MARK:- Advance Search Dynamic Search
-    
-    class func dynamicSearch(parameter: NSDictionary, success: @escaping(SearchRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.searchDynamic
+    //MARK:- Send Firebase Token To Server
+    class func sendFirebaseToken(parameter: NSDictionary, success: @escaping(FirebaseTokenRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
+        let url = Constants.URL.baseUrl+Constants.URL.homeData
         print(url)
         NetworkHandler.postRequest(url: url, parameters: parameter as? Parameters, success: { (successResponse) in
             let dictionary = successResponse as! [String: Any]
-            let objData = SearchRoot(fromDictionary: dictionary)
-            success(objData)
+            let objFirebase = FirebaseTokenRoot(fromDictionary: dictionary)
+            success(objFirebase)
         }) { (error) in
              failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
         }
     }
     
-    //MARK:- Near By Adds Search
-    
-    class func nearbyAddsSearch(params: NSDictionary, success: @escaping(NearByAddSearchRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.nearByLocation
+    //MARK:- Send Firebase Chat Token To Server
+    class func sendFirebaseChatToken(parameter: NSDictionary, success: @escaping(FirebaseTokenRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
+        let url = Constants.URL.baseUrl+Constants.URL.updateChatToken
         print(url)
-        NetworkHandler.postRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
+        NetworkHandler.postRequest(url: url, parameters: parameter as? Parameters, success: { (successResponse) in
             let dictionary = successResponse as! [String: Any]
-            let objSearch = NearByAddSearchRoot(fromDictionary: dictionary)
-            success(objSearch)
+            let objFirebase = FirebaseTokenRoot(fromDictionary: dictionary)
+            success(objFirebase)
         }) { (error) in
              failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
-        }
-    }
-    
-    class func nearbyAddRequest(params: NSDictionary, success: @escaping(NearByAddSearchRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.nearByLocation
-        print(url)
-        NetworkHandler.postDataRequest(url: url, parameters: params as? Parameters, success: { (successResponse) in
-            let dictionary = successResponse as! [String: Any]
-            let objSearch = NearByAddSearchRoot(fromDictionary: dictionary)
-            success(objSearch)
-        }) { (error) in
-            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
-        }
-    }
-   
-    //MARK:- Add Detail Rating Detail
-    class func addDetailRating(parameter: NSDictionary, success: @escaping(AddRatingRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.addDetailRating
-        print(url)
-        NetworkHandler.postRequest(url: url, parameters: parameter as? Parameters, success: { (successResponse) in
-            let dictionary = successResponse as! [String: Any]
-            let objAdd = AddRatingRoot(fromDictionary: dictionary)
-            success(objAdd)
-        }) { (error) in
-            
-        }
-    }
-    
-    //MARK:- Rating to Public User
-    class func ratingToPublicUser(parameter: NSDictionary, success: @escaping(UserPublicRatingRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.publicUserRating
-        print(url)
-        NetworkHandler.postRequest(url: url, parameters: parameter as? Parameters, success: { (successResponse) in
-            let dictionary = successResponse as! [String:Any]
-            let objRate = UserPublicRatingRoot(fromDictionary: dictionary)
-            success(objRate)
-        }) { (error) in
-            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
-        }
-    }
-    
-    //MARK:- Post User Rating
-    class func postUserRating(param: NSDictionary, success: @escaping(UserPublicRatingRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.postRating
-        print(url)
-        NetworkHandler.postRequest(url: url, parameters: param as? Parameters, success: { (successResponse) in
-            let dictionary = successResponse as! [String: Any]
-            let objRate = UserPublicRatingRoot(fromDictionary: dictionary)
-            success(objRate)
-        }) { (error) in
-            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
-        }
-    }
-    
-    //MARK:- Locations Details Data
-    class func locationDetails(parameter: NSDictionary, success: @escaping(LocationDetailRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.locationDetail
-        print(url)
-        NetworkHandler.postRequest(url: url, parameters: parameter as? Parameters, success: { (successResponse) in
-            let dictionary = successResponse as! [String: Any]
-            let objDetail = LocationDetailRoot(fromDictionary: dictionary)
-            success(objDetail)
-        }) { (error) in
-              failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
-        }
-    }
-    
-    //MARK:- user Top Location
-    class func topLocation(parameter: [String:Any], success: @escaping(UserForgot)->Void, failure: @escaping(NetworkError)->Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.topLocation
-        print(url)
-        NetworkHandler.postRequest(url: url, parameters: parameter, success: { (successResponse) in
-            let dictionary = successResponse as! [String: Any]
-            let objDetail = UserForgot(fromDictionary: dictionary)
-            success(objDetail)
-        }) { (error) in
-            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
-        }
-    }
-    
-    //MARK:- React Emojis
-    class func reactEmojis(parameter: [String:Any], success: @escaping(UserForgot)->Void, failure: @escaping(NetworkError)->Void) {
-        let url = Constants.URL.baseUrl+Constants.URL.reactEmojis
-        print(url)
-        NetworkHandler.postRequest(url: url, parameters: parameter, success: { (successResponse) in
-            let dictionary = successResponse as! [String: Any]
-            let objDetail = UserForgot(fromDictionary: dictionary)
-            success(objDetail)
-        }) { (error) in
-            failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
         }
     }
 }

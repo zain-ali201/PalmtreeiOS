@@ -71,22 +71,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         GIDSignIn.sharedInstance().delegate = self
         //self.loginDetails()
         txtFieldsWithRtl()
-        
-        if languageCode == "ar"
-        {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblOr.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnFb.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnGmail.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblSignup.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblSignupBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            buttonForgotPassword.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            buttonSubmit.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtEmail.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtPassword.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            txtEmail.textAlignment = .right
-            txtPassword.textAlignment = .right
-        }
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -369,23 +354,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
             {
                 defaults.set(true, forKey: "isLogin")
                 
-                if defaults.string(forKey: "joining") == nil
-                {
-                    let formatter = DateFormatter()
-                    formatter.dateFormat = "MMMM yyyy"
-                    defaults.set(formatter.string(from: Date()), forKey: "joining")
-                }
-                
                 userDetail?.displayName = successResponse.data.displayName
                 userDetail?.id = successResponse.data.id
-//                userDetail?.phone = successResponse.data.phone
-//                userDetail?.profileImg = successResponse.data.profileImg
+                userDetail?.joining = successResponse.data.joining
+                userDetail?.profileImg = successResponse.data.profileImg
                 userDetail?.userEmail = successResponse.data.userEmail
+                
                 
                 defaults.set(successResponse.data.displayName, forKey: "displayName")
                 defaults.set(successResponse.data.id, forKey: "userID")
-//                defaults.set(successResponse.data.phone, forKey: "phone")
-//                defaults.set(successResponse.data.profileImg, forKey: "profileImg")
+                defaults.set(successResponse.data.joining, forKey: "joining")
+                defaults.set(successResponse.data.profileImg, forKey: "url")
                 defaults.set(successResponse.data.userEmail, forKey: "userEmail")
                 
                 if myAdsVC != nil

@@ -17,13 +17,7 @@ class TermsConditionsController: UIViewController {
     //MARK:- View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if languageCode == "ar"
-        {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        }
-        
+       
         webView.loadRequest(URLRequest(url: URL(string: "http://www.google.com")!))
     }
 

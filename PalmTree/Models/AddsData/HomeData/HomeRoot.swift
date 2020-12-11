@@ -157,8 +157,8 @@ struct AdsJSON
     var longitude : String!
     var address : String!
     var country : String!
-    var phone : String!
-    var whatsapp : String!
+    var phone = ""
+    var whatsapp = ""
     var price : String!
     var price_type : String!
     var isFeatured : Bool!
@@ -189,8 +189,8 @@ struct AdsJSON
         longitude = dictionary["longitude"] as? String
         address = dictionary["address"] as? String
         country = dictionary["country"] as? String
-        phone = dictionary["phone"] as? String
-        whatsapp = dictionary["whatsapp"] as? String
+        phone = dictionary["phone"] as? String ?? ""
+        whatsapp = dictionary["whatsapp"] as? String ?? ""
         price = dictionary["price"] as? String
         price_type = dictionary["price_type"] as? String
         isFeatured = dictionary["is_featured"] as? Bool

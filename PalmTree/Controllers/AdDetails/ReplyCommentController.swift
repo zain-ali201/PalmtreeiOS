@@ -57,14 +57,10 @@ class ReplyCommentController: UIViewController , NVActivityIndicatorViewable{
         
         if languageCode == "ar"
         {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            
-            buttonCancel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            buttonOK.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            
-            txtComment.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            txtComment.text = "مرحبا، هل هذه مازالت متوفرة؟"
             txtComment.textAlignment = .right
         }
+
     }
 
     //MARK: - Custom

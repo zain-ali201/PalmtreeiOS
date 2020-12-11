@@ -84,7 +84,7 @@ class CategoriesTableCell: UITableViewCell, UICollectionViewDelegate, UICollecti
         {
             if languageCode == "ar"
             {
-                cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                
                 cell.lblName.text = "المزيد"
             }
             else
@@ -101,19 +101,18 @@ class CategoriesTableCell: UITableViewCell, UICollectionViewDelegate, UICollecti
         else
         {
             let objData = categoryArray[indexPath.row]
-        
-            if let name = objData.name
+         
+            if languageCode == "ar"
             {
-                if languageCode == "ar"
-                {
-                    cell.lblName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-                    cell.lblName.text = name
-                }
-                else
-                {
-                    cell.lblName.text = name
-                }
-                
+                cell.lblName.text = objData.arabicName
+            }
+            else
+            {
+                cell.lblName.text = objData.name
+            }
+            
+            if let url = objData.imgUrl
+            {
                 if let imgUrl = URL(string: String(format: "%@%@", Constants.URL.imagesUrl, objData.imgUrl.encodeUrl())) {
                     cell.imgPicture.sd_setShowActivityIndicatorView(true)
                     cell.imgPicture.sd_setIndicatorStyle(.gray)

@@ -16,6 +16,8 @@ import FirebaseInstanceID
 import IQKeyboardManagerSwift
 import CoreLocation
 
+var signoutFlag = false
+
 class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable, AddDetailDelegate, CategoryDetailDelegate, UISearchBarDelegate, MessagingDelegate,UNUserNotificationCenterDelegate , UIGestureRecognizerDelegate, CLLocationManagerDelegate {
     
     //MARK:- Outlets
@@ -85,7 +87,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         locationManager.requestWhenInUseAuthorization()
         
         //Location manager
-        getGPSLocation()
+//        getGPSLocation()
         
         self.navigationController?.isNavigationBarHidden = true
        
@@ -101,9 +103,6 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         if languageCode == "ar"
         {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnSearch.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnSearch.titleLabel?.textAlignment = .right
             changeMenuButtons()
         }
         
@@ -115,9 +114,10 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         currentVc = self
                 
-        if fromVC == "PostAd"
+        if fromVC == "PostAd" || signoutFlag
         {
             fromVC = ""
+            signoutFlag = false
             self.homeData()
         }
         adDetailObj = AdDetailObject()
@@ -203,12 +203,6 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         btnPost.setImage(UIImage(named: "post_" + languageCode), for: .normal)
         btnWishlist.setImage(UIImage(named: "wishlist_" + languageCode), for: .normal)
         btnMessages.setImage(UIImage(named: "messages_" + languageCode), for: .normal)
-        
-        btnHome.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        btnPalmtree.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        btnPost.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        btnWishlist.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        btnMessages.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
     }
     
     func subscribeToTopicMessage() {
@@ -253,7 +247,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
             else
             {
-                self.showToast(message: "This Ad is already in your favourites.")
+                self.showToast(message: NSLocalizedString(String(format: "fav_already_%@",languageCode), comment: ""))
             }
         }
     }
@@ -456,24 +450,13 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 categoryArray = successResponse.categories
                 self.latestAdsArray = successResponse.adsData
                 
-                if languageCode == "ar" && categoryArray.count > 0
-                {
-                    categoryArray[0].name = "ملكية"
-                    categoryArray[1].name = "المحركات"
-                    categoryArray[2].name = "تواصل اجتماعي"
-                    categoryArray[3].name = "أجهزة كهربائية"
-                    categoryArray[4].name = "الوظائف"
-                    categoryArray[5].name = "الإعلانات المبوبة"
-                    categoryArray[6].name = "خدمات"
-                    categoryArray[7].name = "الرياضة واللياقة البدنية"
-                    categoryArray[8].name = "أثاث وحدائق"
-                }
-                
                 if self.defaults.bool(forKey: "isLogin") == true
                 {
                     userDetail?.id = self.defaults.integer(forKey: "userID")
                     userDetail?.displayName = self.defaults.string(forKey: "displayName")
                     userDetail?.userEmail = self.defaults.string(forKey: "userEmail")
+                    userDetail?.joining = self.defaults.string(forKey: "joining")
+                    userDetail?.profileImg = self.defaults.string(forKey: "url")
                     
                     if userDetail?.userEmail != nil
                     {

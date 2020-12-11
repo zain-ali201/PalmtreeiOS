@@ -14,6 +14,7 @@ import Alamofire
 class CheckoutViewController: UIViewController, NVActivityIndicatorViewable
 {
     var fromVC = ""
+    var amount = ""
     var paymentIntentClientSecret: String?
 
     lazy var cardTextField: STPPaymentCardTextField = {
@@ -63,14 +64,15 @@ class CheckoutViewController: UIViewController, NVActivityIndicatorViewable
           self.present(alert, animated: true, completion: nil)
         }
     }
-
+    
     //MARK:- API Call
     @objc func getClientSecret()
     {
-        let param: [String: Any] = ["payment": adDetailObj.adPrice]
+        let payment = Double(amount)! * 100
+        let param: [String: Any] = ["payment": payment]
         
         self.showLoader()
-        UserHandler.changePassword(parameter: param as NSDictionary , success: { (successResponse) in
+        UserHandler.getClientSecret(parameter: param as NSDictionary , success: { (successResponse) in
             NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
             if successResponse.success {
                 self.paymentIntentClientSecret = successResponse.data
@@ -90,22 +92,6 @@ class CheckoutViewController: UIViewController, NVActivityIndicatorViewable
 
     func pay()
     {
-//        if self.fromVC == "myads"
-//        {
-//            print(adDetailObj.adId)
-//            let formatter = DateFormatter()
-//            formatter.dateFormat = "dd-MM-YYYY"
-//
-//            let parameter: [String: Any] = [
-//                "ad_id": adDetailObj.adId,
-//                "featured_date": formatter.string(from: Date())
-//            ]
-//            self.featureAd(param: parameter as NSDictionary)
-//        }
-//        else
-//        {
-//            self.addPostLiveAPI()
-//        }
         
         // Collect card details
         let cardParams = cardTextField.cardParams

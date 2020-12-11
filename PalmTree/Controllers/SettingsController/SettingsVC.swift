@@ -58,42 +58,14 @@ class SettingsVC: UIViewController {
         formatter.dateFormat = "yyyy"
         
         lblVersion.text = (Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String)
-        lblRights.text = String(format: "Copyrights 2000-%@ Palmtree", formatter.string(from: Date()))
         
         if languageCode == "ar"
         {
-            self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-//            lblRights.text = String(format: "Palmtree 2000-%@ حقوق النشر", formatter.string(from: Date()))
-            lblRights.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblLang.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            lblLang1.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            
-            logo.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            
-            btnSignin.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnShareApp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnHelp.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnLang.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnPolicy.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnTerms.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnLegal.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            
-            btnSignout.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnShareApp1.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnHelp1.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnLang1.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnPolicy1.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnTerms1.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnLegal1.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnDetails.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnAlert.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnMessage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnUpdate.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            btnEmails.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            lblRights.text = String(format: "بالمتري %@-2000 حقوق النشر", formatter.string(from: Date()))
         }
         else
         {
-//            lblRights.text = String(format: "Copyrights 2000-%@ Palmtree", formatter.string(from: Date()))
+            lblRights.text = String(format: "Copyrights 2000-%@ Palmtree", formatter.string(from: Date()))
         }
     }
     
@@ -148,9 +120,17 @@ class SettingsVC: UIViewController {
     
     @IBAction func signoutBtnAction(_ sender: Any)
     {
-        let alert = UIAlertController(title: "Palmtree", message: "Are you sure you want to signout?", preferredStyle: .alert)
-        let yes = UIAlertAction(title: "YES", style: .default) { (action) in
+        let alert = UIAlertController(title: "Palmtree", message: NSLocalizedString(String(format: "signout_%@",languageCode), comment: ""), preferredStyle: .alert)
+        let yes = UIAlertAction(title: NSLocalizedString(String(format: "yes_%@",languageCode), comment: ""), style: .default) { (action) in
             
+            userDetail = UserObject()
+            adDetailObj = AdDetailObject()
+            defaults.set("",forKey: "userID")
+            defaults.set("",forKey: "displayName")
+            defaults.set("",forKey: "userEmail")
+            defaults.set("",forKey: "joining")
+            defaults.set("", forKey: "url")
+            signoutFlag = true
             defaults.set(false, forKey: "isLogin")
             defaults.set(false, forKey: "isGuest")
             defaults.set(false, forKey: "isSocial")
@@ -160,7 +140,7 @@ class SettingsVC: UIViewController {
             self.navigationController?.popToViewController(homeVC, animated: true)
         }
         
-        let no = UIAlertAction(title: "NO", style: .cancel) { (action) in
+        let no = UIAlertAction(title: NSLocalizedString(String(format: "no_%@",languageCode), comment: ""), style: .cancel) { (action) in
             
         }
         
