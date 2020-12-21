@@ -101,18 +101,29 @@ class FilterVC: UIViewController{
 //            resetBtn.alpha = 1
 //        }
         
-        if adDetailObj.sortType != ""
+        if adDetailObj.sortType > 0
         {
-            lblSortType.text = adDetailObj.sortType
+            lblSortType.text = adDetailObj.sortTypeText
         }
         
         if adDetailObj.adSubCategory != ""
         {
             lblCategory.text = adDetailObj.adSubCategory
         }
-        else
+        else if adDetailObj.adCategory != ""
         {
             lblCategory.text = adDetailObj.adCategory
+        }
+        else
+        {
+            if languageCode == "ar"
+            {
+                lblCategory.text = "جميع الفئات"
+            }
+            else
+            {
+                lblCategory.text = "All Categories"
+            }
         }
         
         if adDetailObj.motorCatObj.make != ""
@@ -285,8 +296,16 @@ class FilterVC: UIViewController{
             txtMaxPrice.text = ""
         }
         
-        lblSortType.text = "Date Descending"
-        lblCategory.text = "All Categories"
+        if languageCode == "ar"
+        {
+            lblSortType.text = "التاريخ تنازليا"
+            lblCategory.text = "جميع الفئات"
+        }
+        else
+        {
+            lblSortType.text = "Date Descending"
+            lblCategory.text = "All Categories"
+        }
 //        lblMake.text = ""
 //        lblBodyType.text = ""
 //        lblFuelType.text = ""

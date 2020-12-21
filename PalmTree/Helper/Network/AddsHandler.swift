@@ -83,7 +83,21 @@ class AddsHandler {
         }
     }
     
-    //MARK:- Get Home Data
+    //MARK:- Get All Categories
+    class func getAllCategories(parameter: NSDictionary, success: @escaping(SubCategoryRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
+        let url = Constants.URL.baseUrl+Constants.URL.getAllCategories
+        print(url)
+        NetworkHandler.postRequest(url: url, parameters: parameter as! Parameters, success: { (successResponse) in
+            let dictionary = successResponse as! [String: Any]
+            let objHome = SubCategoryRoot(fromDictionary: dictionary)
+            success(objHome)
+            
+        }) { (error) in
+             failure(NetworkError(status: Constants.NetworkError.generic, message: error.message))
+        }
+    }
+    
+    //MARK:- Get SubCategories
     class func getSubCategories(parameter: NSDictionary, success: @escaping(SubCategoryRoot)-> Void, failure: @escaping(NetworkError)-> Void) {
         let url = Constants.URL.baseUrl+Constants.URL.adPostSubCategory+"/"+(parameter.value(forKey: "id") as! String)
         print(url)

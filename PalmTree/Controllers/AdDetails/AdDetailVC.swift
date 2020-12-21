@@ -495,7 +495,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
         }
         else
         {
-            if let phoneURL = URL(string: String(format: "tel://%@", adDetailDataObj.phone))
+            if let phoneURL = URL(string: String(format: "tel://+971%@", adDetailDataObj.phone))
             {
                 UIApplication.shared.open(phoneURL, options: [:], completionHandler: nil)
             }
@@ -512,7 +512,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
         }
         else
         {
-            let whatsappURL = URL(string: String(format: "https://wa.me/%@", adDetailDataObj.whatsapp))
+            let whatsappURL = URL(string: String(format: "https://wa.me/+971%@", adDetailDataObj.whatsapp))
             if UIApplication.shared.canOpenURL(whatsappURL!) {
                 UIApplication.shared.open(whatsappURL!, options: [:], completionHandler: nil)
             }

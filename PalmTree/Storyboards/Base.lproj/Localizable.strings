@@ -42,6 +42,8 @@
 "Negotiable" = "قابل للتفاوض";
   
 //Dubai Areas
+"Country1_lat" = "25.2048";
+"Country1_lng" = "55.2708";
 "Country1_count" = "293";
 "Country1_area1" = "Abu Hail";
 "Country1_area2" = "Ad-Daghayah";
@@ -338,6 +340,8 @@
 "Country1_area293" = "Hatta";
 
 //Abu Dhabi
+"Country2_lat" = "24.4539";
+"Country2_lng" = "54.3773";
 "Country2_count" = "43";
 "Country2_area1" = "Al Dhafrah";
 "Country2_area2" = "Al Falah";
@@ -384,6 +388,8 @@
 "Country2_area43" = "Al Bateen";
 
 //Sharjah
+"Country3_lat" = "25.3463";
+"Country3_lng" = "55.4209";
 "Country3_count" = "140";
 "Country3_area1" = "Abu Shagara";
 "Country3_area2" = "Adh Dhaid";
@@ -527,6 +533,8 @@
 "Country3_area140" = "Qidfi";
 
 //Al Ain
+"Country4_lat" = "24.1302";
+"Country4_lng" = "55.8023";
 "Country4_count" = "32";
 "Country4_area1" = "Al Khabisi";
 "Country4_area2" = "Al Khrair";
@@ -561,6 +569,8 @@
 "Country4_area32" = "Umm Ghafa";
 
 //Ajman
+"Country5_lat" = "25.4052";
+"Country5_lng" = "55.5136";
 "Country5_count77" = "29";
 "Country5_area1" = "Al-Aliyah";
 "Country5_area2" = "Al-Aliyah 2";
@@ -642,6 +652,8 @@
 
 
 //Fujaira
+"Country6_lat" = "25.1288";
+"Country6_lng" = "56.3265";
 "Country6_count" = "99";
 "Country6_area1" = "Adgat";
 "Country6_area2" = "Afarah";
@@ -744,6 +756,8 @@
 "Country6_area99" = "Zanhah";
 
 //Ras ul Khaima
+"Country7_lat" = "25.8007";
+"Country7_lng" = "55.9762";
 "Country7_count" = "104";
 "Country7_area1" = "Adh Dharbaniyah";
 "Country7_area2" = "Adhan";
@@ -851,6 +865,8 @@
 
 
 //Umm Al Quwain
+"Country8_lat" = "25.5426";
+"Country8_lng" = "55.5475";
 "Country8_count" = "57";
 "Country8_area1" = "Al Abraq";
 "Country8_area2" = "Al Labsah";

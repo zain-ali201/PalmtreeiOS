@@ -23,12 +23,17 @@ var settingsVC: SettingsVC!
 let defaults = UserDefaults.standard
 let screenWidth = UIScreen.main.bounds.width
 let screenHeight = UIScreen.main.bounds.height
+var allCategories = [CategoryJSON]()
 var categoryArray = [CategoryJSON]()
 var categoriesArray = [AdsJSON]()
 
-var stripeAPIKey = "pk_test_ZDUz26JhS1bTxJzimCXdVR6C"
+var stripeAPIKey = "pk_test_W4PHseTL95OoWJ81nGoFYlAn00nFQIQGHE"
 var stripeBaseURL = "https://sprintsols.com/palmtree/create.php"
 var mapboxToken = "pk.eyJ1IjoicGFsbXRyZWUiLCJhIjoiY2tjeW56ZXR4MDRhcTJybXNiZjhjbjI5NCJ9.luXGYrraO0lqWAxR22x2Hg"
+
+//UAE default lat long
+let latitude = 23.4241
+let longitude = 53.8478
 
 class Constants
 {
@@ -104,6 +109,7 @@ class Constants
         static let adPost = "post_ad/is_update"
         static let adPostDynamicField = "post_ad/dynamic_fields"
         static let adPostSubCategory = "getSubCategory"
+        static let getAllCategories = "findCategories"
         static let adPostUploadImages = "post_ad/image"
         static let adPostDeleteImage = "post_ad/image/delete"
         static let adPostSubLocations = "post_ad/sublocations"

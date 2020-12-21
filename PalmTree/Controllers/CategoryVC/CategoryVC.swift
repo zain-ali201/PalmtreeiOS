@@ -15,17 +15,19 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
     //MARK:- Properties
     @IBOutlet weak var categoriesView: UIView!
     @IBOutlet weak var tblView: CollapseTableView!
+    @IBOutlet weak var tblAllView: UITableView!
     @IBOutlet weak var txtSearch: UITextField!
     @IBOutlet weak var lblTitle: UILabel!
     
     //MARK:- Properties
+    
+    var allFilteredCategories = [CategoryJSON]()
     var subCatArray = [SubCategoryObject]()
     var filteredArray = [SubCategoryObject]()
     
     var selectedCatName = ""
     var selectedCat = 0
     var selectedIndex = -1
-    
     
     var fromVC = ""
     //MARK:- Cycle
@@ -113,7 +115,16 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
             }
             
             selectedIndex = 0
-            getSubCategories(catID: selectedCat)
+            if allCategories.count == 0
+            {
+                getAllCategoriesAPI()
+            }
+            else
+            {
+                tblView.alpha = 0
+                tblAllView.alpha = 1
+                allFilteredCategories = allCategories
+            }
         }
     }
     
@@ -148,40 +159,36 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
         var xAxis = 10
         var width = 0
         
-        for i in 0..<categoryArray.count
+        for i in 0..<(categoryArray.count + 1)
         {
-            let objData = categoryArray[i]
-            
-            let lblWidth = Int((objData.name.html2AttributedString?.width(withConstrainedHeight: 50))!)
-            width = lblWidth + 80
+            var lblWidth = 0
+            var objData:CategoryJSON!
+            let lbl = UILabel()
+            if i == 0
+            {
+                lbl.frame = CGRect(x: 0, y: 0, width: 80, height: 50)
+                width = 80
+            }
+            else
+            {
+                
+                objData = categoryArray[i - 1]
+                lblWidth = Int((objData.name.html2AttributedString?.width(withConstrainedHeight: 50))!)
+                width = lblWidth + 80
+                lbl.frame = CGRect(x: 44, y: 16, width: lblWidth+40, height: 17)
+            }
             
             let view = UIView()
             view.frame = CGRect(x: Int(xAxis), y: 0, width: Int(width), height: 50)
+            
+            lbl.textAlignment = .center
+            lbl.font = UIFont.systemFont(ofSize: 14.0)
+            lbl.backgroundColor = .clear
             
             let imgPicture = UIImageView()
             imgPicture.frame = CGRect(x: 10, y: 10, width: 30, height: 30)
             imgPicture.contentMode = .scaleAspectFit
             
-            if let imgUrl = URL(string: String(format: "%@%@", Constants.URL.imagesUrl, objData.imgUrl.encodeUrl())) {
-                imgPicture.sd_setShowActivityIndicatorView(true)
-                imgPicture.sd_setIndicatorStyle(.gray)
-                imgPicture.sd_setImage(with: imgUrl, completed: nil)
-            }
-            
-            let lbl = UILabel()
-            lbl.frame = CGRect(x: 44, y: 16, width: lblWidth+40, height: 17)
-            lbl.textAlignment = .center
-            lbl.font = UIFont.systemFont(ofSize: 14.0)
-            lbl.backgroundColor = .clear
-            
-            if languageCode == "ar"
-            {
-                lbl.text = objData.arabicName
-            }
-            else
-            {
-               lbl.text = objData.name
-            }
             
             let btn = UIButton()
             btn.frame = CGRect(x: 0, y: 0, width: Int(width), height: 50)
@@ -196,10 +203,35 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
             if i == 0
             {
                 lineView.alpha = 1
+                if languageCode == "ar"
+                {
+                    lbl.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    lbl.text = "جميع"
+                }
+                else
+                {
+                    lbl.text = "All"
+                }
             }
             else
             {
+                if let imgUrl = URL(string: String(format: "%@%@", Constants.URL.imagesUrl, objData.imgUrl.encodeUrl())) {
+                    imgPicture.sd_setShowActivityIndicatorView(true)
+                    imgPicture.sd_setIndicatorStyle(.gray)
+                    imgPicture.sd_setImage(with: imgUrl, completed: nil)
+                }
+                
                 lineView.alpha = 0
+                
+                if languageCode == "ar"
+                {
+                    lbl.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    lbl.text = objData.arabicName
+                }
+                else
+                {
+                   lbl.text = objData.name
+                }
             }
             
             view.addSubview(imgPicture)
@@ -212,6 +244,11 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
         }
         
         scrollView.contentSize = CGSize(width: xAxis + 10, height: 0)
+        
+        if languageCode == "ar"
+        {
+            scrollView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        }
     }
     
     @IBAction func clickBtnACtion(button: UIButton)
@@ -219,23 +256,37 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
         txtSearch.text = ""
         txtSearch.resignFirstResponder()
         
-        let objData = categoryArray[button.tag - 1000]
-        selectedCat = objData.id;
-        selectedCatName = objData.name
-        selectedIndex = button.tag - 1000
-        
         hideLines()
         let view = self.view.viewWithTag(button.tag + 1000)
         view?.alpha = 1
         
-        filteredArray = [SubCategoryObject]()
-        tblView.reloadData()
-        getSubCategories(catID: selectedCat)
+        if button.tag == 1000
+        {
+            tblView.alpha = 0
+            tblAllView.alpha = 1
+            
+            allFilteredCategories = allCategories
+            tblAllView.reloadData()
+        }
+        else
+        {
+            tblView.alpha = 1
+            tblAllView.alpha = 0
+            
+            let objData = categoryArray[button.tag - 1001]
+            selectedCat = objData.id;
+            selectedCatName = objData.name
+            selectedIndex = button.tag - 1001
+            
+            filteredArray = [SubCategoryObject]()
+            tblView.reloadData()
+            getSubCategories(catID: selectedCat)
+        }
     }
     
     func hideLines()
     {
-        for i in 0..<categoryArray.count
+        for i in 0..<(categoryArray.count + 1)
         {
             let view = self.view.viewWithTag(i + 2000)
             view?.alpha = 0
@@ -250,6 +301,37 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
     func getSubCategories(catID: Int)
     {
         self.subCategoriesAPI(catID: catID)
+    }
+    
+    func getAllCategoriesAPI()
+    {
+        let parameters: [String: Any] = ["id": "1"]
+        
+        self.showLoader()
+        
+        AddsHandler.getAllCategories(parameter: parameters as NSDictionary, success: { (successResponse) in
+            self.stopAnimating()
+            
+            if successResponse.success
+            {
+                allCategories = successResponse.categories
+                self.allFilteredCategories = allCategories
+                
+                DispatchQueue.main.async {
+                    self.tblView.alpha = 0
+                    self.tblAllView.alpha = 1
+                    self.tblAllView.reloadData()
+                }
+                
+            } else {
+                let alert = Constants.showBasicAlert(message: successResponse.message)
+                self.presentVC(alert)
+            }
+        }) { (error) in
+            self.stopAnimating()
+            let alert = Constants.showBasicAlert(message: error.message)
+            self.presentVC(alert)
+        }
     }
     
     func subCategoriesAPI(catID: Int)
@@ -376,16 +458,46 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
     
     @IBAction func textFiledDidChange(_ textFiled : UITextField)
     {
-        if textFiled.text != ""
+        if selectedIndex == 0
         {
-            filteredArray = subCatArray.filter({$0.name.localizedCaseInsensitiveContains(String(format: "%@",textFiled.text!))})
+            if textFiled.text != ""
+            {
+//                if languageCode == "ar"
+//                {
+//                    allFilteredCategories = allCategories.filter({$0.arabicName.localizedCaseInsensitiveContains(String(format: "%@",textFiled.text!))})
+//                }
+//                else
+//                {
+                    allFilteredCategories = allCategories.filter({$0.name.localizedCaseInsensitiveContains(String(format: "%@",textFiled.text!))})
+//                }
+            }
+            else
+            {
+                allFilteredCategories = allCategories
+            }
+            
+            tblAllView.reloadData()
         }
         else
         {
-            filteredArray = subCatArray
+            if textFiled.text != ""
+            {
+//                if languageCode == "ar"
+//                {
+//                    filteredArray = subCatArray.filter({$0.arabicName.localizedCaseInsensitiveContains(String(format: "%@",textFiled.text!))})
+//                }
+//                else
+//                {
+                    filteredArray = subCatArray.filter({$0.name.localizedCaseInsensitiveContains(String(format: "%@",textFiled.text!))})
+//                }
+            }
+            else
+            {
+                filteredArray = subCatArray
+            }
+            
+            tblView.reloadData()
         }
-        
-        tblView.reloadData()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -404,12 +516,19 @@ extension CategoryVC: UITableViewDataSource, UITableViewDelegate
     {
         var count = 0
 
-        if section > 0
+        if tableView.tag == 1001
         {
-            if self.filteredArray.count > 0
+            count = allFilteredCategories.count
+        }
+        else
+        {
+            if section > 0
             {
-                count = self.filteredArray[section - 1].subCatArray.count
-                print(count)
+                if self.filteredArray.count > 0
+                {
+                    count = self.filteredArray[section - 1].subCatArray.count
+                    print(count)
+                }
             }
         }
 
@@ -418,83 +537,133 @@ extension CategoryVC: UITableViewDataSource, UITableViewDelegate
     
     func numberOfSections(in tableView: UITableView) -> Int
     {
-        var count = 0
-
-        if self.filteredArray.count > 0
+        var count = 1
+        
+        if tableView.tag == 1002
         {
-            count = self.filteredArray.count + 1
-        }
-        else
-        {
-            count = 1
+            if self.filteredArray.count > 0
+            {
+                count = self.filteredArray.count + 1
+            }
         }
 
         return count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
         let cell: CategoryCell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
 
-        if indexPath.section > 0
+        if tableView.tag == 1001
         {
-            let category = self.filteredArray[indexPath.section - 1].subCatArray
-            let subCat = category[indexPath.row]
-            cell.lblName.text = subCat.name
+            let category = allFilteredCategories[indexPath.row]
+            
+            if languageCode == "ar"
+            {
+                if category.arabicName != nil && category.arabicName != ""
+                {
+                    cell.lblName.text = category.arabicName
+                }
+                else
+                {
+                    cell.lblName.text = category.name
+                }
+            }
+            else
+            {
+                cell.lblName.text = category.name
+            }
         }
-        
+        else
+        {
+            if indexPath.section > 0
+            {
+                let category = self.filteredArray[indexPath.section - 1].subCatArray
+                let subCat = category[indexPath.row]
+                if languageCode == "ar"
+                {
+                    if subCat.arabicName != ""
+                    {
+                        cell.lblName.text = subCat.arabicName
+                    }
+                    else
+                    {
+                        cell.lblName.text = subCat.name
+                    }
+                }
+                else
+                {
+                    cell.lblName.text = subCat.name
+                }
+            }
+        }
         return cell
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
     {
-        let view = UIView(frame: CGRect(x: 10, y: 0, width: tableView.frame.size.width, height: 44))
-        let label = UILabel(frame: CGRect(x: 10, y: 0, width: 300, height: 44))
-        label.textColor = UIColor.black
-        label.backgroundColor = .white
-        label.font = UIFont.systemFont(ofSize: 14.0)
-        
-        let arrow = UIImageView(frame: CGRect(x: tableView.frame.size.width - 30, y: 15, width: 15, height: 15))
-        arrow.image = UIImage(named: "drop_arrow")
-        arrow.contentMode = .scaleAspectFit
-        
-        
-        let lineview = UIView(frame: CGRect(x: 10, y: 43.5, width: tableView.frame.size.width - 10, height: 0.5))
-        lineview.backgroundColor = .lightGray
-        lineview.alpha = 0.5
-        
-        view.addSubview(label)
-        view.addSubview(lineview)
-
-        if section == 0
+        if tableView.tag == 1002
         {
-            if languageCode == "ar"
+            let view = UIView(frame: CGRect(x: 10, y: 0, width: tableView.frame.size.width, height: 44))
+            let label = UILabel(frame: CGRect(x: 10, y: 0, width: 300, height: 44))
+            label.textColor = UIColor.black
+            label.backgroundColor = .white
+            label.font = UIFont.systemFont(ofSize: 14.0)
+            
+            let arrow = UIImageView(frame: CGRect(x: tableView.frame.size.width - 30, y: 15, width: 15, height: 15))
+            arrow.image = UIImage(named: "drop_arrow")
+            arrow.contentMode = .scaleAspectFit
+            
+            
+            let lineview = UIView(frame: CGRect(x: 10, y: 43.5, width: tableView.frame.size.width - 10, height: 0.5))
+            lineview.backgroundColor = .lightGray
+            lineview.alpha = 0.5
+            
+            view.addSubview(label)
+            view.addSubview(lineview)
+
+            if section == 0
             {
-                label.text = "جميع الأصناف"
+                if languageCode == "ar"
+                {
+                    label.text = "جميع الأصناف"
+                }
+                else
+                {
+                    label.text = "All types"
+                }
             }
             else
             {
-                label.text = "All types"
+                let values = self.filteredArray[section - 1]
+                if values.hasSub == "1"
+                {
+                    view.addSubview(arrow)
+                }
+                
+                if languageCode == "ar"
+                {
+                    if values.arabicName != ""
+                    {
+                        label.text = values.arabicName
+                    }
+                    else
+                    {
+                        label.text = values.name
+                    }
+                }
+                else
+                {
+                    label.text = values.name
+                }
             }
+
+            return view
         }
         else
         {
-            let values = self.filteredArray[section - 1]
-            if values.hasSub == "1"
-            {
-                view.addSubview(arrow)
-            }
-            
-            if languageCode == "ar"
-            {
-                label.text = values.arabicName
-            }
-            else
-            {
-                label.text = values.name
-            }
+            return nil
         }
-
-        return view
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -502,48 +671,30 @@ extension CategoryVC: UITableViewDataSource, UITableViewDelegate
         txtSearch.resignFirstResponder()
         
         let adFilterListVC = self.storyboard?.instantiateViewController(withIdentifier: "AdFilterListVC") as! AdFilterListVC
-        if indexPath.section == 0
+        
+        if tableView.tag == 1001
         {
-            if fromVC == "filter" || fromVC == "adPost"
-            {
-                adDetailObj.adCategory = selectedCatName
-                adDetailObj.catID = selectedCat
-                adDetailObj.adSubCategory = ""
-                adDetailObj.subcatID = 0
-                self.navigationController?.popViewController(animated: true)
-            }
-            else
-            {
-                adFilterListVC.categoryID = selectedCat
-                adFilterListVC.catName = selectedCatName
-                self.navigationController?.pushViewController(adFilterListVC, animated: true)
-            }
-        }
-        else
-        {
-            let category = self.filteredArray[indexPath.section - 1].subCatArray
-            let values = category[indexPath.row]
+            let values = allFilteredCategories[indexPath.row]
 
             if fromVC == "filter" || fromVC == "adPost"
             {
-                adDetailObj.adCategory = selectedCatName
-                adDetailObj.catID = selectedCat
+                adDetailObj.catID = Int(values.hasParent) ?? 0
+                adDetailObj.adCategory = ""
                 adDetailObj.subcatID = values.id
                 if languageCode == "ar"
                 {
-                    adFilterListVC.subcatName = values.arabicName
+                    adDetailObj.adSubCategory = values.arabicName
                 }
                 else
                 {
-                    adFilterListVC.subcatName = values.name
+                    adDetailObj.adSubCategory = values.name
                 }
                 self.navigationController?.popViewController(animated: true)
             }
             else
             {
-
-                adFilterListVC.categoryID = selectedCat
-                adFilterListVC.catName = selectedCatName
+                adFilterListVC.categoryID = Int(values.hasParent) ?? 0
+                adFilterListVC.catName = ""
                 adFilterListVC.subcategoryID = values.id
                 if languageCode == "ar"
                 {
@@ -554,6 +705,62 @@ extension CategoryVC: UITableViewDataSource, UITableViewDelegate
                     adFilterListVC.subcatName = values.name
                 }
                 self.navigationController?.pushViewController(adFilterListVC, animated: true)
+            }
+        }
+        else
+        {
+            if indexPath.section == 0
+            {
+                if fromVC == "filter" || fromVC == "adPost"
+                {
+                    adDetailObj.adCategory = selectedCatName
+                    adDetailObj.catID = selectedCat
+                    adDetailObj.adSubCategory = ""
+                    adDetailObj.subcatID = 0
+                    self.navigationController?.popViewController(animated: true)
+                }
+                else
+                {
+                    adFilterListVC.categoryID = selectedCat
+                    adFilterListVC.catName = selectedCatName
+                    self.navigationController?.pushViewController(adFilterListVC, animated: true)
+                }
+            }
+            else
+            {
+                let category = self.filteredArray[indexPath.section - 1].subCatArray
+                let values = category[indexPath.row]
+
+                if fromVC == "filter" || fromVC == "adPost"
+                {
+                    adDetailObj.adCategory = selectedCatName
+                    adDetailObj.catID = selectedCat
+                    adDetailObj.subcatID = values.id
+                    if languageCode == "ar"
+                    {
+                        adDetailObj.adSubCategory = values.arabicName
+                    }
+                    else
+                    {
+                        adDetailObj.adSubCategory = values.name
+                    }
+                    self.navigationController?.popViewController(animated: true)
+                }
+                else
+                {
+                    adFilterListVC.categoryID = selectedCat
+                    adFilterListVC.catName = selectedCatName
+                    adFilterListVC.subcategoryID = values.id
+                    if languageCode == "ar"
+                    {
+                        adFilterListVC.subcatName = values.arabicName
+                    }
+                    else
+                    {
+                        adFilterListVC.subcatName = values.name
+                    }
+                    self.navigationController?.pushViewController(adFilterListVC, animated: true)
+                }
             }
         }
     }

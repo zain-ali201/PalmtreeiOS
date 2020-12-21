@@ -114,7 +114,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         currentVc = self
                 
-        if fromVC == "PostAd" || signoutFlag
+        if fromVC == "PostAd" || fromVC == "Favourites" || signoutFlag
         {
             fromVC = ""
             signoutFlag = false
@@ -438,7 +438,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         categoryArray.removeAll()
         latestAdsArray.removeAll()
         
-        let parameter: [String: Any] = ["user_id" : self.defaults.integer(forKey: "userID")]
+        let parameter: [String: Any] = ["user_id" : self.defaults.integer(forKey: "userID"), "latitude": userDetail?.lat ?? latitude, "longitude" : userDetail?.lng ?? longitude]
         
         AddsHandler.homeData(parameter: parameter as NSDictionary, success: { (successResponse) in
             self.stopAnimating()

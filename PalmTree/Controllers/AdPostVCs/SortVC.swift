@@ -30,7 +30,14 @@ class SortVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
         
         lblTitle.text = fromInd
 
-        dataArray = ["Date Descending", "Most Recent"/*, "Nearest to me"*/, "Cheapest", "Most expensive"/*, "Best match"*/]
+//        if languageCode == "ar"
+//        {
+//            dataArray = ["التاريخ تنازليا", "الأحدث", "الأرخص", "الأغلى"]
+//        }
+//        else
+//        {
+            dataArray = ["Date Descending", "Most Recent", "Cheapest", "Most expensive"]
+//        }
         
         tblView.reloadData()
         self.googleAnalytics(controllerName: "Sort Controller")
@@ -64,21 +71,10 @@ class SortVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
         
         let title = dataArray[indexPath.row]
         
-        if languageCode == "ar"
-        {
-            if title == "Date Descending"
-            {
-                cell.lblName.text = "التاريخ تنازليا"
-            }
-        }
-        else
-        {
-            cell.lblName.text = title
-        }
-        
+        cell.lblName.text = title
         cell.tick.alpha = 0
         
-        if adDetailObj.sortType == dataArray[indexPath.row]
+        if (adDetailObj.sortType - 1) == indexPath.row
         {
             cell.tick.alpha = 1
         }
@@ -88,7 +84,8 @@ class SortVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITe
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        adDetailObj.sortType = dataArray[indexPath.row]
+        adDetailObj.sortType = indexPath.row + 1
+        adDetailObj.sortTypeText = dataArray[indexPath.row]
         self.navigationController?.popViewController(animated: true)
     }
 }

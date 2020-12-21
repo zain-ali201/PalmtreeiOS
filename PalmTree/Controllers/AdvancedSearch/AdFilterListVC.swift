@@ -53,7 +53,8 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.googleAnalytics(controllerName: "Advance Search Controller")
         
-        adDetailObj.sortType = "Date Descending"
+        adDetailObj.sortType = 1
+        adDetailObj.sortTypeText = "Date Descending"
         
 //        var catID = 0
         if subcatName != ""
@@ -141,14 +142,16 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBAction func filterBtnAction(_ button: UIButton)
     {
+        categoryID = 0
+        catName = ""
+        subcategoryID = 0
+        subcatName = ""
         adDetailObj = AdDetailObject()
         let filterVC = self.storyboard?.instantiateViewController(withIdentifier: "FilterVC") as! FilterVC
         filterVC.adFilterVC = self
-        adDetailObj.sortType = "Date Descending"
-//        adDetailObj.adCategory = catName
-//        adDetailObj.catID = categoryID
-//        adDetailObj.adSubCategory = subcatName
-//        adDetailObj.subcatID = subcategoryID
+        adDetailObj.sortType = 1
+        adDetailObj.sortTypeText = "Date Descending"
+
         let navController = UINavigationController(rootViewController: filterVC)
         navController.navigationBar.isHidden = true
         self.present(navController, animated:true, completion: nil)
@@ -176,7 +179,7 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
 //            filtersArray.append("Mileage")
         }
         
-        filtersArray.append(adDetailObj.sortType)
+        filtersArray.append(adDetailObj.sortTypeText)
         
         let scrollView = UIScrollView()
         scrollView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: filtersView.frame.height)
@@ -210,7 +213,7 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
 
             if languageCode == "ar"
             {
-                if filter == "Date Descending"
+                if filter == "Date Descending" || filter == "التاريخ تنازليا"
                 {
                     lbl.text = "التاريخ تنازليا"
                 }
@@ -347,8 +350,11 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     {
         categoryID = 0
         catName = ""
+        subcategoryID = 0
+        subcatName = ""
         adDetailObj = AdDetailObject()
-        adDetailObj.sortType = "Date Descending"
+        adDetailObj.sortType = 1
+        adDetailObj.sortTypeText = "Date Descending"
         filtersArray = ["All Ads"]
         createFilterView()
         let param: [String: Any] = ["title": "", "user_id" : defaults.integer(forKey: "userID")]
@@ -494,15 +500,15 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                         index += 1
                     }
                     
-                    if adDetailObj.sortType == "Cheapest"
+                    if adDetailObj.sortType == 3
                     {
                         self.dataArray = self.dataArray.sorted(by: { Int($0.price)! < Int($1.price)! })
                     }
-                    else if adDetailObj.sortType == "Most expensive"
+                    else if adDetailObj.sortType == 4
                     {
                         self.dataArray = self.dataArray.sorted(by: { Int($0.price)! > Int($1.price)! })
                     }
-                    else if adDetailObj.sortType == "Most Recent" || adDetailObj.sortType == "Date Descending"
+                    else if adDetailObj.sortType == 1 || adDetailObj.sortType == 2
                     {
                         self.dataArray = self.dataArray.sorted(by: {
                             let formatter = DateFormatter()

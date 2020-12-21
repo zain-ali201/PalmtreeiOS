@@ -161,6 +161,9 @@
 /* Class = "UIButton"; normalTitle = "Location"; ObjectID = "BED-H6-krS"; */
 "BED-H6-krS.normalTitle" = "الموقع";
 
+/* Class = "UILabel"; text = "+971"; ObjectID = "X1z-G5-hJ8"; */
+"X1z-G5-hJ8.text" = "+٩٧١";
+
 /* Class = "UITextField"; placeholder = "Email"; ObjectID = "Bmc-YO-1RL"; */
 "Bmc-YO-1RL.placeholder" = "البريد الإلكتروني";
 
@@ -194,9 +197,8 @@
 /* Class = "UILabel"; ObjectID = "EFf-bR-Jcv"; */
 "EFf-bR-Jcv.normalTitle" = "Button";
 
-
 /* Class = "UILabel"; text = "Urgent AED 3.5"; ObjectID = "ERj-z4-FUj"; */
-"ERj-z4-FUj.text" = "3.5 عاجل درهم";
+"ERj-z4-FUj.text" = "10.5 عاجل درهم";
 
 /* Class = "UILabel"; text = "Thank you for posting an advert on Palmtree"; ObjectID = "FDS-jQ-RV2"; */
 "FDS-jQ-RV2.text" = "شكرا لك! للنشر والإعلان على بالمتري";
@@ -414,9 +416,6 @@
 /* Class = "UILabel"; text = "English"; ObjectID = "aCR-Dy-gDb"; */
 "aCR-Dy-gDb.text" = "الإنجليزية";
 
-/* Class = "UITextField"; placeholder = "Please enter your contact"; ObjectID = "XV9-2s-f78"; */
-"XV9-2s-f78.placeholder" = "أدخل رقم هاتفك هنا";
-
 /* Class = "UILabel"; text = "Arabic"; ObjectID = "5Ze-8e-dqr"; */
 "5Ze-8e-dqr.text" = "العربية";
 
@@ -514,13 +513,13 @@
 "Z7J-Ju-ugm.normalTitle" = "نشر الإعلان";
 
 /* Class = "UITextField"; placeholder = "Search"; ObjectID = "0vR-fA-U8i"; */
-"0vR-fA-U8i.placeholder" = "";
+"0vR-fA-U8i.placeholder" = "البحث";
 
-/* Class = "UITextField"; placeholder = "Please enter your contact"; ObjectID = "aE2-wj-CJh"; */
-"aE2-wj-CJh.placeholder" = "أدخل رقم هاتفك هنا";
+/* Class = "UITextField"; placeholder = "555667788"; ObjectID = "XV9-2s-f78"; */
+"XV9-2s-f78.placeholder" = "٥٥٥٦٦٧٧٨٨";
 
-/* Class = "UILabel"; text = "2016, 59000, Petrol, Automatic, 1499cc"; ObjectID = "iJu-hK-yhf"; */
-"iJu-hK-yhf.text" = "2016, 59000, Petrol, Automatic, 1499cc";
+/* Class = "UITextField"; placeholder = "555667788"; ObjectID = "aE2-wj-CJh"; */
+"aE2-wj-CJh.placeholder" = "٥٥٥٦٦٧٧٨٨";
 
 /* Class = "UILabel"; text = "Sofa"; ObjectID = "iKi-zP-Vu1"; */
 "iKi-zP-Vu1.text" = "Sofa";

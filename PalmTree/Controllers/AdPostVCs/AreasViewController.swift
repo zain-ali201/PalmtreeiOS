@@ -20,6 +20,8 @@ class AreasViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var country = ""
     var countryID = 0
     var fromInd = ""
+    var cLat: Double = 0.0
+    var cLong: Double = 0.0
     //MARK:- Cycle
     
     override func viewDidLoad() {
@@ -29,6 +31,9 @@ class AreasViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         if countryID > 0
         {
+            cLat = Double(NSLocalizedString(String(format: "Country%d_lat",countryID), comment: "")) ?? 0.0
+            cLong = Double(NSLocalizedString(String(format: "Country%d_lng",countryID), comment: "")) ?? 0.0
+            
             let areaCount: Int = Int(NSLocalizedString(String(format: "Country%d_count",countryID), comment: "")) ?? 0
             
             for i in 1...areaCount
@@ -97,6 +102,8 @@ class AreasViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         if fromInd == "AdPost"
         {
+            adDetailObj.location.lat = cLat
+            adDetailObj.location.lat = cLong
             adDetailObj.location.address = filteredArray[indexPath.row]
             self.navigationController?.popToViewController(adPostVC, animated: true)
         }

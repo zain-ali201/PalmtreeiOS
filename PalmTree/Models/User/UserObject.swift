@@ -21,8 +21,8 @@ struct UserObject
     var locationName = "UAE"
     var country = ""
     var isAccountConfirm : Bool!
-    var lat = 0.0
-    var lng = 0.0
+    var lat = latitude
+    var lng = longitude
     var joining: String!
     var avatar : UIImage!
 }

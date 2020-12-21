@@ -254,9 +254,8 @@ class AdDetailObject: NSObject
     var objAdPostData = [AdPostField]()
     var adImages : [ImageJSON]!
     var imageIDArray = [Int]()
-    
-    //for search filter
-    var sortType  = ""
+    var sortType = 1
+    var sortTypeText = ""
 }
 
 class AddDetailLocationObject: NSObject

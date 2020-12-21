@@ -55,7 +55,6 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboard()
-
     }
     
     override func viewWillAppear(_ animated: Bool) {

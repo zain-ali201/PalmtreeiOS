@@ -321,6 +321,7 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             if successResponse.success
             {
                 let alert = AlertView.prepare(title: "", message: successResponse.message, okAction: {
+                    homeVC.fromVC = "Favourites"
                     self.favouriteAdsData()
                     self.favTblView.reloadData()
                 })
