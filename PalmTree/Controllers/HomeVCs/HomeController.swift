@@ -61,11 +61,6 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var defaults = UserDefaults.standard
     var latestAdsArray = [AdsJSON]()
 
-    var latitude: Double = 0
-    var longitude: Double = 0
-    //MenuButtons
-    
-    
     var locationManager = CLLocationManager()
     lazy var geocoder = CLGeocoder()
     
@@ -84,10 +79,14 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         homeVC = self
         
-        locationManager.requestWhenInUseAuthorization()
-        
-        //Location manager
-//        getGPSLocation()
+        if (CLLocationManager.locationServicesEnabled())
+        {
+            locationManager = CLLocationManager()
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestAlwaysAuthorization()
+            locationManager.startUpdatingLocation()
+        }
         
         self.navigationController?.isNavigationBarHidden = true
        
@@ -136,42 +135,22 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     //MARK:- Cutom Functions
     
-    func getGPSLocation()
-    {
-        var currentLoc: CLLocation!
-        if(CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
-        CLLocationManager.authorizationStatus() == .authorizedAlways) {
-            currentLoc = locationManager.location
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let currentLoc = locations.last{
+            userDetail?.currentLocation = currentLoc
+            userDetail?.lat = currentLoc.coordinate.latitude
+            userDetail?.lng = currentLoc.coordinate.longitude
             
-            if currentLoc != nil
-            {
-                userDetail?.currentLocation = currentLoc
-                userDetail?.lat = currentLoc.coordinate.latitude
-                userDetail?.lng = currentLoc.coordinate.longitude
-                
-                geocoder.reverseGeocodeLocation(currentLoc) { (placemarks, error) in
-                    self.processResponse(withPlacemarks: placemarks, error: error)
-                }
-            }
+            defaults.set(userDetail?.lat, forKey: "latitude")
+            defaults.set(userDetail?.lng, forKey: "longitude")
             
-//            print("Latitude: \(currentLoc.coordinate.latitude)")
-//            print("Longitude: \(currentLoc.coordinate.longitude)")
-        }
-    }
-    
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!)
-    {
-        let location = locations.last as! CLLocation
-        print("Location: \(location)")
-        userDetail?.currentLocation = location
-        
-        if userDetail?.currentLocation != nil
-        {
-            geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+            print("Latitude: \(currentLoc.coordinate.latitude)")
+            print("Longitude: \(currentLoc.coordinate.longitude)")
+            
+            geocoder.reverseGeocodeLocation(currentLoc) { (placemarks, error) in
                 self.processResponse(withPlacemarks: placemarks, error: error)
             }
         }
-//        locManager.stopUpdatingLocation()
     }
     
     private func processResponse(withPlacemarks placemarks: [CLPlacemark]?, error: Error?) {
@@ -191,7 +170,10 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 defaults.set(userDetail?.currentAddress, forKey: "address")
                 defaults.set(userDetail?.locationName, forKey: "locName")
                 defaults.set(userDetail?.country, forKey: "country")
+                self.showLoader()
+                self.homeData()
                 tableView.reloadData()
+                locationManager.stopUpdatingLocation()
             }
         }
     }
@@ -438,7 +420,22 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         categoryArray.removeAll()
         latestAdsArray.removeAll()
         
+        let savedLat = defaults.double(forKey: "latitude")
+        let savedLng = defaults.double(forKey: "longitude")
+        
+        if savedLat > 0 && userDetail?.lat == latitude
+        {
+            userDetail?.lat = savedLat
+        }
+        
+        if savedLng > 0 && userDetail?.lng == longitude
+        {
+            userDetail?.lng = savedLng
+        }
+        
         let parameter: [String: Any] = ["user_id" : self.defaults.integer(forKey: "userID"), "latitude": userDetail?.lat ?? latitude, "longitude" : userDetail?.lng ?? longitude]
+        
+        print(parameter)
         
         AddsHandler.homeData(parameter: parameter as NSDictionary, success: { (successResponse) in
             self.stopAnimating()

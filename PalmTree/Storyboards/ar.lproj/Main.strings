@@ -164,6 +164,9 @@
 /* Class = "UILabel"; text = "+971"; ObjectID = "X1z-G5-hJ8"; */
 "X1z-G5-hJ8.text" = "+٩٧١";
 
+/* Class = "UILabel"; text = "+971"; ObjectID = "rqU-Mi-lm9"; */
+"rqU-Mi-lm9.text" = "+٩٧١";
+
 /* Class = "UITextField"; placeholder = "Email"; ObjectID = "Bmc-YO-1RL"; */
 "Bmc-YO-1RL.placeholder" = "البريد الإلكتروني";
 

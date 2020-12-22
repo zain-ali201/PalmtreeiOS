@@ -57,7 +57,7 @@ class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
         super.awakeFromNib()
         selectionStyle = .none
         
-//        if languageCode == "ar" && Locale.current.languageCode != "ar"
+//        if languageCode == "ar"
 //        {
 //            lblSectionTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
 //            lblJust.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)

@@ -145,7 +145,6 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         if adDetailObj.location.address != ""
         {
             lblAddress.text = "\(adDetailObj.location.address), \(adDetailObj.location.country)"
-            
         }
         else
         {
@@ -669,8 +668,8 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             "user_id": String(format: "%d", userDetail?.id ?? 0),
             "phone": adDetailObj.phone,
             "whatsapp": adDetailObj.whatsapp,
-            "latitude": userDetail?.lat,
-            "longitude": userDetail?.lng,
+            "latitude": String(format: "%f", userDetail?.lat ?? String(format: "%f", latitude)),
+            "longitude": String(format: "%f",userDetail?.lng ?? String(format: "%f", longitude)),
             "is_featured": "0",
             "country": adDetailObj.location.country,
             "address": adDetailObj.location.address,

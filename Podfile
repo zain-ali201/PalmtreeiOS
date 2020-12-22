@@ -33,14 +33,7 @@ target 'PalmTree' do
     
     #Network
     pod 'Alamofire'
-    
-    #Bar Button View
-#    pod 'XLPagerTabStrip', '~> 8.1'
-    
-    # Star control
-#    pod 'Cosmos'
-    
-    #TextField Effects
+
     pod "TextFieldEffects"
     
     # DropDown Menu
@@ -56,63 +49,20 @@ target 'PalmTree' do
     
     #Image Cache
     pod 'SDWebImage'
-    
-    #Youtube Video Player
-#    pod 'YouTubePlayer'
-    
-    #For Image Sliding
+
     pod 'ImageSlideshow'
     pod "ImageSlideshow/Alamofire"
-    
-    #Rich Text Editor
-    #pod "RichEditorView"
-    
-    #Gallery Image Picker
+
     pod 'OpalImagePicker'
-    
-    #ProgressBar
-#    pod 'RangeSeekSlider'
-    
-    #AdMob
-#    pod 'Google-Mobile-Ads-SDK'
-#    pod 'PersonalizedAdConsent'
-    
-    #In App Purchases
-#    pod 'SwiftyStoreKit'
-    
-    #Textfield Shake
+
     pod 'UITextField+Shake'
     
     #Push Notification
     pod 'NotificationBannerSwift'
-    
-    #Show Action Sheet
-#    pod 'ActionSheetPicker-3.0'
-    
-    #Picker Library
-    # pod 'TCPickerView'
-    
-    #Message Kit
-    # pod 'MessageKit'
-    # pod 'MessageInputBar'
-    #pod 'JSQMessagesViewController', '7.3.3'
-    
-#    pod 'SwiftCheckboxDialog'
+
     pod 'JGProgressHUD'
 
-    #Play Gif 
-#    pod 'SwiftyGif'
-#    pod 'Popover'
-
     pod 'Alamofire-SwiftyJSON'
-     
-    #Intro App
-#    pod 'OnboardKit'
-     #pod 'LinkedinSwift'
-#     pod 'LinkedinSwift', '>= 1.7.9'
-     
-#     pod 'Gallery'
-#     pod 'ExpandableCell'
 
      pod 'Stripe'
      pod 'AFNetworking'

@@ -75,7 +75,14 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
                             adDetailObj.subcatID = values.id
                             if languageCode == "ar"
                             {
-                                adDetailObj.adSubCategory = values.arabicName
+                                if values.arabicName != ""
+                                {
+                                    adDetailObj.adSubCategory = values.arabicName
+                                }
+                                else
+                                {
+                                    adDetailObj.adSubCategory = values.name
+                                }
                             }
                             else
                             {
@@ -85,14 +92,20 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
                         }
                         else
                         {
-
                             adFilterListVC.categoryID = self.selectedCat
                             adFilterListVC.catName = self.selectedCatName
                             adFilterListVC.subcategoryID = values.id
                             
                             if languageCode == "ar"
                             {
-                                adFilterListVC.subcatName = values.arabicName
+                                if values.arabicName != ""
+                                {
+                                    adFilterListVC.subcatName = values.arabicName
+                                }
+                                else
+                                {
+                                    adFilterListVC.subcatName = values.name
+                                }
                             }
                             else
                             {
@@ -156,7 +169,7 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
         scrollView.showsHorizontalScrollIndicator = false
         categoriesView.addSubview(scrollView)
         
-        var xAxis = 10
+        var xAxis = 0
         var width = 0
         
         for i in 0..<(categoryArray.count + 1)
@@ -171,9 +184,15 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
             }
             else
             {
-                
                 objData = categoryArray[i - 1]
-                lblWidth = Int((objData.name.html2AttributedString?.width(withConstrainedHeight: 50))!)
+                if languageCode == "ar"
+                {
+                    lblWidth = Int((objData.arabicName.html2AttributedString?.width(withConstrainedHeight: 50))!)
+                }
+                else
+                {
+                    lblWidth = Int((objData.name.html2AttributedString?.width(withConstrainedHeight: 50))!)
+                }
                 width = lblWidth + 80
                 lbl.frame = CGRect(x: 44, y: 16, width: lblWidth+40, height: 17)
             }
@@ -199,6 +218,11 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
             lineView.frame = CGRect(x: 10, y: Int(view.frame.height - 3.0), width: Int(view.frame.width) - 10, height: 3)
             lineView.backgroundColor = UIColor(red: 58.0/255.0, green: 171.0/255.0, blue: 51.0/255.0, alpha: 1)
             lineView.tag = i + 2000
+            
+            let seperator = UIView()
+            seperator.frame = CGRect(x: width + 5, y: 15, width: 1, height: 20)
+            seperator.alpha = 0.5
+            seperator.backgroundColor = .lightGray
             
             if i == 0
             {
@@ -238,9 +262,13 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
             view.addSubview(lbl)
             view.addSubview(lineView)
             view.addSubview(btn)
+            if i < categoryArray.count
+            {
+                view.addSubview(seperator)
+            }
             scrollView.addSubview(view)
             
-            xAxis += (Int(width))
+            xAxis += (Int(width)) + 10
         }
         
         scrollView.contentSize = CGSize(width: xAxis + 10, height: 0)
@@ -683,7 +711,14 @@ extension CategoryVC: UITableViewDataSource, UITableViewDelegate
                 adDetailObj.subcatID = values.id
                 if languageCode == "ar"
                 {
-                    adDetailObj.adSubCategory = values.arabicName
+                    if values.arabicName != nil && values.arabicName != ""
+                    {
+                        adDetailObj.adSubCategory = values.arabicName
+                    }
+                    else
+                    {
+                        adDetailObj.adSubCategory = values.name
+                    }
                 }
                 else
                 {
@@ -698,7 +733,14 @@ extension CategoryVC: UITableViewDataSource, UITableViewDelegate
                 adFilterListVC.subcategoryID = values.id
                 if languageCode == "ar"
                 {
-                    adFilterListVC.subcatName = values.arabicName
+                    if values.arabicName != nil && values.arabicName != ""
+                    {
+                        adFilterListVC.subcatName = values.arabicName
+                    }
+                    else
+                    {
+                        adFilterListVC.subcatName = values.name
+                    }
                 }
                 else
                 {
@@ -738,7 +780,14 @@ extension CategoryVC: UITableViewDataSource, UITableViewDelegate
                     adDetailObj.subcatID = values.id
                     if languageCode == "ar"
                     {
-                        adDetailObj.adSubCategory = values.arabicName
+                        if values.arabicName != ""
+                        {
+                            adDetailObj.adSubCategory = values.arabicName
+                        }
+                        else
+                        {
+                            adDetailObj.adSubCategory = values.name
+                        }
                     }
                     else
                     {
@@ -753,7 +802,14 @@ extension CategoryVC: UITableViewDataSource, UITableViewDelegate
                     adFilterListVC.subcategoryID = values.id
                     if languageCode == "ar"
                     {
-                        adFilterListVC.subcatName = values.arabicName
+                        if values.arabicName != ""
+                        {
+                            adFilterListVC.subcatName = values.arabicName
+                        }
+                        else
+                        {
+                            adFilterListVC.subcatName = values.name
+                        }
                     }
                     else
                     {
@@ -766,7 +822,14 @@ extension CategoryVC: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 44
+        if tableView.tag == 1002
+        {
+            return 44
+        }
+        else
+        {
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
