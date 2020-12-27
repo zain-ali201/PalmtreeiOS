@@ -9,5 +9,6 @@
 #import "GAIFields.h"
 #import "GAIDictionaryBuilder.h"
 #import <Foundation/Foundation.h>
+#import <TestFairy.h>
 
 

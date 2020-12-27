@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -137,6 +137,9 @@
 		1839241A209C353F00BC35F7 /* SearchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18392419209C353F00BC35F7 /* SearchData.swift */; };
 		1839241C209C407900BC35F7 /* SearchValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1839241B209C407900BC35F7 /* SearchValue.swift */; };
 		1844FD52213D4028005CD5FF /* AddDetailAdTypeBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1844FD51213D4028005CD5FF /* AddDetailAdTypeBar.swift */; };
+		184685FF25935C9B0044798D /* Lahore.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 184685FC25935C990044798D /* Lahore.gpx */; };
+		1846860025935C9B0044798D /* Gujranwala.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 184685FD25935C990044798D /* Gujranwala.gpx */; };
+		1846860125935C9B0044798D /* UAE.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 184685FE25935C9A0044798D /* UAE.gpx */; };
 		184CAFA520B031F1008046C1 /* TermsConditionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184CAFA420B031F1008046C1 /* TermsConditionsController.swift */; };
 		184EDAD42078957000A25228 /* AddDetailRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184EDAD32078957000A25228 /* AddDetailRoot.swift */; };
 		184EDAD62078958B00A25228 /* AddDetailData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184EDAD52078958B00A25228 /* AddDetailData.swift */; };
@@ -442,6 +445,9 @@
 		18392419209C353F00BC35F7 /* SearchData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchData.swift; sourceTree = "<group>"; };
 		1839241B209C407900BC35F7 /* SearchValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchValue.swift; sourceTree = "<group>"; };
 		1844FD51213D4028005CD5FF /* AddDetailAdTypeBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDetailAdTypeBar.swift; sourceTree = "<group>"; };
+		184685FC25935C990044798D /* Lahore.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Lahore.gpx; sourceTree = "<group>"; };
+		184685FD25935C990044798D /* Gujranwala.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Gujranwala.gpx; sourceTree = "<group>"; };
+		184685FE25935C9A0044798D /* UAE.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = UAE.gpx; sourceTree = "<group>"; };
 		184CAFA420B031F1008046C1 /* TermsConditionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsConditionsController.swift; sourceTree = "<group>"; };
 		184EDAD32078957000A25228 /* AddDetailRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDetailRoot.swift; sourceTree = "<group>"; };
 		184EDAD52078958B00A25228 /* AddDetailData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDetailData.swift; sourceTree = "<group>"; };
@@ -1225,6 +1231,9 @@
 				18BBFA8D2051098C0067662F /* PalmTree.xcdatamodeld */,
 				18244F1E2074B46E00B9BE8C /* PalmTree-Bridging-Header.h */,
 				18AF770520E5F95B006408DB /* PrefixHeader.pch */,
+				184685FD25935C990044798D /* Gujranwala.gpx */,
+				184685FC25935C990044798D /* Lahore.gpx */,
+				184685FE25935C9A0044798D /* UAE.gpx */,
 			);
 			path = PalmTree;
 			sourceTree = "<group>";
@@ -1618,6 +1627,7 @@
 				18BBFA812051098B0067662F /* Resources */,
 				0DBAEA91FF140668FEA2C095 /* [CP] Embed Pods Frameworks */,
 				416E9A6AF3F243D23D41FBDD /* [CP] Copy Pods Resources */,
+				18FE1D2C25991A9700A730E9 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1686,13 +1696,16 @@
 				181DDA96233393CC001FF048 /* wow.gif in Resources */,
 				181DDA942333813B001FF048 /* heart.gif in Resources */,
 				ABDBD3B9248E65FD00DCFB0E /* GoogleService-Info.plist in Resources */,
+				1846860125935C9B0044798D /* UAE.gpx in Resources */,
 				181DDD8024EAC8E0007371C5 /* SectionHeaderView.xib in Resources */,
+				1846860025935C9B0044798D /* Gujranwala.gpx in Resources */,
 				18BBFA942051098C0067662F /* LaunchScreen.storyboard in Resources */,
 				18EF992924A09F9800EB6A8E /* Localizable.strings in Resources */,
 				18BBFA912051098C0067662F /* Assets.xcassets in Resources */,
 				18BBFA8C2051098C0067662F /* Main.storyboard in Resources */,
 				181DDA9823339465001FF048 /* sad.gif in Resources */,
 				186BA6FA2583590F00333DAB /* InfoPlist.strings in Resources */,
+				184685FF25935C9B0044798D /* Lahore.gpx in Resources */,
 				181DDA90233380B5001FF048 /* thumb.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1736,6 +1749,7 @@
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Stripe/Stripe.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftGoogleTranslate/SwiftGoogleTranslate.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TextFieldEffects/TextFieldEffects.framework",
 				"${BUILT_PRODUCTS_DIR}/UITextField+Shake/UITextField_Shake.framework",
@@ -1776,6 +1790,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Stripe.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftGoogleTranslate.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TextFieldEffects.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UITextField_Shake.framework",
@@ -1790,6 +1805,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PalmTree/Pods-PalmTree-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		18FE1D2C25991A9700A730E9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 8;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "sh '${SRCROOT}/Pods/TestFairy/upload-dsym.sh' 9ac8a67036c1e723e79f5287e267797a520da4b7\n";
+		};
 		416E9A6AF3F243D23D41FBDD /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1798,10 +1831,12 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PalmTree/Pods-PalmTree-resources.sh",
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+				"${PODS_ROOT}/TestFairy/upload-dsym.sh",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/upload-dsym.sh",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2265,7 +2300,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -2288,8 +2324,11 @@
 					"$(PROJECT_DIR)/PalmTree/Controllers/CategoryVC",
 				);
 				INFOPLIST_FILE = PalmTree/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sprintsols.Palmtree;
 				PRODUCT_NAME = Palmtree;
@@ -2320,8 +2359,11 @@
 					"$(PROJECT_DIR)/PalmTree/Controllers/CategoryVC",
 				);
 				INFOPLIST_FILE = PalmTree/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sprintsols.Palmtree;
 				PRODUCT_NAME = Palmtree;

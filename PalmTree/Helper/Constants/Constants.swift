@@ -30,6 +30,7 @@ var categoriesArray = [AdsJSON]()
 var stripeAPIKey = "pk_test_W4PHseTL95OoWJ81nGoFYlAn00nFQIQGHE"
 var stripeBaseURL = "https://sprintsols.com/palmtree/create.php"
 var mapboxToken = "pk.eyJ1IjoicGFsbXRyZWUiLCJhIjoiY2tjeW56ZXR4MDRhcTJybXNiZjhjbjI5NCJ9.luXGYrraO0lqWAxR22x2Hg"
+var googleAPIKey = "AIzaSyB5R0wNHQ4DSumsV23DTw1e4gK55UwvlT0"
 
 //UAE default lat long
 let latitude = 23.4241
@@ -216,16 +217,10 @@ class Constants
         case loadingMessage = ""
     }
     
-//    static func showBasicAlert (message: String) -> UIAlertController{
-//        let alert = UIAlertController(title: "Alert", message: message, preferredStyle: UIAlertControllerStyle.alert)
-//        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-//        return alert
-//    }
-    
     static func showBasicAlert (message: String) -> UIAlertController
     {
-        let alert = UIAlertController(title: "Palmtree", message: message, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        let alert = UIAlertController(title: NSLocalizedString(String(format: "Palmtree_%@",languageCode), comment: ""), message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString(String(format: "OK_%@",languageCode), comment: ""), style: UIAlertActionStyle.default, handler: nil))
         return alert
     }
     

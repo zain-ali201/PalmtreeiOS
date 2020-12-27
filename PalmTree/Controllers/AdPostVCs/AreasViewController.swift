@@ -31,9 +31,6 @@ class AreasViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         if countryID > 0
         {
-            cLat = Double(NSLocalizedString(String(format: "Country%d_lat",countryID), comment: "")) ?? 0.0
-            cLong = Double(NSLocalizedString(String(format: "Country%d_lng",countryID), comment: "")) ?? 0.0
-            
             let areaCount: Int = Int(NSLocalizedString(String(format: "Country%d_count",countryID), comment: "")) ?? 0
             
             for i in 1...areaCount
@@ -100,16 +97,20 @@ class AreasViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
+        cLat = Double(NSLocalizedString(String(format: "Country%d_lat%d",countryID, (indexPath.row + 1)), comment: "")) ?? 0.0
+        cLong = Double(NSLocalizedString(String(format: "Country%d_lng%d",countryID, (indexPath.row + 1)), comment: "")) ?? 0.0
+        
+        
+        adDetailObj.location.lat = cLat
+        adDetailObj.location.lat = cLong
+        adDetailObj.location.address = filteredArray[indexPath.row]
+        
         if fromInd == "AdPost"
         {
-            adDetailObj.location.lat = cLat
-            adDetailObj.location.lat = cLong
-            adDetailObj.location.address = filteredArray[indexPath.row]
             self.navigationController?.popToViewController(adPostVC, animated: true)
         }
         else if fromInd == "Filter"
         {
-            adDetailObj.location.address = filteredArray[indexPath.row]
             self.navigationController?.popToViewController(filterVC, animated: true)
         }
     }

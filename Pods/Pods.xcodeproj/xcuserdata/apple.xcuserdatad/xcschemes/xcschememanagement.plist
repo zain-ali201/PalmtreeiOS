@@ -264,7 +264,17 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SwiftGoogleTranslate.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SwiftyJSON.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>TestFairy.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

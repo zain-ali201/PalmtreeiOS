@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SwiftGoogleTranslate
+
 protocol AddDetailDelegate{
     func goToAddDetail(ad_id : Int)
     func goToAddDetailVC(detail : AdsJSON)
@@ -94,18 +96,59 @@ class AddsTableCell: UITableViewCell, UICollectionViewDelegate, UICollectionView
                 cell.imgPicture.setImage(from: imgUrl)
             }
         }
-        
-//        for item in objData.images {
-//            if let imgUrl = URL(string: String(format: "%@%@", Constants.URL.imagesUrl, item.url.encodeUrl())) {
-//                print(imgUrl)
-//                cell.imgPicture.sd_setShowActivityIndicatorView(true)
-//                cell.imgPicture.sd_setIndicatorStyle(.gray)
-//                cell.imgPicture.sd_setImage(with: imgUrl, completed: nil)
-//            }
-//        }
 
-        if let name = objData.title {
+        if let name = objData.title
+        {
             cell.lblName.text = name
+            
+//            SwiftGoogleTranslate.shared.detect(name) { (detections, error) in
+//                if let detections = detections
+//                {
+//                    for detection in detections
+//                    {
+//                        print(detection.language)
+//
+//                        if languageCode == "ar" && detection.language != "ar"
+//                        {
+//                            SwiftGoogleTranslate.shared.translate(name, "ar", detection.language) { (text, error) in
+//                                if text != nil {
+//                                    DispatchQueue.main.async {
+//                                        cell.lblName.text = text
+//                                    }
+//                                }
+//                                else
+//                                {
+//                                    DispatchQueue.main.async {
+//                                        cell.lblName.text = name
+//                                    }
+//                                }
+//                            }
+//                        }
+//                        else if languageCode == "en" && detection.language != "en"
+//                        {
+//                            SwiftGoogleTranslate.shared.translate(name, "en", detection.language) { (text, error) in
+//                                if text != nil {
+//                                    DispatchQueue.main.async {
+//                                        cell.lblName.text = text
+//                                    }
+//                                }
+//                                else
+//                                {
+//                                    DispatchQueue.main.async {
+//                                        cell.lblName.text = name
+//                                    }
+//                                }
+//                            }
+//                        }
+//                        else
+//                        {
+//                            DispatchQueue.main.async {
+//                                cell.lblName.text = name
+//                            }
+//                        }
+//                    }
+//                }
+//            }
         }
         
         if let price = objData.price {

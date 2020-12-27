@@ -8,6 +8,7 @@
 
 import UIKit
 import NVActivityIndicatorView
+import SwiftGoogleTranslate
 
 class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, NVActivityIndicatorViewable{
 
@@ -400,10 +401,115 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 cell.imgPicture.sd_setImage(with: imgUrl, completed: nil)
             }
         }
-        
-        if let title = objData.title {
-            cell.lblName.text = title
+
+        if let name = objData.title
+        {
+            cell.lblName.text = name
+            
+//            SwiftGoogleTranslate.shared.detect(name) { (detections, error) in
+//                if let detections = detections
+//                {
+//                    for detection in detections
+//                    {
+//                        print(detection.language)
+//
+//                        if languageCode == "ar" && detection.language != "ar"
+//                        {
+//                            SwiftGoogleTranslate.shared.translate(name, "ar", detection.language) { (text, error) in
+//                                if text != nil {
+//                                    DispatchQueue.main.async {
+//                                        cell.lblName.text = text
+//                                    }
+//                                }
+//                                else
+//                                {
+//                                    DispatchQueue.main.async {
+//                                        cell.lblName.text = name
+//                                    }
+//                                }
+//                            }
+//                        }
+//                        else if languageCode == "en" && detection.language != "en"
+//                        {
+//                            SwiftGoogleTranslate.shared.translate(name, "en", detection.language) { (text, error) in
+//                                if text != nil {
+//                                    DispatchQueue.main.async {
+//                                        cell.lblName.text = text
+//                                    }
+//                                }
+//                                else
+//                                {
+//                                    DispatchQueue.main.async {
+//                                        cell.lblName.text = name
+//                                    }
+//                                }
+//                            }
+//                        }
+//                        else
+//                        {
+//                            DispatchQueue.main.async {
+//                                cell.lblName.text = name
+//                            }
+//                        }
+//                    }
+//                }
+//            }
         }
+        
+        if let descp = objData.description {
+            cell.lblProcess.text = descp
+
+//            SwiftGoogleTranslate.shared.detect(descp) { (detections, error) in
+//                if let detections = detections
+//                {
+//                    for detection in detections
+//                    {
+//                        print(detection.language)
+//
+//                        if languageCode == "ar" && detection.language != "ar"
+//                        {
+//                            SwiftGoogleTranslate.shared.translate(descp, "ar", detection.language) { (text, error) in
+//                                if text != nil {
+//                                    DispatchQueue.main.async {
+//                                        cell.lblProcess.text = text
+//                                    }
+//                                }
+//                                else
+//                                {
+//                                    DispatchQueue.main.async {
+//                                        cell.lblProcess.text = descp
+//                                    }
+//                                }
+//                            }
+//                        }
+//                        else if languageCode == "en" && detection.language != "en"
+//                        {
+//                            SwiftGoogleTranslate.shared.translate(descp, "en", detection.language) { (text, error) in
+//                                if text != nil {
+//                                    DispatchQueue.main.async {
+//                                        cell.lblProcess.text = text
+//                                    }
+//                                }
+//                                else
+//                                {
+//                                    DispatchQueue.main.async {
+//                                        cell.lblProcess.text = descp
+//                                    }
+//                                }
+//                            }
+//                        }
+//                        else
+//                        {
+//                            DispatchQueue.main.async {
+//                                cell.lblProcess.text = descp
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+        }
+        
+        
         if let location = objData.address {
             cell.btnLocation.setTitle(location, for: .normal)
         }

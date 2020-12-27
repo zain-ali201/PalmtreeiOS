@@ -15,7 +15,7 @@ import OpalImagePicker
 var adDetailObj: AdDetailObject = AdDetailObject()
 var adPostVC: AdPostVC!
 
-class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate, UIImagePickerControllerDelegate, OpalImagePickerControllerDelegate
+class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate, UIImagePickerControllerDelegate, OpalImagePickerControllerDelegate, UITextFieldDelegate
 {
     //MARK:- Properties
     
@@ -105,6 +105,9 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
         
         adPostVC = self
         
+        txtPhone.delegate = self
+        txtWhatsapp.delegate = self
+        
         if languageCode == "ar"
         {
             phoneView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -152,7 +155,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             adDetailObj.location.country = userDetail?.country ?? ""
             adDetailObj.location.lat = userDetail?.currentLocation.coordinate.latitude
             adDetailObj.location.lng = userDetail?.currentLocation.coordinate.longitude
-            lblAddress.text = userDetail?.locationName
+            lblAddress.text = "\(adDetailObj.location.address), \(adDetailObj.location.country)"
         }
         
         if adDetailObj.adTitle != "" && fromVC == "myads"
@@ -1035,6 +1038,23 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             }
             
             self.collectionView.reloadData()
+        }
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
+                           replacementString string: String) -> Bool
+    {
+        if textField == txtPhone || textField == txtWhatsapp
+        {
+            let maxLength = 9
+            let currentString: NSString = textField.text! as NSString
+            let newString: NSString =
+                currentString.replacingCharacters(in: range, with: string) as NSString
+            return newString.length <= maxLength
+        }
+        else
+        {
+            return true
         }
     }
 }

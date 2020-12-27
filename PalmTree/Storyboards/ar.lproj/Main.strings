@@ -84,13 +84,13 @@
 "1eH-EV-SxA.text" = "أو";
 
 /* Class = "UILabel"; text = "UAE"; ObjectID = "2lH-Rm-O6P"; */
-"2lH-Rm-O6P.text" = "الإمارات";
+"2lH-Rm-O6P.text" = "الإمارات العربية المتحدة";
 
 /* Class = "UITextField"; placeholder = "Type a message here"; ObjectID = "4HF-gd-6Dt"; */
 "4HF-gd-6Dt.placeholder" = "أكتب رسالتك هنا";
 
 /* Class = "UILabel"; text = "UAE"; ObjectID = "4OX-d9-PSn"; */
-"4OX-d9-PSn.text" = "الإمارات";
+"4OX-d9-PSn.text" = "الإمارات العربية المتحدة";
 
 /* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "4xB-81-mbZ"; */
 "4xB-81-mbZ.normalTitle" = "إلغاء";
@@ -207,7 +207,7 @@
 "FDS-jQ-RV2.text" = "شكرا لك! للنشر والإعلان على بالمتري";
 
 /* Class = "UILabel"; text = "UAE"; ObjectID = "FEz-Cg-HmM"; */
-"FEz-Cg-HmM.text" = "الإمارات";
+"FEz-Cg-HmM.text" = "الإمارات العربية المتحدة";
 
 /* Class = "UILabel"; text = "$399"; ObjectID = "FNY-5m-da4"; */
 "FNY-5m-da4.text" = "$399";
@@ -360,7 +360,7 @@
 "Sjf-Qh-3dy.text" = "الفئات";
 
 /* Class = "UILabel"; text = "UAE"; ObjectID = "UwK-U4-2G4"; */
-"UwK-U4-2G4.text" = "الإمارات";
+"UwK-U4-2G4.text" = "الإمارات العربية المتحدة";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "VUl-TY-xjw"; */
 "VUl-TY-xjw.text" = "Label";
@@ -407,6 +407,12 @@
 /* Class = "UILabel"; text = "Messages"; ObjectID = "prL-NR-mGH"; */
 "prL-NR-mGH.text" = "الرسائل";
 
+/* Class = "UIButton"; normalTitle = "See Translation"; ObjectID = "UwX-da-C5S"; */
+"UwX-da-C5S.normalTitle" = "شاهد الترجمة";
+
+/* Class = "UIButton"; normalTitle = "See Translation"; ObjectID = "Fxf-Kf-OfV"; */
+"Fxf-Kf-OfV.normalTitle" = "شاهد الترجمة";
+
 /* Class = "UIButton"; normalTitle = "Forgot Password"; ObjectID = "a2p-CZ-AQw"; */
 "a2p-CZ-AQw.normalTitle" = "نسيت كلمة المرور";
 
@@ -428,8 +434,8 @@
 /* Class = "UILabel"; text = "Share this listing"; ObjectID = "RGp-8B-ikP"; */
 "RGp-8B-ikP.text" = "شارك هذه القائمة";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "b38-jK-t6z"; */
-"b38-jK-t6z.text" = "Label";
+/* Class = "UILabel"; text = "Details"; ObjectID = "Cuh-wK-I8k"; */
+"Cuh-wK-I8k.text" = "التفاصيل";
 
 /* Class = "UILabel"; text = "REFINE OPTIONS"; ObjectID = "bVo-O0-Bsf"; */
 "bVo-O0-Bsf.text" = "خيارات التنقيح";
@@ -495,7 +501,7 @@
 "iBR-6Q-aKw.text" = "على مستوى البلد";
 
 /* Class = "UILabel"; text = "I would like to be contacted by"; ObjectID = "NPd-zr-UaO"; */
-"NPd-zr-UaO.text" = "أود أن يتم الاتصال بي من قبل";
+"NPd-zr-UaO.text" = "يرجى التواصل معي على الأرقام التالية";
 
 /* Class = "UILabel"; text = "Description"; ObjectID = "jYG-s6-f2b"; */
 "jYG-s6-f2b.placeholder" = "الوصف (20 حرفًا على الأقل)";
@@ -534,7 +540,7 @@
 "iXB-ZW-2ub.normalTitle" = "نشر الإعلان";
 
 /* Class = "UILabel"; text = "UAE"; ObjectID = "igx-OB-ypi"; */
-"igx-OB-ypi.text" = "الإمارات";
+"igx-OB-ypi.text" = "الإمارات العربية المتحدة";
 
 /* Class = "UIButton"; normalTitle = "Category"; ObjectID = "1Nc-Ti-gX8"; */
 "1Nc-Ti-gX8.text" = "الفئة";
@@ -618,7 +624,7 @@
 "pqF-oD-bUx.text" = "Bello Interior";
 
 /* Class = "UIButton"; normalTitle = "UAE"; ObjectID = "pxZ-Cd-reI"; */
-"pxZ-Cd-reI.normalTitle" = "الإمارات";
+"pxZ-Cd-reI.normalTitle" = "الإمارات العربية المتحدة";
 
 /* Class = "UILabel"; text = "Messages"; ObjectID = "qAw-an-2T5"; */
 "qAw-an-2T5.text" = "الرسائل";

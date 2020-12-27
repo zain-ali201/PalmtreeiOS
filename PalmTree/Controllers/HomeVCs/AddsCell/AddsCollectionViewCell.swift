@@ -16,10 +16,10 @@ class AddsCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        if UserDefaults.standard.bool(forKey: "isRtl") {
+        
+        if languageCode == "ar"
+        {
             lblName.textAlignment = .right
-        } else {
-            lblName.textAlignment = .left
         }
         
     }

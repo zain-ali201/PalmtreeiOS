@@ -36,8 +36,13 @@ class LocationVC: UIViewController, CLLocationManagerDelegate
             lblLocation.text = userDetail?.locationName
         }
         
-        locationManager.requestWhenInUseAuthorization()
-        
+        if (CLLocationManager.locationServicesEnabled())
+        {
+            locationManager = CLLocationManager()
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestAlwaysAuthorization()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,14 +67,7 @@ class LocationVC: UIViewController, CLLocationManagerDelegate
         locView.alpha = 1
         
         //Location manager
-        if (CLLocationManager.locationServicesEnabled())
-        {
-            locationManager = CLLocationManager()
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.requestAlwaysAuthorization()
-            locationManager.startUpdatingLocation()
-        }
+        locationManager.startUpdatingLocation()
     }
     
     @IBAction func cancelBtnAction(_ sender: Any)
@@ -79,20 +77,21 @@ class LocationVC: UIViewController, CLLocationManagerDelegate
     
     //MARK:- Cutom Functions
     
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        let location = locations.last as! CLLocation
-        print("Location: \(location)")
-        userDetail?.currentLocation = location
-        
-        userDetail?.currentLocation = location
-        userDetail?.lat = location.coordinate.latitude
-        userDetail?.lng = location.coordinate.longitude
-        
-        defaults.set(userDetail?.lat, forKey: "latitude")
-        defaults.set(userDetail?.lng, forKey: "longitude")
-        
-        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
-            self.processResponse(withPlacemarks: placemarks, error: error)
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let currentLoc = locations.last{
+            userDetail?.currentLocation = currentLoc
+            userDetail?.lat = currentLoc.coordinate.latitude
+            userDetail?.lng = currentLoc.coordinate.longitude
+            
+            defaults.set(userDetail?.lat, forKey: "latitude")
+            defaults.set(userDetail?.lng, forKey: "longitude")
+            
+            print("Latitude: \(currentLoc.coordinate.latitude)")
+            print("Longitude: \(currentLoc.coordinate.longitude)")
+            
+            geocoder.reverseGeocodeLocation(currentLoc) { (placemarks, error) in
+                self.processResponse(withPlacemarks: placemarks, error: error)
+            }
         }
     }
     

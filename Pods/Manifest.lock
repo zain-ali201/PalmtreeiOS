@@ -451,7 +451,9 @@ PODS:
   - SDWebImage/Core (4.2.3)
   - SnapKit (4.0.1)
   - Stripe (19.3.0)
+  - SwiftGoogleTranslate (0.2.1)
   - SwiftyJSON (4.0.0)
+  - TestFairy (1.26.7)
   - TextFieldEffects (1.4.0)
   - "UITextField+Shake (1.2.1)"
 
@@ -484,6 +486,8 @@ DEPENDENCIES:
   - OpalImagePicker
   - SDWebImage
   - Stripe
+  - SwiftGoogleTranslate
+  - TestFairy
   - TextFieldEffects
   - "UITextField+Shake"
 
@@ -542,7 +546,9 @@ SPEC REPOS:
     - SDWebImage
     - SnapKit
     - Stripe
+    - SwiftGoogleTranslate
     - SwiftyJSON
+    - TestFairy
     - TextFieldEffects
     - "UITextField+Shake"
 
@@ -600,10 +606,12 @@ SPEC CHECKSUMS:
   SDWebImage: 791bb72962b3492327ddcac4b1880bd1b5458431
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   Stripe: dd5bfdd5f1daed4f9ddbfb47e9449ec302f9f708
+  SwiftGoogleTranslate: 96960d3548e800e15b347518afca546d2edc8519
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
+  TestFairy: 08f637ac292b4c7decda5c97704c754024b7de2c
   TextFieldEffects: 4ee41b5216e674d55fb6ac25107bf1af7629176f
   "UITextField+Shake": 298ac5a0f239d731bdab999b19b628c956ca0ac3
 
-PODFILE CHECKSUM: 9ac93959149df43d2d351de6c0a5826764f22610
+PODFILE CHECKSUM: 5bf404a9931350d14528b2243152972a59bea65c
 
 COCOAPODS: 1.9.3

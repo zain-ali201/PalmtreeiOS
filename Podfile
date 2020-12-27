@@ -25,6 +25,9 @@ target 'PalmTree' do
     pod 'Firebase/Firestore'
     pod 'ALLoadingView'
     
+    #Google Translation
+    pod 'SwiftGoogleTranslate'
+    
     # IQKeyboardManager
     pod 'IQKeyboardManagerSwift'
     
@@ -68,4 +71,5 @@ target 'PalmTree' do
      pod 'AFNetworking'
      
      pod 'CollapseTableView'
+     pod 'TestFairy'
 end

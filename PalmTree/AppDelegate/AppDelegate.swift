@@ -17,6 +17,7 @@ import IQKeyboardManagerSwift
 //import GoogleMaps
 //import GooglePlacePicker
 import NotificationBannerSwift
+import SwiftGoogleTranslate
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate, NotificationBannerDelegate {
@@ -30,6 +31,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var deviceFcmToken = "0"
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        SwiftGoogleTranslate.shared.start(with: googleAPIKey)
+        TestFairy.begin("SDK-qTP7qCrq")
         
         Thread.sleep(forTimeInterval: 2)
         

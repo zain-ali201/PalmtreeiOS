@@ -10,6 +10,7 @@ import UIKit
 import NVActivityIndicatorView
 import ImageSlideshow
 import Social
+import SwiftGoogleTranslate
 
 class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesDelegate
 {
@@ -52,6 +53,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     @IBOutlet weak var favBtn: UIButton!
     @IBOutlet weak var btnLocation: UIButton!
     @IBOutlet weak var reportBtn: UIButton!
+    @IBOutlet weak var transBtn: UIButton!
     
     //MARK:- Properties
     var adDetailDataObj:AdsJSON!
@@ -73,7 +75,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        self.googleAnalytics(controllerName: "Watchlist Controller")
+        self.googleAnalytics(controllerName: "Ad Details Controller")
 
         populateData()
     }
@@ -88,7 +90,64 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     
     func populateData()
     {
+        if languageCode == "ar"
+        {
+            lblName.textAlignment = .right
+        }
+        
         lblName.text = adDetailDataObj.title
+        
+//        if let name = adDetailDataObj.title
+//        {
+//            SwiftGoogleTranslate.shared.detect(name) { (detections, error) in
+//                if let detections = detections
+//                {
+//                    for detection in detections
+//                    {
+//                        print(detection.language)
+//
+//                        if languageCode == "ar" && detection.language != "ar"
+//                        {
+//                            SwiftGoogleTranslate.shared.translate(name, "ar", detection.language) { (text, error) in
+//                                if let titleText = text {
+//                                    DispatchQueue.main.async {
+//                                        self.lblName.text = titleText
+//                                    }
+//                                }
+//                                else
+//                                {
+//                                    DispatchQueue.main.async {
+//                                        self.lblName.text = name
+//                                    }
+//                                }
+//                            }
+//                        }
+//                        else if languageCode == "en" && detection.language != "en"
+//                        {
+//                            SwiftGoogleTranslate.shared.translate(name, "en", detection.language) { (text, error) in
+//                                if let titleText = text {
+//                                    DispatchQueue.main.async {
+//                                        self.lblName.text = titleText
+//                                    }
+//                                }
+//                                else
+//                                {
+//                                    DispatchQueue.main.async {
+//                                        self.lblName.text = name
+//                                    }
+//                                }
+//                            }
+//                        }
+//                        else
+//                        {
+//                            DispatchQueue.main.async {
+//                                self.lblName.text = name
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
         
         var price = adDetailDataObj.price ?? ""
         priceType = adDetailDataObj.price_type ?? ""
@@ -99,13 +158,63 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
             {
                 priceType = NSLocalizedString(priceType, comment: "")
             }
+            else if priceType == "سعر ثابت"
+            {
+                priceType = "Fixed"
+            }
+            else if priceType == "قابل للتفاوض"
+            {
+                priceType = "Negotiable"
+            }
             
             price = String(format: "AED %@ (%@)", price, priceType)
         }
         
         lblPrice.text = price
         lblLocation.text = adDetailDataObj.address
+        
         lblSummary.text = adDetailDataObj.description
+        
+//        if let descp = adDetailDataObj.description
+//        {
+//            SwiftGoogleTranslate.shared.detect(descp) { (detections, error) in
+//                if let detections = detections
+//                {
+//                    for detection in detections
+//                    {
+//                        print(detection.language)
+//
+//                        if languageCode == "ar" && detection.language != "ar"
+//                        {
+//                            SwiftGoogleTranslate.shared.translate(descp, "ar", detection.language) { (text, error) in
+//                              if let titleText = text {
+//                                DispatchQueue.main.async {
+//                                    self.lblSummary.text = titleText
+//                                }
+//                              }
+//                            }
+//                        }
+//                        else if languageCode == "en" && detection.language != "en"
+//                        {
+//                            SwiftGoogleTranslate.shared.translate(descp, "en", detection.language) { (text, error) in
+//                              if let titleText = text {
+//                                DispatchQueue.main.async {
+//                                    self.lblSummary.text = titleText
+//                                }
+//                              }
+//                            }
+//                        }
+//                        else
+//                        {
+//                            DispatchQueue.main.async {
+//                                self.lblSummary.text = descp
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+        
         lblID.text = String(format: "ID: %i", adDetailDataObj.id ?? 0)
         
         
@@ -171,7 +280,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
             tabView.alpha = 1
             top.constant = 55
             createSpecsView()
-            summaryViewHeight = 100
+            summaryViewHeight = 135
             height.constant = summaryViewHeight
         }
         else
@@ -179,7 +288,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
             top.constant = 15
             tabView.alpha = 0
             height.constant = 60
-            summaryViewHeight = 60
+            summaryViewHeight = 110
         }
         
         let txtHeight = lblSummary.text?.html2AttributedString?.height(withConstrainedWidth: 345) ?? 0
@@ -314,6 +423,112 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
     }
     
     //MARK:- IBActions
+    @IBAction func translationBtnAction(_ sender: Any)
+    {
+        if let name = adDetailDataObj.title
+        {
+            SwiftGoogleTranslate.shared.detect(name) { (detections, error) in
+                if let detections = detections
+                {
+                    for detection in detections
+                    {
+                        print(detection.language)
+
+                        if detection.language == "ar" || detection.language == "sd"
+                        {
+                            SwiftGoogleTranslate.shared.translate(name, "en", detection.language) { (text, error) in
+                                if let titleText = text {
+                                    DispatchQueue.main.async {
+                                        let alert = Constants.showBasicAlert(message: titleText)
+                                        self.presentVC(alert)
+                                    }
+                                }
+                                else
+                                {
+                                    DispatchQueue.main.async {
+                                        let alert = Constants.showBasicAlert(message: name)
+                                        self.presentVC(alert)
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            SwiftGoogleTranslate.shared.translate(name, "ar", detection.language) { (text, error) in
+                                if let titleText = text {
+                                    DispatchQueue.main.async {
+                                        let alert = Constants.showBasicAlert(message: titleText)
+                                        self.presentVC(alert)
+                                    }
+                                }
+                                else
+                                {
+                                    DispatchQueue.main.async {
+                                        let alert = Constants.showBasicAlert(message: name)
+                                        self.presentVC(alert)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    @IBAction func descpTransBtnAction(_ sender: Any)
+    {
+        if let descp = adDetailDataObj.description
+        {
+            SwiftGoogleTranslate.shared.detect(descp) { (detections, error) in
+                if let detections = detections
+                {
+                    for detection in detections
+                    {
+                        print(detection.language)
+
+                        if detection.language == "ar" || detection.language == "sd"
+                        {
+                            SwiftGoogleTranslate.shared.translate(descp, "en", detection.language) { (text, error) in
+                                if let titleText = text
+                                {
+                                    DispatchQueue.main.async {
+                                        let alert = Constants.showBasicAlert(message: titleText)
+                                        self.presentVC(alert)
+                                    }
+                                }
+                                else
+                                {
+                                    DispatchQueue.main.async {
+                                        let alert = Constants.showBasicAlert(message: descp)
+                                        self.presentVC(alert)
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            SwiftGoogleTranslate.shared.translate(descp, "ar", detection.language) { (text, error) in
+                                if let titleText = text {
+                                    DispatchQueue.main.async {
+                                        let alert = Constants.showBasicAlert(message: titleText)
+                                        self.presentVC(alert)
+                                    }
+                                }
+                                else
+                                {
+                                    DispatchQueue.main.async {
+                                        let alert = Constants.showBasicAlert(message: descp)
+                                        self.presentVC(alert)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
     
     @IBAction func backBtnAction(_ sender: Any)
     {
@@ -436,7 +651,7 @@ class AdDetailVC: UIViewController, NVActivityIndicatorViewable, moveTomessagesD
             
             lblSummary.alpha = 1
             specsView.alpha = 0
-            summaryViewHeight = 100
+            summaryViewHeight = 135
             let txtHeight = lblSummary.text?.html2AttributedString?.height(withConstrainedWidth: 345) ?? 0
             
             if txtHeight > 85.0
