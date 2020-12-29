@@ -81,26 +81,26 @@ class CategoriesTableCell: UITableViewCell, UICollectionViewDelegate, UICollecti
         
         let cell: CategoriesCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoriesCollectionCell", for: indexPath) as! CategoriesCollectionCell
         
-//        if indexPath.row == categoryArray.count
-//        {
-//            if languageCode == "ar"
-//            {
-//
-//                cell.lblName.text = "المزيد"
-//            }
-//            else
-//            {
-//                cell.lblName.text = "More"
-//            }
-//
-//            cell.imgPicture.image = UIImage(named: "more")
-//
-//            cell.btnFullAction = { () in
-//                self.delegate?.goToCategoryDetail()
-//            }
-//        }
-//        else
-//        {
+        if indexPath.row == categoryArray.count
+        {
+            if languageCode == "ar"
+            {
+
+                cell.lblName.text = "المزيد"
+            }
+            else
+            {
+                cell.lblName.text = "More"
+            }
+
+            cell.imgPicture.image = UIImage(named: "more")
+
+            cell.btnFullAction = { () in
+                self.delegate?.goToCategoryDetail()
+            }
+        }
+        else
+        {
             let objData = categoryArray[indexPath.row]
          
             if languageCode == "ar"
@@ -135,7 +135,7 @@ class CategoriesTableCell: UITableViewCell, UICollectionViewDelegate, UICollecti
                     UserDefaults.standard.set(recentList, forKey: "recentList")
                 }
             }
-//        }
+        }
         
         return cell
     }

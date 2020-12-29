@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -1627,7 +1627,6 @@
 				18BBFA812051098B0067662F /* Resources */,
 				0DBAEA91FF140668FEA2C095 /* [CP] Embed Pods Frameworks */,
 				416E9A6AF3F243D23D41FBDD /* [CP] Copy Pods Resources */,
-				18FE1D2C25991A9700A730E9 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1804,24 +1803,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PalmTree/Pods-PalmTree-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		18FE1D2C25991A9700A730E9 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 8;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "sh '${SRCROOT}/Pods/TestFairy/upload-dsym.sh' 9ac8a67036c1e723e79f5287e267797a520da4b7\n";
 		};
 		416E9A6AF3F243D23D41FBDD /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2300,8 +2281,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -2324,16 +2304,13 @@
 					"$(PROJECT_DIR)/PalmTree/Controllers/CategoryVC",
 				);
 				INFOPLIST_FILE = PalmTree/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sprintsols.Palmtree;
 				PRODUCT_NAME = Palmtree;
 				PROVISIONING_PROFILE = "6ba7ba8c-bf20-47cd-b2f1-137f2ade4e4a";
-				PROVISIONING_PROFILE_SPECIFIER = "Palmtree-Dev v2";
+				PROVISIONING_PROFILE_SPECIFIER = "Palmtree-Dev v3";
 				SWIFT_OBJC_BRIDGING_HEADER = "PalmTree/PalmTree-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
@@ -2359,16 +2336,13 @@
 					"$(PROJECT_DIR)/PalmTree/Controllers/CategoryVC",
 				);
 				INFOPLIST_FILE = PalmTree/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sprintsols.Palmtree;
 				PRODUCT_NAME = Palmtree;
 				PROVISIONING_PROFILE = "6ba7ba8c-bf20-47cd-b2f1-137f2ade4e4a";
-				PROVISIONING_PROFILE_SPECIFIER = "Palmtree-Dist v3";
+				PROVISIONING_PROFILE_SPECIFIER = "Palmtree-Dist v5";
 				SWIFT_OBJC_BRIDGING_HEADER = "PalmTree/PalmTree-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;

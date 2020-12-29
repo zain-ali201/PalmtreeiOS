@@ -326,7 +326,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let totalTopBottomOffSet = CollectionViewSettings.offset + CollectionViewSettings.offset
             let totalSpacing = CGFloat(totalRow - 1) * CollectionViewSettings.minLineSpacing
             totalHeight = ((itemHeight * CGFloat(totalRow)) + totalTopBottomOffSet + totalSpacing)
-            height =  totalHeight - 135
+            height =  totalHeight - 20
         }
         else if section == 1
         {

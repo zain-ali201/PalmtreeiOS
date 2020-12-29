@@ -1231,186 +1231,183 @@
 "Country1_lng293" = "56.1111889";
 
 
-
 //Abu Dhabi
 "Country2_count" = "43";
 
 "Country2_area1" = "Al Dhafrah";
-"Country2_lat1" = "";
-"Country2_lng1" = "";
+"Country2_lat1" = "23.5908508";
+"Country2_lng1" = "51.8319871";
 
 "Country2_area2" = "Al Falah";
-"Country2_lat2" = "";
-"Country2_lng2" = "";
+"Country2_lat2" = "24.4371972";
+"Country2_lng2" = "6844486";
 
 "Country2_area3" = "Al Karama";
-"Country2_lat3" = "";
-"Country2_lng3" = "";
+"Country2_lat3" = "24.4134711";
+"Country2_lng3" = "54.4765671";
 
 "Country2_area4" = "Al Khubeirah";
-"Country2_lat4" = "";
-"Country2_lng4" = "";
+"Country2_lat4" = "24.3214915";
+"Country2_lng4" = "54.7747082";
 
 "Country2_area5" = "Al Lulu Island";
-"Country2_lat5" = "";
-"Country2_lng5" = "";
+"Country2_lat5" = "24.5001134";
+"Country2_lng5" = "54.3272199";
 
 "Country2_area6" = "Al Madina";
-"Country2_lat6" = "";
-"Country2_lng6" = "";
+"Country2_lat6" = "24.4311707";
+"Country2_lng6" = "54.3501341";
 
 "Country2_area7" = "Al Maryah Island";
-"Country2_lat7" = "";
-"Country2_lng7" = "";
+"Country2_lat7" = "24.5022076";
+"Country2_lng7" = "54.3819165";
 
 "Country2_area8" = "Al Manaseer";
-"Country2_lat8" = "";
-"Country2_lng8" = "";
+"Country2_lat8" = "24.4567463";
+"Country2_lng8" = "54.357724";
 
 "Country2_area9" = "Al Manhal";
-"Country2_lat9" = "";
-"Country2_lng9" = "";
+"Country2_lat9" = "24.460705";
+"Country2_lng9" = "54.3424459";
 
 "Country2_area10" = "Al Maqtaa";
-"Country2_lat10" = "";
-"Country2_lng10" = "";
+"Country2_lat10" = "24.4054654";
+"Country2_lng10" = "54.4947346";
 
 "Country2_area11" = "Al Markaziyah";
-"Country2_lat11" = "";
-"Country2_lng11" = "";
+"Country2_lat11" = "24.3871984";
+"Country2_lng11" = "54.2784198";
 
 "Country2_area12" = "Al Meena";
-"Country2_lat12" = "";
-"Country2_lng12" = "";
+"Country2_lat12" = "24.3871984";
+"Country2_lng12" = "54.2784198";
 
 "Country2_area13" = "Al Moroor";
-"Country2_lat13" = "";
-"Country2_lng13" = "";
+"Country2_lat13" = "24.4883258";
+"Country2_lng13" = "54.2843676";
 
 "Country2_area14" = "Al Mushrif";
-"Country2_lat" = "";
-"Country2_lng" = "";
+"Country2_lat" = "24.4411826";
+"Country2_lng" = "54.3725602";
 
 "Country2_area15" = "Al Muzoon";
-"Country2_lat15" = "";
-"Country2_lng15" = "";
+"Country2_lat15" = "24.3871984";
+"Country2_lng15" = "54.2784198";
 
 "Country2_area16" = "Al Nahyan";
-"Country2_lat16" = "";
-"Country2_lng16" = "";
+"Country2_lat16" = "24.4705929";
+"Country2_lng16" = "54.3795776";
 
 "Country2_area17" = "Al Qubesat";
-"Country2_lat17" = "";
-"Country2_lng17" = "";
+"Country2_lat17" = "24.3871984";
+"Country2_lng17" = "54.2784198";
 
 "Country2_area18" = "Al Ras Al Akhdar";
-"Country2_lat18" = "";
-"Country2_lng18" = "";
+"Country2_lat18" = "24.387934";
+"Country2_lng18" = "54.2784169";
 
 "Country2_area19" = "Al Reef";
-"Country2_lat19" = "";
-"Country2_lng19" = "";
+"Country2_lat19" = "24.4585239";
+"Country2_lng19" = "54.6718073";
 
 "Country2_area20" = "Al Reem Island";
-"Country2_lat20" = "";
-"Country2_lng20" = "";
+"Country2_lat20" = "24.49271";
+"Country2_lng20" = "54.3909826";
 
 "Country2_area21" = "Al Rehhan";
-"Country2_lat21" = "";
-"Country2_lng21" = "";
+"Country2_lat21" = "24.3871984";
+"Country2_lng21" = "54.2784198";
 
 "Country2_area22" = "Al Rowdah";
-"Country2_lat22" = "";
-"Country2_lng22" = "";
+"Country2_lat22" = "24.4183965";
+"Country2_lng22" = "54.4456931";
 
 "Country2_area23" = "Al Shamkha";
-"Country2_lat23" = "";
-"Country2_lng23" = "";
+"Country2_lat23" = "24.3783509";
+"Country2_lng23" = "54.6794326";
 
 "Country2_area24" = "Bani Yas";
-"Country2_lat24" = "";
-"Country2_lng24" = "";
+"Country2_lat24" = "24.3064261";
+"Country2_lng24" = "54.5995935";
 
 "Country2_area25" = "Al Zaab";
-"Country2_lat25" = "";
-"Country2_lng25" = "";
+"Country2_lat25" = "24.4625175";
+"Country2_lng25" = "54.3591456";
 
 "Country2_area26" = "Al Zahiyah";
-"Country2_lat26" = "";
-"Country2_lng26" = "";
+"Country2_lat26" = "24.3871984";
+"Country2_lng26" = "54.2784198";
 
 "Country2_area27" = "Al Zahraa";
-"Country2_lat27" = "";
-"Country2_lng27" = "";
+"Country2_lat27" = "24.4024204";
+"Country2_lng27" = "54.4845398";
 
 "Country2_area28" = "Al Khalidyah";
-"Country2_lat28" = "";
-"Country2_lng28" = "";
+"Country2_lat28" = "24.4700739";
+"Country2_lng28" = "54.3495253";
 
 "Country2_area29" = "Bain Al Jisrain";
-"Country2_lat29" = "";
-"Country2_lng29" = "";
+"Country2_lat29" = "24.4518575";
+"Country2_lng29" = "54.3412522";
 
 "Country2_area30" = "Hideriyyat";
-"Country2_lat30" = "";
-"Country2_lng30" = "";
+"Country2_lat30" = "24.3871984";
+"Country2_lng30" = "54.2784198";
 
 "Country2_area31" = "Khalifa City";
-"Country2_lat31" = "";
-"Country2_lng31" = "";
+"Country2_lat31" = "24.3871984";
+"Country2_lng31" = "54.2784198";
 
 "Country2_area32" = "Marina Village";
-"Country2_lat32" = "";
-"Country2_lng32" = "";
+"Country2_lat32" = "24.3871984";
+"Country2_lng32" = "54.2784198";
 
 "Country2_area33" = "Masdar City";
-"Country2_lat33" = "";
-"Country2_lng33" = "";
+"Country2_lat33" = "24.4283036";
+"Country2_lng33" = "54.6017502";
 
 "Country2_area34" = "Mohammed Bin Zayed City";
-"Country2_lat34" = "";
-"Country2_lng34" = "";
+"Country2_lat34" = "24.340538";
+"Country2_lng34" = "54.4925082";
 
 "Country2_area35" = "Saadiyat Island";
-"Country2_lat35" = "";
-"Country2_lng35" = "";
+"Country2_lat35" = "24.5404508";
+"Country2_lng35" = "54.400448";
 
 "Country2_area36" = "Shakhbout City";
-"Country2_lat36" = "";
-"Country2_lng36" = "";
+"Country2_lat36" = "24.3595243";
+"Country2_lng36" = "54.5592195";
 
 "Country2_area37" = "Officers City";
-"Country2_lat37" = "";
-"Country2_lng37" = "";
+"Country2_lat37" = "24.3871984";
+"Country2_lng37" = "54.2784198";
 
 "Country2_area38" = "Qasr El Bahr";
-"Country2_lat38" = "";
-"Country2_lng38" = "";
+"Country2_lat38" = "24.4658687";
+"Country2_lng38" = "54.3915625";
 
 "Country2_area39" = "Qasr El Shatie";
-"Country2_lat39" = "";
-"Country2_lng39" = "";
+"Country2_lat39" = "24.4261486";
+"Country2_lng39" = "54.3762516";
 
 "Country2_area40" = "Yas Island";
-"Country2_lat40" = "";
-"Country2_lng40" = "";
+"Country2_lat40" = "24.4859266";
+"Country2_lng40" = "54.5679586";
 
 "Country2_area41" = "Al Samha";
-"Country2_lat41" = "";
-"Country2_lng41" = "";
+"Country2_lat41" = "24.6659307";
+"Country2_lng41" = "54.7160365";
 
 "Country2_area42" = "Al Aman";
-"Country2_lat42" = "";
-"Country2_lng42" = "";
+"Country2_lat42" = "24.4314343";
+"Country2_lng42" = "54.4303062";
 
 "Country2_area43" = "Al Bateen";
-"Country2_lat43" = "";
-"Country2_lng43" = "";
-
+"Country2_lat43" = "24.4513907";
+"Country2_lng43" = "54.3106347";
 
 
 //Sharjah
-
 "Country3_count" = "140";
 
 "Country3_area1" = "Abu Shagara";
@@ -1975,7 +1972,6 @@
 
 
 //Al Ain
-
 "Country4_count" = "32";
 
 "Country4_area1" = "Al Khabisi";
@@ -2108,312 +2104,312 @@
 "Country5_count" = "77";
 
 "Country5_area1" = "Al Aliyah";
-"Country5_lat1" = "";
-"Country5_lng1" = "";
+"Country5_lat1" = "25.3966053";
+"Country5_lng1" = "55.5509089";
 
 "Country5_area2" = "Al Aliyah 2";
-"Country5_lat2" = "";
-"Country5_lng2" = "";
+"Country5_lat2" = "25.3966053";
+"Country5_lng2" = "55.5509089";
 
 "Country5_area3" = "Al Hamaidiyah";
-"Country5_lat3" = "";
-"Country5_lng3" = "";
+"Country5_lat3" = "25.3955854";
+"Country5_lng3" = "55.5292367";
 
 "Country5_area4" = "Al Hamaidiyah 2";
-"Country5_lat4" = "";
-"Country5_lng4" = "";
+"Country5_lat4" = "25.4077599";
+"Country5_lng4" = "55.5162762";
 
 "Country5_area5" = "Al Jurf 1";
-"Country5_lat5" = "";
-"Country5_lng5" = "";
+"Country5_lat5" = "25.4078354";
+"Country5_lng5" = "55.5162761";
 
 "Country5_area6" = "Al Jurf 2";
-"Country5_lat6" = "";
-"Country5_lng6" = "";
+"Country5_lat6" = "25.4018714";
+"Country5_lng6" = "55.5002409";
 
 "Country5_area7" = "Ar Raqayib 1";
-"Country5_lat7" = "";
-"Country5_lng7" = "";
+"Country5_lat7" = "25.4036606";
+"Country5_lng7" = "55.5282925";
 
 "Country5_area8" = "Ar Raqayib 2";
-"Country5_lat8" = "";
-"Country5_lng8" = "";
+"Country5_lat8" = "25.4001717";
+"Country5_lng8" = "55.540738";
 
 "Country5_area9" = "Ajman as Sinaiyah 1";
-"Country5_lat9" = "";
-"Country5_lng9" = "";
+"Country5_lat9" = "25.4001717";
+"Country5_lng9" = "55.540738";
 
 "Country5_area10" = "Ajman as Sinaiyah 2";
-"Country5_lat1" = "";
-"Country5_lng1" = "";
+"Country5_lat1" = "25.4001717";
+"Country5_lng1" = "55.540738";
 
 "Country5_area11" = "Al Muwaihat 1";
-"Country5_lat11" = "";
-"Country5_lng11" = "";
+"Country5_lat11" = "25.4036676";
+"Country5_lng11" = "55.4631214";
 
 "Country5_area12" = "Al Muwaihat 2";
-"Country5_lat12" = "";
-"Country5_lng12" = "";
+"Country5_lat12" = "25.3776247";
+"Country5_lng12" = "55.4898072";
 
 "Country5_area13" = "Al Muwaihat 3";
-"Country5_lat13" = "";
-"Country5_lng13" = "";
+"Country5_lat13" = "25.3670616";
+"Country5_lng13" = "55.4810428";
 
 "Country5_area14" = "Ar Rawdha 1";
-"Country5_lat14" = "";
-"Country5_lng14" = "";
+"Country5_lat14" = "25.3911595";
+"Country5_lng14" = "55.5128216";
 
 "Country5_area15" = "Ar Rawdha 2";
-"Country5_lat15" = "";
-"Country5_lng15" = "";
+"Country5_lat15" = "25.3908493";
+"Country5_lng15" = "55.5029512";
 
 "Country5_area16" = "Ar Rawdha 3";
-"Country5_lat16" = "";
-"Country5_lng16" = "";
+"Country5_lat16" = "25.3900545";
+"Country5_lng16" = "55.4916858";
 
 "Country5_area17" = "At Talah 1";
-"Country5_lat17" = "";
-"Country5_lng17" = "";
+"Country5_lat17" = "25.0965162";
+"Country5_lng17" = "55.4946954";
 
 "Country5_area18" = "At Talah 2";
-"Country5_lat18" = "";
-"Country5_lng18" = "";
+"Country5_lat18" = "25.365646";
+"Country5_lng18" = "55.4950761";
 
 "Country5_area19" = "Madinat Mohammad Bin ZƒÅyed 1";
-"Country5_lat19" = "";
-"Country5_lng19" = "";
+"Country5_lat19" = "25.3636786";
+"Country5_lng19" = "55.4082206";
 
 "Country5_area20" = "Madinat Mohammad Bin ZƒÅyed 2";
-"Country5_lat20" = "";
-"Country5_lng20" = "";
+"Country5_lat20" = "25.2917956";
+"Country5_lng20" = "55.2738866";
 
 "Country5_area21" = "Al Manamah 1";
-"Country5_lat21" = "";
-"Country5_lng21" = "";
+"Country5_lat21" = "25.3279613";
+"Country5_lng21" = "55.9806631";
 
 "Country5_area22" = "Al Manamah 2";
-"Country5_lat22" = "";
-"Country5_lng22" = "";
+"Country5_lat22" = "25.3279613";
+"Country5_lng22" = "55.9806631";
 
 "Country5_area23" = "Al Manamah 3";
-"Country5_lat23" = "";
-"Country5_lng23" = "";
+"Country5_lat23" = "25.3279613";
+"Country5_lng23" = "55.9806631";
 
 "Country5_area24" = "Al Manamah 4";
-"Country5_lat24" = "";
-"Country5_lng24" = "";
+"Country5_lat24" = "25.3279613";
+"Country5_lng24" = "55.9806631";
 
 "Country5_area25" = "Al Manamah 5";
-"Country5_lat25" = "";
-"Country5_lng25" = "";
+"Country5_lat25" = "25.3214406";
+"Country5_lng25" = "56.0004982";
 
 "Country5_area26" = "Al Manamah 6";
-"Country5_lat26" = "";
-"Country5_lng26" = "";
+"Country5_lat26" = "25.3214406";
+"Country5_lng26" = "56.0004982";
 
 "Country5_area27" = "Al Manamah 7";
-"Country5_lat27" = "";
-"Country5_lng27" = "";
+"Country5_lat27" = "25.3214406";
+"Country5_lng27" = "56.0004982";
 
 "Country5_area28" = "Al Manamah 8";
-"Country5_lat28" = "";
-"Country5_lng28" = "";
+"Country5_lat28" = "25.3214406";
+"Country5_lng28" = "56.0004982";
 
 "Country5_area29" = "Al Manamah 9";
-"Country5_lat29" = "";
-"Country5_lng29" = "";
+"Country5_lat29" = "25.3214406";
+"Country5_lng29" = "56.0004982";
 
 "Country5_area30" = "Al Manamah 10";
-"Country5_lat30" = "";
-"Country5_lng30" = "";
+"Country5_lat30" = "25.3214406";
+"Country5_lng30" = "56.0004982";
 
 "Country5_area31" = "Al Manamah 11";
-"Country5_lat31" = "";
-"Country5_lng31" = "";
+"Country5_lat31" = "25.3214406";
+"Country5_lng31" = "56.0004982";
 
 "Country5_area32" = "Al Manamah 12";
-"Country5_lat32" = "";
-"Country5_lng32" = "";
+"Country5_lat32" = "25.321440";
+"Country5_lng32" = "56.0004982";
 
 "Country5_area33" = "Al Manamah 13";
-"Country5_lat33" = "";
-"Country5_lng33" = "";
+"Country5_lat33" = "25.3214406";
+"Country5_lng33" = "56.0004982";
 
 "Country5_area34" = "Al Manamah 14";
-"Country5_lat34" = "";
-"Country5_lng34" = "";
+"Country5_lat34" = "25.3214406";
+"Country5_lng34" = "56.0004982";
 
 "Country5_area35" = "Al Manamah 15";
-"Country5_lat35" = "";
-"Country5_lng35" = "";
+"Country5_lat35" = "25.32303";
+"Country5_lng35" = "56.0067387";
 
 "Country5_area36" = "Al Manamah 16";
-"Country5_lat36" = "";
-"Country5_lng36" = "";
+"Country5_lat36" = "25.3214406";
+"Country5_lng36" = "56.0004982";
 
 "Country5_area37" = "Al Manamah 17";
-"Country5_lat37" = "";
-"Country5_lng37" = "";
+"Country5_lat37" = "25.3244878";
+"Country5_lng37" = "56.0004982";
 
 "Country5_area38" = "Al Bahyah";
-"Country5_lat38" = "";
-"Country5_lng38" = "";
+"Country5_lat38" = "25.4365574";
+"Country5_lng38" = "55.4624578";
 
 "Country5_area39" = "Al Jurf as Sinaiyah 1";
-"Country5_lat39" = "";
-"Country5_lng39" = "";
+"Country5_lat39" = "25.4366";
+"Country5_lng39" = "55.4471369";
 
 "Country5_area40" = "Al Jurf as Sinaiyah 2";
-"Country5_lat40" = "";
-"Country5_lng40" = "";
+"Country5_lat40" = "25.4366754";
+"Country5_lng40" = "55.4471368";
 
 "Country5_area41" = "Al Jurf as Sinaiyah 3";
-"Country5_lat41" = "";
-"Country5_lng41" = "";
+"Country5_lat41" = "25.4367508";
+"Country5_lng41" = "55.4471368";
 
 "Country5_area42" = "Al Amrah";
-"Country5_lat42" = "";
-"Country5_lng42" = "";
+"Country5_lat42" = "25.3909062";
+"Country5_lng42" = "55.5609511";
 
 "Country5_area43" = "Al Hiliw 1";
-"Country5_lat43" = "";
-"Country5_lng43" = "";
+"Country5_lat43" = "25.3636786";
+"Country5_lng43" = "55.4082206";
 
 "Country5_area44" = "Al Hiliw 2";
-"Country5_lat44" = "";
-"Country5_lng44" = "";
+"Country5_lat44" = "25.4097365";
+"Country5_lng44" = "55.6247985";
 
 "Country5_area45" = "Al Yasmin";
-"Country5_lat45" = "";
-"Country5_lng45" = "";
+"Country5_lat45" = "25.3725087";
+"Country5_lng45" = "55.5499969";
 
 "Country5_area46" = "Az Zahyah";
-"Country5_lat46" = "";
-"Country5_lng46" = "";
+"Country5_lat46" = "25.372685";
+"Country5_lng46" = "55.4974657";
 
 "Country5_area47" = "Az Zura";
-"Country5_lat47" = "";
-"Country5_lng47" = "";
+"Country5_lat47" = "25.3876023";
+"Country5_lng47" = "55.3585874";
 
 "Country5_area48" = "An Nakhil 1";
-"Country5_lat48" = "";
-"Country5_lng48" = "";
+"Country5_lat48" = "25.4114249";
+"Country5_lng48" = "55.4361641";
 
 "Country5_area49" = "An Nakhil 2";
-"Country5_lat49" = "";
-"Country5_lng49" = "";
+"Country5_lat49" = "25.4173116";
+"Country5_lng49" = "55.4297376";
 
 "Country5_area50" = "An Nuaimiyah 1";
-"Country5_lat50" = "";
-"Country5_lng50" = "";
+"Country5_lat50" = "25.3837251";
+"Country5_lng50" = "55.4539418";
 
 "Country5_area51" = "An Nuaimiyah 2";
-"Country5_lat51" = "";
-"Country5_lng51" = "";
+"Country5_lat51" = "25.3840062,";
+"Country5_lng51" = "55.4423332";
 
 "Country5_area52" = "An Nuaimiyah 3";
-"Country5_lat52" = "";
-"Country5_lng52" = "";
+"Country5_lat52" = "25.388533";
+"Country5_lng52" = "55.4325217";
 
 "Country5_area53" = "Ar Rashidiyah 1";
-"Country5_lat53" = "";
-"Country5_lng53" = "";
+"Country5_lat53" = "25.3965773";
+"Country5_lng53" = "55.4512704";
 
 "Country5_area54" = "Ar Rashidiyah 2";
-"Country5_lat54" = "";
-"Country5_lng54" = "";
+"Country5_lat54" = "25.3965871";
+"Country5_lng54" = "55.4389214";
 
 "Country5_area55" = "Ar Rashidiyah 3";
-"Country5_lat55" = "";
-"Country5_lng55" = "";
+"Country5_lat55" = "25.3993008";
+"Country5_lng55" = "55.4282785";
 
 "Country5_area56" = "Ar Rumailah 1";
-"Country5_lat56" = "";
-"Country5_lng56" = "";
+"Country5_lat56" = "25.4067975";
+"Country5_lng56" = "55.431599";
 
 "Country5_area57" = "Ar Rumailah 2";
-"Country5_lat57" = "";
-"Country5_lng57" = "";
+"Country5_lat57" = "25.4026834";
+"Country5_lng57" = "55.426578";
 
 "Country5_area58" = "Ar Rumailah 3";
-"Country5_lat58" = "";
-"Country5_lng58" = "";
+"Country5_lat58" = "25.3978571";
+"Country5_lng58" = "55.4222596";
 
 "Country5_area59" = "As Safia";
-"Country5_lat59" = "";
-"Country5_lng59" = "";
+"Country5_lat59" = "25.4182802";
+"Country5_lng59" = "55.4793024";
 
 "Country5_area60" = "Liwarah 1";
-"Country5_lat60" = "";
-"Country5_lng60" = "";
+"Country5_lat60" = "25.4183175";
+"Country5_lng60" = "4481045";
 
 "Country5_area61" = "Liwarah 2";
-"Country5_lat61" = "";
-"Country5_lng61" = "";
+"Country5_lat61" = "25.4196929";
+"Country5_lng61" = "55.4483947";
 
 "Country5_area62" = "Mushairif";
-"Country5_lat62" = "";
-"Country5_lng62" = "";
+"Country5_lat62" = "25.3931613";
+"Country5_lng62" = "55.4537272";
 
 "Country5_area63" = "Masfut 1";
-"Country5_lat63" = "";
-"Country5_lng63" = "";
+"Country5_lat63" = "24.8155293";
+"Country5_lng63" = "56.088325";
 
 "Country5_area64" = "Masfut 2";
-"Country5_lat64" = "";
-"Country5_lng64" = "";
+"Country5_lat64" = "24.8155293";
+"Country5_lng64" = "56.088325";
 
 "Country5_area65" = "Masfut 3";
-"Country5_lat65" = "";
-"Country5_lng65" = "";
+"Country5_lat65" = "24.8257137";
+"Country5_lng65" = "56.0391336";
 
 "Country5_area66" = "Masfut 4";
-"Country5_lat66" = "";
-"Country5_lng66" = "";
+"Country5_lat66" = "24.8155293";
+"Country5_lng66" = "56.088325";
 
 "Country5_area67" = "Masfut 5";
-"Country5_lat67" = "";
-"Country5_lng67" = "";
+"Country5_lat67" = "24.8155293";
+"Country5_lng67" = "56.088325";
 
 "Country5_area68" = "Masfut 6";
-"Country5_lat68" = "";
-"Country5_lng68" = "";
+"Country5_lat68" = "24.8155293";
+"Country5_lng68" = "56.088325";
 
 "Country5_area69" = "Masfut 7";
-"Country5_lat69" = "";
-"Country5_lng69" = "";
+"Country5_lat69" = "24.8155293";
+"Country5_lng69" = "56.088325";
 
 "Country5_area70" = "Masfut 8";
-"Country5_lat70" = "";
-"Country5_lng70" = "";
+"Country5_lat70" = "24.8155293";
+"Country5_lng70" = "56.088325";
 
 "Country5_area71" = "Masfut 9";
-"Country5_lat71" = "";
-"Country5_lng71" = "";
+"Country5_lat71" = "24.8155293";
+"Country5_lng71" = "56.088325";
 
 "Country5_area72" = "Masfut 10";
-"Country5_lat72" = "";
-"Country5_lng72" = "";
+"Country5_lat72" = "24.8155293";
+"Country5_lng72" = "56.088325";
 
 "Country5_area73" = "Masfut 11";
-"Country5_lat73" = "";
-"Country5_lng73" = "";
+"Country5_lat73" = "24.8155293";
+"Country5_lng73" = "56.088325";
 
 "Country5_area74" = "Masfut 12";
-"Country5_lat74" = "";
-"Country5_lng74" = "";
+"Country5_lat74" = "24.8155293";
+"Country5_lng74" = "56.088325";
 
 "Country5_area75" = "Masfut 13";
-"Country5_lat75" = "";
-"Country5_lng75" = "";
+"Country5_lat75" = "24.8155293";
+"Country5_lng75" = "24.8155293";
 
 "Country5_area76" = "Masfut 14";
-"Country5_lat76" = "";
-"Country5_lng76" = "";
+"Country5_lat76" = "24.8155293";
+"Country5_lng76" = "56.088325";
 
 "Country5_area77" = "Masfut 15";
-"Country5_lat77" = "";
-"Country5_lng77" = "";
+"Country5_lat77" = "24.8155293";
+"Country5_lng77" = "56.088325";
 
 
 //Fujaira
@@ -2818,7 +2814,6 @@
 
 
 //Ras ul Khaima
-
 "Country7_count" = "104";
 
 "Country7_area1" = "Adh Dharbaniyah";
@@ -3236,7 +3231,6 @@
 
 
 //Umm Al Quwain
-
 "Country8_count" = "57";
 
 "Country8_area1" = "Al Abraq";
@@ -3467,1767 +3461,6 @@
 "Country8_lat57" = "";
 "Country8_lng57" = "";
 
-/*
-//Dubai Areas
-"Country1_lat" = "25.2048";
-
-"Country1_lng" = "55.2708";
-
-"Country1_count" = "293";
-
-"Country1_area1" = "Abu Hail";
-"Country1_lat1" = "25.2856018";
-"Country1_lng1" = "55.3259313";
-
-"Country1_area2" = "Ad Daghayah";
-
-"Country1_area3" = "Al Barahah";
-
-"Country1_area4" = "Al Butin";
-
-"Country1_area5" = "Al Khabisi";
-
-"Country1_area6" = "Al Kurnish";
-
-"Country1_area7" = "Al Mamzar";
-
-"Country1_area8" = "Al Murar";
-
-"Country1_area9" = "Al Murqabat";
-
-"Country1_area10" = "Al Mutinah";
-
-"Country1_area11" = "Al Wahidah";
-
-"Country1_area12" = "Ar Ras";
-
-"Country1_area13" = "Ar Riqah";
-
-"Country1_area14" = "As Sabkhah";
-
-"Country1_area15" = "Ayal Nasir";
-
-"Country1_area16" = "Bur Said";
-
-"Country1_area17" = "Hur al Anz";
-
-"Country1_area18" = "Hur al Anz Shraq";
-
-"Country1_area19" = "Kurnish Dairah";
-
-"Country1_area20" = "Mima al Hamriyah";
-
-"Country1_area21" = "Naif";
-
-"Country1_area22" = "Nakhlat Dairah";
-
-"Country1_area23" = "Riqah al Butin";
-
-"Country1_area24" = "Al Ayas";
-
-"Country1_area25" = "Al Khawanij";
-
-"Country1_area26" = "Al Mizhar";
-
-"Country1_area27" = "Al Qarhud";
-
-"Country1_area28" = "Al Qusais";
-
-"Country1_area29" = "Al Qusais as Sinaiyah";
-
-"Country1_area30" = "An Nahdah";
-
-"Country1_area31" = "Ar Rashidiyah";
-
-"Country1_area32" = "At Tay";
-
-"Country1_area33" = "At Twar";
-
-"Country1_area34" = "Matar Dubayy ad Duwali";
-
-"Country1_area35" = "Mirdif";
-
-"Country1_area36" = "Muhaisanah 1";
-
-"Country1_area37" = "Mushrif";
-
-"Country1_area38" = "Nad Shama";
-
-"Country1_area39" = "Umm Ramul";
-
-"Country1_area40" = "Wad al Mutinah";
-
-"Country1_area41" = "Wadi al Amradi";
-
-"Country1_area42" = "Al Bad";
-
-"Country1_area43" = "Al Barsha";
-
-"Country1_area44" = "Al Hamriyah";
-
-"Country1_area45" = "Al Hudaibah";
-
-"Country1_area46" = "Al Jadaf";
-
-"Country1_area47" = "Al Jafliyah";
-
-"Country1_area48" = "Al Karamah";
-
-"Country1_area49" = "Al Khalij at Tijari";
-
-"Country1_area50" = "Al Kifaf";
-
-"Country1_area51" = "Al Manarah";
-
-"Country1_area52" = "Al Mankhul";
-
-"Country1_area53" = "Al Markada";
-
-"Country1_area54" = "Al Markaz at Tijari";
-
-"Country1_area55" = "Al Quz";
-
-"Country1_area56" = "Al Quz as Sinaiyah";
-
-"Country1_area57" = "Al Wasl";
-
-"Country1_area58" = "Ar Rafah";
-
-"Country1_area59" = "Ash Shandagah";
-
-"Country1_area60" = "As Safa";
-
-"Country1_area61" = "As Satwah";
-
-"Country1_area62" = "As Sufuh";
-
-"Country1_area63" = "As Suq al Kabir";
-
-"Country1_area64" = "Ath Thanyah";
-
-"Country1_area65" = "Burj Khalifa";
-
-"Country1_area66" = "Jazirat Jumira";
-
-"Country1_area67" = "Jumeira";
-
-"Country1_area68" = "Juzur al Alam";
-
-"Country1_area69" = "Madinat Dubayy at Tibiyah";
-
-"Country1_area70" = "Mursa Dubayy";
-
-"Country1_area71" = "Nakhlat Jumeira";
-
-"Country1_area72" = "Shati Jumeira";
-
-"Country1_area73" = "Umm ash Shif";
-
-"Country1_area74" = "Umm Hurair";
-
-"Country1_area75" = "Umm Suqaim";
-
-"Country1_area76" = "Wad Mitha";
-
-"Country1_area77" = "Zaabil";
-
-"Country1_area78" = "Al Qita";
-
-"Country1_area79" = "Al Khatran";
-
-"Country1_area80" = "Al Warqa";
-
-"Country1_area81" = "Nad al Hamar";
-
-"Country1_area82" = "Ras al Khur";
-
-"Country1_area83" = "Wadi ash Shabak";
-
-"Country1_area84" = "Al Wajahat al Bahriyah";
-
-"Country1_area85" = "Hisyan";
-
-"Country1_area86" = "Jabal Ali";
-
-"Country1_area87" = "Jabal Ali as Sinaiyah";
-
-"Country1_area88" = "Madinat al Maṭar";
-
-"Country1_area89" = "Majm' Dubayy Lil'astathmar";
-
-"Country1_area90" = "Mina Jabal Ali";
-
-"Country1_area91" = "Saiḥ Shuaib";
-
-"Country1_area92" = "Al Barsha Janub";
-
-"Country1_area93" = "Al Hibiah";
-
-"Country1_area94" = "Bu Kadrah";
-
-"Country1_area95" = "Hadaiq ash Shaikh Moḥammad Bin Rashid";
-
-"Country1_area96" = "Miasim";
-
-"Country1_area97" = "Nad ash Shiba";
-
-"Country1_area98" = "Nad Hisah";
-
-"Country1_area99" = "Ras al Khur as Sinaiyah";
-
-"Country1_area100" = "Wadi aṣ Safa";
-
-"Country1_area101" = "Warsan";
-
-"Country1_area102" = "Al Qita";
-
-"Country1_area103" = "Al Awir";
-
-"Country1_area104" = "Al Miryal";
-
-"Country1_area105" = "Al Wuḥush";
-
-"Country1_area106" = "Inkhali";
-
-"Country1_area107" = "Lihbab";
-
-"Country1_area108" = "Nazwah";
-
-"Country1_area109" = "Al Qita";
-
-"Country1_area110" = "Al Himaira";
-
-"Country1_area111" = "Al Maha";
-
-"Country1_area112" = "Ar Ruwaiyah";
-
-"Country1_area113" = "Hata";
-
-"Country1_area114" = "Lihbab";
-
-"Country1_area115" = "Margham";
-
-"Country1_area116" = "Marqab";
-
-"Country1_area117" = "Miriyil";
-
-"Country1_area118" = "Rimaḥ";
-
-"Country1_area119" = "Umm ad Daman";
-
-"Country1_area120" = "Umm al Muminin";
-
-"Country1_area121" = "Umm as Silay";
-
-"Country1_area122" = "Warsan";
-
-"Country1_area123" = "Yaraḥ";
-
-"Country1_area124" = "Al Qita";
-
-"Country1_area125" = "Al Faqa";
-
-"Country1_area126" = "Al Hathmah";
-
-"Country1_area127" = "Al Layan";
-
-"Country1_area128" = "Al Lisaily";
-
-"Country1_area129" = "Al Marmum";
-
-"Country1_area130" = "Al Yalayis";
-
-"Country1_area131" = "Al Yufrah";
-
-"Country1_area132" = "Ash Shush";
-
-"Country1_area133" = "As Silal";
-
-"Country1_area134" = "Ghadir Barashy";
-
-"Country1_area135" = "Hifair";
-
-"Country1_area136" = "Muqatrah";
-
-"Country1_area137" = "Qraytisah";
-
-"Country1_area138" = "Saih ad Dahal";
-
-"Country1_area139" = "Saih as Salam";
-
-"Country1_area140" = "Saih Shuailah";
-
-"Country1_area141" = "Umm Nahad";
-
-"Country1_area142" = "Al Khawanij 2";
-
-"Country1_area143" = "Al Mizhar 2";
-
-"Country1_area144" = "Al Qusais 2";
-
-"Country1_area145" = "Al Qusais 3";
-
-"Country1_area146" = "Al Qusais as Sinaiyah 2";
-
-"Country1_area147" = "Al Qusais as Sinaiyah 3";
-
-"Country1_area148" = "Al Qusais as Sinaiyah 4";
-
-"Country1_area149" = "Al Qusais as Sinaiyah 5";
-
-"Country1_area150" = "An Nahdah 2";
-
-"Country1_area151" = "At Twar 2";
-
-"Country1_area152" = "At Twar 3";
-
-"Country1_area153" = "Muhaisanah 2";
-
-"Country1_area154" = "Muhaisanah 3";
-
-"Country1_area155" = "Muhaisanah 4";
-
-"Country1_area156" = "Muhaisanah 5";
-
-"Country1_area157" = "Wad al Mutinah 2";
-
-"Country1_area158" = "Wad al Mutinah 3";
-
-"Country1_area159" = "Al Barsha' 2";
-
-"Country1_area160" = "Al Barsha' 3";
-
-"Country1_area161" = "Al Markaz at Tijari 2";
-
-"Country1_area162" = "Al Quz 2";
-
-"Country1_area163" = "Al Quz 3";
-
-"Country1_area164" = "Al Quz 4";
-
-"Country1_area165" = "Al Quz as Sinaiyah 2";
-
-"Country1_area166" = "Al Quz as Sinaiyah 3";
-
-"Country1_area167" = "Al Quz as Sinaiyah 4";
-
-"Country1_area168" = "As Safa 2";
-
-"Country1_area169" = "Ath Thanyah 2";
-
-"Country1_area170" = "Ath Thanyah 3";
-
-"Country1_area171" = "Ath Thanyah 4";
-
-"Country1_area172" = "Ath Thanyah 5";
-
-"Country1_area173" = "Jumeira 2";
-
-"Country1_area174" = "Jumeira 3";
-
-"Country1_area175" = "Umm Hurair 2";
-
-"Country1_area176" = "Umm Suqaim 2";
-
-"Country1_area177" = "Umm Suqaim 3";
-
-"Country1_area178" = "Zaabil 2";
-
-"Country1_area179" = "Al Warqaa 2";
-
-"Country1_area180" = "Al Warqaa 3";
-
-"Country1_area181" = "Al Warqaa 4";
-
-"Country1_area182" = "Al Warqaa 5";
-
-"Country1_area183" = "Hisyan 2";
-
-"Country1_area184" = "Jabal Ali 2";
-
-"Country1_area185" = "Jabal Ali 3";
-
-"Country1_area186" = "Jabal Ali as Sinaiyah 2";
-
-"Country1_area187" = "Jabal Ali as Sinaiyah 3";
-
-"Country1_area188" = "Majm Dubayy Lilastathmar 2";
-
-"Country1_area189" = "Saih Shuaib 2";
-
-"Country1_area190" = "Saih Shuaib 3";
-
-"Country1_area191" = "Saih Shuaib 4";
-
-"Country1_area192" = "Al Barsha Janub 2";
-
-"Country1_area193" = "Al Barsha Janub 3";
-
-"Country1_area194" = "Al Barsha Janub 4";
-
-"Country1_area195" = "Al Barsha Janub 5";
-
-"Country1_area196" = "Al Hibiah 2";
-
-"Country1_area197" = "Al Hibiah 3";
-
-"Country1_area198" = "Al Hibiah 4";
-
-"Country1_area199" = "Al Hibiah 5";
-
-"Country1_area200" = "Al Hibiah 6";
-
-"Country1_area201" = "Miasim 2";
-
-"Country1_area202" = "Ar Ruwaiyah 2";
-
-"Country1_area203" = "Ar Ruwaiyah 3";
-
-"Country1_area204" = "Al Layan 2";
-
-"Country1_area205" = "Al Yalayis 2";
-
-"Country1_area206" = "Al Yalayis 3";
-
-"Country1_area207" = "Al Yalayis 4";
-
-"Country1_area208" = "Al Yalayis 5";
-
-"Country1_area209" = "Al Yufrah 2";
-
-"Country1_area210" = "Al Yufrah 3";
-
-"Country1_area211" = "Al Yufrah 4";
-
-"Country1_area212" = "Umm Nahad 2";
-
-"Country1_area213" = "Umm Nahad 3";
-
-"Country1_area214" = "Umm Nahad 4";
-
-"Country1_area215" = "Burj Al Arab";
-
-"Country1_area216" = "Dubai Silicon Oasis";
-
-"Country1_area217" = "Dubai Academic City";
-
-"Country1_area218" = "International City";
-
-"Country1_area219" = "Al Warqa";
-
-"Country1_area220" = "Rashidiya";
-
-"Country1_area221" = "Mirdif";
-
-"Country1_area222" = "Deira";
-
-"Country1_area223" = "Al Garhood";
-
-"Country1_area224" = "Dubai Festival City";
-
-"Country1_area225" = "Al Garhood";
-
-"Country1_area226" = "Al Ghusais";
-
-"Country1_area227" = "Al Qusais";
-
-"Country1_area228" = "Dubai Airport";
-
-"Country1_area229" = "Dubai Airport Free Zone";
-
-"Country1_area230" = "Corniche Rd";
-
-"Country1_area231" = "Al Mamzar";
-
-"Country1_area232" = "Al Waheda";
-
-"Country1_area233" = "Abu Hail";
-
-"Country1_area234" = "Al Baraha";
-
-"Country1_area235" = "Al Murar";
-
-"Country1_area236" = "Hyatt";
-
-"Country1_area237" = "Deira Fish Market";
-
-"Country1_area238" = "Al Sabkha";
-
-"Country1_area239" = "Al Ras";
-
-"Country1_area240" = "Hor Al Anz";
-
-"Country1_area241" = "Bur Dubai";
-
-"Country1_area242" = "Al Mankhool";
-
-"Country1_area243" = "Karama";
-
-"Country1_area244" = "Zabeel";
-
-"Country1_area245" = "Al Jafiliya";
-
-"Country1_area246" = "Dubai Healthcare City";
-
-"Country1_area247" = "Oud Metha";
-
-"Country1_area248" = "Al Quoz";
-
-"Country1_area249" = "Dubai International Financial Cente";
-
-"Country1_area250" = "Downtown Dubai";
-
-"Country1_area251" = "Old Town Dubai";
-
-"Country1_area252" = "Business Bay";
-
-"Country1_area253" = "Nad Al Shiba";
-
-"Country1_area254" = "Dubai Design District";
-
-"Country1_area255" = "Jumeirah";
-
-"Country1_area256" = "Jumeirah 1";
-
-"Country1_area257" = "Jumeirah 2";
-
-"Country1_area258" = "Jumeirah 3";
-
-"Country1_area259" = "Al Wasl";
-
-"Country1_area260" = "Al Safa";
-
-"Country1_area261" = "Umm Al Sheif";
-
-"Country1_area262" = "Umm Suqiem";
-
-"Country1_area263" = "Madinat Jumeirah";
-
-"Country1_area264" = "Al Sufouh";
-
-"Country1_area265" = "Knowledge Village";
-
-"Country1_area266" = "Dubai Media City";
-
-"Country1_area267" = "Dubai Internet City";
-
-"Country1_area268" = "Al Sufouh";
-
-"Country1_area269" = "Al Barsha";
-
-"Country1_area270" = "Emaar Emirates Hills";
-
-"Country1_area271" = "The Greens";
-
-"Country1_area272" = "The Meadows";
-
-"Country1_area273" = "The Springs";
-
-"Country1_area274" = "Emirates Hills";
-
-"Country1_area275" = "Jumeirah Islands";
-
-"Country1_area276" = "New Dubai";
-
-"Country1_area277" = "Dubai Marina";
-
-"Country1_area278" = "Jumeirah Beach Residence";
-
-"Country1_area279" = "Jumeirah Lake Towers";
-
-"Country1_area280" = "Discovery Gardens";
-
-"Country1_area281" = "Dubai Investments Park";
-
-"Country1_area282" = "Green Community";
-
-"Country1_area283" = "Jebel Ali Gardens";
-
-"Country1_area284" = "Jebel Ali";
-
-"Country1_area285" = "Jebel Ali Port";
-
-"Country1_area286" = "Jebel Ali Industrial Area";
-
-"Country1_area287" = "Jebel Ali Free Zone";
-
-"Country1_area288" = "Jebel Ali Village";
-
-"Country1_area289" = "Palm Deira";
-
-"Country1_area290" = "Palm Jumeirah";
-
-"Country1_area291" = "Palm Jebel Ali";
-
-"Country1_area292" = "The World";
-
-"Country1_area293" = "Hatta";
-
-
-
-//Abu Dhabi
-"Country2_lat" = "24.4539";
-
-"Country2_lng" = "54.3773";
-
-"Country2_count" = "43";
-
-"Country2_area1" = "Al Dhafrah";
-"Country2_lat1" = "24.187618";
-"Country2_lng1" = "54.4396583";
-
-"Country2_area2" = "Al Falah";
-
-"Country2_area3" = "Al Karama";
-
-"Country2_area4" = "Al Khubeirah";
-
-"Country2_area5" = "Al Lulu Island";
-
-"Country2_area6" = "Al Madina";
-
-"Country2_area7" = "Al Maryah Island";
-
-"Country2_area8" = "Al Manaseer";
-
-"Country2_area9" = "Al Manhal";
-
-"Country2_area10" = "Al Maqtaa";
-
-"Country2_area11" = "Al Markaziyah";
-
-"Country2_area12" = "Al Meena";
-
-"Country2_area13" = "Al Moroor";
-
-"Country2_area14" = "Al Mushrif";
-
-"Country2_area15" = "Al Muzoon";
-
-"Country2_area16" = "Al Nahyan";
-
-"Country2_area17" = "Al Qubesat";
-
-"Country2_area18" = "Al Ras Al Akhdar";
-
-"Country2_area19" = "Al Reef";
-
-"Country2_area20" = "Al Reem Island";
-
-"Country2_area21" = "Al Rehhan";
-
-"Country2_area22" = "Al Rowdah";
-
-"Country2_area23" = "Al Shamkha";
-
-"Country2_area24" = "Bani Yas";
-
-"Country2_area25" = "Al Zaab";
-
-"Country2_area26" = "Al Zahiyah";
-
-"Country2_area27" = "Al Zahraa";
-
-"Country2_area28" = "Al Khalidyah";
-
-"Country2_area29" = "Bain Al Jisrain";
-
-"Country2_area30" = "Hideriyyat";
-
-"Country2_area31" = "Khalifa City";
-
-"Country2_area32" = "Marina Village";
-
-"Country2_area33" = "Masdar City";
-
-"Country2_area34" = "Mohammed Bin Zayed City";
-
-"Country2_area35" = "Saadiyat Island";
-
-"Country2_area36" = "Shakhbout City";
-
-"Country2_area37" = "Officers City";
-
-"Country2_area38" = "Qasr El Bahr";
-
-"Country2_area39" = "Qasr El Shatie";
-
-"Country2_area40" = "Yas Island";
-
-"Country2_area41" = "Al Samha";
-
-"Country2_area42" = "Al Aman";
-
-"Country2_area43" = "Al Bateen";
-
-
-
-//Sharjah
-"Country3_lat" = "25.3463";
-
-"Country3_lng" = "55.4209";
-
-"Country3_count" = "140";
-
-"Country3_area1" = "Abu Shagara";
-
-"Country3_area2" = "Adh Dhaid";
-
-"Country3_area3" = "Adh Dhayd";
-
-"Country3_area4" = "Al Abar";
-
-"Country3_area5" = "Al Bu Deniq";
-
-"Country3_area6" = "Al Daid";
-
-"Country3_area7" = "Al Darari";
-
-"Country3_area8" = "Al Dhaid";
-
-"Country3_area9" = "Al Falaj";
-
-"Country3_area10" = "Al Fayha";
-
-"Country3_area11" = "Al Ghubaiba";
-
-"Country3_area12" = "Al Ghuwair";
-
-"Country3_area13" = "Al Goaz";
-
-"Country3_area14" = "Al Gulayaa";
-
-"Country3_area15" = "Al Hamriya";
-
-"Country3_area16" = "Al Jazirah";
-
-"Country3_area17" = "Al Jazzat";
-
-"Country3_area18" = "Al Juhail";
-
-"Country3_area19" = "Al Khezammia";
-
-"Country3_area20" = "Al Mahatah";
-
-"Country3_area21" = "Al Majaz";
-
-"Country3_area22" = "Al Manakh";
-
-"Country3_area23" = "Al Mansura";
-
-"Country3_area24" = "Al Merraija";
-
-"Country3_area25" = "Al Mujarrah";
-
-"Country3_area26" = "Al Mussalla";
-
-"Country3_area27" = "Al Muwafjah";
-
-"Country3_area28" = "Al Nabbaa";
-
-"Country3_area29" = "Al Nasserya";
-
-"Country3_area30" = "Al Nud";
-
-"Country3_area31" = "Al Qarrayen";
-
-"Country3_area32" = "Al Ramla East";
-
-"Country3_area33" = "Al Ramla West";
-
-"Country3_area34" = "Al Rifaa";
-
-"Country3_area35" = "Al Seef";
-
-"Country3_area36" = "Al Shahba";
-
-"Country3_area37" = "Al Sharjah";
-
-"Country3_area38" = "Al Sharq District";
-
-"Country3_area39" = "Al Sheyoukh";
-
-"Country3_area40" = "Al Shuwaiheen";
-
-"Country3_area41" = "Al Soor";
-
-"Country3_area42" = "Al Soor Square";
-
-"Country3_area43" = "Al Sweihat";
-
-"Country3_area44" = "Al Talaa";
-
-"Country3_area45" = "Al Tarrfah";
-
-"Country3_area46" = "Al Yarmook";
-
-"Country3_area47" = "Al Awdah";
-
-"Country3_area48" = "Al Ḩamrīyah";
-
-"Country3_area49" = "Al Awdah";
-
-"Country3_area50" = "Al Dhayd";
-
-"Country3_area51" = "Ar Rufayşah";
-
-"Country3_area52" = "Ash Mariqah";
-
-"Country3_area53" = "Ash Shariqa";
-
-"Country3_area54" = "Ash Shuayb";
-
-"Country3_area55" = "Ash Shariqah";
-
-"Country3_area56" = "Ash Mariqah";
-
-"Country3_area57" = "Ash Shariqah emiraat";
-
-"Country3_area58" = "Balaida";
-
-"Country3_area59" = "Bu Tina";
-
-"Country3_area60" = "Bulaydah";
-
-"Country3_area61" = "Charjah";
-
-"Country3_area62" = "Chardja";
-
-"Country3_area63" = "Dasman";
-
-"Country3_area64" = "Dhaid";
-
-"Country3_area65" = "Dhayd";
-
-"Country3_area66" = "Duhayd";
-
-"Country3_area67" = "Eliash";
-
-"Country3_area68" = "Fakkan";
-
-"Country3_area69" = "Ghail";
-
-"Country3_area70" = "Ghallah";
-
-"Country3_area71" = "Ghayl";
-
-"Country3_area72" = "Ghalla";
-
-"Country3_area73" = "Girath";
-
-"Country3_area74" = "Hamriya";
-
-"Country3_area75" = "Hamriyah";
-
-"Country3_area76" = "Hamriyyah";
-
-"Country3_area77" = "Harra";
-
-"Country3_area78" = "Hiyawa";
-
-"Country3_area79" = "Hizayib az Zanah";
-
-"Country3_area80" = "Ihaid";
-
-"Country3_area81" = "Juwaiza";
-
-"Country3_area82" = "Juwayzah";
-
-"Country3_area83" = "Juweiza";
-
-"Country3_area84" = "Kalbah";
-
-"Country3_area85" = "Kalbā";
-
-"Country3_area86" = "Khawr Fakkan";
-
-"Country3_area87" = "Khawr Kalba";
-
-"Country3_area88" = "Khawr Zaab";
-
-"Country3_area89" = "Khawr al Fakkan";
-
-"Country3_area90" = "Khawr al Kalba";
-
-"Country3_area91" = "Khor Fakhan";
-
-"Country3_area92" = "Khor Kalba";
-
-"Country3_area93" = "Khor al Fakhan";
-
-"Country3_area94" = "Khor al Kalba";
-
-"Country3_area95" = "Khusayy";
-
-"Country3_area96" = "King Faisal Square";
-
-"Country3_area97" = "Lulaiyah";
-
-"Country3_area98" = "Marbah";
-
-"Country3_area99" = "Maysaloon";
-
-"Country3_area100" = "Mirba";
-
-"Country3_area101" = "Mirbih";
-
-"Country3_area102" = "Mowaileh Camp";
-
-"Country3_area103" = "Mowaileh Commercial";
-
-"Country3_area104" = "Muaifi";
-
-"Country3_area105" = "Murbah";
-
-"Country3_area106" = "Muwafi";
-
-"Country3_area107" = "Mudayfi";
-
-"Country3_area108" = "Nad Beidha";
-
-"Country3_area109" = "Nadd Bayda";
-
-"Country3_area110" = "Nadd Bayda";
-
-"Country3_area111" = "Nahai";
-
-"Country3_area112" = "Nedaifi";
-
-"Country3_area113" = "Nuhayy";
-
-"Country3_area114" = "Port Khor Fakkan";
-
-"Country3_area115" = "Qalba";
-
-"Country3_area116" = "Qidfa";
-
-"Country3_area117" = "Rafa";
-
-"Country3_area118" = "Samnan";
-
-"Country3_area119" = "Sardzsa";
-
-"Country3_area120" = "Schardscha";
-
-"Country3_area121" = "Sharga";
-
-"Country3_area122" = "Shariqah";
-
-"Country3_area123" = "Shis";
-
-"Country3_area124" = "Sur";
-
-"Country3_area125" = "Szardza";
-
-"Country3_area126" = "Umm Tarrafa";
-
-"Country3_area127" = "University City";
-
-"Country3_area128" = "Wadi Shi";
-
-"Country3_area129" = "Xarjah";
-
-"Country3_area130" = "Uqayr";
-
-"Country3_area131" = "Sarjo";
-
-"Country3_area132" = "Sarîqe";
-
-"Country3_area133" = "Sardza";
-
-"Country3_area134" = "Al Majaz 2";
-
-"Country3_area135" = "Al Majaz 3";
-
-"Country3_area136" = "Luluiyah";
-
-"Country3_area137" = "Lulayyah";
-
-"Country3_area138" = "Luliyyah";
-
-"Country3_area139" = "Luluya";
-
-"Country3_area140" = "Qidfi";
-
-
-
-//Al Ain
-"Country4_lat" = "24.1302";
-
-"Country4_lng" = "55.8023";
-
-"Country4_count" = "32";
-
-"Country4_area1" = "Al Khabisi";
-
-"Country4_area2" = "Al Khrair";
-
-"Country4_area3" = "Al Maqam";
-
-"Country4_area4" = "Al Masoudi";
-
-"Country4_area5" = "Al Mazam";
-
-"Country4_area6" = "Al Mutawaa";
-
-"Country4_area7" = "Central Al Ain";
-
-"Country4_area8" = "Al Muwaiji";
-
-"Country4_area9" = "Al Niyadat";
-
-"Country4_area10" = "Al Qattara";
-
-"Country4_area11" = "Al Saniya";
-
-"Country4_area12" = "Al Surooj";
-
-"Country4_area13" = "Al Tawiyah";
-
-"Country4_area14" = "Central District";
-
-"Country4_area15" = "Falaj Hazza";
-
-"Country4_area16" = "Hili";
-
-"Country4_area17" = "Magar Al Dhabi";
-
-"Country4_area18" = "Munaseer";
-
-"Country4_area19" = "Saniya Tawam";
-
-"Country4_area20" = "Zakhir";
-
-"Country4_area21" = "Al Foah";
-
-"Country4_area22" = "Al Jimi";
-
-"Country4_area23" = "Tawam";
-
-"Country4_area24" = "Magar Al Dhabi";
-
-"Country4_area26" = "Al Bateen";
-
-"Country4_area27" = "Al Buraimi";
-
-"Country4_area28" = "Al Hili";
-
-"Country4_area29" = "Al Koua";
-
-"Country4_area30" = "Jafeer Al Jadeed";
-
-"Country4_area31" = "Oud Al Touba";
-
-"Country4_area32" = "Umm Ghafa";
-
-
-
-//Ajman
-"Country5_lat" = "25.4052";
-
-"Country5_lng" = "55.5136";
-
-"Country5_count77" = "29";
-
-"Country5_area1" = "Al Aliyah";
-
-"Country5_area2" = "Al Aliyah 2";
-
-"Country5_area3" = "Al Hamaidiyah";
-
-"Country5_area4" = "Al Hamaidiyah 2";
-
-"Country5_area5" = "Al Jurf 1";
-
-"Country5_area6" = "Al Jurf 2";
-
-"Country5_area7" = "Ar Raqayib 1";
-
-"Country5_area8" = "Ar Raqayib 2";
-
-"Country5_area9" = "Ajman as Sinaiyah 1";
-
-"Country5_area10" = "Ajman as Sinaiyah 2";
-
-"Country5_area11" = "Al Muwaihat 1";
-
-"Country5_area12" = "Al Muwaihat 2";
-
-"Country5_area13" = "Al Muwaihat 3";
-
-"Country5_area14" = "Ar Rawdha 1";
-
-"Country5_area15" = "Ar Rawdha 2";
-
-"Country5_area16" = "Ar Rawdha 3";
-
-"Country5_area17" = "At Talah 1";
-
-"Country5_area18" = "At Talah 2";
-
-"Country5_area19" = "Madinat Mohammad Bin Zāyed 1";
-
-"Country5_area20" = "Madinat Mohammad Bin Zāyed 2";
-
-"Country5_area21" = "Al Manamah 1";
-
-"Country5_area22" = "Al Manamah 2";
-
-"Country5_area23" = "Al Manamah 3";
-
-"Country5_area24" = "Al Manamah 4";
-
-"Country5_area25" = "Al Manamah 5";
-
-"Country5_area26" = "Al Manamah 6";
-
-"Country5_area27" = "Al Manamah 7";
-
-"Country5_area28" = "Al Manamah 8";
-
-"Country5_area29" = "Al Manamah 9";
-
-"Country5_area30" = "Al Manamah 10";
-
-"Country5_area31" = "Al Manamah 11";
-
-"Country5_area32" = "Al Manamah 12";
-
-"Country5_area33" = "Al Manamah 13";
-
-"Country5_area34" = "Al Manamah 14";
-
-"Country5_area35" = "Al Manamah 15";
-
-"Country5_area36" = "Al Manamah 16";
-
-"Country5_area37" = "Al Manamah 17";
-
-"Country5_area38" = "Al Bahyah";
-
-"Country5_area39" = "Al Jurf as Sinaiyah 1";
-
-"Country5_area40" = "Al Jurf as Sinaiyah 2";
-
-"Country5_area41" = "Al Jurf as Sinaiyah 3";
-
-"Country5_area42" = "Al Amrah";
-
-"Country5_area43" = "Al Hiliw 1";
-
-"Country5_area44" = "Al Hiliw 2";
-
-"Country5_area45" = "Al Yasmin";
-
-"Country5_area46" = "Az Zahyah";
-
-"Country5_area47" = "Az Zura";
-
-"Country5_area48" = "An Nakhil 1";
-
-"Country5_area49" = "An Nakhil 2";
-
-"Country5_area50" = "An Nuaimiyah 1";
-
-"Country5_area51" = "An Nuaimiyah 2";
-
-"Country5_area52" = "An Nuaimiyah 3";
-
-"Country5_area53" = "Ar Rashidiyah 1";
-
-"Country5_area54" = "Ar Rashidiyah 2";
-
-"Country5_area55" = "Ar Rashidiyah 3";
-
-"Country5_area56" = "Ar Rumailah 1";
-
-"Country5_area57" = "Ar Rumailah 2";
-
-"Country5_area58" = "Ar Rumailah 3";
-
-"Country5_area59" = "As Safia";
-
-"Country5_area60" = "Liwarah 1";
-
-"Country5_area61" = "Liwarah 2";
-
-"Country5_area62" = "Mushairif";
-
-"Country5_area63" = "Masfut 1";
-
-"Country5_area64" = "Masfut 2";
-
-"Country5_area65" = "Masfut 3";
-
-"Country5_area66" = "Masfut 4";
-
-"Country5_area67" = "Masfut 5";
-
-"Country5_area68" = "Masfut 6";
-
-"Country5_area69" = "Masfut 7";
-
-"Country5_area70" = "Masfut 8";
-
-"Country5_area71" = "Masfut 9";
-
-"Country5_area72" = "Masfut 10";
-
-"Country5_area73" = "Masfut 11";
-
-"Country5_area74" = "Masfut 12";
-
-"Country5_area75" = "Masfut 13";
-
-"Country5_area76" = "Masfut 14";
-
-"Country5_area77" = "Masfut 15";
-
-
-
-//Fujaira
-"Country6_lat" = "25.1288";
-
-"Country6_lng" = "56.3265";
-
-"Country6_count" = "99";
-
-"Country6_area1" = "Adgat";
-
-"Country6_area2" = "Afarah";
-
-"Country6_area3" = "Akamiya";
-
-"Country6_area4" = "Al Abadilah";
-
-"Country6_area5" = "Al Badiyah";
-
-"Country6_area6" = "Al Bithnah";
-
-"Country6_area7" = "Al Fujayrah";
-
-"Country6_area8" = "Al Fuqait";
-
-"Country6_area9" = "Al Ghurfah";
-
-"Country6_area10" = "Al Gissemari";
-
-"Country6_area11" = "Al Halah";
-
-"Country6_area12" = "Al Hayl";
-
-"Country6_area13" = "Al hinya";
-
-"Country6_area14" = "Al Khalabiya";
-
-"Country6_area15" = "Al Khulaybīyah";
-
-"Country6_area16" = "Al Kubus";
-
-"Country6_area17" = "Al Manamah";
-
-"Country6_area18" = "Al Qurayyah";
-
-"Country6_area19" = "Al Uyaynah";
-
-"Country6_area20" = "Al Fudjayra";
-
-"Country6_area21" = "Al Fujayrah emiraat";
-
-"Country6_area22" = "Al Rol";
-
-"Country6_area23" = "Alhala";
-
-"Country6_area24" = "Aqqa";
-
-"Country6_area25" = "As Saqamqam";
-
-"Country6_area26" = "Ar Rul";
-
-"Country6_area27" = "As Saqamqam";
-
-"Country6_area28" = "Ayaina";
-
-"Country6_area29" = "Badiyah";
-
-"Country6_area30" = "Badiyyah";
-
-"Country6_area31" = "Bilaidah";
-
-"Country6_area32" = "Daba";
-
-"Country6_area33" = "Farfar";
-
-"Country6_area34" = "Daba al Hisn";
-
-"Country6_area35" = "Dadna";
-
-"Country6_area36" = "Dahir";
-
-"Country6_area37" = "Diba";
-
-"Country6_area38" = "Dibā al Hisn";
-
-"Country6_area39" = "Dub";
-
-"Country6_area40" = "Farah";
-
-"Country6_area41" = "Daba al Ghurfah";
-
-"Country6_area42" = "Fudschaira";
-
-"Country6_area43" = "Fujajro";
-
-"Country6_area44" = "Gharaifah";
-
-"Country6_area45" = "Ghob";
-
-"Country6_area46" = "Ghura";
-
-"Country6_area47" = "Ghurayfah";
-
-"Country6_area48" = "Ghurfah";
-
-"Country6_area49" = "Hafarah";
-
-"Country6_area50" = "Hail";
-
-"Country6_area51" = "Harat Zutut";
-
-"Country6_area52" = "Hayl";
-
-"Country6_area53" = "Husn Dibba";
-
-"Country6_area54" = "Jareef";
-
-"Country6_area55" = "Khalaibiya";
-
-"Country6_area56" = "Madaq";
-
-"Country6_area57" = "Mahtarraqah";
-
-"Country6_area58" = "Maidaq";
-
-"Country6_area59" = "Manama";
-
-"Country6_area60" = "Marbad";
-
-"Country6_area61" = "Maydaq";
-
-"Country6_area62" = "Mutaridah";
-
-"Country6_area63" = "Muhtarqah";
-
-"Country6_area64" = "Murbad";
-
-"Country6_area65" = "Murrah";
-
-"Country6_area66" = "Qaraiyah";
-
-"Country6_area67" = "Ramlah";
-
-"Country6_area68" = "Ras Dibba";
-
-"Country6_area69" = "Righeilat";
-
-"Country6_area70" = "Riyama";
-
-"Country6_area71" = "Rol Ḍadnah";
-
-"Country6_area72" = "Rughaylat";
-
-"Country6_area73" = "Rul Dabbah";
-
-"Country6_area74" = "Rul Dadna";
-
-"Country6_area75" = "Rul Dibah";
-
-"Country6_area76" = "Rul Dadnah";
-
-"Country6_area77" = "Saif";
-
-"Country6_area78" = "Sad";
-
-"Country6_area79" = "Sakamkam";
-
-"Country6_area80" = "Sharam";
-
-"Country6_area81" = "Shawīyah";
-
-"Country6_area82" = "Sinnah";
-
-"Country6_area83" = "Sram";
-
-"Country6_area84" = "Subaykhah";
-
-"Country6_area85" = "Sufad";
-
-"Country6_area86" = "Sumbrair";
-
-"Country6_area87" = "Suwayfah";
-
-"Country6_area88" = "Taiyibah";
-
-"Country6_area89" = "Tariqat Jad";
-
-"Country6_area90" = "Tawian";
-
-"Country6_area91" = "Theeb";
-
-"Country6_area92" = "Thoban";
-
-"Country6_area93" = "Waabain";
-
-"Country6_area94" = "Wamm";
-
-"Country6_area95" = "Yalah";
-
-"Country6_area96" = "Zanhah";
-
-"Country6_area97" = "Zikt";
-
-"Country6_area98" = "Zubara";
-
-"Country6_area99" = "Zanhah";
-
-
-
-//Ras ul Khaima
-"Country7_lat" = "25.8007";
-
-"Country7_lng" = "55.9762";
-
-"Country7_count" = "104";
-
-"Country7_area1" = "Adh Dharbaniyah";
-
-"Country7_area2" = "Adhan";
-
-"Country7_area3" = "Adhin";
-
-"Country7_area4" = "Ajima";
-
-"Country7_area5" = "Al Aysat";
-
-"Country7_area6" = "Al Fai";
-
-"Country7_area7" = "Al Fara";
-
-"Country7_area8" = "Al Fay";
-
-"Country7_area9" = "Al Faḩlayn";
-
-"Country7_area10" = "Al Fulayyah";
-
-"Country7_area11" = "Al Ghabah";
-
-"Country7_area12" = "Al Ghabam";
-
-"Country7_area13" = "Al Ghashban";
-
-"Country7_area14" = "Al Hamra";
-
-"Country7_area15" = "Al Hayir";
-
-"Country7_area16" = "Al Hayr";
-
-"Country7_area17" = "Al Jaddah";
-
-"Country7_area18" = "Al Jazirah al Hamra";
-
-"Country7_area19" = "Al Kharan";
-
-"Country7_area20" = "Al Khashfah";
-
-"Country7_area21" = "Al Khatt";
-
-"Country7_area22" = "Al Khari";
-
-"Country7_area23" = "Al Maham";
-
-"Country7_area24" = "Al Mahamm";
-
-"Country7_area25" = "Al Masafirah";
-
-"Country7_area26" = "Al Mataf";
-
-"Country7_area27" = "Al Muamurah";
-
-"Country7_area28" = "Al Qawr";
-
-"Country7_area29" = "Al Qor";
-
-"Country7_area30" = "Al Quwayz";
-
-"Country7_area31" = "Al Qir";
-
-"Country7_area32" = "Al Usayli";
-
-"Country7_area33" = "Al Hamraniyah";
-
-"Country7_area34" = "Al Hamra";
-
-"Country7_area35" = "Al Hayl";
-
-"Country7_area36" = "Al Hulaylah";
-
-"Country7_area37" = "Al Ghil";
-
-"Country7_area38" = "Al Naslah";
-
-"Country7_area39" = "Algida";
-
-"Country7_area40" = "An Nakhil";
-
-"Country7_area41" = "An Naslah";
-
-"Country7_area42" = "Ar Rams";
-
-"Country7_area43" = "Araibi";
-
-"Country7_area44" = "As Sur";
-
-"Country7_area45" = "Ash Sham";
-
-"Country7_area46" = "Athaba";
-
-"Country7_area47" = "Athabat";
-
-"Country7_area48" = "As Salihiyah";
-
-"Country7_area49" = "Baqal";
-
-"Country7_area50" = "Bidiyah";
-
-"Country7_area51" = "Bida";
-
-"Country7_area52" = "Chuwais";
-
-"Country7_area53" = "Dab`ah";
-
-"Country7_area54" = "Daftah";
-
-"Country7_area55" = "Datta";
-
-"Country7_area56" = "Dayah";
-
-"Country7_area57" = "Daynah";
-
-"Country7_area58" = "Dhaiah";
-
-"Country7_area59" = "Dhaiyah";
-
-"Country7_area60" = "Difān";
-
-"Country7_area61" = "Digdagga";
-
-"Country7_area62" = "Dihān";
-
-"Country7_area63" = "Diq Duqqah";
-
-"Country7_area64" = "Diqdaqah";
-
-"Country7_area65" = "Dārah";
-
-"Country7_area66" = "Fay";
-
-"Country7_area67" = "Fahlain";
-
-"Country7_area68" = "Fahlayn";
-
-"Country7_area69" = "Falaiya";
-
-"Country7_area70" = "Falaiyah";
-
-"Country7_area71" = "Faqi";
-
-"Country7_area72" = "Far";
-
-"Country7_area73" = "Fara";
-
-"Country7_area74" = "Fashrah";
-
-"Country7_area75" = "Fa’y";
-
-"Country7_area76" = "Fulayyah";
-
-"Country7_area77" = "Gargaha";
-
-"Country7_area78" = "Ghadaf";
-
-"Country7_area79" = "Ghaghah";
-
-"Country7_area80" = "Ghail";
-
-"Country7_area81" = "Ghalīlah";
-
-"Country7_area82" = "Ghamara";
-
-"Country7_area83" = "Ghamarah";
-
-"Country7_area84" = "Ghayl";
-
-"Country7_area85" = "Ghubb";
-
-"Country7_area86" = "Ghubbah";
-
-"Country7_area87" = "Ghubbat Khawarah";
-
-"Country7_area88" = "Ghumrah";
-
-"Country7_area89" = "Gragrah";
-
-"Country7_area90" = "Habhab";
-
-"Country7_area91" = "Hadaibah";
-
-"Country7_area92" = "Hadeiba";
-
-"Country7_area93" = "Hail";
-
-"Country7_area94" = "Ham Ham";
-
-"Country7_area95" = "Hamra";
-
-"Country7_area96" = "Harat `Awali";
-
-"Country7_area97" = "Hatiyah";
-
-"Country7_area98" = "Howeilat";
-
-"Country7_area99" = "Hudaybah";
-
-"Country7_area101" = "Huwaylāt";
-
-"Country7_area102" = "Idhn";
-
-"Country7_area103" = "Julfa";
-
-"Country7_area104" = "Ad Dharbaniya";
-
-
-
-//Umm Al Quwain
-"Country8_lat" = "25.5426";
-
-"Country8_lng" = "55.5475";
-
-"Country8_count" = "57";
-
-"Country8_area1" = "Al Abraq";
-
-"Country8_area2" = "Al Labsah";
-
-"Country8_area3" = "Al Adhib";
-
-"Country8_area4" = "Al Hazaywah";
-
-"Country8_area5" = "Al Adhīb";
-
-"Country8_area6" = "Ar Rafaah";
-
-"Country8_area7" = "Ar Ramlah";
-
-"Country8_area8" = "Ar Ramlah C";
-
-"Country8_area9" = "Ar Rashidiyah";
-
-"Country8_area10" = "Ar Rafah";
-
-"Country8_area11" = "As Salamah";
-
-"Country8_area12" = "As Salamah C";
-
-"Country8_area13" = "As Surrah";
-
-"Country8_area14" = "Biyatah";
-
-"Country8_area15" = "Dhad al Arab";
-
-"Country8_area16" = "Falaj Ibn Mu'alla";
-
-"Country8_area17" = "Falaj al Ali";
-
-"Country8_area18" = "Fili Ma`ala";
-
-"Country8_area19" = "Kabir";
-
-"Country8_area20" = "Lazimah";
-
-"Country8_area21" = "Madu Maj";
-
-"Country8_area22" = "Mintaqah al Hadithah";
-
-"Country8_area23" = "Mintaqat ad Dar al Bayda A";
-
-"Country8_area24" = "Mintaqat al Hawiyah";
-
-"Country8_area25" = "Mintaqat al Humrah A";
-
-"Country8_area26" = "Mintaqat al Madinah al Qadimah";
-
-"Country8_area27" = "Mintaqat al Maydan";
-
-"Country8_area28" = "Mintaqat al Ahd";
-
-"Country8_area29" = "Mintaqat Limghadar";
-
-"Country8_area30" = "Mintaqat Umm al Qaywayn at Tibbyah";
-
-"Country8_area31" = "Mintaqat ad Dār al Bayda A";
-
-"Country8_area32" = "Mintaqat al Khawr";
-
-"Country8_area33" = "Mintaqat al Ḩumrah";
-
-"Country8_area34" = "Mintaqat al Ahd";
-
-"Country8_area35" = "Mintaqat ar Rawḑah";
-
-"Country8_area36" = "Mintaqat ar Ras A";
-
-"Country8_area37" = "Mintaqat ar Riqqah";
-
-"Country8_area38" = "Muhadhdhib";
-
-"Country8_area39" = "Oumm al Qaiwain";
-
-"Country8_area40" = "Um al Kawain";
-
-"Country8_area41" = "Um al Quweim";
-
-"Country8_area42" = "Umm al Qaiwain";
-
-"Country8_area43" = "Yumul al Quwain";
-
-"Country8_area44" = "Zarqa";
-
-"Country8_area45" = "Zawr";
-
-"Country8_area46" = "Umm al Qaywayn";
-
-"Country8_area47" = "Umm al Quwain";
-
-"Country8_area48" = "Mintaqat ad Dar al Bayda B";
-
-"Country8_area49" = "Mintaqat al Humrah J";
-
-"Country8_area50" = "Mintaqat ar Ras B";
-
-"Country8_area51" = "Mintaqat ar Ras D";
-
-"Country8_area52" = "Mintaqat ar Ras J";
-
-"Country8_area53" = "Mintaqat ad Dar al Bayda B";
-
-"Country8_area54" = "Mintaqat al Humrah B";
-
-"Country8_area55" = "Mintaqat al Humrah D";
-
-"Country8_area56" = "Mintaqat al Humrah J";
-
-"Country8_area57" = "Zarqa";
-*/
 
 //Translation
 "signout_en" = "Are you sure you want to signout?";
