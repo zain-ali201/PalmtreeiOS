@@ -20,6 +20,7 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
     @IBOutlet weak var lblTitle: UILabel!
     
     //MARK:- Properties
+    
     var allFilteredCategories = [CategoryJSON]()
     var subCatArray = [SubCategoryObject]()
     var filteredArray = [SubCategoryObject]()
