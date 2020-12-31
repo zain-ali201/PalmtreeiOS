@@ -385,7 +385,8 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
                         subCatObj.name = obj.name
                         subCatObj.hasSub = obj.hasSub
                         subCatObj.hasParent = obj.hasParent
-                        if obj.arabicName != nil
+                        
+                        if obj.arabicName != nil && obj.arabicName != ""
                         {
                             subCatObj.arabicName = obj.arabicName
                         }
@@ -446,7 +447,7 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
                         subCatObj.id = obj.id
                         subCatObj.name = obj.name
                         subCatObj.hasSub = obj.hasSub
-                        if obj.arabicName != nil
+                        if obj.arabicName != nil && obj.arabicName != ""
                         {
                             subCatObj.arabicName = obj.arabicName
                         }
@@ -490,14 +491,28 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
         {
             if textFiled.text != ""
             {
-//                if languageCode == "ar"
-//                {
-//                    allFilteredCategories = allCategories.filter({$0.arabicName.localizedCaseInsensitiveContains(String(format: "%@",textFiled.text!))})
-//                }
-//                else
-//                {
+                if languageCode == "ar"
+                {
+                    allFilteredCategories = allCategories.filter({
+                        
+                        var flag = false
+                            
+                        if $0.arabicName != nil && $0.arabicName != ""
+                        {
+                            flag = $0.arabicName.localizedCaseInsensitiveContains(String(format: "%@",textFiled.text!))
+                        }
+                        else
+                        {
+                            flag = $0.name.localizedCaseInsensitiveContains(String(format: "%@",textFiled.text!))
+                        }
+                        
+                        return flag
+                    })
+                }
+                else
+                {
                     allFilteredCategories = allCategories.filter({$0.name.localizedCaseInsensitiveContains(String(format: "%@",textFiled.text!))})
-//                }
+                }
             }
             else
             {
@@ -510,14 +525,28 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
         {
             if textFiled.text != ""
             {
-//                if languageCode == "ar"
-//                {
-//                    filteredArray = subCatArray.filter({$0.arabicName.localizedCaseInsensitiveContains(String(format: "%@",textFiled.text!))})
-//                }
-//                else
-//                {
+                if languageCode == "ar"
+                {
+                    filteredArray = subCatArray.filter({
+                        
+                        var flag = false
+                            
+                        if $0.arabicName != ""
+                        {
+                            flag = $0.arabicName.localizedCaseInsensitiveContains(String(format: "%@",textFiled.text!))
+                        }
+                        else
+                        {
+                            flag = $0.name.localizedCaseInsensitiveContains(String(format: "%@",textFiled.text!))
+                        }
+                        
+                        return flag
+                    })
+                }
+                else
+                {
                     filteredArray = subCatArray.filter({$0.name.localizedCaseInsensitiveContains(String(format: "%@",textFiled.text!))})
-//                }
+                }
             }
             else
             {
@@ -527,7 +556,7 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
             tblView.reloadData()
         }
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -593,7 +622,7 @@ extension CategoryVC: UITableViewDataSource, UITableViewDelegate
                     cell.lblName.text = category.arabicName
                 }
                 else
-                {
+                 {
                     cell.lblName.text = category.name
                 }
             }

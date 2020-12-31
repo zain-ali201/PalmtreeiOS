@@ -322,11 +322,11 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if section == 0
         {
             let itemHeight = CollectionViewSettings.getItemWidth(boundWidth: tableView.bounds.size.width)
-            let totalRow = ceil(CGFloat(categoryArray.count + 1) / CollectionViewSettings.column)
+            let totalRow = ceil(CGFloat(categoryArray.count) / CollectionViewSettings.column)
             let totalTopBottomOffSet = CollectionViewSettings.offset + CollectionViewSettings.offset
             let totalSpacing = CGFloat(totalRow - 1) * CollectionViewSettings.minLineSpacing
             totalHeight = ((itemHeight * CGFloat(totalRow)) + totalTopBottomOffSet + totalSpacing)
-            height =  totalHeight - 20
+            height =  totalHeight
         }
         else if section == 1
         {
