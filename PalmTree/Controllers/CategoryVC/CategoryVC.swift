@@ -229,11 +229,11 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
                 if languageCode == "ar"
                 {
                     lbl.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-                    lbl.text = "جميع"
+                    lbl.text = "جميع الفئات"
                 }
                 else
                 {
-                    lbl.text = "All"
+                    lbl.text = "All Groups"
                 }
             }
             else
