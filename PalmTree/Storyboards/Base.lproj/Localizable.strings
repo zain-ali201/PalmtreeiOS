@@ -55,6 +55,22 @@
 
 "Negotiable" = "قابل للتفاوض";
 
+"profile_update_en" = "Your Profile updated successfully.";
+
+"profile_update_ar" = "تم تحديث ملفك الشخصي بنجاح";
+
+"phone_exist_en" = "This phone number belongs to another user.";
+
+"phone_exist_ar" = "رقم الجوال هذا يخص مستخدم آخر.";
+
+"something_en" = "Something went wrong. Please try again.";
+
+"something_ar" = "هناك خطأ ما. يرجى إعادة المحاولة";
+
+"add_fav_en" = "Post is added in your favourites.";
+
+"add_fav_ar" = "تم إضافة الإعلان إلى المفضلة بنجاح";
+
 //Dubai Areas
 "Country1_count" = "293";
 
@@ -1063,8 +1079,8 @@
 "Country1_lng251" = "55.2744061";
 
 "Country1_area252" = "Business Bay";
-"Country1_lat252" = "25.1850477";
-"Country1_lng252" = "55.2568423";
+"Country1_lat252" = "25.1850096";
+"Country1_lng252" = "55.2655971";
 
 "Country1_area253" = "Nad Al Shiba";
 "Country1_lat253" = "25.1451939";

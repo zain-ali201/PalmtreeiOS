@@ -247,7 +247,7 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
         }) { (error) in
             
             self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
+            let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
             self.presentVC(alert)
         }
     }
@@ -263,7 +263,7 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
                 print(successResponse)
             }) { (error) in
                 self.stopAnimating()
-                let alert = Constants.showBasicAlert(message: error.message)
+                let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
                 self.presentVC(alert)
             }
         }

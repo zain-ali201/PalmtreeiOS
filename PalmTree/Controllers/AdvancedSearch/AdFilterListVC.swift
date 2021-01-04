@@ -647,7 +647,7 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }) { (error) in
             self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
+            let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
             self.presentVC(alert)
         }
     }
@@ -666,7 +666,7 @@ class AdFilterListVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }) { (error) in
             NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
+            let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
             self.presentVC(alert)
         }
     }

@@ -165,7 +165,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             if let placemarks = placemarks, let placemark = placemarks.first
             {
                 userDetail?.currentAddress = placemark.compactAddress ?? ""
-                userDetail?.locationName = placemark.name ?? ""
+                userDetail?.locationName = placemark.locationName ?? ""
                 userDetail?.country = placemark.currentCountry ?? ""
                 defaults.set(userDetail?.currentAddress, forKey: "address")
                 defaults.set(userDetail?.locationName, forKey: "locName")
@@ -469,7 +469,7 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }) { (error) in
             self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
+            let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
             self.presentVC(alert)
         }
     }
@@ -522,8 +522,8 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 print(successResponse)
             }) { (error) in
                 self.stopAnimating()
-                let alert = Constants.showBasicAlert(message: error.message)
-                self.presentVC(alert)
+//                let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
+//                self.presentVC(alert)
             }
         }
     }
@@ -558,8 +558,8 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             print(successResponse)
         }) { (error) in
             self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
-            self.presentVC(alert)
+//            let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
+//            self.presentVC(alert)
         }
     }
     
@@ -586,12 +586,13 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 self.tableView.reloadData()
             }
             else {
-                let alert = Constants.showBasicAlert(message: successResponse.message)
+                
+                let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "add_fav_%@", languageCode), comment: ""))
                 self.presentVC(alert)
             }
         }) { (error) in
             self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
+            let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
             self.presentVC(alert)
         }
     }
@@ -600,36 +601,45 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
 extension CLPlacemark {
 
     var compactAddress: String? {
-        if let name = name {
+        if let name = subLocality {
             var result = name
 
-//            if let street = thoroughfare {
-//                result += ", \(street)"
-//            }
-
-//            if let city = locality {
-//                result += ", \(city)"
-//            }
-
-            if let country = country {
-//                userDetail?.country = country
+            if let country = locality {
                 result += ", \(country)"
             }
 
             return result
         }
-
-        return nil
+        else
+        {
+            return "UAE"
+        }
     }
     
     var currentCountry: String?
     {
-        if let country = country
+        if let country = locality
         {
             return country
         }
 
         return nil
+    }
+    
+    var locationName: String?
+    {
+        if let area = subLocality
+        {
+            return area
+        }
+        else if let area = locality
+        {
+            return area
+        }
+        else
+        {
+            return administrativeArea
+        }
     }
 }
 

@@ -105,7 +105,7 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate, NVAct
             }
         
         }) { (error) in
-            let alert = Constants.showBasicAlert(message: error.message)
+            let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
             self.presentVC(alert)
         }
     }
@@ -127,7 +127,7 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate, NVAct
                 self.presentVC(alert)
             }
         }) { (error) in
-            let alert = Constants.showBasicAlert(message: error.message)
+            let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
             self.presentVC(alert)
         }
     }

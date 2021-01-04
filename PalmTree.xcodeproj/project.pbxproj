@@ -31,6 +31,8 @@
 		180A4F772328E367002BC411 /* TimerString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180A4F762328E367002BC411 /* TimerString.swift */; };
 		180B26722523665900BCC15F /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180B26712523665900BCC15F /* ChatTableViewCell.swift */; };
 		180B26742523666200BCC15F /* Chat2TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180B26732523666200BCC15F /* Chat2TableViewCell.swift */; };
+		180D806825A30D23005E0B48 /* Burj Khalifa.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 180D806725A30D22005E0B48 /* Burj Khalifa.gpx */; };
+		180D806B25A34957005E0B48 /* Jumeirah.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 180D806A25A34957005E0B48 /* Jumeirah.gpx */; };
 		18108E692092F91F0020D440 /* AdPostImagesRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18108E682092F91F0020D440 /* AdPostImagesRoot.swift */; };
 		18108E6D2092F9720020D440 /* AdPostImagesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18108E6C2092F9720020D440 /* AdPostImagesData.swift */; };
 		18108E6F2092F98A0020D440 /* AdPostImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18108E6E2092F98A0020D440 /* AdPostImages.swift */; };
@@ -338,6 +340,8 @@
 		180A4F762328E367002BC411 /* TimerString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerString.swift; sourceTree = "<group>"; };
 		180B26712523665900BCC15F /* ChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
 		180B26732523666200BCC15F /* Chat2TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chat2TableViewCell.swift; sourceTree = "<group>"; };
+		180D806725A30D22005E0B48 /* Burj Khalifa.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Burj Khalifa.gpx"; sourceTree = "<group>"; };
+		180D806A25A34957005E0B48 /* Jumeirah.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Jumeirah.gpx; sourceTree = "<group>"; };
 		18108E682092F91F0020D440 /* AdPostImagesRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdPostImagesRoot.swift; sourceTree = "<group>"; };
 		18108E6C2092F9720020D440 /* AdPostImagesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdPostImagesData.swift; sourceTree = "<group>"; };
 		18108E6E2092F98A0020D440 /* AdPostImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdPostImages.swift; sourceTree = "<group>"; };
@@ -1231,6 +1235,8 @@
 				18BBFA8D2051098C0067662F /* PalmTree.xcdatamodeld */,
 				18244F1E2074B46E00B9BE8C /* PalmTree-Bridging-Header.h */,
 				18AF770520E5F95B006408DB /* PrefixHeader.pch */,
+				180D806A25A34957005E0B48 /* Jumeirah.gpx */,
+				180D806725A30D22005E0B48 /* Burj Khalifa.gpx */,
 				184685FD25935C990044798D /* Gujranwala.gpx */,
 				184685FC25935C990044798D /* Lahore.gpx */,
 				184685FE25935C9A0044798D /* UAE.gpx */,
@@ -1701,9 +1707,11 @@
 				18BBFA942051098C0067662F /* LaunchScreen.storyboard in Resources */,
 				18EF992924A09F9800EB6A8E /* Localizable.strings in Resources */,
 				18BBFA912051098C0067662F /* Assets.xcassets in Resources */,
+				180D806B25A34957005E0B48 /* Jumeirah.gpx in Resources */,
 				18BBFA8C2051098C0067662F /* Main.storyboard in Resources */,
 				181DDA9823339465001FF048 /* sad.gif in Resources */,
 				186BA6FA2583590F00333DAB /* InfoPlist.strings in Resources */,
+				180D806825A30D23005E0B48 /* Burj Khalifa.gpx in Resources */,
 				184685FF25935C9B0044798D /* Lahore.gpx in Resources */,
 				181DDA90233380B5001FF048 /* thumb.gif in Resources */,
 			);

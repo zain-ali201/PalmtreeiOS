@@ -251,7 +251,7 @@ class CollectionImageCell: UITableViewCell, UICollectionViewDelegate, UICollecti
             
         }) { (error) in
             NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
+            let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
             self.appDelegate.presentController(ShowVC: alert)
         }
     }

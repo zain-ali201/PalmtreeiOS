@@ -207,7 +207,6 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
             imgPicture.frame = CGRect(x: 10, y: 10, width: 30, height: 30)
             imgPicture.contentMode = .scaleAspectFit
             
-            
             let btn = UIButton()
             btn.frame = CGRect(x: 0, y: 0, width: Int(width), height: 50)
             btn.tag = i + 1000
@@ -356,7 +355,7 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
             }
         }) { (error) in
             self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
+            let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
             self.presentVC(alert)
         }
     }
@@ -419,7 +418,7 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
             }
         }) { (error) in
             self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
+            let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
             self.presentVC(alert)
         }
     }
@@ -479,7 +478,7 @@ class CategoryVC: UIViewController, NVActivityIndicatorViewable, UITextFieldDele
             }
         }) { (error) in
             NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
+            let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
             self.presentVC(alert)
         }
     }

@@ -11,6 +11,7 @@ import Foundation
 struct ProfileUpdateRoot {
 
     var message : String!
+    var responseCode : String!
     var success : Bool!
 
     /**
@@ -19,6 +20,7 @@ struct ProfileUpdateRoot {
     init(fromDictionary dictionary: [String:Any]){
        
         message = dictionary["message"] as? String
+        responseCode = dictionary["responseCode"] as? String
         success = dictionary["success"] as? Bool
     }
     
@@ -31,6 +33,10 @@ struct ProfileUpdateRoot {
         
         if message != nil{
             dictionary["message"] = message
+        }
+        
+        if responseCode != nil{
+            dictionary["responseCode"] = responseCode
         }
         
         if success != nil{

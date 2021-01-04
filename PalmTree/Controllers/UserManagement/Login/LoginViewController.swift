@@ -339,7 +339,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
             }
         }) { (error) in
             self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
+            let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
             self.presentVC(alert)
         }
     }
@@ -392,7 +392,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
             }
         }) { (error) in
             self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
+            let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
             self.presentVC(alert)
         }
     }

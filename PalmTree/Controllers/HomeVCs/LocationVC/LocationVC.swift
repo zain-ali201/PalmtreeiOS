@@ -106,8 +106,14 @@ class LocationVC: UIViewController, CLLocationManagerDelegate
         {
             if let placemarks = placemarks, let placemark = placemarks.first
             {
+                print("Name: \(placemark.name)")
+                print("locality: \(placemark.locality)")
+                print("subLocality: \(placemark.subLocality)")
+                print("administrativeArea: \(placemark.administrativeArea)")
+                print("country: \(placemark.country)")
+                
                 userDetail?.currentAddress = placemark.compactAddress ?? ""
-                userDetail?.locationName = placemark.name ?? ""
+                userDetail?.locationName = placemark.locationName ?? ""
                 userDetail?.country = placemark.currentCountry ?? ""
                 defaults.set(userDetail?.currentAddress, forKey: "address")
                 defaults.set(userDetail?.locationName, forKey: "locName")

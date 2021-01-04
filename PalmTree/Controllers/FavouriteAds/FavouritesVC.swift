@@ -294,7 +294,7 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             cell.crossAction = { () in
                 
                 
-                let alert = UIAlertController(title: "Palmtree", message:NSLocalizedString(String(format: "fav_remove_%@",languageCode), comment: ""), preferredStyle: .alert)
+                let alert = UIAlertController(title: NSLocalizedString(String(format: "Palmtree_%@", languageCode), comment: ""), message:NSLocalizedString(String(format: "fav_remove_%@",languageCode), comment: ""), preferredStyle: .alert)
                 let okAction = UIAlertAction(title: NSLocalizedString(String(format: "yes_%@",languageCode), comment: ""), style: .default, handler: { (okAction) in
                     let parameter: [String: Any] = ["ad_id": objData.id ?? 0, "user_id" : userDetail?.id ?? 0]
                     print(parameter)
@@ -359,7 +359,7 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             }
         }) { (error) in
             self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
+            let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
             self.presentVC(alert)
         }
     }
@@ -384,7 +384,7 @@ class FavouritesVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             }
         }) { (error) in
             self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
+            let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
             self.presentVC(alert)
         }
     }

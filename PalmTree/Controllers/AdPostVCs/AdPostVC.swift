@@ -791,7 +791,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             }
         }) { (error) in
             self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
+            let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
             self.presentVC(alert)
         }
     }
@@ -815,7 +815,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             }
         }) { (error) in
             self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
+            let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
             self.presentVC(alert)
         }
     }
@@ -921,7 +921,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
           
       }) { (error) in
           self.stopAnimating()
-          let alert = Constants.showBasicAlert(message: error.message)
+          let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
           self.presentVC(alert)
       }
     }
@@ -989,7 +989,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
             }
         }) { (error) in
             self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
+            let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
             self.presentVC(alert)
         }
     }
@@ -1023,7 +1023,7 @@ class AdPostVC: UIViewController, NVActivityIndicatorViewable, UITextViewDelegat
                 }
             }) { (error) in
                 self.stopAnimating()
-                let alert = Constants.showBasicAlert(message: error.message)
+                let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
                 self.presentVC(alert)
             }
         }

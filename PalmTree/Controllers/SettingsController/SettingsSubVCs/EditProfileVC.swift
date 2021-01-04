@@ -344,7 +344,7 @@ class EditProfileVC: UIViewController, NVActivityIndicatorViewable, UIImagePicke
             }
         }) { (error) in
             NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
+            let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
             self.presentVC(alert)
         }
     }
@@ -353,9 +353,9 @@ class EditProfileVC: UIViewController, NVActivityIndicatorViewable, UIImagePicke
         self.showLoader()
         UserHandler.profileUpdate(parameters: params, success: { (successResponse) in
             self.stopAnimating()
-            if successResponse.success
+            if successResponse.responseCode == "1"
             {
-                let alert = AlertView.prepare(title: "Palmtree", message: successResponse.message, okAction: {
+                let alert = AlertView.prepare(title: NSLocalizedString(String(format: "Palmtree_%@", languageCode), comment: ""), message: NSLocalizedString(String(format: "profile_update_%@", languageCode), comment: ""), okAction: {
                     self.contactView.alpha = 0
                     userDetail?.displayName = self.txtFirstName.text!
                     userDetail?.phone = self.txtNumber.text!
@@ -371,13 +371,19 @@ class EditProfileVC: UIViewController, NVActivityIndicatorViewable, UIImagePicke
                 })
                 self.presentVC(alert)
             }
+            else if successResponse.responseCode == "2"
+            {
+                let alert = AlertView.prepare(title: NSLocalizedString(String(format: "Palmtree_%@", languageCode), comment: ""), message: NSLocalizedString(String(format: "phone_exist_%@", languageCode), comment: ""), okAction: {
+                })
+                self.presentVC(alert)
+            }
             else {
-                let alert = Constants.showBasicAlert(message: successResponse.message)
+                let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
                 self.presentVC(alert)
             }
         }) { (error) in
             self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
+            let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
             self.presentVC(alert)
         }
     }
@@ -436,7 +442,7 @@ class EditProfileVC: UIViewController, NVActivityIndicatorViewable, UIImagePicke
             }
         }) { (error) in
             self.stopAnimating()
-            let alert = Constants.showBasicAlert(message: error.message)
+            let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "something_%@", languageCode), comment: ""))
             self.presentVC(alert)
         }
     }

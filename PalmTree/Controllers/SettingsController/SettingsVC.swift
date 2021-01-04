@@ -120,7 +120,7 @@ class SettingsVC: UIViewController {
     
     @IBAction func signoutBtnAction(_ sender: Any)
     {
-        let alert = UIAlertController(title: "Palmtree", message: NSLocalizedString(String(format: "signout_%@",languageCode), comment: ""), preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString(String(format: "Palmtree_%@", languageCode), comment: ""), message: NSLocalizedString(String(format: "signout_%@",languageCode), comment: ""), preferredStyle: .alert)
         let yes = UIAlertAction(title: NSLocalizedString(String(format: "yes_%@",languageCode), comment: ""), style: .default) { (action) in
             
             userDetail = UserObject()
