@@ -71,6 +71,9 @@
 
 "add_fav_ar" = "تم إضافة الإعلان إلى المفضلة بنجاح";
 
+"user_block_en" = "This user is blocked by the Palmtree. Please contact Customer Services.";
+"user_block_ar" = "تم حظر هذا المستخدم من قبل بالمتري.  يرجى الاتصال بخدمة العملاء.";
+
 //Dubai Areas
 "Country1_count" = "293";
 

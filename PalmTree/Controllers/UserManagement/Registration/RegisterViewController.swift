@@ -175,7 +175,7 @@ class RegisterViewController: UIViewController,UITextFieldDelegate, UIScrollView
         self.showLoader()
         UserHandler.registerUser(parameter: param, success: { (successResponse) in
             self.stopAnimating()
-            if successResponse.success
+            if successResponse.success == 1
             {
                 if self.isVerifivation
                 {

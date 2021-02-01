@@ -12,7 +12,7 @@ struct UserRegisterRoot{
     
     var data : UserRegisterData!
     var message : String!
-    var success : Bool!
+    var success : Int!
     
     
     /**
@@ -23,7 +23,7 @@ struct UserRegisterRoot{
             data = UserRegisterData(fromDictionary: dataData)
         }
         message = dictionary["message"] as? String
-        success = dictionary["success"] as? Bool
+        success = dictionary["success"] as? Int
     }
     
     /**

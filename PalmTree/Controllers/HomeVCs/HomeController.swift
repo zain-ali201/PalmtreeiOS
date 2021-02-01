@@ -441,14 +441,13 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.stopAnimating()
             
             if successResponse.success {
-                
-                print(successResponse.categories)
-                
+
                 categoryArray = successResponse.categories
                 self.latestAdsArray = successResponse.adsData
                 
-                if self.defaults.bool(forKey: "isLogin") == true
+                if successResponse.userActivation == "1"
                 {
+                    print("active.......")
                     userDetail?.id = self.defaults.integer(forKey: "userID")
                     userDetail?.displayName = self.defaults.string(forKey: "displayName")
                     userDetail?.userEmail = self.defaults.string(forKey: "userEmail")
@@ -459,6 +458,24 @@ class HomeController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     {
                         self.createFirebaseUser(email: (userDetail?.userEmail)!)
                     }
+                }
+                else
+                {
+                    print("inactive.......")
+                    userDetail = UserObject()
+                    adDetailObj = AdDetailObject()
+                    self.defaults.set("",forKey: "userID")
+                    self.defaults.set("",forKey: "displayName")
+                    self.defaults.set("",forKey: "userEmail")
+                    self.defaults.set("",forKey: "joining")
+                    self.defaults.set("", forKey: "url")
+                    signoutFlag = true
+                    self.defaults.set(false, forKey: "isLogin")
+                    self.defaults.set(false, forKey: "isGuest")
+                    self.defaults.set(false, forKey: "isSocial")
+                    FacebookAuthentication.signOut()
+                    GoogleAuthenctication.signOut()
+                    try! Auth.auth().signOut()
                 }
                 
                 self.tableView.reloadData()

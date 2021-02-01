@@ -14,7 +14,7 @@ struct HomeRoot
     var adsData : [AdsJSON]!
     var message : String!
     var success : Bool!
-    
+    var userActivation = "0"
     
     /**
      * Instantiate the instance using the passed dictionary values to set the properties values
@@ -39,6 +39,7 @@ struct HomeRoot
         
         message = dictionary["message"] as? String
         success = dictionary["success"] as? Bool
+        userActivation = dictionary["user_active"] as? String ?? "0"
     }
     
     /**
@@ -71,6 +72,11 @@ struct HomeRoot
         if success != nil{
             dictionary["success"] = success
         }
+        
+        if userActivation != nil{
+            dictionary["user_active"] = userActivation
+        }
+        
         return dictionary
     }
 }

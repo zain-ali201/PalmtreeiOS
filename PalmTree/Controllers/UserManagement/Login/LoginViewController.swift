@@ -350,7 +350,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
         self.showLoader()
         UserHandler.loginUser(parameter: parameters, success: { (successResponse) in
             self.stopAnimating()
-            if successResponse.success
+            if successResponse.success == 1
             {
                 defaults.set(true, forKey: "isLogin")
                 
@@ -384,6 +384,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate, NVActivityIndi
 
                 self.dismiss(animated: true, completion: nil)
                 
+            }
+            else if successResponse.success == 3
+            {
+                let alert = Constants.showBasicAlert(message: NSLocalizedString(String(format: "user_block_%@", languageCode), comment: ""))
+                self.presentVC(alert)
             }
             else
             {
